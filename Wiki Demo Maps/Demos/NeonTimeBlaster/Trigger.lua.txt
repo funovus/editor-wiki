@@ -1,0 +1,342 @@
+local core = require("core")
+local STAR_TYPE = "Arcade NTB Background Star"
+local TARGET_TYPE = "Arcade NTB Target"
+local HERO_TYPES = {"Arcade NTB Player Hero Fire", "Arcade NTB Player Hero Water", "Arcade NTB Player Hero Nature"}
+local ATTACK_TYPES = {
+    "Arcade NTB Player Basic Attack Fire Launch",
+    "Arcade NTB Player Basic Attack Water Launch",
+    "Arcade NTB Player Basic Attack Nature Launch"
+}
+
+local ENEMIES = {
+    "Arcade NTB Ooze Fire 01",
+    "Arcade NTB Ooze Water 01",
+    "Arcade NTB Ooze Nature 01"
+}
+
+local COLORS = {
+    red = 1,
+    blue = 2,
+    green = 3
+}
+
+local colors = {
+    {"<color=#ff8d85>", "<color=#ff1100>"}, --red
+    {"<color=#87cdff>", "<color=#177fff>"}, --blue
+    {"<color=#7dff86>", "<color=#19e058>"} --green
+}
+
+local deathFX = {
+    "Arcade NTB Decay Small Red",
+    "Arcade NTB Decay Small Blue",
+    "Arcade NTB Decay Small Green"
+}
+
+local spawnFX = {
+    "Arcade NTB Spawn FX Red",
+    "Arcade NTB Spawn FX Blue",
+    "Arcade NTB Spawn FX Green"
+}
+
+local GAME_LOOP_RATE = 0.0625
+
+local playerTarget
+local currentHero
+local oldHero
+local CurrentHeroIndex = 1
+
+local screenBottom = 24
+local maxWidth = 20
+local maxSpawnRange = {2, 23}
+local off_screen_center = {13, 0}
+local previousTargetLocation = {0, 0}
+local star_table = {}
+
+local beatTime = 2.1
+local current_score = 0
+local high_score = 0
+local player_fire_rate = 0.1
+
+local spawnBounds = {
+    {
+        -- Top
+        spawnY = {36, 37}, --Range of y values the unit can spawn at
+        spawnX = {2, 30}, --range of x values units can spawn at
+        target = {13, 0}, --where units spawning in this quadrant should head
+        inset = {0, -5} -- what inset from the spawning point the "spawn flash" should appear
+    },
+    {
+        -- Right
+        spawnY = {17, 36},
+        spawnX = {28, 29},
+        target = {-10, 24},
+        inset = {-5, 0}
+    },
+    {
+        -- Bot
+        spawnY = {10, 11},
+        spawnX = {4, 27},
+        target = {14, 60},
+        inset = {0, 5}
+    },
+    {
+        --Left
+        spawnY = {17, 36},
+        spawnX = {1, 2},
+        target = {39, 25},
+        inset = {5, 0}
+    }
+}
+
+-- DCEI.TriggerAddTimerEventElapsed(function() SpeedBoost() end, 30)
+-- DCEI.TriggerAddTimerEventElapsed(function() SpeedBoost() end, 60)
+-- DCEI.TriggerAddTimerEventElapsed(function() SpeedBoost() end, 120)
+--DCEI.TriggerAddTimerEventPeriodicIndefinite(SpeedBoost, 15)
+
+DCEI.ShowMessageWithButtonText(
+    "How To Play",
+    "Switch color with Left Click \n\nAim with Right Click\n\nYou can only kill enemies the same color as you!",
+    "BLAST OFF"
+)
+
+function OnUnitSpawn()
+    local u = DCEI.TriggeringUnit
+    local owner = DCEI.GetUnitPlayerId(u)
+    local unitName = DCEI.UnitName(u)
+
+    if unitName == "Ship" then
+        spawnStars()
+        OnBeat()
+        initializeGame()
+    end
+end
+
+function initializeGame()
+    core.HideDefaultUi()
+    playerTarget = DCEI.CreateUnitAsync(1, 1, TARGET_TYPE, off_screen_center[1], screenBottom)
+    currentHero = DCEI.CreateUnitAsync(1, 1, HERO_TYPES[1], off_screen_center[1], screenBottom)
+    DCEI.SelectUnitSync(playerTarget)
+
+    DCEI.SetEnabledCameraClamp(false)
+    DCEI.HideFastForwardButton()
+    --DCEI.HidePlayerUi(1, 1)
+    DCEI.SetCameraVisibleAreaWidth(23)
+    DCEI.SetCameraVisibleAreaLength(23)
+    DCEI.TriggerAddTimerEventPeriodicIndefinite(gameLoop, GAME_LOOP_RATE)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SelectUnitSync(playerTarget)
+            fire()
+        end,
+        1
+    )
+end
+
+function SpeedBoost()
+    if beatTime > 0.5 then
+        beatTime = beatTime - 0.25
+    end
+end
+
+function OnBeat()
+    spawnEnemies(6, math.random(1, #ENEMIES), math.random(1, #spawnBounds))
+    BeatFX()
+    if beatTime > 0.5 then
+    --beatTime = beatTime - 0.0625
+    end
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            OnBeat()
+        end,
+        beatTime
+    )
+
+    --Arcade NTB Star Beat
+    for i = 1, #star_table do
+        DCEI.ApplyBehavior(star_table[i], "Arcade NTB Star Beat")
+    end
+end
+
+function BeatFX()
+    local dur = 0.15
+    DCEI.ShowSlowMotionEffect()
+    DCEI.SetCameraDistance(31, 0.15)
+
+    if playerTarget ~= nil then
+        DCEI.ApplyBehavior(playerTarget, "Arcade NTB Beat Behavior")
+    end
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.HideSlowMotionEffect()
+            DCEI.SetCameraDistance(30, 0.15)
+        end,
+        dur
+    )
+end
+
+function spawnStars()
+    local spawnPos = {((math.random(9, 30)) * math.random()), 45}
+    local endPos = {spawnPos[1], 0}
+    local starUnit = DCEI.CreateUnitAsync(1, 1, STAR_TYPE, spawnPos[1], spawnPos[2])
+    table.insert(star_table, starUnit)
+    DCEI.Move(starUnit, endPos[1], endPos[2])
+    for i = 1, math.random(1, 20) do
+        DCEI.ApplyBehavior(starUnit, "Arcade NTB Star Variable Speed")
+    end
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            spawnStars()
+        end,
+        0.0625
+    )
+end
+
+function OnUnitDeselected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+    local pos = DCEI.GetUnitPosition2D(currentHero)
+
+    DCEI.SelectUnitSync(playerTarget)
+end
+
+function OnUnitSelected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+
+    switchElement()
+end
+
+function spawnEnemies(quantity, type, quadrant)
+    local spawnPos = {}
+    local endPos = {}
+    local starUnit
+    --fire
+    spawnPos = {
+        math.random(spawnBounds[quadrant].spawnX[1], spawnBounds[quadrant].spawnX[2]),
+        math.random(spawnBounds[quadrant].spawnY[1], spawnBounds[quadrant].spawnY[2])
+    }
+    endPos = spawnBounds[quadrant].target
+    for i = 1, quantity do
+        starUnit =
+            DCEI.CreateUnitAsync(
+            -1,
+            -1,
+            ENEMIES[type],
+            spawnPos[1] + (math.random() * math.random(-2, 2)),
+            spawnPos[2] + (math.random() * math.random(-2, 2))
+        )
+        DCEI.Move(starUnit, endPos[1], endPos[2])
+        if i == 2 then
+            DCEI.CreateEffect(
+                spawnFX[type],
+                starUnit,
+                spawnPos[1] + spawnBounds[quadrant].inset[1],
+                spawnPos[2] + spawnBounds[quadrant].inset[2]
+            )
+        end
+    end
+end
+
+function switchElement()
+    local pos = DCEI.GetUnitPosition2D(currentHero)
+    oldHero = currentHero
+
+    CurrentHeroIndex = CurrentHeroIndex + 1
+    if CurrentHeroIndex > #HERO_TYPES then
+        CurrentHeroIndex = 1
+    end
+
+    currentHero = DCEI.CreateUnitAsync(1, 1, HERO_TYPES[CurrentHeroIndex], pos.x, pos.y)
+    DCEI.KillUnit(oldHero)
+    --DCEI.ShowAbilitiesUi(1, currentHero)
+    --DCEI.ShowUnitStatusUi(2, currentHero)
+    UpdateScore()
+end
+
+function gameLoop()
+    local pos = DCEI.GetUnitPosition2D(playerTarget)
+    local posCenter = DCEI.GetUnitPosition2D(currentHero)
+    local camX = posCenter.x
+    local camY = posCenter.y
+    --DCEI.Move(currentHero, pos.x, screenBottom) --Disable movement until we can have a better movement system
+
+    -- if pos.x ~= previousTargetLocation[1] or pos.y ~= previousTargetLocation[2] then
+    -- end
+
+    if camX > (pos.x + 6.5) then
+        camX = camX - 3.5
+    elseif camX < (pos.x - 6.5) then
+        camX = camX + 3.5
+    end
+
+    if camY > (pos.y + 5.0) then
+        camY = camY - 4.5
+    elseif camY < (pos.y - 4.5) then
+        camY = camY + 4.5
+    end
+
+    DCEI.SetCameraFocus(camX, camY, 1.5)
+    previousTargetLocation = {pos.x, pos.y}
+end
+
+function fire()
+    local pos = DCEI.GetUnitPosition2D(playerTarget)
+    DCEI.CreateEffect(ATTACK_TYPES[CurrentHeroIndex], currentHero, pos.x + math.random(), pos.y + math.random())
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            fire()
+        end,
+        player_fire_rate
+    )
+end
+
+function ScoreDecrease()
+    if current_score > 0 then
+        current_score = current_score - 2
+        --beatTime = beatTime + 0.0625
+        UpdateScore()
+    end
+end
+
+function UpdateScore()
+    if current_score > high_score then
+        high_score = current_score
+    end
+
+    DCEI.ShowObjective(
+        colors[CurrentHeroIndex][1] ..
+            "Current: " .. current_score .. colors[CurrentHeroIndex][2] .. "\nHigh:" .. high_score
+    )
+end
+
+function OnUnitDeath()
+    local u = DCEI.TriggeringUnit
+    if DCEI.UnitBehaviorStackCount(u, "GameSystem Enemy") >= 1 then
+        current_score = current_score + 1
+        UpdateScore()
+
+        --Temporary -- probably don't want splats to spawn for every dead creep
+        --      Instead, chance based, or search to see if any others are nearby first
+        if DCEI.UnitBehaviorStackCount(u, "GameAttribute ElementFire") >= 1 then
+            DCEI.CreateEffect(deathFX[1], u)
+        elseif DCEI.UnitBehaviorStackCount(u, "GameAttribute ElementWater") >= 1 then
+            DCEI.CreateEffect(deathFX[2], u)
+        elseif DCEI.UnitBehaviorStackCount(u, "GameAttribute ElementNature") >= 1 then
+            DCEI.CreateEffect(deathFX[3], u)
+        end
+    end
+
+    for i = 1, #star_table do
+        if u == star_table[i] then
+            table.remove(star_table, i)
+        end
+    end
+end
+
+DCEI.TriggerAddUnitSpawnEvent(DCEI.UnitAny, OnUnitSpawn)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddEffectEvent("Arcade NTB RemoveScore", ScoreDecrease)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDeath)

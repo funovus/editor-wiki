@@ -1,0 +1,419 @@
+-- VARIABLES
+local core = require("core")
+local crop_caster = DCEI.FindUnit("Crop_Caster")
+
+local cursor_states = {
+    normal = "normal",
+    harvesting = "harvest",
+    field_planting = "field"
+}
+local cursor_state = cursor_states.normal
+local cursor_unit = nil
+function SwitchCursorState(new_state)
+    if cursor_state == new_state then
+        return
+    end
+
+    --LEAVE OLD STATE
+    if cursor_state == cursor_states.field_planting then
+        FieldGrids_Destroy()
+    end
+
+    --ENTER NEW STATE
+    if new_state == cursor_states.normal and cursor_unit ~= nil then
+        DCEI.RemoveUnitSync(cursor_unit)
+        cursor_unit = nil
+    elseif new_state == cursor_states.field_planting then
+        CreateCursor("Planting Cursor")
+        FieldGrids_Create()
+    end
+
+    --SWITCH TO NEW STATE
+    cursor_state = new_state
+end
+
+--grids
+local field_grid_table = {}
+
+-- UI
+local ui_root = DCEI.GetUiRoot()
+local ui_fullscreen = DCEI.NewFrame(ui_root)
+DCEI.SetMatchParent(ui_fullscreen, true, true)
+local ui = {
+    crop_selector,
+    harvest_button
+}
+
+local CROP_DATA_TABLE = {
+    {
+        key = "Tree",
+        availible_quantity = 0,
+        used_quantity = 0,
+        icon = "btn_tree",
+        action = function()
+            DCEI.EnterTargetingMode(crop_caster, "Place Crop: Tree")
+        end
+    },
+    {
+        key = "Sheep",
+        availible_quantity = 0,
+        used_quantity = 0,
+        icon = "btn_sheep",
+        action = function()
+            DCEI.EnterTargetingMode(crop_caster, "Place Crop: Tree")
+        end
+    },
+    {
+        key = "consumable_towerboost",
+        availible_quantity = 0,
+        used_quantity = 0,
+        icon = "icon_spell_vine_lash",
+        action = function()
+            DCEI.EnterTargetingMode(crop_caster, "Place Crop: Tree")
+        end
+    }
+}
+
+function CreateCropSelectorUI(data_table)
+    local layout = {
+        crop_buttons = {},
+        crop_labels = {},
+        collapsed = false
+    }
+
+    local temporary_item
+    local pos
+    local horizontal_button_offset = 95
+    local bottom_offset = 10
+    local column_width = 110
+
+    layout.frame = DCEI.NewVStack(ui_fullscreen)
+    DCEI.SetSpacing(layout.frame, 3)
+    DCEI.SetPadding(layout.frame, 25)
+    DCEI.SetBottomAlignmentInParent(layout.frame)
+    DCEI.SetLeftAlignmentInParent(layout.frame)
+    DCEI.SetBottomAlignment(layout.frame)
+    DCEI.SetLeftAlignment(layout.frame)
+    DCEI.SetVerticalOffsetInParent(layout.frame, bottom_offset + 80)
+    DCEI.SetHorizontalOffsetInParent(layout.frame, 10)
+    DCEI.SetBackgroundImage(layout.frame, "shop_background")
+    --DCEI.SetBackgroundImageColor(layout.frame, 0, 0, 0, 0.5)
+
+    layout.collapse_toggle = DCEI.NewButton(ui_fullscreen)
+    DCEI.SetOnClickCallback(
+        layout.collapse_toggle,
+        function()
+            if ui.crop_selector.collapsed then
+                ui.crop_selector.collapsed = false
+                DCEI.SetRotation(ui.crop_selector.collapse_toggle_arrow, 180)
+                DCEI.AnimateScale(ui.crop_selector.frame, {x = 1, y = 0, z = 1}, {x = 1, y = 1, z = 1}, 0.5, "OutCubic")
+                DCEI.AnimateVerticalOffset(ui.crop_selector.frame, 0, 90, 0.5, "OutCubic")
+            else
+                ui.crop_selector.collapsed = true
+                DCEI.SetRotation(ui.crop_selector.collapse_toggle_arrow, 0)
+                DCEI.AnimateScale(ui.crop_selector.frame, {x = 1, y = 1, z = 1}, {x = 1, y = 0, z = 1}, 0.5, "OutCubic")
+                DCEI.AnimateVerticalOffset(ui.crop_selector.frame, 90, 0, 0.5, "OutCubic")
+            end
+        end
+    )
+    DCEI.SetBackgroundImage(layout.collapse_toggle, "dialog_frame_02")
+    DCEI.SetPadding(layout.collapse_toggle, 25)
+    DCEI.SetBottomAlignmentInParent(layout.collapse_toggle)
+    DCEI.SetLeftAlignmentInParent(layout.collapse_toggle)
+    DCEI.SetBottomAlignment(layout.collapse_toggle)
+    DCEI.SetHorizontalOffsetInParent(layout.collapse_toggle, bottom_offset)
+    DCEI.SetVerticalOffsetInParent(layout.collapse_toggle, 10)
+    --DCEI.SetSize(layout.collapse_toggle, column_width, 65)
+    --DCEI.SetMaxSize(layout.collapse_toggle, column_width, 65)
+
+    layout.collapse_toggle_arrow = DCEI.NewFrame(layout.collapse_toggle)
+    DCEI.SetRotation(layout.collapse_toggle_arrow, 180)
+    DCEI.SetBackgroundImage(layout.collapse_toggle_arrow, "shape_arrow00")
+    DCEI.SetTopAlignmentInParent(layout.collapse_toggle_arrow)
+    DCEI.SetVerticalOffsetInParent(layout.collapse_toggle_arrow, 5)
+    DCEI.SetSize(layout.collapse_toggle_arrow, 31, 20)
+    DCEI.SetMaxSize(layout.collapse_toggle_arrow, 31, 20)
+
+    layout.title = DCEI.NewText(layout.collapse_toggle)
+    DCEI.SetText(layout.title, "Crops!")
+    --DCEI.SetText(layout.title, "<align=\"center\"><color=#FFFAAA>" .. string.format("%d",consumables_used) .. "/" .. string.format("%d", math.min(consumables_count_availible, CONSUMABLES_MAX)))
+    DCEI.SetTextFontSize(layout.title, 32)
+    DCEI.SetBottomAlignmentInParent(layout.title)
+    DCEI.SetVerticalOffsetInParent(layout.title, -10)
+    DCEI.SetSize(layout.title, column_width, 35)
+    DCEI.SetMaxSize(layout.title, column_width, 35)
+
+    for i = 1, #data_table do
+        layout.crop_buttons[i] = DCEI.NewButton(layout.frame)
+        DCEI.SetBottomAlignmentInParent(layout.crop_buttons[i])
+        DCEI.SetLeftAlignmentInParent(layout.crop_buttons[i])
+        DCEI.SetBottomAlignment(layout.crop_buttons[i])
+        DCEI.SetLeftAlignment(layout.crop_buttons[i])
+        DCEI.SetBackgroundImage(layout.crop_buttons[i], data_table[i].icon)
+        DCEI.SetVerticalOffsetInParent(layout.crop_buttons[i], 0 + (horizontal_button_offset * (i - 1)))
+        DCEI.SetSize(layout.crop_buttons[i], 90, 94)
+        DCEI.EnableButton(layout.crop_buttons[i], true)
+        DCEI.SetOnClickCallback(
+            layout.crop_buttons[i],
+            function()
+                data_table[i].action()
+            end
+        )
+
+        temporary_item = DCEI.NewFrame(layout.crop_buttons[i])
+        DCEI.SetSize(temporary_item, 33, 33)
+        DCEI.SetBottomAlignmentInParent(temporary_item)
+        DCEI.SetRightAlignmentInParent(temporary_item)
+        DCEI.SetHorizontalOffsetInParent(temporary_item, 17)
+        DCEI.SetVerticalOffsetInParent(temporary_item, -7)
+        DCEI.SetBackgroundImage(temporary_item, "ui_ingame_hub")
+
+        layout.crop_labels[i] = DCEI.NewText(layout.crop_buttons[i])
+        DCEI.SetText(layout.crop_labels[i], '<align="right">' .. string.format("%d", data_table[i].availible_quantity))
+        DCEI.SetBottomAlignmentInParent(layout.crop_labels[i])
+        DCEI.SetRightAlignmentInParent(layout.crop_labels[i])
+        DCEI.SetBottomAlignment(layout.crop_labels[i])
+        DCEI.SetRightAlignment(layout.crop_labels[i])
+        DCEI.SetHorizontalOffsetInParent(layout.crop_labels[i], 10)
+        DCEI.SetSize(layout.crop_labels[i], 120, 15)
+        DCEI.SetMaxSize(layout.crop_labels[i], 120, 15)
+    end
+
+    return layout
+end
+
+function CreateHarvestButtonUI()
+    local layout = {}
+
+    local temporary_item
+    local pos
+
+    layout.button = DCEI.NewButton(ui_fullscreen)
+    DCEI.SetBottomAlignmentInParent(layout.button)
+    DCEI.SetRightAlignmentInParent(layout.button)
+    DCEI.SetBottomAlignment(layout.button)
+    DCEI.SetRightAlignment(layout.button)
+    DCEI.SetBackgroundImage(layout.button, "icon_harvest_new")
+    DCEI.SetVerticalOffsetInParent(layout.button, 10)
+    DCEI.SetHorizontalOffsetInParent(layout.button, -10)
+    DCEI.SetSize(layout.button, 90, 94)
+    DCEI.EnableButton(layout.button, true)
+    DCEI.SetOnClickCallback(
+        layout.button,
+        function()
+            DCEI.EnterTargetingMode(crop_caster, "Harvest Crops")
+            DCEI.Wait(0)
+            SwitchCursorState(cursor_states.harvesting)
+        end
+    )
+
+    return layout
+end
+
+-- TRIGGERS
+function OnMapStart()
+    core.HideDefaultUi()
+
+    DCEI.SetEnabledCameraClamp(false)
+    DCEI.SetCameraFocus(25, 25, 0, false)
+    DCEI.SetCameraVisibleAreaWidth(50, true)
+    DCEI.SetCameraVisibleAreaLength(50, true)
+    DCEI.SetCameraDistance(70, 0, false)
+    --DCEI.SetCameraVisibleAreaLength(12)
+    --DCEI.SetCameraPitchSmoothOvertime(90, 0, false)
+    --DCEI.BlockCameraInput(true)
+    DCEI.SetCameraPitchSmoothOvertime(50, 0, false)
+    DCEI.SetCameraYawSmoothOvertime(35, 0, false)
+
+    -- DCEI.AddGrid(
+    --     {x = 25, y = 0.07, z = 25}, -- center
+    --     50, 50, --size
+    --     23, 23, -- number of rows/columns
+    --     0.08,  -- line width
+    --     {x = 0, y = 90, z = 0},  --color
+    --     0.09-- transparency
+    -- )
+
+    --Create UI
+    ui.crop_selector = CreateCropSelectorUI(CROP_DATA_TABLE)
+    ui.harvest_button = CreateHarvestButtonUI()
+end
+
+function OnUnitSpawn()
+    local u = DCEI.TriggeringUnit
+    local type = DCEI.UnitType(u)
+    local unit_name = DCEI.UnitName(u)
+    local player_id = DCEI.GetUnitPlayerId(u)
+    local pos = DCEI.GetUnitPosition2D(u)
+
+    DCEI.SetUnitPosition2D(u, RoundToMultiple(pos.x, 2), RoundToMultiple(pos.y, 2))
+end
+
+function OnAbilityDeactivate()
+    local ability_name = DCEI.TriggeringAbilityName
+
+    SwitchCursorState(cursor_states.normal)
+    -- if ability_name == "Harvest Crops" then
+
+    -- end
+end
+
+function OnAbilityActivate()
+    local ability_name = DCEI.TriggeringAbilityName
+
+    if ability_name == "Place Crop: Tree" then
+        SwitchCursorState(cursor_states.field_planting)
+    end
+end
+
+function RoundToDecimals(num, num_decimals)
+    return tonumber(string.format("%." .. (num_decimals or 0) .. "f", num))
+end
+
+function RoundToMultiple(num, multiple)
+    return math.floor(num / multiple + 0.5) * multiple
+end
+
+function OnUseAbility()
+    local ability_name = DCEI.TriggeringAbilityName
+    local u = DCEI.TriggeringUnit
+
+    if u == crop_caster then
+        DCEI.Wait(0)
+        DCEI.EnterTargetingMode(crop_caster, ability_name)
+    end
+end
+
+function OnUnitDied()
+    local u = DCEI.TriggeringUnit
+    local type = DCEI.UnitType(u)
+    local unit_name = DCEI.UnitName(u)
+    local player_id = DCEI.GetUnitPlayerId(u)
+    local pos = DCEI.GetUnitPosition2D(u)
+
+    DCEI.ShowFloatingText({x = pos.x, z = pos.y}, "+1 <sprite name=nature>", 1, 1, 1, {offset = {up = -0.5}})
+end
+
+function FieldGrids_Create()
+    local i = 1
+    local region
+    local region_center
+    local region_size
+
+    while DCEI.FindRegion("field_" .. i) ~= DCEI.RegionAny do
+        region = DCEI.FindRegion("field_" .. i)
+        DCEI.LogError("field_" .. i)
+        region_center = DCEI.GetCenterOfRegion(region)
+        region_size = DCEI.GetSizeOfRegion(region)
+        DCEI.RemoveGrid(field_grid_table[i])
+        field_grid_table[i] =
+            DCEI.AddGrid(
+            {x = RoundToMultiple(region_center.x, 1), y = 0.07, z = RoundToMultiple(region_center.y, 1)}, -- center
+            RoundToMultiple(region_size.x, 2),
+            RoundToMultiple(region_size.y, 2), --size
+            RoundToMultiple(region_size.x, 2) / 2,
+            RoundToMultiple(region_size.y, 2) / 2, -- number of rows/columns
+            0.2, -- line width
+            {x = 0, y = 90, z = 0}, --color
+            1
+         -- transparency
+        )
+        i = i + 1
+    end
+end
+
+function FieldGrids_Destroy()
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            local i = 1
+            if cursor_state ~= cursor_states.field_planting then
+                DCEI.LogError("CONDITION FAILED")
+                for i = 1, #field_grid_table do
+                    DCEI.RemoveGrid(field_grid_table[i])
+                end
+            end
+        end,
+        0.125,
+        true
+    )
+end
+
+DCEI.TriggerAddTimerEventPeriodicIndefinite(
+    function()
+        if cursor_state ~= cursor_states.normal then
+            EvaluateCursorState()
+        end
+    end,
+    0.0,
+    true
+)
+
+function EvaluateCursorState()
+    local mouse = DCEI.GetMousePosition2D()
+    if cursor_unit ~= nil then
+        DCEI.SetUnitPosition2DWithInterpolation(cursor_unit, RoundToMultiple(mouse.x, 2), RoundToMultiple(mouse.y, 2))
+    end
+
+    if cursor_state == cursor_states.harvesting then
+        DCEI.CreateEffect("Crop Harvest Search", crop_caster, mouse.x, mouse.y)
+    end
+
+    if cursor_state == cursor_states.field_planting then
+        EvaluateCursor_Planting()
+    end
+end
+
+function EvaluateCursor_Planting()
+    if IsCursorInField() then
+        DCEI.RemoveBehavior(cursor_unit, "Cursor Invalid")
+    else
+        DCEI.ApplyBehavior(cursor_unit, "Cursor Invalid")
+    end
+end
+
+function IsCursorInField()
+    local mouse = DCEI.GetMousePosition2D()
+    local i = 1
+    local region
+    local return_value = false
+
+    while DCEI.FindRegion("field_" .. i) ~= DCEI.RegionAny do
+        region = DCEI.FindRegion("field_" .. i)
+        if DCEI.CheckPointInRegion(region, mouse.x, mouse.y) then
+            return_value = true
+            break
+        end
+        i = i + 1
+    end
+
+    return return_value
+end
+
+function CreateCursor(unit_type)
+    local mouse = DCEI.GetMousePosition2D()
+    cursor_unit = DCEI.CreateUnitAsync(1, 1, unit_type, mouse.x, mouse.y)
+end
+
+-- Debug Commands
+function OnTextCommand(text_command)
+    local print = ""
+    local u
+    DCEI.ShowFeedbackMessage(text_command)
+    -- if DCEI.IsDev() == false then
+    --     return
+    -- end
+
+    if text_command == "test" then
+        DCEI.EnterTargetingMode(crop_caster, "Harvest Crops")
+        SwitchCursorState(cursor_states.harvesting)
+    end
+end
+DCEI.TriggerAddTextCommandEvent(OnTextCommand)
+
+-- INITIALIZE
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddUnitSpawnEvent(DCEI.UnitAny, OnUnitSpawn)
+DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnUseAbility)
+DCEI.TriggerAddDeactivateAbilityEvent(DCEI.UnitAny, OnAbilityDeactivate)
+DCEI.TriggerAddActivateAbilityEvent(DCEI.UnitAny, OnAbilityActivate)

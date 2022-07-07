@@ -1,0 +1,718 @@
+{
+    "actors": {
+        "Demo Banker Missile": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_thunderbird"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Holy"
+                                }
+                            },
+                            {
+                                "playAnimationWithDuration": {
+                                    "clipId": 3,
+                                    "clipDuration": 0.5
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Banker Missile Trail",
+                                    "hostSite": "SiteCenter"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Banker Missile Trail Long",
+                                    "hostSite": "SiteForward"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStart": {
+                                "weapon": "Demo Banker Missile Smite"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStop": {
+                                "weapon": "Demo Banker Missile Smite"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "stopAnimation": {
+                                    "clipId": 0
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteCenter": {
+                        "offset": {
+                            "forward": 0.375,
+                            "up": 0.375
+                        }
+                    },
+                    "SiteForward": {
+                        "offset": {
+                            "forward": 1,
+                            "up": 0.375
+                        }
+                    }
+                },
+                "modelScale": 0.5,
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5",
+                    "SOp FollowMovement Orientation"
+                ]
+            }
+        },
+        "Demo Banker Missile Smite Action": {
+            "parent": "Standard RangedUnit Weapon Attack FX",
+            "actionActor": {
+                "effect": "Demo Banker Missile Smite",
+                "launchModel": "Demo Banker Missile Smite Launch Model",
+                "impactModel": "Demo Banker Missile Smite Damage Impact Model",
+                "launchSite": "SiteHit"
+            }
+        },
+        "Demo Banker Missile Smite Damage Impact Model": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_chosen_weapon_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "duration",
+                                    "duration": 1
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Banker Missile Smite Damage Impact Sound"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "duration"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "Demo Banker Missile Smite Damage SOp"
+                ]
+            }
+        },
+        "Demo Banker Missile Smite Damage Impact Sound": {
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "drow_mage_damage_aura_impact "
+                }
+            }
+        },
+        "Demo Banker Missile Smite Damage SOp": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 0
+                }
+            }
+        },
+        "Demo Banker Missile Smite Launch Model": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_crusader_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Banker Missile Smite Launch Sound"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "duration",
+                                    "duration": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "duration"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "Demo Banker Missile Smite Launch SOp"
+                ]
+            }
+        },
+        "Demo Banker Missile Smite Launch SOp": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 0
+                }
+            }
+        },
+        "Demo Banker Missile Smite Launch Sound": {
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "hero_chosen_blindingflash_launch"
+                }
+            }
+        },
+        "Demo Banker Missile Smite Missile": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "light_trail"
+                }
+            }
+        },
+        "Demo Banker Missile Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "light_trail"
+                },
+                "modelScale": 6
+            }
+        },
+        "Demo Banker Missile Trail Long": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "light_trail_longer"
+                },
+                "modelScale": 3
+            }
+        },
+        "Demo Forward Missile": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_deathknight_deathbolt_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Holy"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.5,
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Demo Goblin": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "preserveOnUnitRemove": false,
+                "walkAnimationSpeed": 2,
+                "modelScale": 2
+            }
+        },
+        "Demo Hero": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "name": "windknight"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitSpawn": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimationWithDuration": {
+                                    "clipId": 3,
+                                    "clipDuration": 0.5
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5,
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ]
+            }
+        },
+        "Demo Orbital Missile Blue": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_frosttower_weapon_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Demo Orbital Missile Blue Trail"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5",
+                    "SOp FollowMovement Orientation"
+                ]
+            }
+        },
+        "Demo Orbital Missile Blue Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "blue_trail_longer"
+                }
+            }
+        },
+        "Demo Orbital Missile Green": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_drow_mage_green_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Demo Orbital Missile Green Trail"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Demo Orbital Missile Green Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "green_trail_longer"
+                }
+            }
+        },
+        "Demo Orbital Missile Red": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Demo Orbital Missile Red Trail"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.5,
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Demo Orbital Missile Red Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "red_trail_longer"
+                }
+            }
+        },
+        "Demo Sine Missile": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_thunderbird"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "ElementFire"
+                                }
+                            },
+                            {
+                                "playAnimationWithDuration": {
+                                    "clipId": 3,
+                                    "clipDuration": 0.5
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Sine Missile Trail",
+                                    "hostSite": "SiteForward"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Sine Missile Fire Trail",
+                                    "hostSite": "SiteCenter"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteCenter": {
+                        "offset": {
+                            "up": 0.375
+                        }
+                    },
+                    "SiteForward": {
+                        "offset": {
+                            "forward": 0.375,
+                            "up": 0.375
+                        }
+                    }
+                },
+                "modelScale": 0.5,
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5",
+                    "SOp FollowMovement Orientation"
+                ]
+            }
+        },
+        "Demo Sine Missile Anchor": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_indicator_beacon_radius"
+                },
+                "modelScale": 0.25
+            }
+        },
+        "Demo Sine Missile Fire Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_fireball_missile"
+                },
+                "modelScale": 0.35
+            }
+        },
+        "Demo Sine Missile Immolation Damage Action Actor": {
+            "actionActor": {
+                "effect": "Demo Sine Missile Immolation Damage",
+                "launchModelDetached": true,
+                "impactModel": "Demo Sine Missile Immolation Damage Impact Model"
+            }
+        },
+        "Demo Sine Missile Immolation Damage Impact Model": {
+            "parent": "",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_status_burn"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "duration",
+                                    "duration": 1
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Demo Sine Missile Immolation Damage Impact Sound"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "duration"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "Demo Sine Missile Immolation Damage SOp"
+                ]
+            }
+        },
+        "Demo Sine Missile Immolation Damage Impact Sound": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "scorcher_weapon_impact"
+                },
+                "hostSiteOperations": [
+                    "Demo Sine Missile Immolation Damage SOp"
+                ]
+            }
+        },
+        "Demo Sine Missile Immolation Damage SOp": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 0
+                }
+            }
+        },
+        "Demo Sine Missile Trail": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "red_trail"
+                },
+                "modelScale": 6
+            }
+        },
+        "Environment Temple Floor": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "constructionworld_castle_floor00"
+                },
+                "preserveOnUnitRemove": false,
+                "modelScale": 5,
+                "hostSiteOperations": [
+                    "SOp DownBy 3Dot73",
+                    "SOp FaceNorth"
+                ],
+                "unselectable": true
+            }
+        },
+        "Environment Temple Lower Floor": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "desertworld_castle_dark_floor00"
+                },
+                "preserveOnUnitRemove": false,
+                "modelScale": 5,
+                "hostSiteOperations": [
+                    "SOp DownBy 7Dot46",
+                    "SOp FaceNorth"
+                ],
+                "unselectable": true
+            }
+        },
+        "Environment Temple Lower Wall": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "desertworld_castle_dark_wall01"
+                },
+                "preserveOnUnitRemove": false,
+                "modelScale": 5,
+                "hostSiteOperations": [
+                    "SOp DownBy 3Dot73",
+                    "SOp FaceEast"
+                ],
+                "unselectable": true
+            }
+        },
+        "Environment Temple Roof": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "desertworld_castle_dark_floor01"
+                },
+                "preserveOnUnitRemove": false,
+                "modelScale": 5,
+                "hostSiteOperations": [
+                    "SOp DownBy Dot0335",
+                    "SOp FaceNorth"
+                ],
+                "unselectable": true
+            }
+        },
+        "Environment Temple Wall": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "desertworld_castle_dark_wall00"
+                },
+                "preserveOnUnitRemove": false,
+                "modelScale": 5,
+                "hostSiteOperations": [
+                    "SOp FaceEast"
+                ],
+                "unselectable": true
+            }
+        },
+        "SOp DownBy 3Dot73": {
+            "siteOperation": {
+                "offset": {
+                    "y": -3.73
+                }
+            }
+        },
+        "SOp DownBy 7Dot46": {
+            "siteOperation": {
+                "offset": {
+                    "y": -7.46
+                }
+            }
+        },
+        "SOp DownBy Dot0335": {
+            "siteOperation": {
+                "offset": {
+                    "y": -0.0335
+                }
+            }
+        }
+    }
+}

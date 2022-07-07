@@ -1,0 +1,20 @@
+{
+    "actors": {
+        "UnitA": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "chosen"
+                }
+            }
+        },
+        "UnitB": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "alchemist"
+                }
+            }
+        }
+    }
+}

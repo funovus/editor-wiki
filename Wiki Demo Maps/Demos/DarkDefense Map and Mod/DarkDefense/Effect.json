@@ -1,0 +1,232 @@
+{
+    "effects": {
+        "Enemy Boss Gold Bounty": {
+            "addGold": {
+                "amount": 10,
+                "target": 1,
+                "displayInUi": true
+            }
+        },
+        "Enemy Boss ZombieOgre Jungle": {
+            "morph": {
+                "targetUnit": "Enemy Boss ZombieOgre Jungle"
+            }
+        },
+        "Enemy Boss ZombieOgre Weapon Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        },
+        "Enemy ConvertToJungle": {
+            "issueAbility": {
+                "abilityCaster": 1,
+                "abilityTarget": 1,
+                "ignoreCost": true,
+                "abilityTag": "jungle"
+            }
+        },
+        "Enemy Waypoint Finish Trigger": {
+            "applyBehavior": {
+                "behavior": "Enemy Waypoint Finish Trigger",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Enemy Zombie Jungle": {
+            "morph": {
+                "targetUnit": "Enemy Zombie Jungle"
+            }
+        },
+        "Enemy Zombie Weapon Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "GameSystem SetWaypointsNearest": {
+            "setWaypoints": {
+                "target": 1,
+                "waypoints": {
+                    "nearestWaypoint": {}
+                },
+                "useNaturalDispersal": true,
+                "ignoreRallyDisabledLanes": true
+            }
+        },
+        "Player Archer Weapon Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Player Archer Weapon Damage Tag": {
+            "applyBehavior": {
+                "behavior": "Player Archer Weapon Damage Tag",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Player Archer Weapon Damage Tag Remove": {
+            "removeBehavior": {
+                "behavior": "Player Archer Weapon Damage Tag",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Player Archer Weapon ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Player Archer Weapon Damage",
+                    "Player Archer Weapon Damage Tag Remove"
+                ]
+            }
+        },
+        "Player Archer Weapon Launch 025": {
+            "launchMissile": {
+                "missileUnit": "Player Archer Weapon Missile",
+                "startEffect": "Player Archer Weapon Damage Tag",
+                "effect": "Player Archer Weapon ImpactSet",
+                "launchLocation": 7,
+                "impactLocation": 1,
+                "mover": "Player Archer Weapon Missile 025"
+            }
+        },
+        "Player Archer Weapon Launch 050": {
+            "launchMissile": {
+                "missileUnit": "Player Archer Weapon Missile",
+                "startEffect": "Player Archer Weapon Damage Tag",
+                "effect": "Player Archer Weapon ImpactSet",
+                "launchLocation": 7,
+                "impactLocation": 1,
+                "mover": "Player Archer Weapon Missile 050"
+            }
+        },
+        "Player Archer Weapon Launch 075": {
+            "launchMissile": {
+                "missileUnit": "Player Archer Weapon Missile",
+                "startEffect": "Player Archer Weapon Damage Tag",
+                "effect": "Player Archer Weapon ImpactSet",
+                "launchLocation": 7,
+                "impactLocation": 1,
+                "mover": "Player Archer Weapon Missile 075"
+            }
+        },
+        "Player Archer Weapon Launch 100": {
+            "launchMissile": {
+                "missileUnit": "Player Archer Weapon Missile",
+                "startEffect": "Player Archer Weapon Damage Tag",
+                "effect": "Player Archer Weapon ImpactSet",
+                "launchLocation": 7,
+                "impactLocation": 1,
+                "mover": "Player Archer Weapon Missile 100"
+            }
+        },
+        "Player Castle Chunk HitResponse Trigger": {
+            "applyBehavior": {
+                "behavior": "Player Castle Chunk HitResponse Trigger",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Player Fighter Weapon Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Player Hero Dragoon SummonTroop Create": {
+            "persistent": {
+                "targetType": 3,
+                "periodicCount": 5,
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "periodicDurations": [
+                    0.1875
+                ],
+                "periodicEffects": [
+                    "Player Hero Dragoon SummonTroop Spawn"
+                ],
+                "periodicOffsetSelectMode": 3,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 0.25,
+                        "right": -1
+                    },
+                    {
+                        "forward": -0.8,
+                        "right": -0.6
+                    },
+                    {
+                        "forward": 0.9,
+                        "right": 0.4
+                    },
+                    {
+                        "forward": 0.4,
+                        "right": 1.2
+                    },
+                    {
+                        "forward": 1,
+                        "right": -0.3
+                    },
+                    {
+                        "forward": -0.8,
+                        "right": 0.8
+                    },
+                    {
+                        "forward": 0.3,
+                        "right": -0.6
+                    },
+                    {
+                        "forward": 0.8,
+                        "right": -0.9
+                    },
+                    {
+                        "forward": 0.4,
+                        "right": 0.8
+                    },
+                    {
+                        "forward": -0.8,
+                        "right": -0.3
+                    },
+                    {
+                        "forward": -0.6,
+                        "right": 0.3
+                    },
+                    {
+                        "forward": 0.8,
+                        "right": 0.2
+                    },
+                    {
+                        "forward": -0.4,
+                        "right": 0.8
+                    },
+                    {
+                        "forward": -0.4,
+                        "right": -1
+                    },
+                    {
+                        "forward": 0.9,
+                        "right": -0.4
+                    },
+                    {
+                        "forward": -0.2,
+                        "right": 0.7
+                    }
+                ]
+            }
+        },
+        "Player Hero Dragoon SummonTroop Spawn": {
+            "spawn": {
+                "unit": "Player Hero Dragoon SummonTroop",
+                "count": 1,
+                "owner": 3,
+                "location": 2,
+                "offsetStart": 7,
+                "offsetEnd": 7
+            }
+        },
+        "Player Hero Dragoon Weapon Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        }
+    }
+}

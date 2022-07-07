@@ -1,0 +1,165 @@
+{
+    "actors": {
+        "Invisible Goof": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boarbarian_healer"
+                },
+                "modelScale": 12,
+                "hostSiteOperations": [
+                    "SOp DownBy 2",
+                    "SOp DownBy 1"
+                ]
+            }
+        },
+        "Standard Damage Action Actor": {
+            "actionActor": {
+                "effect": "Standard Damage",
+                "launchModelDetached": true,
+                "impactModel": "Standard Damage Impact Model",
+                "impactModelDetached": true,
+                "targetSite": "SiteHit"
+            }
+        },
+        "Standard Damage Impact Model": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_explosion00_impact00_small"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 0
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "duration",
+                                    "duration": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "duration"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "Standard Damage SOp"
+                ],
+                "modelScale": 3
+            }
+        },
+        "Standard Damage SOp": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 0
+                }
+            }
+        },
+        "Standard MeleeUnit": {
+            "unitActor": {
+                "resource": {
+                    "name": "sheep"
+                },
+                "modelScale": 2
+            }
+        },
+        "Standard MeleeUnit Rabbit": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "name": "rabbit"
+                },
+                "modelScale": 2
+            }
+        },
+        "Standard MeleeUnit Turkey": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "name": "turkey"
+                },
+                "modelScale": 2
+            }
+        },
+        "Super Secret Invisible Dude": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_boarbarius"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": false
+                                }
+                            },
+                            {
+                                "log": {
+                                    "type": 2,
+                                    "message": "Workshop02 - Invisible Dude Created!"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Reveal"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 4.9,
+                                    "duration": 0.4
+                                }
+                            },
+                            {
+                                "shakeCamera": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 2
+            }
+        }
+    }
+}

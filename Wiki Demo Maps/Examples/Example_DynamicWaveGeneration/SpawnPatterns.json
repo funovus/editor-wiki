@@ -1,0 +1,14 @@
+{
+    "spawnPatterns": {
+        "Line Long": {
+            "interval": {
+                "min": 1,
+                "max": 1
+            },
+            "dispersal": {
+                "min": 0.5,
+                "max": 0.5
+            }
+        }
+    }
+}

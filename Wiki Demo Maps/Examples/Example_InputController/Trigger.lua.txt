@@ -1,0 +1,100 @@
+-- Global Variables
+local core = require("core")
+local HERO
+local HERO_NAME = "Player Hero"
+local HERO_SLASH = "Player Hero Slash"
+local GAME_SPEED = 0.6
+
+local ENEMY_NAME = "Enemy SlimeGreen"
+
+-- Triggers
+function OnMapStart()
+    local spawn_point = {15.5, 15.5}
+    local dx, dy = 0, -1
+
+    -- hide standard UI
+    core.HideDefaultUi()
+
+    -- slow down game speed
+    core.SetGameSpeed(GAME_SPEED)
+
+    -- spawn hero
+    HERO = DCEI.CreateUnitAsync(1, 1, HERO_NAME, spawn_point[1], spawn_point[2], dx, dy)
+    SpawnEnemyInRandomLocation()
+end
+
+function OnJoystickMove()
+    local axes = DCEI.TriggeringJoystickAxes
+    local pos = DCEI.GetUnitPosition2D(HERO)
+
+    -- order unit to move in direction of joystick axes
+    DCEI.Move(HERO, pos.x + axes.x, pos.y + axes.y)
+    DCEI.LogMessage("Joystick input: " .. axes.x .. ", " .. axes.y)
+end
+
+function OnJoystickRelease()
+    local pos = DCEI.GetUnitPosition2D(HERO)
+
+    -- order unit to move to its current location to 'stop'
+    DCEI.Move(HERO, pos.x, pos.y)
+    DCEI.LogMessage("Joystick release")
+end
+
+function OnJoystickButton()
+    local button_id = DCEI.TriggeringJoystickButtonId
+    local button_event = DCEI.TriggeringJoystickButtonEventType
+
+    -- unnecessary to check for button id in this case since we only have one joystick button, but good to demonstrate
+    -- button event 0 is for ButtonDown, event 1 is for ButtonUp
+    if button_id == 0 and button_event == 0 then
+        -- currently does not support targeted abilities
+        -- movement commands will interrupt ability prep time / finish time, unless ability has "can cast while moving" flag checked
+        DCEI.CastAbility(HERO_SLASH, HERO, HERO)
+    end
+end
+
+function OnUnitDied()
+    SpawnEnemyInRandomLocation()
+end
+
+function SpawnEnemyInRandomLocation()
+    local dx, dy = 0, -1
+    local x = math.random(9, 23)
+    local y = math.random(11, 22)
+    DCEI.CreateUnitAsync(-1, -1, ENEMY_NAME, x, y, dx, dy)
+end
+
+-- JOYSTICK EVENTS
+
+-- On PC, joystick can be used with WASD, Arrow Keys, or by click+dragging the joystick button
+-- Configure unit move speed and turning speed in data
+
+-- On PC button hotkeys as follows:
+-- Button Id 0 = "Space"
+-- Button Id 1 = "1"
+-- Button Id 2 = "2"
+-- Button Id 3 = "3"
+--                          -------------------
+--                          |                 |
+--                          |             (3) |
+--  Button id and buttons:  |          (2)    |
+--                          |       (1)   (0) |
+--                          |-----------------|
+
+local joystick_options = {
+    offset = {
+        x = 148,
+        y = 148
+    },
+    anchor = {
+        x = 0,
+        y = 0
+    }
+}
+
+-- Initialization
+OnMapStart()
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddJoystickEvent(OnJoystickMove, joystick_options)
+DCEI.TriggerAddJoystickReleaseEvent(OnJoystickRelease)
+DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, {icon = "icon_ingame_towerslot_barracks"})

@@ -1,0 +1,8 @@
+{
+    "weapons": {
+        "Hazard ArcherTower Weapon": {
+            "parent": "_StandardRangedWeapon",
+            "effectName": "Hazard ArcherTower Launch"
+        }
+    }
+}

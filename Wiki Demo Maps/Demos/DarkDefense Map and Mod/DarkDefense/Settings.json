@@ -1,0 +1,33 @@
+{
+    "settings": {
+        "dependencies": [
+            "DarkDefense_WaveGenerator"
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Player Castle Chunk",
+            "Player Castle Gate",
+            "Player Archer",
+            "Player Fighter",
+            "Player Hero Dragoon",
+            "Base Upgrade Center",
+            "Base Upgrade Archer",
+            "Base Upgrade Fighter",
+            "Base Upgrade Economy",
+            "Base Build Economy",
+            "Enemy Zombie",
+            "Enemy Boss ZombieOgre"
+        ],
+        "usedBehaviors": [
+            "Player Hero PauseManaGeneration",
+            "Base Upgrade Center ShowSword",
+            "Enemy Waypoint Start",
+            "Enemy Boss Scaling",
+            "Player Hero Revive FX"
+        ],
+        "usedAtlasAssets": [
+            "Assets/Bundles/UI/Atlas/WildSkyInGame.spriteatlas"
+        ]
+    }
+}

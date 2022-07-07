@@ -1,0 +1,16 @@
+{
+    "actors": {
+        "Hero IceMage": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "name": "elvenmage"
+                },
+                "eventMacros": [
+                    "Events StandardUnit Selectable"
+                ],
+                "walkAnimationSpeed": 1.7
+            }
+        }
+    }
+}

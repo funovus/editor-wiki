@@ -1,0 +1,23 @@
+{
+    "weapons": {
+        "Standard Leader Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Standard Leader Weapon AOE",
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.75,
+                "range": 0.625
+            }
+        },
+        "Standard Troop Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Standard Troop Weapon Damage"
+        },
+        "_StandardMeleeWeapon": {
+            "stats": {
+                "randomPreswingDelayMin": -0.0625,
+                "randomPreswingDelayMax": 0.125
+            }
+        }
+    }
+}

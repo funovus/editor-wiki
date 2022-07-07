@@ -1,0 +1,12 @@
+{
+    "behaviors": {
+        "Reveal": {
+            "duration": -1
+        },
+        "Sinister Searching Behavior ": {
+            "duration": -1,
+            "periodicInterval": 1,
+            "periodicEffect": "Secret Super Dude Search"
+        }
+    }
+}

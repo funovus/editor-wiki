@@ -1,0 +1,35 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ],
+        "resolvedRegistryDependencies": [
+            {
+                "identifier": "core",
+                "version": "1.0.1"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Player Hero",
+            "Enemy SlimeGreen",
+            "Enemy SlimeBlue",
+            "Enemy SlimeYellow",
+            "Enemy Caster",
+            "Enemy SlimeRed"
+        ],
+        "usedEffects": [
+            "GameSystem BoundarySearch Vertical Create",
+            "GameSystem BoundarySearch Horizontal Create",
+            "KillAll"
+        ],
+        "usedBehaviors": [
+            "Custom Value",
+            "ToggleOn"
+        ]
+    }
+}

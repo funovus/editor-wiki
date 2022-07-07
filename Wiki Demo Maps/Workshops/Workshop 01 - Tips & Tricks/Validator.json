@@ -1,0 +1,107 @@
+{
+    "validators": {
+        "SourceUnit Is Alive": {
+            "expression": {
+                "compare": {
+                    "left": {
+                        "value": {
+                            "health": {
+                                "unit": 1
+                            }
+                        }
+                    },
+                    "op": 2,
+                    "right": {
+                        "value": {
+                            "constant": {
+                                "int32Value": 0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "expressions": {
+        "FireDamage": {
+            "add": {
+                "expressions": [
+                    {
+                        "namedExpression": {
+                            "name": "NegateDefaultDamage"
+                        }
+                    },
+                    {
+                        "multiply": {
+                            "expressions": [
+                                {
+                                    "value": {
+                                        "damageAmount": {
+                                            "multiplier": 1
+                                        }
+                                    }
+                                },
+                                {
+                                    "namedExpression": {
+                                        "name": "FireDamage_Modifier"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "FireDamage_Modifier": {
+            "subtract": {
+                "left": {
+                    "value": {
+                        "constant": {
+                            "doubleValue": 1
+                        }
+                    }
+                },
+                "right": {
+                    "multiply": {
+                        "expressions": [
+                            {
+                                "subtract": {
+                                    "left": {
+                                        "value": {
+                                            "tagCount": {
+                                                "unit": 2,
+                                                "tagName": "gt_fire_resist"
+                                            }
+                                        }
+                                    },
+                                    "right": {
+                                        "value": {
+                                            "tagCount": {
+                                                "unit": 2,
+                                                "tagName": "gt_fire_weak"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "value": {
+                                    "constant": {
+                                        "doubleValue": 0.01
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "NegateDefaultDamage": {
+            "value": {
+                "damageAmount": {
+                    "multiplier": -1
+                }
+            }
+        }
+    }
+}

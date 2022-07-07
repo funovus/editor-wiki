@@ -1,0 +1,25 @@
+{
+    "validators": {
+        "Waypoint Finished": {
+            "expression": {
+                "compare": {
+                    "left": {
+                        "value": {
+                            "remainingPathDistance": {
+                                "unit": 2
+                            }
+                        }
+                    },
+                    "op": 5,
+                    "right": {
+                        "value": {
+                            "constant": {
+                                "int32Value": 1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

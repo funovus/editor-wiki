@@ -1,0 +1,105 @@
+{
+    "actors": {
+        "Creep Melee": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "skeleton_warrior"
+                }
+            }
+        },
+        "Creep Ranged": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "skeleton_archer"
+                }
+            }
+        },
+        "Tower": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "teslatower_rank01"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Tower RangeIndicator"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStart": {
+                                "weapon": "Tower Weapon"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 4
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStop": {
+                                "weapon": "Tower Weapon"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "stopAnimation": {
+                                    "clipId": 4
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteWeapon": {
+                        "offset": {
+                            "up": 1
+                        }
+                    }
+                }
+            }
+        },
+        "Tower RangeIndicator": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_indicator_white"
+                },
+                "modelScale": 4
+            }
+        },
+        "Tower Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Tower Weapon Damage",
+                "beamModel": "Tower Weapon Beam FX"
+            }
+        },
+        "Tower Weapon Beam FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "BeamAnimation",
+                    "name": "beam_general"
+                },
+                "modelScale": 2
+            }
+        }
+    }
+}

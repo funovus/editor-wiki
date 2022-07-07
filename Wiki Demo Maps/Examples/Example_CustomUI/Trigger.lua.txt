@@ -1,0 +1,276 @@
+local core = require("core")
+
+-- save the root UI frame as a variable
+local root = DCEI.GetUiRoot()
+
+-- SCORE VIEW
+function CreateScoreView()
+    -- create the score view frame in UI root
+    local container = DCEI.NewFrame(root)
+    DCEI.SetTopAlignmentInParent(container)
+    DCEI.SetLeftAlignmentInParent(container)
+    DCEI.SetHorizontalOffsetInParent(container, 340)
+
+    -- padding is used give the score view proper spacing
+    local padding = DCEI.NewFrame(container)
+    DCEI.SetPadding(padding, 15.5)
+    DCEI.SetPaddingRight(padding, 28)
+
+    -- score frame is used as image background
+    local score_frame = DCEI.NewFrame(padding)
+    DCEI.SetBackgroundImage(score_frame, "ui_ingame_hub")
+    DCEI.SetBackgroundImageColor(score_frame, 1, 1, 1, 200 / 255)
+    DCEI.SetMinSize(score_frame, 120, 35)
+
+    -- score text is tinted to match existing UI
+    local score_text = DCEI.NewText(score_frame)
+    DCEI.SetTextColor(score_text, 255 / 255, 236 / 255, 164 / 255)
+
+    -- icon is left aligned (and benefits from PaddingRight of padding frame) to match
+    local icon = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(icon, "icon_affinity_green")
+    DCEI.SetLeftAlignmentInParent(icon)
+    DCEI.SetMinSize(icon, 56, 56)
+
+    return {
+        -- return the root frame of this UI element so it can be referenced later
+        frame = container,
+        -- creates a SetText function that lets its score_text be updated later
+        SetText = function(text)
+            DCEI.SetText(score_text, text)
+        end
+    }
+end
+
+-- creates the score_view as a variable
+local score_view = CreateScoreView()
+local score = 0
+
+-- increase the score and update the ScoreView each second
+function UpdateScore()
+    score = score + 1
+    score_view.SetText(score)
+    DCEI.TriggerAddTimerEventElapsed(UpdateScore, 1)
+end
+UpdateScore()
+
+-- OBJECTIVE BADGE
+local icons = {
+    "icon_enhance_crusader_blessed_hammer",
+    "icon_enhance_leviathan_ink_spray",
+    "icon_enhance_scorcher_face_melt"
+}
+local badge_container = nil
+local badge_row = nil
+local badge_row_count = 0
+
+function AddObjectiveBadge()
+    -- create a badge_container if one doesn't exist
+    -- badge_container is a vertical stack that holds badge_row elements
+    if not badge_container then
+        badge_container = DCEI.NewVStack(root)
+        -- DCEI.SetBackgroundImage(badge_container, "bar_exp00_empty")
+        DCEI.SetTopAlignmentInParent(badge_container)
+        DCEI.SetLeftAlignmentInParent(badge_container)
+        DCEI.SetVerticalOffsetInParent(badge_container, -60)
+        DCEI.SetHorizontalOffsetInParent(badge_container, 16)
+        DCEI.SetSpacing(badge_container, 6)
+    end
+
+    -- create a badge_row if one doesn't exist
+    -- badge_row is a horizontal stack, combines with badge_container to create a grid
+    if not badge_row or badge_row_count >= 8 then
+        badge_row = DCEI.NewHStack(badge_container)
+        DCEI.SetLeftAlignmentInParent(badge_row)
+        DCEI.SetSpacing(badge_row, 6)
+        badge_row_count = 0
+    end
+
+    -- create a badge using a random icon from icons table
+    local badge = DCEI.NewButton(badge_row)
+    DCEI.SetBackgroundImage(badge, icons[math.random(1, #icons)])
+    DCEI.SetMinSize(badge, 32, 32)
+    badge_row_count = badge_row_count + 1
+end
+
+-- DUMMY PAUSE MENU
+function CreateLightAndDarkGroup(parent)
+    -- light and dark display is created within one vertical stack
+    local container = DCEI.NewVStack(parent)
+    local light = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(light, "icon_affinity_gold")
+    DCEI.SetMinSize(light, 64, 64)
+
+    local arrows = DCEI.NewHStack(container)
+    local up = DCEI.NewFrame(arrows)
+    DCEI.SetBackgroundImage(up, "arrow_infinity")
+    DCEI.SetMinSize(up, 29, 40)
+    DCEI.SetBackgroundImageColor(up, 163 / 255, 85 / 255, 225 / 255, 1)
+
+    local down = DCEI.NewFrame(arrows)
+    DCEI.SetBackgroundImage(down, "arrow_infinity")
+    DCEI.SetMinSize(down, 29, 40)
+    DCEI.SetRotation(down, 180)
+    DCEI.SetBackgroundImageColor(down, 255 / 255, 233 / 255, 0 / 255, 1)
+
+    local dark = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(dark, "icon_affinity_purple")
+    DCEI.SetMinSize(dark, 64, 64)
+end
+
+function CreateHelpInfo(parent)
+    -- creates the elemental info display box
+    local frame = DCEI.NewFrame(parent)
+
+    -- height of the info box is determined by its children in container
+    local container = DCEI.NewVStack(frame)
+    DCEI.SetBackgroundImage(container, "frame_inner_light_grey_stroke")
+    DCEI.SetPadding(container, 16)
+    DCEI.SetMinSize(container, 500, 0)
+    DCEI.SetSpacing(container, 16)
+
+    local affinities = DCEI.NewFrame(container)
+    CreateLightAndDarkGroup(affinities)
+
+    local text = DCEI.NewText(container)
+    DCEI.SetText(text, "Elemental advantage deals 100% more damage")
+    DCEI.SetTextFontSize(text, 18)
+    DCEI.SetTextColor(text, 81 / 255, 75 / 255, 161 / 255)
+    -- text outline is enabled by default, doesn't look great with colored text
+    DCEI.SetTextOutline(text, false)
+end
+
+-- returns a standardized button element with OnClick function as a parameter
+function CreateButton(parent, message, callback)
+    local button = DCEI.NewButton(parent)
+    DCEI.SetMinSize(button, 128, 60)
+
+    local text = DCEI.NewText(button)
+    DCEI.SetText(text, message)
+
+    if callback then
+        DCEI.SetOnClickCallback(
+            button,
+            function()
+                callback(button, text)
+            end
+        )
+    end
+
+    return button
+end
+
+-- sets the "Music" state true so the Music button is On when map starts
+local state = {["Music"] = true}
+
+-- creates an on/off button using a wrapper frame around CreateButton to give it a title label
+function CreateOnOffButton(parent, message, callback)
+    local container = DCEI.NewVStack(parent)
+    DCEI.SetSpacing(container, 10)
+
+    local label = DCEI.NewText(container)
+    DCEI.SetText(label, message)
+
+    local button =
+        CreateButton(
+        container,
+        state[message] and "On" or "Off",
+        function(button, text)
+            -- callback toggles button text and background color
+            state[message] = not state[message]
+            DCEI.SetText(text, state[message] and "On" or "Off")
+            DCEI.SetBackgroundImage(button, state[message] and "btn_blue" or "btn_red")
+            -- runs additional callback if provided as parameter using state variable as callback parameter
+            if callback then
+                callback(state[message])
+            end
+            -- callback also creates a new ObjectiveBadge whenever clicked
+            AddObjectiveBadge()
+        end
+    )
+
+    -- set initial button color based on on/off state
+    DCEI.SetBackgroundImage(button, state[message] and "btn_blue" or "btn_red")
+end
+
+-- create the dummy pause menu
+function CreatePauseMenu()
+    local frame = DCEI.NewFrame(root)
+    DCEI.SetBackgroundImage(frame, "frame_thick_dark_grey")
+    DCEI.SetPadding(frame, 8)
+
+    local container = DCEI.NewVStack(frame)
+    DCEI.SetBackgroundImage(container, "frame_light_grey")
+    DCEI.SetSpacing(container, 10)
+    DCEI.SetPaddingBottom(container, 20)
+
+    local banner = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(banner, "frame_half_top_blue")
+    DCEI.SetMinSize(banner, 530, 64)
+
+    CreateHelpInfo(container)
+
+    -- container for top row of (on/off) buttons
+    local buttons1 = DCEI.NewHStack(container)
+    DCEI.SetSpacing(buttons1, 40)
+
+    -- container for 2nd row of buttons
+    local buttons2 = DCEI.NewHStack(container)
+    DCEI.SetSpacing(buttons2, 40)
+    DCEI.SetPaddingTop(buttons2, 80)
+
+    -- quit button destoys all ObjectiveBadges by destroying the root badge_container frame and reseting variable state
+    local quitButton =
+        CreateButton(
+        buttons2,
+        "Quit",
+        function()
+            DCEI.Destroy(badge_container)
+            badge_container = nil
+            badge_row = nil
+        end
+    )
+    DCEI.SetBackgroundImage(quitButton, "btn_grey")
+    DCEI.SetMinSize(quitButton, 130, 80)
+
+    -- restart button does nothing
+    local restartButton = CreateButton(buttons2, "Restart")
+    DCEI.SetBackgroundImage(restartButton, "btn_yellow")
+    DCEI.SetMinSize(restartButton, 130, 80)
+
+    -- resume button destroys the pause menu and recreates it after 1 second
+    local resumeButton =
+        CreateButton(
+        buttons2,
+        "Resume",
+        function()
+            DCEI.Destroy(frame)
+            DCEI.TriggerAddTimerEventElapsed(CreatePauseMenu, 1)
+        end
+    )
+    DCEI.SetBackgroundImage(resumeButton, "btn_green")
+    DCEI.SetMinSize(resumeButton, 130, 80)
+
+    -- music button enables/disables "quit" button
+    CreateOnOffButton(
+        buttons1,
+        "Music",
+        function(on)
+            DCEI.EnableButton(quitButton, on)
+        end
+    )
+
+    -- sound button enables/disables "restart" button
+    CreateOnOffButton(
+        buttons1,
+        "Sound",
+        function(on)
+            DCEI.EnableButton(restartButton, on)
+        end
+    )
+end
+
+-- create one ObjectiveBadge and dummy pause menu
+AddObjectiveBadge()
+CreatePauseMenu()
+core.HideDefaultUi()

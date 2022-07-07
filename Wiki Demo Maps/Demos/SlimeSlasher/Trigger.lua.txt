@@ -1,0 +1,421 @@
+local core = require("core")
+
+-- Variables
+local POINT_CENTER = {16, 16}
+
+-- orthographic values
+local MAP_BOUNDS = {
+    min_x = 6,
+    max_x = 26,
+    min_y = 9,
+    max_y = 23
+}
+
+-- perspective values
+-- local MAP_BOUNDS = {
+--     min_x = 4,
+--     max_x = 28,
+--     min_y = 9,
+--     max_y = 25
+-- }
+
+local INPUT_ENABLED = false
+local GAME_SPEED = 0.6
+local GAME_ID = 0
+local GAME_TICK = 0
+local GAME_TICK_DURATION = 5
+
+local BOUNDARY_EFFECT_HORIZONTAL = "GameSystem BoundarySearch Horizontal Create"
+local BOUNDARY_EFFECT_VERTICAL = "GameSystem BoundarySearch Vertical Create"
+
+local HERO_NAME = "Player Hero"
+local HERO_SLASH = "Player Hero Slash"
+local SCORE_MULTIPLIER = "Player Score Multiplier"
+
+local HERO
+
+local ENEMY_CASTER
+local ENEMY_CASTER_NAME = "Enemy Caster"
+
+local ENEMY_DEFAULT_STATE = "Enemy State Default"
+local ENEMY_ACTION_STATE = "Enemy State Action"
+
+local CUSTOM_VALUE = "Custom Value"
+
+-- Enemy Behavior
+function EnemyBehavior_PursueHero(unit)
+    local tick_rate = 0.375
+    local default_state = DCEI.UnitBehaviorStackCount(unit, ENEMY_DEFAULT_STATE)
+
+    if not (DCEI.UnitExists(unit) and DCEI.UnitExists(HERO) and default_state == 1) then
+        return
+    end
+
+    local p = DCEI.GetUnitPosition2D(HERO)
+    DCEI.Move(unit, p.x, p.y)
+    DCEI.LogMessage("-- pursue")
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            EnemyBehavior_PursueHero(unit)
+        end,
+        tick_rate
+    )
+end
+
+function EnemyBehavior_MoveCrosswise(unit, spawn_index)
+    local p = GenerateEnemyTargetPoint(spawn_index)
+    DCEI.Move(unit, p[1], p[2])
+end
+
+function SlimeYellowAttack(unit)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            core.UnitHoldPosition(unit)
+        end,
+        0.125
+    )
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            local pos = DCEI.GetUnitPosition2D(HERO)
+            core.MakeUnitFacePoint(unit, pos.x, pos.y, 0.125)
+            core.MakeUnitFaceUnitPoint(unit, HERO, 0.125)
+        end,
+        0.25
+    )
+end
+
+local SLIME_YELLOW_TARGET_ACQUIRED = "Enemy SlimeYellow Attack TargetAcquired"
+local ENEMY_TYPES = {
+    {
+        name = "Enemy SlimeGreen",
+        behavior = EnemyBehavior_MoveCrosswise,
+        score = 1
+    },
+    {
+        name = "Enemy SlimeYellow",
+        behavior = EnemyBehavior_PursueHero,
+        score = 3
+    },
+    {
+        name = "Enemy SlimeBlue",
+        behavior = EnemyBehavior_PursueHero,
+        score = 2
+    }
+}
+
+function EnemyScore(unit)
+    local name = DCEI.UnitName(unit)
+    for i = 1, #ENEMY_TYPES do
+        if ENEMY_TYPES[i].name == name then
+            return ENEMY_TYPES[i].score
+        end
+    end
+    return 0
+end
+
+function EnemyResumeBehavior(unit)
+    local spawn_index = math.random(1, 4)
+    local name = DCEI.UnitName(unit)
+    for i = 1, #ENEMY_TYPES do
+        if ENEMY_TYPES[i].name == name then
+            local spawn_index = DCEI.UnitBehaviorStackCount(unit, CUSTOM_VALUE)
+            ENEMY_TYPES[i].behavior(unit, spawn_index)
+            break
+        end
+    end
+end
+
+-- Triggers
+function OnMapInitialization()
+    core.HideDefaultUi()
+
+    core.SetGameSpeed(GAME_SPEED)
+
+    ENEMY_CASTER = DCEI.CreateUnitAsync(-1, -1, ENEMY_CASTER_NAME, 0, 0)
+    SpawnPlayerHero()
+
+    CreateGameBoundary()
+    StartGameTick()
+    SpawnController()
+end
+
+function OnUnitSelected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+    -- DCEI.LogMessage("> " .. name .. " selected")
+    if u == HERO and INPUT_ENABLED then
+        DCEI.CastAbility(HERO_SLASH, u, u)
+    end
+end
+
+function OnUnitDeselected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+    -- DCEI.LogMessage("> " .. name .. " deselected")
+    if u == HERO then
+        DCEI.SelectUnitSync(HERO)
+    end
+end
+
+function OnUnitDied()
+    local u = DCEI.TriggeringUnit
+    local p = DCEI.GetUnitPlayerId(u)
+
+    if p == -1 and INPUT_ENABLED then
+        ApplyEnemyScore(u)
+    end
+
+    if u == HERO then
+        ResetGame()
+    end
+end
+
+function OnUnitBehaviorAdd()
+    local u = DCEI.TriggeringUnit
+    local b = DCEI.TriggeringBehaviorName
+
+    if b == SLIME_YELLOW_TARGET_ACQUIRED then
+        DCEI.LogMessage("> SlimeYellow has acquired target")
+        SlimeYellowAttack(u)
+    elseif b == ENEMY_DEFAULT_STATE then
+        -- DCEI.LogMessage("> resume default behavior")
+        EnemyResumeBehavior(u)
+    elseif b == "GameSystem Debug Hook" then
+        DCEI.LogMessage("-- SlimeYellow launch")
+    end
+end
+
+function CreateGameBoundary()
+    local x
+    local y
+
+    x = (MAP_BOUNDS.min_x + MAP_BOUNDS.max_x) / 2
+    y = MAP_BOUNDS.min_y - 2
+    DCEI.CreateEffect(BOUNDARY_EFFECT_HORIZONTAL, ENEMY_CASTER, x, y)
+
+    y = MAP_BOUNDS.max_y + 2
+    DCEI.CreateEffect(BOUNDARY_EFFECT_HORIZONTAL, ENEMY_CASTER, x, y)
+
+    x = MAP_BOUNDS.min_x - 2
+    y = (MAP_BOUNDS.min_y + MAP_BOUNDS.max_y) / 2
+    DCEI.CreateEffect(BOUNDARY_EFFECT_VERTICAL, ENEMY_CASTER, x, y)
+
+    x = MAP_BOUNDS.max_x + 2
+    DCEI.CreateEffect(BOUNDARY_EFFECT_VERTICAL, ENEMY_CASTER, x, y)
+end
+
+function SpawnPlayerHero()
+    local d = {1, 0}
+    local p = POINT_CENTER
+
+    HERO = DCEI.CreateUnitAsync(1, 1, HERO_NAME, p[1], p[2], d[1], d[2])
+    DCEI.SelectUnitSync(HERO)
+
+    core.HookupJoystick(HERO)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            INPUT_ENABLED = true
+        end,
+        0.125
+    )
+end
+
+function ResetGame()
+    INPUT_ENABLED = false
+    GAME_ID = GAME_ID + 1
+
+    DCEI.TriggerAddTimerEventElapsed(ScreenWipe, 0.5)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.CreateEffect("KillAll", ENEMY_CASTER, 16, 16)
+            DCEI.SetGold(1, 0)
+        end,
+        0.75
+    )
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            SpawnPlayerHero()
+            StartGameTick()
+            SpawnController()
+        end,
+        1
+    )
+end
+
+function StartGameTick()
+    GAME_TICK = 1
+    AdvanceGameTick()
+end
+
+function AdvanceGameTick()
+    local current_game_id = GAME_ID
+    local game_tick_duration = GAME_TICK_DURATION * GAME_SPEED
+
+    DCEI.LogMessage("== New Game Tick [" .. GAME_TICK .. "] ==")
+    GAME_TICK = GAME_TICK + 1
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if GAME_ID == current_game_id then
+                AdvanceGameTick(current_game_id)
+            else
+                DCEI.LogMessage("== Game Tick Reset ==")
+            end
+        end,
+        game_tick_duration
+    )
+end
+
+function SpawnController()
+    SpawnGreenSlimes()
+    DCEI.TriggerAddTimerEventElapsed(SpawnYellowSlimes, GAME_TICK_DURATION * GAME_SPEED)
+    DCEI.TriggerAddTimerEventElapsed(SpawnYellowSlimes, GAME_TICK_DURATION * GAME_SPEED * 2)
+end
+
+function YellowSlimePeriod()
+    return math.max(1.5 - (GAME_TICK * 0.05), 0.25)
+end
+
+function GreenSlimePeriod()
+    return math.max(1.5 - (GAME_TICK * 0.05), 0.25)
+end
+
+function SpawnYellowSlimes()
+    local current_game_id = GAME_ID
+    local enemy_index = 2
+    local period = YellowSlimePeriod()
+    local chance = 1 - (0.09 + ((GAME_TICK - 1) * 0.03))
+    local rand = math.random()
+
+    if rand >= chance then
+        DCEI.LogMessage(">> " .. rand .. " vs " .. chance .. " SUCCESS")
+        SpawnEnemy(enemy_index)
+    else
+        DCEI.LogMessage(">> " .. rand .. " vs " .. chance .. " FAIL")
+    end
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if current_game_id == GAME_ID then
+                SpawnYellowSlimes()
+            end
+        end,
+        period
+    )
+end
+
+function SpawnGreenSlimes()
+    local current_game_id = GAME_ID
+    local enemy_index = 1
+    local period = GreenSlimePeriod()
+    SpawnEnemy(enemy_index)
+    SpawnEnemy(enemy_index)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if current_game_id == GAME_ID then
+                SpawnGreenSlimes()
+            end
+        end,
+        period
+    )
+end
+
+function SpawnEnemy(enemy_index, spawn_index)
+    local spawn_index = spawn_index or math.random(1, 4)
+    local spawn_x
+    local spawn_y
+
+    local enemy_index = enemy_index or 1
+    local enemy = ENEMY_TYPES[enemy_index]
+
+    if spawn_index == 1 then
+        spawn_x = MAP_BOUNDS.min_x
+    elseif spawn_index == 2 then
+        spawn_y = MAP_BOUNDS.min_y
+    elseif spawn_index == 3 then
+        spawn_x = MAP_BOUNDS.max_x
+    elseif spawn_index == 4 then
+        spawn_y = MAP_BOUNDS.max_y
+    end
+
+    if not spawn_y then
+        spawn_y = math.random(MAP_BOUNDS.min_y + 2, MAP_BOUNDS.max_y - 2)
+    elseif not spawn_x then
+        spawn_x = math.random(MAP_BOUNDS.min_x + 2, MAP_BOUNDS.max_x - 2)
+    end
+
+    local u = DCEI.CreateUnitAsync(-1, -1, enemy.name, spawn_x, spawn_y)
+    DCEI.ApplyBehavior(u, CUSTOM_VALUE, spawn_index)
+end
+
+function GenerateEnemyTargetPoint(spawn_index)
+    local target_index = ((spawn_index + 1) % 4) + 1
+    local target_x
+    local target_y
+
+    if target_index == 1 then
+        target_x = MAP_BOUNDS.min_x - 2
+    elseif target_index == 2 then
+        target_y = MAP_BOUNDS.min_y - 2
+    elseif target_index == 3 then
+        target_x = MAP_BOUNDS.max_x + 2
+    elseif target_index == 4 then
+        target_y = MAP_BOUNDS.max_y + 2
+    end
+
+    if not target_y then
+        target_y = math.random(MAP_BOUNDS.min_y + 1, MAP_BOUNDS.max_y - 1)
+    elseif not target_x then
+        target_x = math.random(MAP_BOUNDS.min_x + 1, MAP_BOUNDS.max_x - 1)
+    end
+
+    return {target_x, target_y}
+end
+
+function ApplyEnemyScore(u)
+    local base = EnemyScore(u)
+    local multi = DCEI.UnitBehaviorStackCount(HERO, SCORE_MULTIPLIER)
+    local score = base * multi
+    DCEI.AddGold(1, score)
+    if multi > 1 then
+        UpdateScoreMultiplierDisplay(multi)
+    end
+end
+
+local OBJECTIVE_ID = 0
+function UpdateScoreMultiplierDisplay(multi)
+    local display = "x" .. multi
+    -- TODO move debug checkbox so it doesnt cover normal objective area
+    display = "              " .. display
+    OBJECTIVE_ID = OBJECTIVE_ID + 1
+    local current_id = OBJECTIVE_ID
+    DCEI.ShowObjective(display)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if current_id == OBJECTIVE_ID then
+                DCEI.HideObjective()
+            end
+        end,
+        0.5
+    )
+end
+
+function ScreenWipe()
+    core.FadeOut(0.25)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            core.FadeIn(0.25)
+        end,
+        0.375
+    )
+end
+
+-- Initialization
+OnMapInitialization()
+
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd)

@@ -1,0 +1,1 @@
+{ "GameEntityList": [ { "UnitName": "Hazard Fire", "Position": [ 36, 0, 15 ], "Rotation": [ 0, 0, 0, 1 ], "Player": -1 }, { "UnitName": "Hazard ArcherTower", "Position": [ 18, 0, 15 ], "Rotation": [ 0, 0, 0, 1 ], "Player": -1 } ] }

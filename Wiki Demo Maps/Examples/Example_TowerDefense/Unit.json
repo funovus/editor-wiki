@@ -1,0 +1,61 @@
+{
+    "units": {
+        "Creep Melee": {
+            "baseUnit": "Standard MeleeUnit",
+            "components": {
+                "movement": {
+                    "moveSpeed": 1
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 6
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Remove Creep On Waypoint Finished"
+                ]
+            }
+        },
+        "Creep Ranged": {
+            "baseUnit": "Standard RangedUnit",
+            "components": {
+                "movement": {
+                    "moveSpeed": 1
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 7,
+                        "unitBattleData": {
+                            "enemySearchRange": 5
+                        }
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Remove Creep On Waypoint Finished"
+                ]
+            }
+        },
+        "Tower": {
+            "baseUnit": "_CBuilding",
+            "components": {
+                "unitStats": {
+                    "immortal": true
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 4
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Tower Weapon"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,686 @@
+-- MODS
+local core = require("core")
+
+-- VARIABLES
+local MAP_DATA = {
+    min_x = 13.875,
+    max_x = 18.125,
+    min_y = 12,
+    max_y = 18,
+}
+
+local STATE = {
+    select = "select",
+    ready = "ready",
+    battle = "battle",
+    results = "results",
+}
+
+local BATTLE_DATA = {
+    state = STATE.select,
+    player = {
+        units = {}
+    },
+    enemy = {
+        units = {}
+    }
+}
+
+local MAX_TROOP_COUNT = 40
+local MAX_TROOPS_PER_ROW = 8
+
+-- UI
+local ui = {
+    root = DCEI.GetUiRoot()
+}
+
+function InitializeUI()
+    ui.lower = DCEI.NewFrame(ui.root)
+    DCEI.SetMatchParent(ui.lower, true, true)
+
+    ui.upper = DCEI.NewFrame(ui.root)
+    DCEI.SetMatchParent(ui.upper, true, true)
+
+    ui.mask = NewMask(ui.lower)
+
+    local banner = DCEI.NewFrame(ui.upper)
+    DCEI.SetBackgroundImage(banner, "banner02_blue")
+    DCEI.SetBackgroundImageColor(banner, 0.8, 0.8, 1, 1)
+    DCEI.SetTopAlignmentInParent(banner)
+    DCEI.SetPaddingTop(banner, 12)
+    DCEI.SetPaddingLeft(banner, 48)
+    DCEI.SetPaddingRight(banner, 48)
+    DCEI.SetPaddingBottom(banner, 28)
+    DCEI.SetSize(banner, 500, 124)
+    
+    -- player healthbar
+    local player_health = NewHealthBar(banner, "player")
+    DCEI.SetTopAlignmentInParent(player_health.frame)
+    DCEI.SetLeftAlignmentInParent(player_health.frame)
+    
+    -- player troop display
+    local player_troops = NewPlayerTroopDisplay(banner)
+    DCEI.SetLeftAlignmentInParent(player_troops.frame)
+    DCEI.SetBottomAlignmentInParent(player_troops.frame)
+    
+    -- enemy health
+    local enemy_health = NewHealthBar(banner, "enemy")
+    DCEI.SetTopAlignmentInParent(enemy_health.frame)
+    DCEI.SetRightAlignmentInParent(enemy_health.frame)
+    
+    -- enemy troop display
+    local enemy_troops = NewEnemyTroopDisplay(banner)
+    DCEI.SetRightAlignmentInParent(enemy_troops.frame)
+    DCEI.SetBottomAlignmentInParent(enemy_troops.frame)
+    
+    -- game settings
+    local control = NewControlLayout(ui.upper)
+    DCEI.SetBottomAlignmentInParent(control.frame)
+
+    -- references
+    ui.top_banner = banner
+    ui.player_health = player_health
+    ui.player_troops = player_troops
+    ui.enemy_health = enemy_health
+    ui.enemy_troops = enemy_troops
+    ui.control = control
+end
+
+function NewControlLayout(parent)
+    local layout = {}
+
+    local frame = DCEI.NewFrame(parent)
+    DCEI.SetVerticalOffsetInParent(frame, 12)
+
+    -- layout
+    local hstack = DCEI.NewHStack(frame)
+    DCEI.SetSpacing(hstack, 10)
+
+    local player_vstack = DCEI.NewVStack(hstack)
+    DCEI.SetSpacing(player_vstack, 4)
+
+    local text = "Player"
+    local label = DCEI.NewText(player_vstack)
+    DCEI.SetTextFontSize(label, 16)
+    DCEI.SetText(label, text)
+    
+    local player_troop_input = DCEI.NewInput(player_vstack)
+    DCEI.SetSize(player_troop_input, 80, 32)
+    DCEI.SetInputPlaceholder(player_troop_input, 4)
+    
+    local button = DCEI.NewButton(hstack)
+    DCEI.SetSize(button, 144, 64)
+    
+    local text = "Confirm"
+    local button_label = DCEI.NewText(button)
+    DCEI.SetText(button_label, text)
+    
+    local enemy_vstack = DCEI.NewVStack(hstack)
+    DCEI.SetSpacing(enemy_vstack, 4)
+    
+    local text = "Enemy"
+    local label = DCEI.NewText(enemy_vstack)
+    DCEI.SetTextFontSize(label, 16)
+    DCEI.SetText(label, text)
+
+    local enemy_troop_input = DCEI.NewInput(enemy_vstack)
+    DCEI.SetSize(enemy_troop_input, 80, 32)
+    DCEI.SetInputPlaceholder(enemy_troop_input, 4)
+    
+    local other_button = DCEI.NewButton(frame)
+    DCEI.SetBackgroundImage(other_button, "btn_yellow")
+    DCEI.SetHorizontalOffsetInParent(other_button, 128)
+    DCEI.SetSize(other_button, 107, 48)
+
+    local text = "Nope"
+    local other_label = DCEI.NewText(other_button)
+    DCEI.SetTextFontSize(other_label, 20)
+    DCEI.SetText(other_label, text)
+
+    DCEI.SetActive(other_button, false)
+
+    -- export
+    layout.frame = frame
+    layout.button = button
+    layout.button_label = button_label
+    layout.player_vstack = player_vstack
+    layout.player_troop_input = player_troop_input
+    layout.enemy_vstack = enemy_vstack
+    layout.enemy_troop_input = enemy_troop_input
+    layout.other_button = other_button
+    return layout
+end
+
+function NewMask(parent)
+    local layout = {}
+    layout.a = 0.85
+
+    local frame = DCEI.NewFrame(parent)
+    DCEI.SetMatchParent(frame, true, true)
+    DCEI.SetBackgroundImageColor(frame, 0, 0, 0, 0.6)
+
+    function layout:FadeIn(duration)
+        duration = duration or 0.1875
+        
+        DCEI.SetActive(frame, true)
+        DCEI.AnimateAlpha(frame, 0, layout.a, duration, "InSine")
+    end
+    function layout:FadeOut(duration)
+        duration = duration or 0.1875
+
+        DCEI.AnimateAlpha(frame, layout.a, 0, duration, "OutSine")
+        DCEI.TriggerAddTimerEventElapsed(
+            function()
+                DCEI.SetActive(frame, false)
+            end,
+            duration
+        )
+    end
+
+    layout:FadeOut(0)
+    return layout
+end
+
+function NewPlayerTroopDisplay(parent)
+    local layout = {}
+    local frame = DCEI.NewFrame(parent)
+
+    -- layout
+    local container = DCEI.NewHStack(frame)
+    DCEI.SetBackgroundImage(container, "ui_ingame_hub")
+    DCEI.SetBackgroundImageColor(container, 0, 0, 0, 0.7)
+    DCEI.SetPaddingLeft(container, 4)
+    DCEI.SetPaddingRight(container, 8)
+    DCEI.SetMinSize(container, 88, 44)
+    
+    local camera = DCEI.NewCameraFrame(container)
+    DCEI.SetSize(camera, 44, 44)
+    
+    DCEI.SetCameraFrameSize(camera, 200, 200)
+    DCEI.SetCameraFramePosition(camera, 3, 0.35, 31.25)
+    DCEI.SetCameraFrameRotation(camera, 0, 0, 0)
+    
+    local label = DCEI.NewText(container)
+    DCEI.SetText(label, "0")
+
+    -- functions
+    function layout:Update()
+
+        -- update displayed troop count
+        local unit_count = BATTLE_DATA.player.troop_count or 0
+        DCEI.SetText(label, unit_count)
+    end
+
+    function layout:ResetPotrait()
+        if layout.unit then
+            DCEI.RemoveUnitSync(layout.unit)
+        end
+
+        local id = 1
+        local unit_type = "Human Troop Footman"
+        local x, y = 3, 32
+        local dx, dy = 0, -1
+
+        layout.unit = DCEI.CreateUnitAsync(id, id, unit_type, x, y, dx, dy)
+    end
+
+    function layout:AnimatePortrait_Attack()
+
+        -- apply behavior that makes portrait unit play attack anim
+        local behavior = "Event PlayAnim Attack"
+        DCEI.ApplyBehavior(layout.unit, behavior, 1)
+    end
+
+    function layout:AnimatePortrait_Death()
+        
+        -- actually kill portait unit and clear unit ref
+        if layout.unit then
+            DCEI.KillUnit(layout.unit)
+            layout.unit = nil
+        end
+    end
+
+    -- export
+    layout.frame = frame
+    return layout
+end
+
+function NewEnemyTroopDisplay(parent)
+    local layout = {}
+    local frame = DCEI.NewFrame(parent)
+
+    -- layout
+    local container = DCEI.NewHStack(frame)
+    DCEI.SetBackgroundImage(container, "ui_ingame_hub")
+    DCEI.SetBackgroundImageColor(container, 0, 0, 0, 0.7)
+    DCEI.SetPaddingLeft(container, 8)
+    DCEI.SetPaddingRight(container, 4)
+    DCEI.SetMinSize(container, 88, 44)
+
+    local label = DCEI.NewText(container)
+    DCEI.SetText(label, "0")
+    
+    local camera = DCEI.NewCameraFrame(container)
+    DCEI.SetSize(camera, 44, 44)
+    
+    DCEI.SetCameraFrameSize(camera, 200, 200)
+    DCEI.SetCameraFramePosition(camera, 4, 0.25, 31.25)
+    DCEI.SetCameraFrameRotation(camera, 0, 0, 0)
+    
+    -- functions
+    function layout:Update()
+        local unit_count = BATTLE_DATA.enemy.troop_count or 0
+        DCEI.SetText(label, unit_count)
+    end
+
+    function layout:ResetPotrait()
+        if layout.unit then
+            DCEI.RemoveUnitSync(layout.unit)
+        end
+
+        local id = 1
+        local unit_type = "Goblin Troop Club"
+        local x, y = 4, 32
+        local dx, dy = 0, -1
+
+        layout.unit = DCEI.CreateUnitAsync(id, id, unit_type, x, y, dx, dy)
+    end
+
+    function layout:AnimatePortrait_Attack()
+
+        -- apply behavior that makes portrait unit play attack anim
+        local behavior = "Event PlayAnim Attack"
+        DCEI.ApplyBehavior(layout.unit, behavior, 1)
+    end
+
+    function layout:AnimatePortrait_Death()
+
+        -- actually kill portait unit and clear unit ref
+        if layout.unit then
+            DCEI.KillUnit(layout.unit)
+            layout.unit = nil
+        end
+    end
+
+    -- export
+    layout.frame = frame
+    return layout
+end
+
+function NewHealthBar(parent, key)
+    local layout = {}
+    layout.key = key
+
+    -- layout
+    local frame = DCEI.NewFrame(parent)
+
+    local background = DCEI.NewFrame(frame)
+    DCEI.SetBackgroundImage(background, "bar_dot_base00")
+    DCEI.SetPadding(background, 2)
+
+    local fill = DCEI.NewFrame(background)
+    DCEI.SetBackgroundImage(fill, "shape_square_sharp_32x32")
+    DCEI.SetBackgroundImageColor(fill, 255/255, 79/255, 79/255, 1)
+    DCEI.SetSize(fill, 188, 32)
+
+    local label = DCEI.NewText(background)
+    DCEI.SetTextFontSize(label, 32)
+
+    -- functions
+    function layout:BindUnit(unit)
+        local bind_id = layout.key .. "_health"
+
+        DCEI.BindUnit(bind_id, unit)
+
+        DCEI.SetTextExpression(label, "{" .. bind_id .. ".Health.Current}")
+        DCEI.SetBackgroundImageFillAmountExpression(fill, bind_id .. ".Health.Fraction")
+    end
+
+    -- export
+    layout.fill = fill
+    layout.frame = frame
+    return layout
+end
+
+
+-- FUNCTIONS
+function OnMapStart()
+    core.HideDefaultUi()
+    
+    InitializeUI()
+    HookupUI()
+
+    SpawnTroopsForBothSides()
+end
+
+function HookupUI()
+
+    -- advance battle state when selecting main button (select > ready > battle)
+    DCEI.SetOnClickCallback(
+        ui.control.button,
+        function()
+            if BATTLE_DATA.state == STATE.select then
+                OnBattleConfirm()
+            elseif BATTLE_DATA.state == STATE.ready then
+                OnBattleReady()
+            end
+        end
+    )
+
+    DCEI.SetOnClickCallback(ui.control.other_button, OnBattleReset)
+end
+
+function OnBattleReset()
+    RemoveAllUnits()
+    ResetGame()
+end
+
+function OnBattleConfirm()
+    local player_unit_count = DCEI.GetInputText(ui.control.player_troop_input)
+    local enemy_unit_count = DCEI.GetInputText(ui.control.enemy_troop_input)
+    
+    DCEI.SetActive(ui.control.player_vstack, false)
+    DCEI.SetActive(ui.control.enemy_vstack, false)
+    DCEI.SetActive(ui.control.other_button, true)
+
+    RemoveAllUnits()
+    SpawnTroopsForBothSides(tonumber(player_unit_count), tonumber(enemy_unit_count))
+
+    local text = "Ready"
+    DCEI.SetText(ui.control.button_label, text)
+
+
+    BATTLE_DATA.state = STATE.ready
+end
+
+function OnBattleReady()
+    DCEI.SetActive(ui.control.other_button, false)
+    DCEI.SetActive(ui.control.frame, false)
+    
+    BATTLE_DATA.state = STATE.battle
+    
+    SendPlayerTroopsForward()
+    SendEnemyTroopsForward()
+
+    -- play unit portrait animations with some randomized offsets
+    local random_delay = math.random(0, 5) * 0.0625
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            ui.player_troops:AnimatePortrait_Attack()
+        end,
+        random_delay
+    )
+
+    local random_delay = math.random(0, 5) * 0.0625
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            ui.enemy_troops:AnimatePortrait_Attack()
+        end,
+        random_delay
+    )
+end
+
+function SpawnTroopsForBothSides(player_unit_count, enemy_unit_count)
+    local player_id = 1
+    local enemy_id = -1
+    player_unit_count = player_unit_count or 4
+    enemy_unit_count = enemy_unit_count or 4
+
+    local unit_type = "Human Troop Footman"
+    local y_position = MAP_DATA.min_y
+    SpawnTroops(player_id, unit_type, player_unit_count, y_position)
+    SpawnLeader(player_id)
+    
+    
+    local unit_type = "Goblin Troop Club"
+    local y_position = MAP_DATA.max_y
+    SpawnTroops(enemy_id, unit_type, enemy_unit_count, y_position)
+    SpawnLeader(enemy_id)
+
+    ui.player_troops:ResetPotrait()
+    ui.enemy_troops:ResetPotrait()
+end
+
+function SpawnLeader(id)
+    local player_id = 1
+    local enemy_id = -1
+    
+    -- get battle leader position based off of values generated in SpawnTroops()
+    local battle_data = (id == player_id and BATTLE_DATA.player) or BATTLE_DATA.enemy
+    local unit_type = (id == player_id and "Human Leader WindKnight") or "Goblin Leader OrcBrute"
+    local dx, dy = 0, (id == player_id and 1) or -1
+    local y = battle_data.leader_y or 16
+    local x = 16
+    
+    local unit = DCEI.CreateUnitAsync( id, id, unit_type, x, y, dx, dy)
+    local unit_id = tostring(unit)
+    
+    -- add unit to unit group and increment count
+    battle_data.units[unit_id] = unit
+    battle_data.units.count = (battle_data.units.count and battle_data.units.count + 1) or 1
+
+    -- bind health bar
+    local health_bar = (id == player_id and ui.player_health) or ui.enemy_health 
+    health_bar:BindUnit(unit)
+end
+
+function SpawnTroops(id, unit_type, spawn_count, y)
+    -- error handling for invalid parameters
+    if not id then DCEI.LogError("Error in SpawnTroops: " .. "invalid player_id") end
+    if not spawn_count then DCEI.LogError("Error in SpawnTroops: " .. "invalid spawn_count") end
+    if not unit_type then DCEI.LogError("Error in SpawnTroops: " .. "invalid unit_type") end
+    if not y then DCEI.LogError("Error in SpawnTroops: " .. "invalid y") end
+
+    -- limit spawn count to max troop count
+    spawn_count = math.min(spawn_count, MAX_TROOP_COUNT)
+
+    local min_x, max_x = MAP_DATA.min_x, MAP_DATA.max_x
+    local battle_data = (id == 1 and BATTLE_DATA.player) or BATTLE_DATA.enemy
+    local unit_group = (id == 1 and BATTLE_DATA.player.units) or BATTLE_DATA.enemy.units
+    local dx, dy = 0, (id == 1 and 1) or -1
+
+    -- determine number of rows to use
+    local total_troops_to_spawn = spawn_count
+    local row_count = (spawn_count <= MAX_TROOPS_PER_ROW and 1) or math.ceil(spawn_count / MAX_TROOPS_PER_ROW)
+    local row_offset = 0.5
+
+    for row = 1, row_count do
+        -- offset each row beyond the first to be behind by row offset
+        if row > 1 then
+            y = y - (dy * row_offset)
+        end
+
+        local troops_in_this_row = math.min(total_troops_to_spawn, MAX_TROOPS_PER_ROW)
+        total_troops_to_spawn = total_troops_to_spawn - troops_in_this_row
+
+        -- spawn up to 8 evenly spaced troops per row
+        for i = 1, troops_in_this_row do
+            local range = max_x - min_x
+            local interval = range / troops_in_this_row
+            local x = min_x + (i * interval) - (interval / 2)
+    
+            local unit = DCEI.CreateUnitAsync(id, id, unit_type, x, y, dx, dy)
+            local unit_id = tostring(unit)
+
+            -- add unit to unit group and increment unit and troop count
+            unit_group[unit_id] = unit
+            unit_group.count = (unit_group.count and unit_group.count + 1) or 1
+            battle_data.troop_count = (battle_data.troop_count and battle_data.troop_count + 1) or 1
+
+            if id == 1 then
+                ui.player_troops:Update()
+            else 
+                ui.enemy_troops:Update()
+            end
+
+            -- update battle leader spawn position
+            battle_data.leader_y = y - (dy * row_offset * 3)
+
+            -- DCEI.LogMessage("> spawned " .. #unit_group .. " " .. unit_type .. " for player " .. id .. " at " .. x .. ", " .. y)
+        end
+    end
+
+end
+
+function SendPlayerTroopsForward()
+    local unit_group = BATTLE_DATA.player.units
+
+    for k, unit in pairs(unit_group) do
+        if k ~= "count" then
+            local pos = DCEI.GetUnitPosition2D(unit)
+            local target_distance = 10
+    
+            -- target position is up 10
+            local x, y = pos.x, pos.y + target_distance
+            DCEI.MoveAttack(unit, x, y)
+        end
+    end
+end
+
+-- enemy troops
+function SendEnemyTroopsForward()
+    local unit_group = BATTLE_DATA.enemy.units
+
+    for k, unit in pairs(unit_group) do
+        if k ~= "count" then
+            local pos = DCEI.GetUnitPosition2D(unit)
+            local target_distance = -10
+    
+            -- target position is down 10
+            local x, y = pos.x, pos.y + target_distance
+            DCEI.MoveAttack(unit, x, y)
+        end
+    end
+end
+
+function CheckForGameOver()
+
+    -- only check for game over if game is in battle state
+    if BATTLE_DATA.state == STATE.battle then
+        
+        -- end game if either team has 0 troops and leader is dead
+        if BATTLE_DATA.player.units.count == 0 then
+            EndGameInDefeat()
+        elseif BATTLE_DATA.enemy.units.count == 0 then
+            EndGameInVictory()
+        end
+    end
+end
+
+function EndGameInVictory()
+    BATTLE_DATA.state = STATE.results
+    ui.enemy_troops:AnimatePortrait_Death()
+    
+    ui.mask:FadeIn()
+    DCEI.Wait(0.25)
+    
+    DCEI.ShowFeedbackMessage("VICTORY!")
+    
+    DCEI.Wait(1.25)
+    ui.mask:FadeOut()
+    
+    DCEI.Wait(0.25)
+    RemoveAllUnits()
+    ResetGame()
+end
+
+function EndGameInDefeat()
+    BATTLE_DATA.state = STATE.results
+    ui.player_troops:AnimatePortrait_Death()
+
+    ui.mask:FadeIn()
+    DCEI.Wait(0.25)
+    
+    DCEI.ShowFeedbackMessage("Defeat...")
+    
+    DCEI.Wait(1.25)
+    ui.mask:FadeOut()
+    
+    DCEI.Wait(0.25)
+    RemoveAllUnits()
+    ResetGame()
+end
+
+function RemoveAllUnits()
+    -- clear all player units
+    BATTLE_DATA.player.troop_count = 0
+    local unit_group = BATTLE_DATA.player.units
+    unit_group.count = 0
+    
+    for k, unit in pairs(unit_group) do
+        if k ~= "count" then
+            unit_group[k] = nil
+            DCEI.RemoveUnitSync(unit)
+        end
+    end
+    
+    -- clear all enemy units
+    BATTLE_DATA.enemy.troop_count = 0
+    local unit_group = BATTLE_DATA.enemy.units
+    unit_group.count = 0
+    
+    for k, unit in pairs(unit_group) do
+        if k ~= "count" then
+            unit_group[k] = nil
+            DCEI.RemoveUnitSync(unit)
+        end
+    end
+end
+
+function ResetGame()
+    SpawnTroopsForBothSides()
+    BATTLE_DATA.state = STATE.select
+
+    local text = "Confirm"
+    DCEI.SetText(ui.control.button_label, text)
+
+    DCEI.SetActive(ui.control.player_vstack, true)
+    DCEI.SetActive(ui.control.enemy_vstack, true)
+    DCEI.SetActive(ui.control.frame, true)
+    DCEI.SetActive(ui.control.other_button, false)
+end
+
+
+-- TRIGGERS
+function OnUnitDied(killing_unit)
+    local u = DCEI.TriggeringUnit
+    local id = DCEI.GetUnitPlayerId(u)
+    local unit_id = tostring(u)
+
+    -- check if dying unit is player troop
+    if BATTLE_DATA.player.units[unit_id] then
+
+        BATTLE_DATA.player.units[unit_id] = nil
+        BATTLE_DATA.player.units.count = BATTLE_DATA.player.units.count - 1
+        
+        local troop_tag = "Unit Tag Troop"
+        if DCEI.UnitBehaviorStackCount(u, troop_tag) == 1 then
+
+            -- only update troop count if troop unit dies
+            BATTLE_DATA.player.troop_count = BATTLE_DATA.player.troop_count - 1
+            ui.player_troops:Update()
+        end
+    end
+    
+    -- check if dying unit is enemy troop
+    if BATTLE_DATA.enemy.units[unit_id] then
+        
+        BATTLE_DATA.enemy.units[unit_id] = nil
+        BATTLE_DATA.enemy.units.count = BATTLE_DATA.enemy.units.count - 1
+        
+        local troop_tag = "Unit Tag Troop"
+        if DCEI.UnitBehaviorStackCount(u, troop_tag) == 1 then
+
+            -- only update troop count if troop unit dies
+            BATTLE_DATA.enemy.troop_count = BATTLE_DATA.enemy.troop_count - 1
+            ui.enemy_troops:Update()
+        end
+    end
+
+    CheckForGameOver()
+end
+
+
+-- INITIALIZE
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)

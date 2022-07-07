@@ -1,0 +1,10 @@
+{
+    "movers": {
+        "Arcade NTB BasicAttackMover": {
+            "ballistic": {
+                "flightTime": 1.25,
+                "gravity": 0
+            }
+        }
+    }
+}

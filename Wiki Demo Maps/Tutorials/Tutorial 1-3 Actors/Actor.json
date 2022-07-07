@@ -1,0 +1,58 @@
+{
+    "actors": {
+        "Hero IceMage": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "name": "elvenmage"
+                },
+                "eventMacros": [
+                    "Events StandardUnit Selectable"
+                ],
+                "hostSites": {
+                    "SiteWeapon": {
+                        "offset": {
+                            "forward": 0.5,
+                            "up": 0.5
+                        }
+                    }
+                },
+                "walkAnimationSpeed": 1.7
+            }
+        },
+        "Hero IceMage Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Hero IceMage Weapon Launch",
+                "launchModel": "Hero IceMage Weapon Launch SFX",
+                "impactModel": "Hero IceMage Weapon Impact FX"
+            }
+        },
+        "Hero IceMage Weapon Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_icemage_frostbolt_impact"
+                }
+            }
+        },
+        "Hero IceMage Weapon Launch SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "ice_mage_missile_launch"
+                }
+            }
+        },
+        "Hero IceMage Weapon Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_icemage_weapon_missile"
+                }
+            }
+        }
+    }
+}

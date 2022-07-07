@@ -1,0 +1,533 @@
+{
+    "actors": {
+        "Crop Harvest Coins VFX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_creep_death_huge"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Plant Crop SFX"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Plant Harvest SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.8
+            }
+        },
+        "Crop Harvest VFX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_polybomb_impact_aoe"
+                },
+                "modelScale": 1.3
+            }
+        },
+        "Crop Ready VFX": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_mine_fountain_ready"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 150,
+                                        "b": 80
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1
+            }
+        },
+        "Crop Spawn Effect": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_dryad_pheromones_cast"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Plant Crop SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 2
+            }
+        },
+        "Crop Tree": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "tree_prop"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Crop Spawn Effect"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.2,
+                                    "duration": 0.3
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "grow",
+                                    "duration": 0.3625
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "grow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.5,
+                                    "modelScaleExpression": [
+                                        {}
+                                    ],
+                                    "duration": 8
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Crop State: Ready"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "ready",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "twitch",
+                                    "duration": 5,
+                                    "repeat": true
+                                }
+                            },
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 280,
+                                        "g": 280,
+                                        "b": 280
+                                    }
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Crop Ready VFX",
+                                    "hostSite": "SiteReady"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Crop State: Ready"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "ready",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 0
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "removeTimer": {
+                                    "name": "twitch"
+                                }
+                            },
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 256,
+                                        "g": 256,
+                                        "b": 256
+                                    }
+                                }
+                            },
+                            {
+                                "destroy": {
+                                    "actor": "Crop Ready VFX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "twitch"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.7,
+                                    "duration": 0.15
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "twitch_off",
+                                    "duration": 0.15,
+                                    "repeat": false
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "twitch_off"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.5,
+                                    "duration": 0.15
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Crop Harvest Coins VFX"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Crop Harvest VFX"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.3
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "remove",
+                                    "duration": 0.3
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "remove"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Crop Selected"
+                ],
+                "hostSites": {
+                    "SiteReady": {
+                        "offset": {
+                            "up": 2
+                        }
+                    }
+                },
+                "modelScale": 3
+            }
+        },
+        "Crop Tree Placement": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "tree_prop"
+                },
+                "modelScale": 1.5
+            }
+        },
+        "Crop Tree Placement_Invalid": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "tree_prop"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 60,
+                                        "b": 60
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Crop_Caster": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "airship_cargo"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": false
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Harvest Cursor": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_drow_lord_missile_red"
+                },
+                "hostSiteOperations": [
+                    "SOp Basic Rotator",
+                    "SOp UpBy 1"
+                ],
+                "modelScale": 3
+            }
+        },
+        "Plant Crop SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "dryad_overgrowth_impact"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Plant Harvest SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "goldorb_collect"
+                }
+            }
+        },
+        "Planting Cursor": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "misc_crate"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 5,
+                                        "g": 355,
+                                        "b": 5
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Cursor Invalid"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 355,
+                                        "g": 5,
+                                        "b": 5
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Cursor Invalid"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 5,
+                                        "g": 355,
+                                        "b": 5
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 5.5,
+                "hostSiteOperations": [
+                    "SOp DownBy 1",
+                    "SOp DownBy Dot25",
+                    "SOp DownBy Dot25"
+                ]
+            }
+        },
+        "SOp Basic Rotator": {
+            "siteOperation": {
+                "rotate": {
+                    "dy": 360
+                }
+            }
+        },
+        "Standard Selection": {
+            "modelActor": {
+                "modelScale": 1.5
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Crop Selected": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "selectionOn": {}
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Standard Selection"
+                            }
+                        },
+                        {
+                            "applyMeshEffect": {
+                                "effect": "Shock"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "selectionOff": {}
+                    },
+                    "actions": [
+                        {
+                            "destroy": {
+                                "actor": "Standard Selection"
+                            }
+                        },
+                        {
+                            "removeMeshEffect": {
+                                "effect": "Shock"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

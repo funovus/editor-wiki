@@ -1,0 +1,100 @@
+{
+    "abilities": {
+        "Base Build Economy": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "cost": {
+                "gold": 50
+            },
+            "commandCardIndex": 5,
+            "commandCardIcon": "icon_spell_greed_cannon",
+            "preserveMenu": true,
+            "description": "data/Arcade/DarkDefense/ability/Base Upgrade Economy/description",
+            "title": "data/Arcade/DarkDefense/ability/Base Upgrade Economy/title"
+        },
+        "Base Upgrade Archer": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "cost": {
+                "gold": 5
+            },
+            "commandCardIndex": 5,
+            "commandCardIcon": "icon_ingame_towerslot_arrowtower",
+            "preserveMenu": true,
+            "description": "data/Arcade/DarkDefense/ability/Base Upgrade Archer/description",
+            "title": "data/Arcade/DarkDefense/ability/Base Upgrade Archer/title"
+        },
+        "Base Upgrade Economy": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "cost": {
+                "gold": 50
+            },
+            "commandCardIndex": 5,
+            "commandCardIcon": "icon_spell_greed_cannon",
+            "preserveMenu": true,
+            "description": "data/Arcade/DarkDefense/ability/Base Upgrade Economy/description",
+            "title": "data/Arcade/DarkDefense/ability/Base Upgrade Economy/title"
+        },
+        "Base Upgrade Fighter": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "cost": {
+                "gold": 10
+            },
+            "commandCardIndex": 5,
+            "commandCardIcon": "icon_ingame_towerslot_barracks",
+            "preserveMenu": true,
+            "description": "data/Arcade/DarkDefense/ability/Base Upgrade Fighter/description",
+            "title": "data/Arcade/DarkDefense/ability/Base Upgrade Fighter/title"
+        },
+        "Enemy Boss ZombieOgre Jungle": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Boss ZombieOgre Jungle",
+            "abilityTags": [
+                "jungle"
+            ],
+            "description": "data/Arcade/DarkDefense/ability/Enemy Boss ZombieOgre Jungle/description",
+            "title": "data/Arcade/DarkDefense/ability/Enemy Boss ZombieOgre Jungle/title"
+        },
+        "Enemy ConvertToJungle": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy ConvertToJungle",
+            "description": "data/Arcade/DarkDefense/ability/Enemy ConvertToJungle/description",
+            "title": "data/Arcade/DarkDefense/ability/Enemy ConvertToJungle/title"
+        },
+        "Enemy Zombie Jungle": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Zombie Jungle",
+            "abilityTags": [
+                "jungle"
+            ],
+            "commandCardIcon": "icon_ingame_towerslot_arrowtower",
+            "preserveMenu": true,
+            "description": "data/Arcade/DarkDefense/ability/Enemy Zombie Jungle/description",
+            "title": "data/Arcade/DarkDefense/ability/Enemy Zombie Jungle/title"
+        },
+        "Player Hero Dragoon SummonTroops": {
+            "parent": "",
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Player Hero Dragoon SummonTroop Create",
+            "stats": {
+                "prepTime": 0.375,
+                "finishTime": 0.375
+            },
+            "cost": {
+                "mana": 100
+            },
+            "description": "data/Arcade/DarkDefense/ability/Player Hero Dragoon SummonTroops/description",
+            "title": "data/Arcade/DarkDefense/ability/Player Hero Dragoon SummonTroops/title"
+        }
+    }
+}

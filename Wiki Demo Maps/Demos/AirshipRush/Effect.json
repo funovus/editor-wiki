@@ -1,0 +1,542 @@
+{
+    "effects": {
+        "Enemy Boss ChainMissile Create": {
+            "persistent": {
+                "periodicCount": 2,
+                "startEffect": "Enemy Shared FaceShipOver Dot125 Apply",
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "periodicDurations": [
+                    0.25,
+                    0
+                ],
+                "periodicEffects": [
+                    "Enemy Boss ChainMissile Launch Left",
+                    "Enemy Boss ChainMissile Launch Right"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 16
+                    }
+                ]
+            }
+        },
+        "Enemy Boss ChainMissile Launch Left": {
+            "launchMissile": {
+                "targetType": 1,
+                "missileUnit": "Enemy Whelp Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "launchOffset": {
+                    "right": -0.25,
+                    "up": 0.5
+                },
+                "impactOffset": {
+                    "right": -0.25,
+                    "up": 0.5
+                },
+                "mover": "Enemy Whelp Missile"
+            }
+        },
+        "Enemy Boss ChainMissile Launch Right": {
+            "launchMissile": {
+                "targetType": 1,
+                "missileUnit": "Enemy Whelp Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "launchOffset": {
+                    "right": 0.25,
+                    "up": 0.4
+                },
+                "impactOffset": {
+                    "right": 0.25,
+                    "up": 0.4
+                },
+                "mover": "Enemy Whelp Missile"
+            }
+        },
+        "Enemy Boss Warship Caster Spawn": {
+            "spawn": {
+                "unit": "Enemy Boss Warship Caster",
+                "count": 1,
+                "owner": 3,
+                "location": 7,
+                "offset": {
+                    "forward": 1.5
+                }
+            }
+        },
+        "Enemy Boss Warship CollisionScan BreakFacing": {
+            "persistent": {
+                "periodicCount": 1,
+                "location": 5,
+                "offsetStart": 5,
+                "offsetEnd": 2,
+                "periodicEffects": [
+                    "Enemy Boss Warship CollisionScan Search"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 0.01
+                    }
+                ]
+            }
+        },
+        "Enemy Boss Warship CollisionScan Damage": {
+            "damage": {
+                "whichUnit": 3,
+                "damageAmount": 1
+            }
+        },
+        "Enemy Boss Warship CollisionScan ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Enemy Boss Warship CollisionScan TargetSwitch",
+                    "Enemy Boss Warship CollisionScan Damage"
+                ]
+            }
+        },
+        "Enemy Boss Warship CollisionScan Missile Impact Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy Boss Warship CollisionScan Missile Impact",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Enemy Boss Warship CollisionScan Missile ImpactSequence": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Enemy Boss Warship CollisionScan Missile Impact Apply",
+                "finalEffect": "Remove"
+            }
+        },
+        "Enemy Boss Warship CollisionScan Search": {
+            "areaSearch": {
+                "debugDraw": true,
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 2.5,
+                        "length": 5.25
+                    }
+                },
+                "filter": {
+                    "player": 2,
+                    "ally": 2,
+                    "neutral": 2,
+                    "structure": 2,
+                    "stealth": 2,
+                    "invulerable": 2,
+                    "alive": 1
+                },
+                "effect": "Enemy Boss Warship CollisionScan ImpactSet",
+                "location": 5,
+                "offsetStart": 5,
+                "offsetEnd": 2
+            }
+        },
+        "Enemy Boss Warship CollisionScan TargetSwitch": {
+            "switchEffect": {
+                "cases": [
+                    {
+                        "effect": "Enemy Boss Warship CollisionScan Missile ImpactSequence",
+                        "validator": "TargetUnit Is Missile"
+                    },
+                    {
+                        "effect": "Kill"
+                    }
+                ]
+            }
+        },
+        "Enemy Boss Warship SpawnGoblin Create Left": {
+            "persistent": {
+                "periodicCount": 3,
+                "periodicDurations": [
+                    0.125
+                ],
+                "periodicEffects": [
+                    "Enemy Boss Warship SpawnGoblin Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 2.4,
+                        "right": 2.4
+                    },
+                    {
+                        "right": 4
+                    },
+                    {
+                        "forward": -2.4,
+                        "right": 2.4
+                    }
+                ]
+            }
+        },
+        "Enemy Boss Warship SpawnGoblin Create Right": {
+            "persistent": {
+                "periodicCount": 3,
+                "periodicDurations": [
+                    0.125
+                ],
+                "periodicEffects": [
+                    "Enemy Boss Warship SpawnGoblin Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 2.4,
+                        "right": -2.4
+                    },
+                    {
+                        "right": -4
+                    },
+                    {
+                        "forward": -2.4,
+                        "right": -2.4
+                    }
+                ]
+            }
+        },
+        "Enemy Boss Warship SpawnGoblin Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "Enemy Goblin FromWarship",
+                "missileDeathType": 0,
+                "effect": "Enemy Boss Warship SpawnGoblin Spawn",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "Enemy Goblin Missile"
+            }
+        },
+        "Enemy Boss Warship SpawnGoblin Spawn": {
+            "spawn": {
+                "unit": "Enemy Goblin FromWarship",
+                "count": 1,
+                "owner": 3,
+                "location": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2
+            }
+        },
+        "Enemy DamageResponse Flash Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy DamageResponse Flash",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Enemy Goblin Deathrattle Create": {
+            "persistent": {
+                "periodicCount": 8,
+                "location": 2,
+                "offsetStart": 2,
+                "offsetEnd": 2,
+                "periodicEffects": [
+                    "Enemy Goblin Deathrattle Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 4
+                    },
+                    {
+                        "forward": 2.8,
+                        "right": 2.8
+                    },
+                    {
+                        "right": 5
+                    },
+                    {
+                        "forward": -2.8,
+                        "right": 2.8
+                    },
+                    {
+                        "forward": -4
+                    },
+                    {
+                        "forward": -2.8,
+                        "right": -2.8
+                    },
+                    {
+                        "right": -4
+                    },
+                    {
+                        "forward": 2.8,
+                        "right": -2.8
+                    }
+                ]
+            }
+        },
+        "Enemy Goblin Deathrattle Launch": {
+            "launchMissile": {
+                "targetType": 1,
+                "missileUnit": "Enemy Whelp Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2,
+                "launchOffset": {
+                    "forward": -0.1,
+                    "up": 0.4
+                },
+                "impactOffset": {
+                    "up": 0.4
+                },
+                "mover": "Enemy Goblin Deathrattle Missile"
+            }
+        },
+        "Enemy Goblin Missile Launch": {
+            "launchMissile": {
+                "missileUnit": "Enemy Goblin Missile",
+                "effect": "DoNothing",
+                "launchLocation": 7,
+                "offsetStart": 7,
+                "launchOffset": {
+                    "forward": -0.1,
+                    "up": -0.1
+                },
+                "impactOffset": {
+                    "forward": 16,
+                    "up": -0.1
+                },
+                "mover": "Enemy Goblin Missile"
+            }
+        },
+        "Enemy ScanForPlayerMissile Dot25 Search": {
+            "areaSearch": {
+                "debugDraw": true,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.25
+                    }
+                },
+                "validators": [
+                    "TargetUnit Is PlayerShipMissile"
+                ],
+                "effect": "Player Ship Missile Scan ImpactSet"
+            }
+        },
+        "Enemy Shared FaceShipOver Dot125 Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy Shared FaceShipOver Dot125",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Enemy Whelp 2 Missile Create": {
+            "persistent": {
+                "periodicCount": 3,
+                "startEffect": "Enemy Shared FaceShipOver Dot125 Apply",
+                "location": 7,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "periodicDurations": [
+                    0.25,
+                    0,
+                    0,
+                    0
+                ],
+                "periodicEffects": [
+                    "Enemy Whelp 2 Missile Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 16
+                    },
+                    {
+                        "forward": 11.2,
+                        "right": 11.2
+                    },
+                    {
+                        "forward": 11.2,
+                        "right": -11.2
+                    }
+                ]
+            }
+        },
+        "Enemy Whelp 2 Missile Launch": {
+            "launchMissile": {
+                "targetType": 1,
+                "missileUnit": "Enemy Whelp Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "launchOffset": {
+                    "forward": 0.1,
+                    "up": 0.4
+                },
+                "impactOffset": {
+                    "up": 0.4
+                },
+                "mover": "Enemy Whelp Missile"
+            }
+        },
+        "Enemy Whelp Missile Create": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Enemy Shared FaceShipOver Dot125 Apply",
+                "finalEffect": "Enemy Whelp Missile Launch",
+                "location": 7,
+                "periodicDurations": [
+                    0.25
+                ]
+            }
+        },
+        "Enemy Whelp Missile Launch": {
+            "launchMissile": {
+                "targetType": 1,
+                "missileUnit": "Enemy Whelp Missile",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "launchOffset": {
+                    "forward": -0.1,
+                    "up": 0.4
+                },
+                "impactOffset": {
+                    "forward": 16,
+                    "up": 0.4
+                },
+                "mover": "Enemy Whelp Missile"
+            }
+        },
+        "GameSystem Boundary Search": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 18,
+                        "length": 4
+                    }
+                },
+                "filter": {
+                    "ally": 2,
+                    "neutral": 2,
+                    "structure": 2,
+                    "invulerable": 2
+                },
+                "effect": "GameSystem Boundary TargetSwitch",
+                "offsetStart": 7,
+                "offsetEnd": 7
+            }
+        },
+        "GameSystem Boundary TargetSwitch": {
+            "switchEffect": {
+                "cases": [
+                    {
+                        "effect": "Kill",
+                        "validator": "TargetUnit Is PlayerShip"
+                    },
+                    {
+                        "effect": "Remove"
+                    }
+                ]
+            }
+        },
+        "GameSystem Stop": {
+            "stop": {
+                "whichUnit": 2
+            }
+        },
+        "Player Ship CollisionScan ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Player Ship CollisionScan TargetSwitch",
+                    "Kill Source"
+                ]
+            }
+        },
+        "Player Ship CollisionScan Search": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.6
+                    }
+                },
+                "filter": {
+                    "player": 2,
+                    "ally": 2,
+                    "neutral": 2,
+                    "structure": 2,
+                    "stealth": 2,
+                    "invulerable": 2,
+                    "alive": 1
+                },
+                "effect": "Player Ship CollisionScan ImpactSet"
+            }
+        },
+        "Player Ship CollisionScan TargetSwitch": {
+            "switchEffect": {
+                "cases": [
+                    {
+                        "effect": "Remove",
+                        "validator": "TargetUnit Is Missile"
+                    },
+                    {
+                        "effect": "Player Ship Missile Damage"
+                    }
+                ]
+            }
+        },
+        "Player Ship Missile Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Player Ship Missile Launch": {
+            "launchMissile": {
+                "missileUnit": "Player Ship Missile",
+                "effect": "DoNothing",
+                "launchLocation": 7,
+                "offsetStart": 7,
+                "launchOffset": {
+                    "forward": 0.4,
+                    "up": -0.7
+                },
+                "impactOffset": {
+                    "forward": 16,
+                    "up": -0.7
+                },
+                "mover": "Player Ship Missile"
+            }
+        },
+        "Player Ship Missile Scan ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Player Ship Missile Damage",
+                    "Kill Source"
+                ]
+            }
+        },
+        "Player Ship Missile Scan Search": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 0.5,
+                        "length": 0.75
+                    }
+                },
+                "filter": {
+                    "player": 2,
+                    "ally": 2,
+                    "neutral": 2,
+                    "missile": 2,
+                    "structure": 2,
+                    "stealth": 2,
+                    "invulerable": 2,
+                    "alive": 1
+                },
+                "validators": [
+                    "TargetUnit No CollisionScan"
+                ],
+                "effect": "Player Ship Missile Scan ImpactSet",
+                "offset": {
+                    "forward": 0.25
+                }
+            }
+        }
+    }
+}

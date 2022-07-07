@@ -1,0 +1,16 @@
+{
+    "effects": {
+        "Hero IceMage Weapon Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        },
+        "Hero IceMage Weapon Launch": {
+            "launchMissile": {
+                "missileUnit": "Hero IceMage Weapon Missile",
+                "effect": "Hero IceMage Weapon Damage",
+                "mover": "Hero IceMage Weapon Missile"
+            }
+        }
+    }
+}

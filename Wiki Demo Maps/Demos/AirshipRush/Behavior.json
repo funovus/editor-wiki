@@ -1,0 +1,96 @@
+{
+    "behaviors": {
+        "Enemy Boss ChainMissile Launch Enable": {
+            "duration": 3.75,
+            "periodicInterval": 0.375,
+            "periodicEffect": "Enemy Boss Warship Caster Spawn",
+            "periodicEffectCount": -1,
+            "modifiers": {
+                "enabledWeapons": [
+                    "Enemy Boss ChainMissile Launch"
+                ]
+            }
+        },
+        "Enemy Boss Warship CollisionScan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Enemy Boss Warship CollisionScan BreakFacing",
+            "behaviorTagArray": [
+                {
+                    "name": "gt_collisionScan",
+                    "count": 1
+                }
+            ]
+        },
+        "Enemy Boss Warship CollisionScan Missile Impact": {
+            "duration": 0.125
+        },
+        "Enemy DamageResponse": {
+            "damageResponse": {
+                "chance": 1,
+                "effect": "Enemy DamageResponse Flash Apply"
+            }
+        },
+        "Enemy DamageResponse Flash": {
+            "duration": 0.125
+        },
+        "Enemy Goblin Deathrattle": {
+            "finalEffect": "Enemy Goblin Deathrattle Create"
+        },
+        "Enemy ScanForPlayerMissile Dot25": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Enemy ScanForPlayerMissile Dot25 Search"
+        },
+        "Enemy Shared FaceShipOver Dot125": {
+            "duration": 0.125,
+            "modifiers": {
+                "enabledWeapons": [
+                    "Enemy Whelp Missile Launch"
+                ]
+            }
+        },
+        "Enemy Whelp Missile Launch Enable": {
+            "modifiers": {
+                "enabledWeapons": [
+                    "Enemy Whelp Missile Launch",
+                    "Enemy Whelp 2 Missile Launch"
+                ]
+            }
+        },
+        "Player Ship Banking Left": {
+            "refreshStack": true,
+            "maxStackCount": 1,
+            "duration": 0.25
+        },
+        "Player Ship Banking None": {
+            "refreshStack": true,
+            "maxStackCount": 1,
+            "duration": 0.25
+        },
+        "Player Ship Banking Right": {
+            "refreshStack": true,
+            "maxStackCount": 1,
+            "duration": 0.25
+        },
+        "Player Ship Caster Duration": {
+            "duration": 0.75,
+            "finalEffect": "Remove"
+        },
+        "Player Ship CollisionScan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Player Ship CollisionScan Search",
+            "behaviorTagArray": [
+                {
+                    "name": "gt_collisionScan",
+                    "count": 1
+                }
+            ]
+        },
+        "Player Ship Missile Launch Anim": {
+            "duration": 0.0625
+        },
+        "Player Ship Missile Scan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Player Ship Missile Scan Search"
+        }
+    }
+}

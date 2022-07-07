@@ -1,0 +1,606 @@
+local core = require("core")
+
+-- Variables
+local POINT_SPAWN = {16, 12}
+local POINT_CAMERA = {16, 16}
+
+local BOUNDARY_SEARCH = "GameSystem Boundary Search"
+local GAME_CASTER
+local GAME_CASTER_NAME = "GameSystem Caster"
+
+local SHIP
+local SHIP_NAME = "Player Ship"
+local SHIP_CASTER = "Player Ship Caster"
+local SHIP_ATTACK = "Player Ship Missile Launch"
+local SHIP_ATTACK_ANIM = "Player Ship Missile Launch Anim"
+local SHIP_BANK = {
+    left = "Player Ship Banking Left",
+    right = "Player Ship Banking Right",
+    none = "Player Ship Banking None",
+}
+
+local ENEMIES = {
+    {
+        name = "Enemy Goblin",
+        score = 10
+    },
+    {
+        name = "Enemy Goblin 2",
+        score = 25
+    },
+    {
+        name = "Enemy Whelp",
+        score = 20
+    },
+    {
+        name = "Enemy Whelp 2",
+        score = 50
+    },
+    {
+        name = "Enemy Boss Warship",
+        score = 500
+    },
+    {
+        name = "Enemy Goblin FromWarship",
+        score = 10
+    }
+}
+
+local GAME_ID = 0
+local GAME_IS_RUNNING = false
+
+-- Triggers
+function OnMapInitialization()
+    GAME_CASTER = DCEI.CreateUnitAsync(1, 1, GAME_CASTER_NAME, 0, 0, 0, 1)
+
+    DCEI.HideShipSpellMenu()
+    DCEI.HideFastForwardButton()
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.ShowFeedbackMessage("Use WASD to move")
+        end,
+        0.5
+    )
+
+    SpawnPlayerShip()
+    GameStart()
+end
+
+function OnUnitSelected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+end
+
+function OnUnitDeselected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+    if u == SHIP then
+        DCEI.SelectUnitSync(SHIP)
+    end
+end
+
+function OnUnitDied()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+    local player = DCEI.GetUnitPlayerId(u)
+
+    if GAME_IS_RUNNING and u == SHIP then
+        ResetGame()
+    elseif player == -1 then
+        AddEnemyScore(u)
+    end
+end
+
+function OnUnitBehaviorAdd()
+    local u = DCEI.TriggeringUnit
+    local b = DCEI.TriggeringBehaviorName
+
+    if b == "Enemy Shared FaceShipOver Dot125" then
+        core.MakeUnitFaceUnitPoint(u, SHIP, 0.125)
+    end
+end
+
+function OnCastAbility()
+    local a = DCEI.TriggeringAbilityName
+    if a == "Player Ship Missile AutoLaunch" then
+        LaunchShipAttack()
+    end
+end
+
+function OnUnitSpawn()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+
+    if name == "Enemy Goblin" or name == "Enemy Goblin 2" then
+        RunEnemyBehavior_EnterAndPursue(u)
+    elseif name == "Enemy Goblin FromWarship" then
+        RunEnemyPursueShip(u)
+    elseif name == "Enemy Whelp" or name == "Enemy Whelp 2" then
+        RunEnemyBehavior_EnterWhelp(u)
+    end
+end
+
+function RemoveAllUnits()
+    for i = 1, #ENEMIES do
+        local enemy_type = DCEI.FindUnits(ENEMIES[i].name)
+        local enemy_type_count = #enemy_type
+
+        for _, u in pairs(enemy_type) do
+            DCEI.HideUnitStatusUi(5, u)
+            DCEI.RemoveUnitSync(u)
+        end
+    end
+end
+
+function GameStart()
+    SpawnWaveSequence()
+    StartCameraSequence()
+    -- SpawnBoss()
+end
+
+function ResetGame()
+    GAME_IS_RUNNING = false
+    GAME_ID = GAME_ID + 1
+    DCEI.LogMessage("NEW GAME (" .. GAME_ID .. ")")
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            ScreenWipe()
+        end,
+        0.75
+    )
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SetGold(1, 0)
+            RemoveAllUnits()    
+            DCEI.SetCameraFocus(POINT_CAMERA[1], POINT_CAMERA[2], 0.125, true)
+        end,
+        1
+    )
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            SpawnPlayerShip()
+        end,
+        1.125
+    )
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            GameStart()
+        end,
+        1.25
+    )
+end
+
+function StartCameraSequence()
+    local map_distance = 40
+    local duration = 90
+
+    local p = POINT_CAMERA
+    local endpoint = {p[1], p[2] + map_distance}
+
+    local c = DCEI.GetCameraCurrentFocalPoint()
+    -- DCEI.LogMessage(">> starting from " .. c.x .. ", " .. c.y)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SetEnabledCameraClamp(false)
+            DCEI.SetCameraFocus(endpoint[1], endpoint[2], duration, true)
+            RemoveOffscreenUnits(GAME_ID)
+        end,
+        0.5
+    )
+end
+
+local SHIP_X = 16
+function RunPlayerShipAnimator(id)
+    local tick_rate = 0.125
+
+    if GAME_ID == id then
+        local current_x = DCEI.GetUnitPosition2D(SHIP).x
+        local previous_x = SHIP_X
+        local delta = current_x - previous_x
+        SHIP_X = current_x
+
+        if delta == 0 and DCEI.UnitBehaviorStackCount(SHIP, SHIP_BANK.none) == 0 then
+            -- DCEI.LogMessage(">> [" .. delta .. "] " .. "apply mid")
+            DCEI.ApplyBehavior(SHIP, SHIP_BANK.none)
+        elseif delta > 0 and DCEI.UnitBehaviorStackCount(SHIP, SHIP_BANK.right) == 0 then
+            -- DCEI.LogMessage(">> [" .. delta .. "] " .. "apply right")
+            DCEI.ApplyBehavior(SHIP, SHIP_BANK.right)
+        elseif delta < 0 and DCEI.UnitBehaviorStackCount(SHIP, SHIP_BANK.left) == 0 then
+            -- DCEI.LogMessage(">> [" .. delta .. "] " .. "apply left")
+            DCEI.ApplyBehavior(SHIP, SHIP_BANK.left)
+        end
+
+        DCEI.TriggerAddTimerEventElapsed(
+            function()
+                RunPlayerShipAnimator(id)
+            end,
+            tick_rate
+        )
+    end
+end
+
+function RemoveOffscreenUnits(id)
+    if GAME_ID == id then
+        local camera_point = DCEI.GetCameraCurrentFocalPoint()
+        local y_offset = -10
+        local p = {camera_point.x, camera_point.y + y_offset}
+
+        DCEI.CreateEffect(BOUNDARY_SEARCH, GAME_CASTER, p[1], p[2])
+        DCEI.TriggerAddTimerEventElapsed(
+            function()
+                RemoveOffscreenUnits(id)
+            end,
+            1
+        )
+    end
+end
+
+function SpawnEnemyWithDelay(id, delay, name)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if GAME_ID == id then
+                SpawnEnemy(name)
+            end
+        end,
+        delay
+    )
+end
+
+function SpawnEnemy(name, x_offset, y_offset)
+    x_offset = x_offset or math.random(-8, 8)
+    y_offset = y_offset or 8
+
+    local p = DCEI.GetCameraCurrentFocalPoint()
+    local d = {0, -1}
+    -- DCEI.LogMessage("Camera at " .. p.x .. ", " .. p.y)
+
+    p.x = p.x + x_offset
+    p.y = p.y + y_offset
+
+    local u = DCEI.CreateUnitAsync(-1, -1, name, p.x, p.y, d[1], d[2])
+end
+
+function SpawnBoss()
+    local name = "Enemy Boss Warship"
+    local p = DCEI.GetCameraCurrentFocalPoint()
+    local d = {0, -1}
+
+    p.y = p.y + 8
+
+    local u = DCEI.CreateUnitAsync(-1, -1, name, p.x, p.y, d[1], d[2])
+    RunEnemyBehavior_BossEnter(u)   
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.ShowUnitStatusUi(5, u)
+        end,
+        2
+    )
+end
+
+local BOSS_POSITION = 2
+local BOSS_ATTACK = 1
+
+function RunEnemyBehavior_BossMove(unit)
+    if not DCEI.UnitExists(unit) then
+        return
+    end
+
+    local current_position = DCEI.GetUnitPosition2D(unit)
+    local p = DCEI.GetCameraCurrentFocalPoint()
+    local speed = 1.3
+
+    local target_x = {
+        {
+            min = -6,
+            max = -4
+        },
+        {
+            min = -1,
+            max = 1
+        },
+        {
+            min = 4,
+            max = 6
+        }
+    }
+    local target_y = 3
+
+    -- boss position is randomized but not repeated twice in a row
+    DCEI.LogMessage(">> boss is at " .. BOSS_POSITION)
+    BOSS_POSITION = ((BOSS_POSITION + math.random(0,1)) % 3) + 1
+    
+    local x = p.x + math.random(target_x[BOSS_POSITION].min, target_x[BOSS_POSITION].max)
+    local y = p.y + target_y
+    
+    local distance = math.abs(current_position.x - x)
+    
+    DCEI.LogMessage("-- boss is at " .. string.format("%.2f",current_position.x) .. ", " .. string.format("%.2f",current_position.y))
+    DCEI.LogMessage("-- boss is movin to " .. string.format("%.2f", x) .. ", " .. string.format("%.2f",y))
+    DCEI.Move(unit, x, y)
+    
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.TurnUnitTowards(unit, 0, -1)
+        end,
+        (distance * speed) + 0.25
+    )
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if BOSS_ATTACK == 1 then
+                RunEnemyBehavior_BossLaunchMissiles(unit)
+            else
+                RunEnemyBehavior_BossSpawnGoblins(unit)
+            end
+        end,
+        (distance * speed) + 0.5
+    )
+end
+
+function RunEnemyBehavior_BossEnter(unit)
+    local position = DCEI.GetUnitPosition2D(unit)
+    local move_down = 5.5
+    local speed = 1
+    
+    local p = {position.x, position.y - move_down}
+    local duration = move_down / speed
+
+    DCEI.Move(unit, p[1], p[2])
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            RunEnemyBehavior_BossMove(unit)
+            -- RunEnemyBehavior_BossLaunchMissiles(unit)
+        end,
+        duration
+    )
+end
+
+function RunEnemyBehavior_BossLaunchMissiles(unit)
+    local duration = 6
+    BOSS_ATTACK = 2
+    DCEI.ApplyBehavior(unit, "Enemy Boss ChainMissile Launch Enable")
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            RunEnemyBehavior_BossMove(unit)
+        end,
+        duration
+    )
+end
+
+function RunEnemyBehavior_BossSpawnGoblins(unit)
+    local duration = 6
+    local spawn_ability = {
+        "Enemy Boss Warship SpawnGoblin Left",
+        "Enemy Boss Warship SpawnGoblin Right"
+    }
+    local cast01 = math.random(1,2)
+    local cast02 = (cast01 % 2) + 1
+
+    BOSS_ATTACK = 1
+    DCEI.CastAbility(spawn_ability[cast01], unit, unit)
+    
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if DCEI.UnitExists(unit) then
+                DCEI.CastAbility(spawn_ability[cast02], unit, unit)
+            end
+        end,
+        0.5
+    )
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            RunEnemyBehavior_BossMove(unit)
+        end,
+        duration
+    )
+end
+
+function RunEnemyBehavior_EnterWhelp(unit)
+    local position = DCEI.GetUnitPosition2D(unit)
+    local move_down = math.random(2, 4) + math.random()
+    local speed = 1
+
+    local p = {position.x, position.y - move_down}
+    local duration = move_down / speed
+
+    DCEI.Move(unit, p[1], p[2])
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.ApplyBehavior(unit, "Enemy Whelp Missile Launch Enable")
+        end,
+        duration
+    )
+end
+
+function RunEnemyBehavior_EnterAndPursue(unit)
+    local position = DCEI.GetUnitPosition2D(unit)
+    local p = {position.x, position.y - 3}
+
+    DCEI.Move(unit, p[1], p[2])
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            RunEnemyPursueShip(unit)
+        end,
+        3
+    )
+end
+
+function RunEnemyPursueShip(unit)
+    local tick_rate = 0.375
+
+    if not (DCEI.UnitExists(unit) and DCEI.UnitExists(SHIP)) then
+        return
+    end
+    
+    local ship_position = DCEI.GetUnitPosition2D(SHIP)
+    local current_position = DCEI.GetUnitPosition2D(unit)
+
+    -- enemies that pursue cannot move backwards
+    local x = ship_position.x
+    local y = math.min(current_position.y, ship_position.y) - 1
+
+    DCEI.Move(unit, x, y)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            RunEnemyPursueShip(unit)
+        end,
+        tick_rate
+    )
+end
+
+function LaunchShipAttack()
+    DCEI.ApplyBehavior(SHIP, SHIP_ATTACK_ANIM)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            local p = DCEI.GetUnitPosition2D(SHIP)
+            local d = {0, 1}
+            local caster = DCEI.CreateUnitAsync(1, 1, SHIP_CASTER, p.x, p.y, d[1], d[2])
+            DCEI.CastAbility(SHIP_ATTACK, caster, caster)
+        end,
+        0.125
+    )
+end
+
+function SpawnPlayerShip()
+    local p = POINT_SPAWN
+    local d = {0, 1}
+
+    SHIP = DCEI.CreateUnitAsync(1, 1, SHIP_NAME, p[1], p[2], d[1], d[2])
+    core.HookupJoystick(SHIP)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            GAME_IS_RUNNING = true
+            SHIP_X = DCEI.GetUnitPosition2D(SHIP).x
+            RunPlayerShipAnimator(GAME_ID)
+        end,
+        0.125
+    )
+
+end
+
+function AddEnemyScore(unit)
+    local score = GetEnemyScore(unit)
+    DCEI.AddGold(1, score)
+end
+
+function GetEnemyScore(unit)
+    local name = DCEI.UnitName(unit)
+    for i = 1, #ENEMIES do
+        if ENEMIES[i].name == name then
+            return ENEMIES[i].score
+        end
+    end
+    return nil
+end
+
+function ScreenWipe()
+    core.FadeOut(0.25)
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            core.FadeIn(0.25)
+        end,
+        0.375
+    )
+end
+
+function ShowVictoryMessage()
+    DCEI.ShowMessageWithButtonText("Victory", "You are the winner!", "OK")
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SetVictory()
+        end,
+        0.01
+    )
+end
+
+function SpawnWaveSequence()
+    local id = GAME_ID
+    local goblin = ENEMIES[1].name
+    local goblin2 = ENEMIES[2].name
+    local whelp = ENEMIES[3].name
+    local whelp2 = ENEMIES[4].name
+    local wave_time
+
+    
+
+    -- Wave 1
+    wave_time = 3
+    SpawnEnemyWithDelay(id, wave_time + 0, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 2, goblin)
+    
+    -- Wave 2
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 0, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 2, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 4, goblin)
+    
+    -- Wave 3
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 0, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 1, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 2, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 3, goblin)
+    
+    -- Wave 4
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 0, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 2, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 3, whelp)
+
+    -- Wave 5
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 0, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 2, whelp)
+    SpawnEnemyWithDelay(id, wave_time + 3, goblin)
+    SpawnEnemyWithDelay(id, wave_time + 5, whelp)
+    
+    -- Wave 6
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 2, whelp)
+    SpawnEnemyWithDelay(id, wave_time + 4, whelp)
+    SpawnEnemyWithDelay(id, wave_time + 6, whelp)
+
+    -- Wave 7
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 1, goblin2)
+    SpawnEnemyWithDelay(id, wave_time + 3, goblin2)
+    SpawnEnemyWithDelay(id, wave_time + 5, goblin2)
+
+    -- Wave 8
+    wave_time = wave_time + 8
+    SpawnEnemyWithDelay(id, wave_time + 2, whelp)
+    SpawnEnemyWithDelay(id, wave_time + 2, whelp)
+    SpawnEnemyWithDelay(id, wave_time + 6, whelp2)
+    SpawnEnemyWithDelay(id, wave_time + 6, whelp2)
+
+    -- Wave 9 BOSS
+    wave_time = wave_time + 8
+    DCEI.LogMessage("the boss would be here")
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            if GAME_ID == id then
+                ShowVictoryMessage()
+            end
+        end,
+        78
+    )
+end
+
+-- Initialization
+OnMapInitialization()
+
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddUnitSpawnEvent(DCEI.UnitAny, OnUnitSpawn)
+DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnCastAbility)
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd)

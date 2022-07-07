@@ -1,0 +1,12 @@
+{
+    "behaviors": {
+        "Crop State: Growing": {
+            "finalEffect": "Plant Crop: Apply Ready State"
+        },
+        "Crop State: Growth Controller": {
+            "maxStackCount": 100
+        },
+        "Crop State: Ready": {},
+        "Cursor Invalid": {}
+    }
+}

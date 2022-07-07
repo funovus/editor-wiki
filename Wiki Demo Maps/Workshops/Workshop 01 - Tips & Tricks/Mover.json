@@ -1,0 +1,31 @@
+{
+    "movers": {
+        "Arena Rocket Launch": {
+            "guidance": {
+                "acceleration": 20,
+                "speed": 20,
+                "maxSpeed": 24
+            }
+        },
+        "Hazard ArcherTower Launch": {
+            "ballistic": {
+                "speed": 8,
+                "gravity": 32
+            }
+        },
+        "Knockback Launch": {
+            "ballistic": {
+                "speed": 4,
+                "gravity": 20
+            },
+            "noRotation": true
+        },
+        "PowerUp Spawn Launch": {
+            "ballistic": {
+                "speed": 8,
+                "gravity": 32
+            },
+            "upright": true
+        }
+    }
+}

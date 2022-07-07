@@ -1,0 +1,64 @@
+{
+    "abilities": {
+        "Enemy Boss Warship SpawnGoblin Left": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Boss Warship SpawnGoblin Create Left",
+            "description": "data/Arcade/AirshipRush/ability/Enemy Boss Warship SpawnGoblin Left/description",
+            "title": "data/Arcade/AirshipRush/ability/Enemy Boss Warship SpawnGoblin Left/title"
+        },
+        "Enemy Boss Warship SpawnGoblin Right": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Boss Warship SpawnGoblin Create Right",
+            "description": "data/Arcade/AirshipRush/ability/Enemy Boss Warship SpawnGoblin Right/description",
+            "title": "data/Arcade/AirshipRush/ability/Enemy Boss Warship SpawnGoblin Right/title"
+        },
+        "Enemy Goblin Missile Launch": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Goblin Missile Launch",
+            "stats": {
+                "prepTime": 0.1875,
+                "finishTime": 0.375,
+                "period": 0.5
+            },
+            "description": "data/Arcade/ZephyrRush/ability/Enemy Goblin Missile Launch/description",
+            "title": "data/Arcade/ZephyrRush/ability/Enemy Goblin Missile Launch/title"
+        },
+        "Enemy Whelp Missile Launch": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Enemy Whelp Missile Launch",
+            "stats": {
+                "prepTime": 0.1875,
+                "finishTime": 0.375,
+                "period": 0.5
+            },
+            "description": "data/Arcade/ZephyrRush/ability/Enemy Goblin Missile Launch/description",
+            "title": "data/Arcade/ZephyrRush/ability/Enemy Goblin Missile Launch/title"
+        },
+        "Player Ship Missile AutoLaunch": {
+            "abilityType": 2,
+            "castType": 2,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.3125
+            },
+            "canCastWhileMoving": true,
+            "description": "data/Arcade/ZephyrRush/ability/Player Ship Missile AutoLaunch/description",
+            "title": "data/Arcade/ZephyrRush/ability/Player Ship Missile AutoLaunch/title"
+        },
+        "Player Ship Missile Launch": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Player Ship Missile Launch",
+            "stats": {
+                "period": 0.5
+            },
+            "canCastWhileMoving": true,
+            "description": "data/Arcade/ZephyrRush/ability/Player Ship Cannon/description",
+            "title": "data/Arcade/ZephyrRush/ability/Player Ship Cannon/title"
+        }
+    }
+}

@@ -1,0 +1,251 @@
+{
+    "effects": {
+        "Demo Banker Missile Smite": {
+            "parent": "Standard RangedUnit Weapon Launch",
+            "launchMissile": {
+                "missileUnit": "Demo Banker Missile Smite Missile",
+                "effect": "Demo Banker Missile Smite Damage"
+            }
+        },
+        "Demo Banker Missile Smite Damage": {
+            "damage": {
+                "whichUnit": 1,
+                "damageAmount": 5
+            }
+        },
+        "Demo Sine Missile Apply Immolation": {
+            "applyBehavior": {
+                "behavior": "Demo Sine Missile Immolation",
+                "target": 3
+            }
+        },
+        "Demo Sine Missile Caster Spawn Anchor": {
+            "persistent": {
+                "startEffect": "Demo Sine Missile Spawn Anchor",
+                "location": 7
+            }
+        },
+        "Demo Sine Missile Immolation Damage": {
+            "damage": {
+                "whichUnit": 1,
+                "damageAmount": 2.5
+            }
+        },
+        "Demo Sine Missile Immolation Search": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "effect": "Demo Sine Missile Immolation Damage"
+            }
+        },
+        "Demo Sine Missile Initial": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Demo Sine Missile Caster Spawn Anchor",
+                "location": 1,
+                "periodicEffectSelectMode": 1,
+                "periodicEffects": [
+                    "Demo Sine Missile Launch Left",
+                    "Demo Sine Missile Launch Right"
+                ]
+            }
+        },
+        "Demo Sine Missile Launch Left": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "effect": "Demo Sine Missile Search Anchor Left",
+                "launchLocation": 7,
+                "impactLocation": 3,
+                "impactOffset": {
+                    "up": 1
+                },
+                "missileEffect": "Demo Sine Missile Apply Immolation",
+                "mover": "Demo Sine Missile Mover Left"
+            }
+        },
+        "Demo Sine Missile Launch Right": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "effect": "Demo Sine Missile Search Anchor Right",
+                "launchLocation": 7,
+                "impactLocation": 3,
+                "impactOffset": {
+                    "up": 1
+                },
+                "missileEffect": "Demo Sine Missile Apply Immolation",
+                "mover": "Demo Sine Missile Mover Right"
+            }
+        },
+        "Demo Sine Missile Remove Immolation": {
+            "removeBehavior": {
+                "behavior": "Demo Sine Missile Immolation",
+                "target": 3
+            }
+        },
+        "Demo Sine Missile Retarget Left": {
+            "persistent": {
+                "location": 7,
+                "periodicEffects": [
+                    "Demo Sine Missile Search Anchor Left"
+                ]
+            }
+        },
+        "Demo Sine Missile Retarget Right": {
+            "persistent": {
+                "location": 7,
+                "periodicEffects": [
+                    "Demo Sine Missile Search Anchor Right"
+                ]
+            }
+        },
+        "Demo Sine Missile Return Left": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "effect": "Demo Sine Missile Remove Immolation",
+                "launchLocation": 7,
+                "impactLocation": 3,
+                "mover": "Demo Sine Missile Mover Left"
+            }
+        },
+        "Demo Sine Missile Return Left Set": {
+            "set": {
+                "effectList": [
+                    "Demo Sine Missile Return Left",
+                    "Kill Target"
+                ]
+            }
+        },
+        "Demo Sine Missile Return Right": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "effect": "Demo Sine Missile Remove Immolation",
+                "launchLocation": 7,
+                "impactLocation": 3,
+                "mover": "Demo Sine Missile Mover Right"
+            }
+        },
+        "Demo Sine Missile Return Right Set": {
+            "set": {
+                "effectList": [
+                    "Demo Sine Missile Return Right",
+                    "Kill Target"
+                ]
+            }
+        },
+        "Demo Sine Missile Search Anchor Left": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "children": {}
+                },
+                "effect": "Demo Sine Missile Return Left Set"
+            }
+        },
+        "Demo Sine Missile Search Anchor Right": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "children": {}
+                },
+                "effect": "Demo Sine Missile Return Right Set"
+            }
+        },
+        "Demo Sine Missile Spawn Anchor": {
+            "spawnTroop": {
+                "unit": "Demo Sine Missile Anchor",
+                "spawnCount": 1
+            }
+        },
+        "Kill Target": {
+            "persistent": {
+                "targetType": 1,
+                "startEffect": "Kill",
+                "location": 1
+            }
+        },
+        "Spawn Demo Sine Missile Persistent": {
+            "persistent": {
+                "periodicCount": 1,
+                "periodicDurations": [
+                    0.125
+                ],
+                "periodicEffects": [
+                    "Spawn Demo Sine Missile Spawn"
+                ],
+                "periodicOffsetSelectMode": 2,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 0,
+                        "right": -2,
+                        "up": 0
+                    },
+                    {
+                        "forward": 0,
+                        "right": -1
+                    },
+                    {},
+                    {
+                        "right": 1
+                    },
+                    {
+                        "right": 2
+                    },
+                    {
+                        "forward": -1,
+                        "right": -2,
+                        "up": 0
+                    },
+                    {
+                        "forward": -1,
+                        "right": -1
+                    },
+                    {
+                        "forward": -1
+                    },
+                    {
+                        "forward": -1,
+                        "right": 1
+                    },
+                    {
+                        "forward": -1,
+                        "right": 2
+                    },
+                    {
+                        "forward": -1,
+                        "right": -2,
+                        "up": 1
+                    },
+                    {
+                        "forward": -1,
+                        "right": -1,
+                        "up": 1
+                    },
+                    {
+                        "forward": -1,
+                        "up": 1
+                    },
+                    {
+                        "forward": -1,
+                        "right": 1,
+                        "up": 1
+                    },
+                    {
+                        "forward": -1,
+                        "right": 2,
+                        "up": 1
+                    }
+                ]
+            }
+        },
+        "Spawn Demo Sine Missile Spawn": {
+            "spawn": {
+                "unit": "Demo Sine Missile",
+                "count": 1,
+                "location": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2,
+                "offset": {
+                    "forward": -10,
+                    "up": 2
+                }
+            }
+        }
+    }
+}

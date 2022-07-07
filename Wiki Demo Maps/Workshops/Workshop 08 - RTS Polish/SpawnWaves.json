@@ -1,0 +1,8 @@
+{
+    "cameraSettings": {
+        "pitchAngleDegree": 41,
+        "allowPanX": false,
+        "skipIntroSequence": true,
+        "viewMode": 1
+    }
+}

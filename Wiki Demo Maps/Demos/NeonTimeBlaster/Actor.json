@@ -1,0 +1,2279 @@
+{
+    "actors": {
+        "Arcade NTB Backdrop Black": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "towerslot_forestworld"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 1,
+                                        "g": 1,
+                                        "b": 1
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy 12"
+                ],
+                "modelScale": 90
+            }
+        },
+        "Arcade NTB Background Star": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_lighthouse_weapon_missile"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "timer_remove",
+                                    "duration": 3
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.6
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 3
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.4
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.2
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 0.6
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "timer_remove"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "status_dead",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Background Star Trail"
+                                }
+                            },
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 600,
+                                        "g": 600,
+                                        "b": 600
+                                    }
+                                }
+                            },
+                            {
+                                "setVariable": {
+                                    "name": "randomSeed",
+                                    "valueExpression": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 3
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "birth",
+                                    "duration": 0.0625
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.2,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 6,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.8,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 2,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.4,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 1.2,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.6,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 3,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.4,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 1,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Arcade NTB Star Beat"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "randomSeed"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.2,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "actor": "_UnitModelAddition",
+                                    "modelScale": 0.6,
+                                    "duration": 0.125
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteHit": {
+                        "offset": {
+                            "forward": 0.1,
+                            "up": 0.25
+                        }
+                    },
+                    "SiteStatus": {
+                        "offset": {
+                            "forward": 0.05,
+                            "up": 0.75
+                        }
+                    }
+                },
+                "walkAnimationSpeed": 1,
+                "modelScale": 0.4,
+                "selectionBonusRadius": -4,
+                "aliases": [
+                    "_Unit"
+                ]
+            }
+        },
+        "Arcade NTB Background Star Trail": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "general_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 3
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.2
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 3
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 3
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 3
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.6,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Beat SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "overdrive"
+                }
+            }
+        },
+        "Arcade NTB Decay Small Blue": {
+            "parent": "",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_decay_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Decay Small Blue"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOff": {
+                                "effect": "Arcade NTB Decay Small Blue"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy CliffHeight"
+                ],
+                "modelScale": 0.4
+            }
+        },
+        "Arcade NTB Decay Small Green": {
+            "parent": "",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_decay_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Decay Small Green"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOff": {
+                                "effect": "Arcade NTB Decay Small Green"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy CliffHeight"
+                ],
+                "modelScale": 0.4
+            }
+        },
+        "Arcade NTB Decay Small Red": {
+            "parent": "",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_decay_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Decay Small Red"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "shakeCamera": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOff": {
+                                "effect": "Arcade NTB Decay Small Red"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy CliffHeight"
+                ],
+                "modelScale": 0.4
+            }
+        },
+        "Arcade NTB Enemy Trail Fire Small": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "red_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Enemy Trail Fire Small Longer": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "red_trail_longer"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Enemy Trail Nature Small": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "green_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Enemy Trail Nature Small Longer": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "green_trail_longer"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Enemy Trail Water Small": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "blue_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Enemy Trail Water Small Longer": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "blue_trail_longer"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 4,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Hero Trail Fire": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "red_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 8,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Hero Trail Nature": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "green_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 8,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB Hero Trail Water": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "blue_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDestroy"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHide"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShow"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 8,
+                "aliases": [
+                    "_UnitModelAddition"
+                ]
+            }
+        },
+        "Arcade NTB OffScreen Remover": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                },
+                "preserveOnUnitRemove": true,
+                "eventMacros": [
+                    "Events StandardUnit AttackAnimation",
+                    "Events StandardUnit DeathAnimation"
+                ]
+            }
+        },
+        "Arcade NTB OffScreen Remover Vertical": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                },
+                "preserveOnUnitRemove": true,
+                "eventMacros": [
+                    "Events StandardUnit AttackAnimation",
+                    "Events StandardUnit DeathAnimation"
+                ]
+            }
+        },
+        "Arcade NTB Ooze Fire 01": {
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 2000,
+                                        "g": 200,
+                                        "b": 200
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementFire"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Enemy Trail Fire Small Longer"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardCreepDeath Small PoofOnDeath",
+                    "Arcade NTB Creep Red"
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Ooze Nature 01": {
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 2000,
+                                        "b": 200
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementNature"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Enemy Trail Nature Small Longer"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardCreepDeath Small PoofOnDeath",
+                    "Arcade NTB Creep Green"
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Ooze Water 01": {
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 200,
+                                        "b": 2000
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementWater"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Enemy Trail Water Small Longer"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardCreepDeath Small PoofOnDeath",
+                    "Arcade NTB Creep Blue"
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Attack": {
+            "actionActor": {
+                "effect": "Arcade NTB Player Basic Attack Fire Launch",
+                "launchModel": "Arcade NTB Player Basic Attack Fire Launch FX",
+                "impactModel": "Arcade NTB Player Basic Attack Fire Impact FX",
+                "launchSite": "SiteCrystal",
+                "launchSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_impact_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Fire Impact SFX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Player Basic Attack Fire Impact"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.8
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Impact SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "fireball_hit"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Launch FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_muzzleflash_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Fire Launch SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Launch SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "placeholder"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 355,
+                                        "g": 195,
+                                        "b": 95
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.6
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Attack": {
+            "actionActor": {
+                "effect": "Arcade NTB Player Basic Attack Nature Launch",
+                "launchModel": "Arcade NTB Player Basic Attack Nature Launch FX",
+                "impactModel": "Arcade NTB Player Basic Attack Nature Impact FX",
+                "launchSite": "SiteCrystal",
+                "launchSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_impact_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Nature Impact SFX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Player Basic Attack Nature Impact"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.8
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Impact SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "desertworld_sand_uncover"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Launch FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_muzzleflash_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Nature Launch SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Launch SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "placeholder"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 148,
+                                        "g": 255,
+                                        "b": 64
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.6
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Attack": {
+            "actionActor": {
+                "effect": "Arcade NTB Player Basic Attack Water Launch",
+                "launchModel": "Arcade NTB Player Basic Attack Water Launch FX",
+                "impactModel": "Arcade NTB Player Basic Attack Water Impact FX",
+                "launchSite": "SiteCrystal",
+                "launchSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_impact_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Water Impact SFX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Player Basic Attack Nature Impact"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.8
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Impact SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "mana_fountain_activate"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Launch FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_muzzleflash_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Player Basic Attack Water Launch SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Launch SFX": {
+            "parent": "_SFX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "placeholder"
+                }
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_missile_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.6,
+                                    "duration": 0.125
+                                }
+                            },
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 128,
+                                        "g": 192,
+                                        "b": 356
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0
+            }
+        },
+        "Arcade NTB Player Hero Fire": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dwarfsmith"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 1200,
+                                        "g": 200,
+                                        "b": 200
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementFire"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Hero Trail Fire"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.15,
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "walkAnimationSpeed": 1.7,
+                "modelScale": 1.15,
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ],
+                "selectionBonusRadius": 0.05
+            }
+        },
+        "Arcade NTB Player Hero Nature": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dwarfsmith"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 1200,
+                                        "b": 200
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementNature"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Hero Trail Nature"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.15,
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "walkAnimationSpeed": 1.7,
+                "modelScale": 0.01,
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ],
+                "selectionBonusRadius": 0.05
+            }
+        },
+        "Arcade NTB Player Hero Water": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dwarfsmith"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 200,
+                                        "g": 200,
+                                        "b": 1200
+                                    }
+                                }
+                            },
+                            {
+                                "setMeshEffect": {
+                                    "effect": "ElementWater"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Hero Trail Water"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.15,
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.01,
+                                    "duration": 0.5
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "walkAnimationSpeed": 1.7,
+                "modelScale": 1.15,
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ],
+                "selectionBonusRadius": 0.05
+            }
+        },
+        "Arcade NTB SpawnFlash Blue": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_muzzleflash_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Spawn FX Blue"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy SkyHeight"
+                ],
+                "modelScale": 40
+            }
+        },
+        "Arcade NTB SpawnFlash Green": {
+            "siteOperation": {
+                "offset": {
+                    "y": -1.2
+                }
+            }
+        },
+        "Arcade NTB SpawnFlash Red": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arcade_muzzleflash_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "Arcade NTB Spawn FX Red"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp DownBy SkyHeight"
+                ],
+                "modelScale": 40
+            }
+        },
+        "Arcade NTB Target": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "timer_remove",
+                                    "duration": 3
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "timer_remove"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "status_dead",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": false
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Backdrop Black"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Arcade NTB Beat Behavior"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arcade NTB Beat SFX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteHit": {
+                        "offset": {
+                            "forward": 0.1,
+                            "up": 0.25
+                        }
+                    },
+                    "SiteStatus": {
+                        "offset": {
+                            "forward": 0.05,
+                            "up": 0.75
+                        }
+                    }
+                },
+                "walkAnimationSpeed": 1,
+                "aliases": [
+                    "_Unit"
+                ]
+            }
+        },
+        "Death Poof SFX": {
+            "modelActor": {
+                "resource": {
+                    "type": "Sound",
+                    "name": "placeholder"
+                }
+            }
+        },
+        "Generic Creep Death Small FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_creep_death_small"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Death Poof SFX"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "SOp DownBy 12": {
+            "siteOperation": {
+                "offset": {
+                    "y": -12
+                }
+            }
+        },
+        "SOp DownBy CliffHeight": {
+            "siteOperation": {
+                "offset": {
+                    "y": -1.2
+                }
+            }
+        },
+        "SOp DownBy SkyHeight": {
+            "siteOperation": {
+                "offset": {
+                    "y": -12
+                }
+            }
+        },
+        "Ship": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                }
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Arcade NTB Creep Blue": {},
+        "Arcade NTB Creep Green": {},
+        "Arcade NTB Creep Red": {},
+        "Events StandardCreepDeath Small PoofOnDeath": {}
+    }
+}

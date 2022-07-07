@@ -1,0 +1,275 @@
+{
+    "units": {
+        "Enemy Boss Warship": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 2,
+                    "air": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 60
+                },
+                "movement": {
+                    "moveSpeed": 1.3,
+                    "unitHeight": 1
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Enemy Boss Warship SpawnGoblin Left",
+                    "Enemy Boss Warship SpawnGoblin Right"
+                ],
+                "behaviorList": [
+                    "Enemy DamageResponse",
+                    "Enemy Boss Warship CollisionScan"
+                ]
+            },
+            "displayName": "data/GameData/unit/Boss GoblinWarship/display_name",
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Boss Warship Caster": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "immortal": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "movement": {
+                    "unitHeight": 2.5
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Boss ChainMissile Launch"
+                ],
+                "behaviorList": [
+                    "Player Ship Caster Duration"
+                ]
+            }
+        },
+        "Enemy Goblin": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                },
+                "movement": {
+                    "moveSpeed": 1,
+                    "unitHeight": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Enemy Goblin Missile Launch"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Goblin 2": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 2
+                },
+                "movement": {
+                    "moveSpeed": 1,
+                    "unitHeight": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Enemy Goblin Missile Launch"
+                ],
+                "behaviorList": [
+                    "Enemy Goblin Deathrattle",
+                    "Enemy DamageResponse"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Goblin FromWarship": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                },
+                "movement": {
+                    "moveSpeed": 1,
+                    "unitHeight": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Enemy Goblin Missile Launch"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Goblin Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "Enemy Whelp": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                },
+                "movement": {
+                    "moveSpeed": 1.3,
+                    "unitHeight": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Whelp Missile Launch"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Whelp 2": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 2
+                },
+                "movement": {
+                    "moveSpeed": 1.3,
+                    "unitHeight": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Whelp 2 Missile Launch"
+                ],
+                "behaviorList": [
+                    "Enemy DamageResponse"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy Whelp Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "GameSystem Caster": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "selectable": false
+                }
+            }
+        },
+        "Player Ship": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "air": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "movement": {
+                    "moveSpeed": 6,
+                    "unitHeight": 1.25
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Player Ship Missile AutoLaunch"
+                ],
+                "behaviorList": [
+                    "Player Ship CollisionScan"
+                ]
+            }
+        },
+        "Player Ship Caster": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "immortal": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "movement": {
+                    "unitHeight": 2.5
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Player Ship Missile Launch"
+                ],
+                "behaviorList": [
+                    "Player Ship Caster Duration"
+                ]
+            }
+        },
+        "Player Ship Missile": {
+            "baseUnit": "_CMissile",
+            "references": {
+                "behaviorList": [
+                    "Player Ship Missile Scan"
+                ]
+            }
+        }
+    }
+}

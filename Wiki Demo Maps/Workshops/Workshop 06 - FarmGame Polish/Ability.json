@@ -1,0 +1,29 @@
+{
+    "abilities": {
+        "Harvest Crops": {
+            "parent": "_PlaceCropTemplate",
+            "effect": "DoNothing",
+            "preserveMenu": true,
+            "targetingValidCursorActor": "Harvest Cursor",
+            "targetingInvalidCursorActor": "Harvest Cursor"
+        },
+        "Place Crop: Tree": {
+            "parent": "_PlaceCropTemplate",
+            "effect": "Create Crop: Tree",
+            "preserveMenu": true,
+            "targetingValidCursorActor": "Crop Tree Placement",
+            "targetingInvalidCursorActor": "Crop Tree Placement_Invalid"
+        },
+        "_PlaceCropTemplate": {
+            "abilityType": 1,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "range": 80
+            },
+            "Validators": [
+                "Crop Valid Position"
+            ]
+        }
+    }
+}

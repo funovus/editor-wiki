@@ -1,0 +1,95 @@
+{
+    "units": {
+        "Goblin Leader OrcBrute": {
+            "baseUnit": "_StandardLeader",
+            "references": {
+                "weaponList": [
+                    "Standard Leader Weapon"
+                ]
+            },
+            "healthBar": {
+                "type": 0
+            }
+        },
+        "Goblin Troop Club": {
+            "baseUnit": "_StandardTroop",
+            "references": {
+                "weaponList": [
+                    "Standard Troop Weapon"
+                ]
+            }
+        },
+        "Human Leader WindKnight": {
+            "baseUnit": "_StandardLeader",
+            "references": {
+                "weaponList": [
+                    "Standard Leader Weapon"
+                ],
+                "behaviorList": [
+                    "System Knockback"
+                ]
+            },
+            "healthBar": {
+                "type": 0
+            }
+        },
+        "Human Troop Footman": {
+            "baseUnit": "_StandardTroop",
+            "references": {
+                "weaponList": [
+                    "Standard Troop Weapon"
+                ],
+                "behaviorList": [
+                    "System Knockback"
+                ]
+            }
+        },
+        "_StandardLeader": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.5
+                },
+                "health": {
+                    "maxHealth": 150
+                },
+                "mana": {
+                    "maxMana": 100,
+                    "startMana": 0,
+                    "regeneration": 10
+                },
+                "movement": {
+                    "moveSpeed": 1
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "System HitReaction"
+                ]
+            },
+            "healthBar": {
+                "type": 0
+            }
+        },
+        "_StandardTroop": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.25
+                },
+                "health": {
+                    "maxHealth": 30
+                },
+                "movement": {
+                    "moveSpeed": 1
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "System HitReaction",
+                    "Unit Tag Troop"
+                ]
+            }
+        }
+    }
+}

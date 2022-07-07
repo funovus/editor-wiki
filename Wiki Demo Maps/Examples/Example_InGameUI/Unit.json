@@ -1,0 +1,161 @@
+{
+    "units": {
+        "Enemy Caster": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "immortal": true,
+                    "ground": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "behavior": {
+                    "doNothing": {}
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Enemy State Default"
+                ]
+            },
+            "hideUnitStatusBar": true
+        },
+        "Enemy SlimeBlue": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "mana": {
+                    "maxMana": 100,
+                    "regeneration": 50
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Demo Ability 1",
+                    "Demo Ability 2",
+                    "Demo Ability 3",
+                    "Demo Ability 4",
+                    "Demo Ability 5",
+                    "Demo Ability 6"
+                ]
+            }
+        },
+        "Enemy SlimeGreen": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "mana": {
+                    "maxMana": 100,
+                    "regeneration": 50
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Demo Ability 1",
+                    "Demo Ability 2",
+                    "Demo Ability 3",
+                    "Demo Ability 4",
+                    "Demo Ability 5",
+                    "Demo Ability 6"
+                ]
+            }
+        },
+        "Enemy SlimeRed": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "mana": {
+                    "maxMana": 100,
+                    "regeneration": 50
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Demo Ability 1",
+                    "Demo Ability 2",
+                    "Demo Ability 3",
+                    "Demo Ability 4",
+                    "Demo Ability 5",
+                    "Demo Ability 6"
+                ]
+            }
+        },
+        "Enemy SlimeYellow": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "mana": {
+                    "maxMana": 100,
+                    "regeneration": 50
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Demo Ability 1",
+                    "Demo Ability 2",
+                    "Demo Ability 3",
+                    "Demo Ability 4",
+                    "Demo Ability 5",
+                    "Demo Ability 6"
+                ]
+            }
+        },
+        "Player Hero": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.325,
+                    "ground": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                },
+                "mana": {
+                    "maxMana": 10,
+                    "regeneration": 10
+                },
+                "movement": {
+                    "moveSpeed": 6
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Player Hero Slash"
+                ]
+            },
+            "ingameIcon": "icon_ingame_hero_wind_knight"
+        },
+        "_StandardEnemy": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "ground": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "movement": {
+                    "moveSpeed": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 100
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Enemy State Default Delayed"
+                ]
+            },
+            "hideUnitStatusBar": true
+        }
+    }
+}

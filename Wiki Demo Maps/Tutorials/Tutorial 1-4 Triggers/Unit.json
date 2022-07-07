@@ -1,0 +1,23 @@
+{
+    "units": {
+        "Hero IceMage": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "health": {
+                    "maxHealth": 100
+                },
+                "mana": {
+                    "maxMana": 100
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Hero IceMage Weapon"
+                ]
+            }
+        },
+        "Hero IceMage Weapon Missile": {
+            "baseUnit": "_CMissile"
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "units": {
+        "Hero IceMage": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "health": {
+                    "maxHealth": 100
+                },
+                "mana": {
+                    "maxMana": 100
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "units": {
+        "Hero": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "health": {
+                    "maxHealth": 330
+                },
+                "mana": {
+                    "maxMana": 100,
+                    "regeneration": 5,
+                    "regenerationDelay": 1
+                },
+                "movement": {
+                    "moveSpeed": 3
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "FlameStrike"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        }
+    }
+}

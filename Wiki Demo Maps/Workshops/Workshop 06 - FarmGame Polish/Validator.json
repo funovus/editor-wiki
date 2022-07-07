@@ -1,0 +1,26 @@
+{
+    "validators": {
+        "Crop Valid Position": {
+            "combine": {
+                "validatorList": [
+                    "Target On Navmesh"
+                ]
+            }
+        },
+        "NoUnitsNear": {
+            "negate": false,
+            "unitWithinRange": {
+                "range": 1,
+                "unitCountRange": {
+                    "min": 0,
+                    "max": 0
+                }
+            }
+        },
+        "Target On Navmesh": {
+            "pointOnNavmesh": {
+                "target": 2
+            }
+        }
+    }
+}

@@ -1,0 +1,342 @@
+{
+    "units": {
+        "Base Build Economy": {
+            "baseUnit": "_CBuilding",
+            "components": {
+                "unitStats": {
+                    "immortal": true
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Base Build Economy"
+                ]
+            }
+        },
+        "Base Upgrade Archer": {
+            "baseUnit": "_CBuilding",
+            "components": {
+                "unitStats": {
+                    "immortal": true
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Base Upgrade Archer"
+                ]
+            }
+        },
+        "Base Upgrade Center": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "immortal": true,
+                    "selectable": true
+                }
+            }
+        },
+        "Base Upgrade Economy": {
+            "baseUnit": "_CBuilding",
+            "components": {
+                "unitStats": {
+                    "immortal": true
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Base Upgrade Economy"
+                ]
+            }
+        },
+        "Base Upgrade Fighter": {
+            "baseUnit": "_CBuilding",
+            "components": {
+                "unitStats": {
+                    "immortal": true
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Base Upgrade Fighter"
+                ]
+            }
+        },
+        "Enemy Boss ZombieOgre": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.4,
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 120
+                },
+                "movement": {
+                    "moveSpeed": 0.75
+                },
+                "turning": {
+                    "turningSpeed": 180
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 7
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Boss ZombieOgre Weapon"
+                ],
+                "abilityList": [
+                    "Enemy ConvertToJungle",
+                    "Enemy Boss ZombieOgre Jungle"
+                ],
+                "behaviorList": [
+                    "Enemy Waypoint Finish"
+                ]
+            }
+        },
+        "Enemy Boss ZombieOgre Jungle": {
+            "baseUnit": "Enemy Boss ZombieOgre",
+            "components": {
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Enemy Zombie": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 4
+                },
+                "movement": {
+                    "moveSpeed": 1
+                },
+                "turning": {
+                    "turningSpeed": 180
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 7
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy Zombie Weapon"
+                ],
+                "abilityList": [
+                    "Enemy ConvertToJungle",
+                    "Enemy Zombie Jungle"
+                ],
+                "behaviorList": [
+                    "Enemy Waypoint Finish"
+                ]
+            }
+        },
+        "Enemy Zombie Jungle": {
+            "baseUnit": "Enemy Zombie",
+            "components": {
+                "unitStats": {
+                    "ignoreCollision": true
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2
+                    }
+                }
+            }
+        },
+        "Player Archer": {
+            "components": {
+                "unitStats": {
+                    "radius": 0.15,
+                    "selectable": false
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 4
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Player Archer Weapon 100",
+                    "Player Archer Weapon 075",
+                    "Player Archer Weapon 050",
+                    "Player Archer Weapon 025"
+                ]
+            },
+            "displayName": "data/GameData/unit/_CUnit/display_name"
+        },
+        "Player Archer Weapon Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "Player Castle Chunk": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.5,
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 99999
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Player Castle Chunk HitResponse"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Player Castle Gate": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.1,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 100
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2
+                    }
+                }
+            }
+        },
+        "Player Fighter": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "ground": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "movement": {
+                    "moveSpeed": 2
+                },
+                "turning": {
+                    "turningSpeed": 180
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 1,
+                            "engageRadius": 1,
+                            "resetRadius": 1
+                        }
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Player Fighter Weapon"
+                ]
+            }
+        },
+        "Player Hero Dragoon": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "ground": true,
+                    "selectable": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 40
+                },
+                "mana": {
+                    "maxMana": 100,
+                    "startMana": 0,
+                    "regeneration": 4
+                },
+                "movement": {
+                    "moveSpeed": 3
+                },
+                "turning": {
+                    "turningSpeed": 720
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 2,
+                            "engageRadius": 2,
+                            "resetRadius": 2
+                        }
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Player Hero Dragoon Weapon"
+                ],
+                "abilityList": [
+                    "Player Hero Dragoon SummonTroops"
+                ],
+                "behaviorList": [
+                    "Player Hero PauseManaGeneration"
+                ]
+            },
+            "ingameIcon": "icon_ingame_hero_last_dragoon"
+        },
+        "Player Hero Dragoon SummonTroop": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "ground": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "movement": {
+                    "moveSpeed": 2
+                },
+                "turning": {
+                    "turningSpeed": 180
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 1,
+                            "engageRadius": 1,
+                            "resetRadius": 1
+                        }
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Player Fighter Weapon"
+                ],
+                "behaviorList": [
+                    "Player Hero Dragoon SummonTroop TimedLife"
+                ]
+            }
+        }
+    }
+}

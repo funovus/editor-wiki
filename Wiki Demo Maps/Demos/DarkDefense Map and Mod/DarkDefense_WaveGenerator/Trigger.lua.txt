@@ -1,0 +1,146 @@
+local core = require("core")
+
+-- Variables
+local SEED = 09242019
+core.SetRandomSeed(SEED)
+
+-- local WAVE_CURRENT = 1
+
+local CURRENT_WAVE = {}
+
+local UNIT_NAMES = {
+    "Enemy Zombie"
+}
+
+local BOSS_NAMES = {
+    "Enemy Boss ZombieOgre"
+}
+
+local BOSS_SCALING = "Enemy Boss Scaling"
+local BOSS_COUNT = 0
+
+-- Triggers
+function GetTargetHealthForWave(wave_id)
+    local base_health = 72
+    local growth_multiplier = 1.1
+    return base_health * (growth_multiplier ^ (wave_id - 1))
+end
+
+function GetWaveGold(wave_id)
+    local base_gold = 15
+    local growth_multiplier = 1.05
+    return base_gold * (growth_multiplier ^ (wave_id - 1))
+end
+
+function GetWaveUnit()
+    local index = core.RandomInteger(1, #UNIT_NAMES)
+    return UNIT_NAMES[index]
+end
+
+function GetWaveUnitCount(unit_name, target_health, subwave_index)
+    local count
+    local unit_health = DCEI.GetUnitTypeHealth(unit_name)
+    local subwave_values = {
+        {min = 25, max = 40},
+        {min = 40, max = 60},
+        {min = 100, max = 100}
+    }
+    local subwave_fraction = core.RandomInteger(subwave_values[subwave_index].min, subwave_values[subwave_index].max) * 0.01
+    local subwave_health = target_health * subwave_fraction
+    local count = math.ceil(subwave_health / unit_health)
+
+    DCEI.LogMessage("-- subwave " .. subwave_index .. " using " .. subwave_fraction .. " of " .. subwave_health .. " equals count " .. count)
+    return count
+end
+
+function GenerateNextWave()
+    local wave_id = DCEI.TriggeringWaveId
+
+    local target_health = GetTargetHealthForWave(wave_id)
+    
+    local lane_name = "Main"
+    local pattern = "Random Standard (Fast)"
+    local unit = GetWaveUnit()
+    
+    local subwave_delay = 5
+    local subwave_index = 1
+    local delay = 0
+    local total_health = 0
+    local groups = {}
+
+    DCEI.LogMessage("=== GENERATING WAVE " .. wave_id .. " WITH HEALTH (" .. target_health .. ")")
+    while total_health < target_health do
+        local health_remaining = target_health - total_health
+        local count = GetWaveUnitCount(unit, health_remaining, subwave_index)
+
+        table.insert( 
+            groups,
+            {
+                route_name = lane_name,
+                initial_delay = delay,
+                unit = unit,
+                pattern = pattern,
+                count = count
+            }
+        )
+
+        delay = delay + subwave_delay
+        subwave_index = subwave_index + 1
+        total_health = total_health + (count * DCEI.GetUnitTypeHealth(unit))
+    end
+
+    local wave = {
+        total_gold = GetWaveGold(wave_id),
+        bonus_gold = 0,
+        start_delay = wave_id == 1 and 0 or 0.2,
+        call_wave_countdown = 3000,
+        groups = groups
+    }
+
+    DCEI.AddSpawnWave(wave)
+end
+
+function CheckToSpawnBoss(wave_id)
+    local boss_delay = 12
+    if wave_id % 5 == 0 then
+        DCEI.TriggerAddTimerEventElapsed(
+            function()
+                SpawnBoss()
+            end,
+            boss_delay
+        )
+    end
+end
+
+function SpawnBoss()
+    local x, y = 47, 10.5
+    local i = core.RandomInteger(1, #BOSS_NAMES)
+    local boss_name = BOSS_NAMES[i]
+
+    BOSS_COUNT = BOSS_COUNT + 1
+
+    local boss = DCEI.CreateUnitAsync(-1, -1, boss_name, x, y)
+    DCEI.ApplyBehavior(boss, "Enemy Waypoint Start")
+    DCEI.ApplyBehavior(boss, BOSS_SCALING, BOSS_COUNT)
+end
+
+-- Initialization
+
+
+-- Mod
+local mod = {}
+
+function mod.GenerateWaves()
+    DCEI.LogMessage(">> Infinite Waves Generated")
+    DCEI.AddDynamicSpawnWaves(-1, GenerateNextWave)
+end
+
+function mod.CheckToSpawnBoss(wave_id)
+    CheckToSpawnBoss(wave_id)
+end
+
+function mod.SpawnBoss()
+    SpawnBoss()
+end
+
+return mod

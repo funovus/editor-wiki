@@ -1,0 +1,13 @@
+{
+    "abilities": {
+        "FlameStrike": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "FlameStrike Create",
+            "cost": {
+                "mana": 15
+            },
+            "canCastWhileMoving": true
+        }
+    }
+}

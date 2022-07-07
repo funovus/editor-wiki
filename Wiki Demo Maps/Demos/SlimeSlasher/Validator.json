@@ -1,0 +1,13 @@
+{
+    "validators": {
+        "Enemy State Action": {
+            "expression": {
+                "value": {
+                    "behaviorStackCount": {
+                        "behavior": "Enemy State Action"
+                    }
+                }
+            }
+        }
+    }
+}

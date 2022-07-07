@@ -1,0 +1,65 @@
+{
+    "behaviors": {
+        "Arcade NTB Basic Attack Fire CollisionCheck": {
+            "periodicInterval": 0.025,
+            "periodicEffect": "Arcade NTB Basic Attack Fire CollisionCheck"
+        },
+        "Arcade NTB Basic Attack Nature CollisionCheck": {
+            "periodicInterval": 0.025,
+            "periodicEffect": "Arcade NTB Basic Attack Nature CollisionCheck"
+        },
+        "Arcade NTB Basic Attack Water CollisionCheck": {
+            "periodicInterval": 0.025,
+            "periodicEffect": "Arcade NTB Basic Attack Water CollisionCheck"
+        },
+        "Arcade NTB Beat Behavior": {
+            "duration": 0.125
+        },
+        "Arcade NTB Invulnerable 0.25s": {
+            "duration": 0.25,
+            "modifiers": {
+                "flags": {
+                    "invulnerable": true
+                }
+            }
+        },
+        "Arcade NTB OffScreen ScoreRemove": {
+            "periodicInterval": 0.0626,
+            "periodicEffect": "Arcade NTB OffScreenSearch"
+        },
+        "Arcade NTB OffScreen ScoreRemove Vertical": {
+            "periodicInterval": 0.0626,
+            "periodicEffect": "Arcade NTB OffScreenSearch Vertical"
+        },
+        "Arcade NTB Star Beat": {
+            "duration": 0.125
+        },
+        "Arcade NTB Star Timed Life": {
+            "maxStackCount": 1,
+            "duration": 3,
+            "expireEffect": "Kill",
+            "behaviorTagArray": [
+                {
+                    "name": "gt_timedLife",
+                    "count": 1
+                }
+            ]
+        },
+        "Arcade NTB Star Variable Speed": {
+            "maxStackCount": 999,
+            "duration": -1,
+            "modifiers": {
+                "moveSpeedModifier": {
+                    "scaled": 0,
+                    "additiveFactor": 0,
+                    "unifiedFactor": 0.0625,
+                    "multiplierFactor": 0.0625
+                }
+            }
+        },
+        "GameAttribute ElementFire": {},
+        "GameAttribute ElementNature": {},
+        "GameAttribute ElementWater": {},
+        "GameSystem Enemy": {}
+    }
+}

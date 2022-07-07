@@ -1,0 +1,22 @@
+{
+    "behaviors": {
+        "Demo Banker Missile Radiance Periodic": {},
+        "Demo Sine Missile Immolation": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Demo Sine Missile Immolation Search",
+            "modifiers": {
+                "disabledWeapons": [
+                    "Demo Sine Missile"
+                ]
+            }
+        },
+        "Spawn Demo Orb Missile": {
+            "startEffect": "Spawn Demo Sine Missile Persistent"
+        },
+        "Spawn Demo Sine Missile": {
+            "startEffect": "Spawn Demo Sine Missile Persistent",
+            "periodicInterval": 30,
+            "periodicEffect": "Spawn Demo Sine Missile Persistent"
+        }
+    }
+}

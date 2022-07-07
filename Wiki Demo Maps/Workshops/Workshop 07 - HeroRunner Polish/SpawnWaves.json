@@ -1,0 +1,571 @@
+{
+    "spawnWaves": {
+        "Wave01": {
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "MainPath",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 4,
+                            "initialDelay": 1
+                        },
+                        {
+                            "name": "L01.G02",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 4,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G01"
+                            ]
+                        },
+                        {
+                            "name": "L01.G03",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 4,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G02"
+                            ]
+                        },
+                        {
+                            "name": "L01.G04",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 7,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G03"
+                            ]
+                        },
+                        {
+                            "name": "L01.G05",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 7,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G04"
+                            ]
+                        },
+                        {
+                            "name": "L01.G06",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 7,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G05"
+                            ]
+                        },
+                        {
+                            "name": "L01.G07",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 10,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G06"
+                            ]
+                        },
+                        {
+                            "name": "L01.G08",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 10,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G07"
+                            ]
+                        },
+                        {
+                            "name": "L01.G09",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 10,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G08"
+                            ]
+                        },
+                        {
+                            "name": "L01.G10",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 6,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G11",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 6,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G12",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 6,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wave02": {
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "MainPath",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 8,
+                            "initialDelay": 1
+                        },
+                        {
+                            "name": "L01.G02",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 8,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G01"
+                            ]
+                        },
+                        {
+                            "name": "L01.G03",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 8,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G02"
+                            ]
+                        },
+                        {
+                            "name": "L01.G04",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 14,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G03"
+                            ]
+                        },
+                        {
+                            "name": "L01.G05",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 14,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G04"
+                            ]
+                        },
+                        {
+                            "name": "L01.G06",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 14,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G05"
+                            ]
+                        },
+                        {
+                            "name": "L01.G07",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 20,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G06"
+                            ]
+                        },
+                        {
+                            "name": "L01.G08",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 20,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G07"
+                            ]
+                        },
+                        {
+                            "name": "L01.G09",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 20,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G08"
+                            ]
+                        },
+                        {
+                            "name": "L01.G10",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 12,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G11",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 12,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G12",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 12,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wave03": {
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "MainPath",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 16,
+                            "initialDelay": 1
+                        },
+                        {
+                            "name": "L01.G02",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 16,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G01"
+                            ]
+                        },
+                        {
+                            "name": "L01.G03",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 16,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G02"
+                            ]
+                        },
+                        {
+                            "name": "L01.G04",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 28,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G03"
+                            ]
+                        },
+                        {
+                            "name": "L01.G05",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 28,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G04"
+                            ]
+                        },
+                        {
+                            "name": "L01.G06",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 28,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G05"
+                            ]
+                        },
+                        {
+                            "name": "L01.G07",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 40,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G06"
+                            ]
+                        },
+                        {
+                            "name": "L01.G08",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 40,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G07"
+                            ]
+                        },
+                        {
+                            "name": "L01.G09",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 40,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G08"
+                            ]
+                        },
+                        {
+                            "name": "L01.G10",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 24,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G11",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 24,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G12",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 24,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wave04": {
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "MainPath",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 32,
+                            "initialDelay": 1
+                        },
+                        {
+                            "name": "L01.G02",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 32,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G01"
+                            ]
+                        },
+                        {
+                            "name": "L01.G03",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 32,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G02"
+                            ]
+                        },
+                        {
+                            "name": "L01.G04",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 56,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G03"
+                            ]
+                        },
+                        {
+                            "name": "L01.G05",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 56,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G04"
+                            ]
+                        },
+                        {
+                            "name": "L01.G06",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 56,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G05"
+                            ]
+                        },
+                        {
+                            "name": "L01.G07",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 80,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G06"
+                            ]
+                        },
+                        {
+                            "name": "L01.G08",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 80,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G07"
+                            ]
+                        },
+                        {
+                            "name": "L01.G09",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 80,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G08"
+                            ]
+                        },
+                        {
+                            "name": "L01.G10",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Stream",
+                            "count": 48,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G11",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Mass",
+                            "count": 48,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        },
+                        {
+                            "name": "L01.G12",
+                            "groupPattern": "",
+                            "unitType": "Demo Goblin",
+                            "patternName": "Horde Wall",
+                            "count": 48,
+                            "initialDelay": 6,
+                            "yieldGroup": [
+                                "L01.G09"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "cameraSettings": {
+        "focalPointX": 14,
+        "focalPointY": 14,
+        "allowZoom": false,
+        "allowPanX": false,
+        "allowPanY": false,
+        "panAreaCenterX": 14,
+        "panAreaCenterY": 14,
+        "skipIntroSequence": true,
+        "viewMode": 2
+    }
+}

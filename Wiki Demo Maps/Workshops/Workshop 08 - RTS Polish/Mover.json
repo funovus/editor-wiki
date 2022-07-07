@@ -1,0 +1,12 @@
+{
+    "movers": {
+        "Death Knockback": {
+            "ballistic": {
+                "flightTime": 0.5,
+                "gravity": 24
+            },
+            "upright": true,
+            "noRotation": true
+        }
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "units": {
+        "Enemy Caster": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "immortal": true,
+                    "ground": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "behavior": {
+                    "doNothing": {}
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Enemy State Default"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        },
+        "Enemy SlimeBlue": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "movement": {
+                    "moveSpeed": 2
+                }
+            }
+        },
+        "Enemy SlimeGreen": {
+            "baseUnit": "_StandardEnemy"
+        },
+        "Enemy SlimeYellow": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "movement": {
+                    "moveSpeed": 2
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Enemy SlimeYellow Attack"
+                ],
+                "behaviorList": [
+                    "Enemy SlimeYellow Attack SearchBehavior"
+                ]
+            }
+        },
+        "Player Hero": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.325,
+                    "ground": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 1
+                },
+                "movement": {
+                    "moveSpeed": 6
+                },
+                "turning": {
+                    "turningSpeed": 900
+                }
+            },
+            "references": {
+                "abilityList": [
+                    "Player Hero Slash"
+                ]
+            }
+        },
+        "_StandardEnemy": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "ground": true
+                },
+                "health": {
+                    "maxHealth": 10
+                },
+                "movement": {
+                    "moveSpeed": 1.5
+                },
+                "turning": {
+                    "turningSpeed": 100
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Enemy State Default Delayed"
+                ]
+            },
+            "healthBar": {
+                "type": 8
+            }
+        }
+    }
+}

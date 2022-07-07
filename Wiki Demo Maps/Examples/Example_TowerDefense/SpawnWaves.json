@@ -1,0 +1,108 @@
+{
+    "spawnWaves": {
+        "Wave01": {
+            "disabled": false,
+            "totalGold": 100,
+            "bonusGold": 100,
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "Top > Left",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "unitType": "Creep Melee",
+                            "patternName": "Line Center",
+                            "count": 3
+                        },
+                        {
+                            "name": "L01.G02",
+                            "unitType": "Creep Melee",
+                            "patternName": "Line Left",
+                            "count": 3,
+                            "initialDelay": 2,
+                            "yieldGroup": [
+                                "L01.G01"
+                            ]
+                        },
+                        {
+                            "name": "L01.G03",
+                            "unitType": "Creep Melee",
+                            "patternName": "Line Right",
+                            "count": 3,
+                            "initialDelay": 2,
+                            "yieldGroup": [
+                                "L01.G02"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wave02": {
+            "disabled": false,
+            "totalGold": 200,
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "Top > Left",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "2x2 Melee",
+                            "patternName": "Line Left",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "name": "L02",
+                    "routeName": "Bot > Left",
+                    "subWaves": [
+                        {
+                            "name": "L02.G01",
+                            "groupPattern": "2x2 Melee",
+                            "patternName": "Line Right",
+                            "count": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wave03": {
+            "totalGold": 300,
+            "spawnLanes": [
+                {
+                    "name": "L01",
+                    "routeName": "Bot > Left",
+                    "subWaves": [
+                        {
+                            "name": "L01.G01",
+                            "groupPattern": "6x Melee 1x Range Ring",
+                            "patternName": "Line Center",
+                            "count": 3,
+                            "yieldGroup": [
+                                "L02.G01"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "L02",
+                    "routeName": "Top > Left",
+                    "subWaves": [
+                        {
+                            "name": "L02.G01",
+                            "groupPattern": "2x1 Melee",
+                            "patternName": "Random Standard",
+                            "count": 8
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "cameraSettings": {
+        "skipIntroSequence": true
+    }
+}

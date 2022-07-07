@@ -1,0 +1,424 @@
+-- Global Variables
+local current_selection
+local toggle_behavior = "ToggleOn"
+
+local bighead_images = {
+    "bighead_hero_smith",
+    "bighead_hero_windknight",
+    "bighead_hero_icemage_02",
+    "bighead_hero_chosengirl",
+    "bighead_hero_alchemist",
+    "bighead_hero_lastdragoon"
+}
+
+local toggle_list = {}
+
+local hero
+local hero_name = "Player Hero"
+
+local spawn_point_index = 0
+local spawn_points = {
+    {11.50, 14.75},
+    {13.75, 14.75},
+    {16.00, 14.75},
+    {18.25, 14.75},
+    {20.50, 14.75},
+    {11.50, 16.75},
+    {13.75, 16.75},
+    {16.00, 16.75},
+    {18.25, 16.75},
+    {20.50, 16.75},
+    {11.50, 18.75},
+    {13.75, 18.75},
+    {16.00, 18.75},
+    {18.25, 18.75},
+    {20.50, 18.75}
+}
+
+-- Triggers
+function NextSpawnPoint()
+    spawn_point_index = spawn_point_index + 1
+    return spawn_points[spawn_point_index]
+end
+
+function OnMapStart()
+    DCEI.HideShipSpellMenu()
+
+    -- Toggleable UI Elements
+    CreateToggle(
+        "Hero Status:", 
+        ToggleHeroStatus
+    )
+    CreateToggle(
+        "Big Head:", 
+        ToggleBigHead
+    )
+    CreateToggle(
+        "Speech Bubble:", 
+        ToggleSpeechBubble
+    )
+    CreateToggle(
+        "Circle Menu:", 
+        ToggleCircleMenu
+    )
+    CreateToggle(
+        "Left Menu:", 
+        ToggleLeftMenu
+    )
+
+    CreateToggle(
+        "Objective:", 
+        ToggleObjective
+    )
+    CreateToggle(
+        "Slow Motion FX:", 
+        ToggleSlowMotionFX
+    )
+    CreateToggle(
+        "Position Helper:", 
+        TogglePositionHelper
+    )
+    CreateOneShot(
+        "Question Btn", 
+        ShowQuestionButton
+    )
+    CreateOneShot(
+        "Hide Speed Btn", 
+        HideFastForwardButton
+    )
+
+    -- One Shot UI Elements
+
+    CreateOneShot(
+        "Message Box", 
+        ShowMessage
+    )
+    CreateOneShot(
+        "Screen Mask", 
+        ShowScreenMask
+    )
+    CreateOneShot(
+        "Feedback Message", 
+        ShowFeedbackMessage
+    )
+    CreateOneShot(
+        "Floating Text A", 
+        ShowFloatingText00
+    )
+    CreateOneShot(
+        "Floating Text B", 
+        ShowFloatingText01
+    )
+
+end
+
+function OnUnitSelected()
+    local u = DCEI.TriggeringUnit
+    local name = DCEI.UnitName(u)
+
+    DCEI.LogMessage("> select " .. name)
+    DCEI.DeselectUnitSync(u)
+
+    if name == "Enemy SlimeBlue" then
+        RunToggleFunction(u)
+    else
+        RunUnitFunction(u)
+    end
+end
+
+function OnUnitDeselected()
+    local u = DCEI.TriggeringUnit
+end
+
+-- Functions
+function CreateToggle(label, func)
+    local toggle = {}
+    local unit_name = "Enemy SlimeBlue"
+    local dx, dy = 0, -1
+    local point = NextSpawnPoint()
+    
+    table.insert(toggle_list, toggle)
+
+    toggle.unit = DCEI.CreateUnitAsync(1, 1, unit_name, point[1], point[2], dx, dy)
+    toggle.label = label
+    toggle.func = func
+    UpdateUnitLabel(toggle.unit, false)
+end
+
+function CreateOneShot(label, func)
+    local toggle = {}
+    local unit_name = "Enemy SlimeRed"
+    local dx, dy = 0, -1
+    local point = NextSpawnPoint()
+    
+    table.insert(toggle_list, toggle)
+
+    toggle.unit = DCEI.CreateUnitAsync(1, 1, unit_name, point[1], point[2], dx, dy)
+    toggle.label = label
+    toggle.func = func
+    ShowUnitLabel(toggle.unit)
+end
+
+function GetUnitToggleFunc(unit)
+    for _, toggle in ipairs(toggle_list) do
+        if toggle.unit == unit then
+            return toggle.func
+        end
+    end
+end
+
+function GetUnitToggleLabel(unit)
+    for _, toggle in ipairs(toggle_list) do
+        if toggle.unit == unit then
+            return toggle.label
+        end
+    end
+end
+
+function RunToggleFunction(unit)
+    local toggle_state = ToggleUnitState(unit)
+    local func = GetUnitToggleFunc(unit)
+
+    func(toggle_state, unit)
+end
+
+function RunUnitFunction(unit)
+    local func = GetUnitToggleFunc(unit)
+    func(unit)
+end
+
+function ShowUnitLabel(unit)
+    local ui_label = GetUnitToggleLabel(unit)
+
+    local text = "<size=40%>" .. ui_label
+    local options = {offset = {up = 0.5}}
+
+    DCEI.LogMessage("> " .. text)
+
+    DCEI.HideUnitLabel(unit)
+    DCEI.ShowUnitLabel(unit, text, options)
+end
+
+function UpdateUnitLabel(unit, toggle_value)
+    local ui_label = GetUnitToggleLabel(unit)
+    local ui_value = toggle_value and "ON" or "OFF"
+
+    local text = "<size=40%>" .. ui_label .. " " .. ui_value
+    local options = {offset = {up = 0.5}}
+
+    DCEI.LogMessage("> " .. text)
+
+    DCEI.HideUnitLabel(unit)
+    DCEI.ShowUnitLabel(unit, text, options)
+end
+
+function ToggleUnitState(unit)
+    local toggle_state = false
+    if DCEI.UnitBehaviorStackCount(unit, toggle_behavior) == 0 then
+        DCEI.ApplyBehavior(unit, toggle_behavior)
+        toggle_state = true
+    else
+        DCEI.RemoveBehavior(unit, toggle_behavior)
+        toggle_state = false
+    end
+    
+    UpdateUnitLabel(unit, toggle_state)
+    return toggle_state
+end
+
+
+-- Toggleable UI Examples
+function ToggleObjective(toggle_value)
+    if toggle_value then
+        DCEI.ShowObjective("- Objective Text")
+    else
+        DCEI.HideObjective()
+    end
+end
+
+function ToggleBigHead(toggle_value)
+    local title = "Hero"
+    local text = "This is a \"Big Head\" Message!"
+    local image = bighead_images[math.random(1, #bighead_images)]
+
+    if toggle_value then
+        DCEI.ShowBigHeadMessage(title, text, image)
+    else
+        DCEI.HideBigHeadMessage()
+    end
+end
+
+function ToggleSpeechBubble(toggle_value, unit)
+    local max_width = 320
+    local text = "Hello!"
+    local title = "Slime"
+    local options = {   -- optional offset options
+        up = 0.5,
+        right = 0,
+        front = 0
+    }
+
+    if toggle_value then
+        DCEI.ShowSpeechBubble(unit, max_width, text, title, options)
+    else
+        DCEI.HideSpeechBubble(unit)
+    end
+end
+
+function ToggleCircleMenu(toggle_value, unit)
+    local command_card_id = 0
+
+    if toggle_value then
+        DCEI.ShowAbilitiesUi(0, unit)
+    else
+        DCEI.HideAbilitiesUi(0, unit)
+    end
+end
+
+function ToggleLeftMenu(toggle_value, unit)
+    local command_card_id = 1
+
+    if toggle_value then
+        DCEI.ShowShipSpellMenu()        
+        DCEI.ShowUnitStatusUi(2, unit)  -- shows mana bar
+        DCEI.ShowAbilitiesUi(1, unit)   -- shows abilities
+    else
+        DCEI.HideShipSpellMenu()        
+        DCEI.HideUnitStatusUi(2, unit)  -- hides mana bar
+        DCEI.HideAbilitiesUi(1, unit)   -- hides abilities
+    end
+end
+
+function ToggleHeroStatus(toggle_value, unit)
+    local slot = 1
+
+    if toggle_value then
+        hero = DCEI.CreateUnitAsync(1, 1, hero_name, 16, 13, 0, -1)
+
+        DCEI.ShowUnitStatusUiInSlot(3, hero, slot)  -- shows unit status
+        DCEI.ShowAbilitiesUiInSlot(2, hero, slot)   -- shows ability button
+    else
+        DCEI.RemoveUnitSync(hero)
+
+        DCEI.HideUnitStatusUi(3, unit)  -- hides unit status (just kidding, this doesn't seem to work)
+        DCEI.HideAbilitiesUi(2, unit)   -- hides ability button
+    end
+end
+
+function TogglePositionHelper(toggle_value, unit)
+    local pos, x, y = DCEI.GetUnitPosition2D(unit)
+    local x, y = pos.x, pos.y
+
+    if toggle_value then
+        DCEI.ShowPositionHelper(x, y)
+    else
+        DCEI.HidePositionHelper()
+    end
+end
+
+function ToggleSlowMotionFX(toggle_value)
+    if toggle_value then
+        DCEI.ShowSlowMotionEffect()
+    else
+        DCEI.HideSlowMotionEffect()
+    end
+end
+
+-- One Shot UI Elements
+function ShowMessage(toggle_value, unit)
+    local title = "Message Title"
+    local body = (
+        "This is a message box. It pauses the game.\n" ..
+        "It supports multiple lines.\n" ..
+        "And also <color=yellow>rich text</color><size=125%>!</size></color><size=175%>!</size></color><size=125%>!</size>\n" ..
+        "It also supports images, but you can't use custom images yet so this is of limited use."
+    )     
+    local button_text = "Continue"
+            
+    DCEI.ShowMessageWithButtonText(title, body, button_text)  
+end
+
+function ShowQuestionMessage()
+    local title = "Another Message"
+    local body = "The question button runs a function when pressed, such as showing a message box."  
+    local button_text = "Continue"
+    DCEI.ShowMessageWithButtonText(title, body, button_text)
+end
+
+function ShowQuestionButton()
+    DCEI.SetQuestionButton(ShowQuestionMessage)
+end 
+
+function HideFastForwardButton()
+    DCEI.HideFastForwardButton()
+end
+
+function ShowFeedbackMessage()
+    local text = "This is a feedback message."
+
+    DCEI.ShowFeedbackMessage(text)
+end
+
+function ShowScreenMask()
+    DCEI.ShowScreenMask(0.5)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.HideScreenMask()
+        end,
+        1
+    )
+end
+
+function ShowFloatingText00(unit)
+    local pos = DCEI.GetUnitPosition3D(unit)
+    local text = "<color=green>" .. "text!"
+    local anim_id = 0
+    local show_duration = 0.5
+    local anim_duration = 1
+    local options = {
+        offset = {
+            up = 1.25,
+            right = 0,
+            front = 0
+        }
+    }
+
+    DCEI.ShowFloatingText(
+        pos,
+        text,
+        show_duration,
+        anim_id,
+        anim_duration,
+        options
+    )
+end
+
+function ShowFloatingText01(unit)
+    local pos = DCEI.GetUnitPosition3D(unit)
+    local text = "<color=red>" .. "more text!"
+    local anim_id = 1
+    local show_duration = 0.5
+    local anim_duration = 1
+    local options = {
+        offset = {
+            up = -0.25,
+            right = 0,
+            front = 0
+        }
+    }
+
+    DCEI.ShowFloatingText(
+        pos,
+        text,
+        show_duration,
+        anim_id,
+        anim_duration,
+        options
+    )
+end
+
+-- Initialization
+OnMapStart()
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)

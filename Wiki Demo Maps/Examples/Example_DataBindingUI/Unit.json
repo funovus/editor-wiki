@@ -1,0 +1,50 @@
+{
+    "units": {
+        "UnitA": {
+            "components": {
+                "health": {
+                    "maxHealth": 10000,
+                    "startHealth": 100,
+                    "regeneration": 100
+                },
+                "mana": {
+                    "maxMana": 10000,
+                    "startMana": 100,
+                    "regeneration": 100
+                },
+                "movement": {
+                    "moveSpeed": 1
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2
+                    }
+                }
+            },
+            "ingameIcon": "icon_ingame_hero_chosen_girl"
+        },
+        "UnitB": {
+            "components": {
+                "health": {
+                    "maxHealth": 10000,
+                    "startHealth": 100,
+                    "regeneration": 100
+                },
+                "mana": {
+                    "maxMana": 10000,
+                    "startMana": 100,
+                    "regeneration": 100
+                },
+                "movement": {
+                    "moveSpeed": 1
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2
+                    }
+                }
+            },
+            "ingameIcon": "icon_ingame_hero_crazy_alchemsit"
+        }
+    }
+}

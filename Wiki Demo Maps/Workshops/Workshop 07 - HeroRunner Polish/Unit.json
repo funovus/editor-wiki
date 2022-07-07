@@ -1,0 +1,190 @@
+{
+    "units": {
+        "Demo Banker Missile": {
+            "baseUnit": "_CMissile",
+            "components": {
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Demo Banker Missile Smite"
+                ]
+            }
+        },
+        "Demo Banker Missile Smite Missile": {
+            "baseUnit": "_CMissile",
+            "components": {
+                "unitStats": {
+                    "ground": false
+                }
+            }
+        },
+        "Demo Forward Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "Demo Goblin": {
+            "baseUnit": "Standard MeleeUnit",
+            "components": {
+                "movement": {
+                    "moveSpeed": 6
+                }
+            }
+        },
+        "Demo Hero": {
+            "baseUnit": "Standard MeleeUnit",
+            "components": {
+                "movement": {
+                    "moveSpeed": 3
+                },
+                "behavior": {
+                    "doNothing": {}
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Spawn Demo Sine Missile"
+                ]
+            }
+        },
+        "Demo Orbital Missile Blue": {
+            "baseUnit": "_CMissile"
+        },
+        "Demo Orbital Missile Green": {
+            "baseUnit": "_CMissile"
+        },
+        "Demo Orbital Missile Red": {
+            "baseUnit": "_CMissile"
+        },
+        "Demo Sine Missile": {
+            "baseUnit": "_CMissile",
+            "components": {
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Demo Sine Missile"
+                ]
+            }
+        },
+        "Demo Sine Missile Anchor": {
+            "components": {
+                "unit": {
+                    "unitType": 2
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Environment Temple Floor": {
+            "baseUnit": "_EnvironmentUnit",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "ignoreCollision": true
+                },
+                "turning": {
+                    "turningSpeed": 0
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Environment Temple Lower Floor": {
+            "baseUnit": "_EnvironmentUnit",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "ignoreCollision": true
+                },
+                "turning": {
+                    "turningSpeed": 0
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Environment Temple Lower Wall": {
+            "baseUnit": "_EnvironmentUnit",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "ignoreCollision": true
+                },
+                "turning": {
+                    "turningSpeed": 0
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Environment Temple Roof": {
+            "baseUnit": "_EnvironmentUnit",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "ignoreCollision": true
+                },
+                "turning": {
+                    "turningSpeed": 0
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "Environment Temple Wall": {
+            "baseUnit": "_EnvironmentUnit",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "ignoreCollision": true
+                },
+                "turning": {
+                    "turningSpeed": 0
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            }
+        },
+        "_EnvironmentUnit": {
+            "healthBar": {
+                "type": 8
+            }
+        }
+    }
+}

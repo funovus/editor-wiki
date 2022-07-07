@@ -1,0 +1,15 @@
+{
+    "abilities": {
+        "Player Hero Slash": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Player Hero Slash Create",
+            "stats": {
+                "prepTime": 0.0625,
+                "finishTime": 0.25
+            },
+            "description": "data/Arcade/SlimeSlasher/ability/Player Hero Slash/description",
+            "title": "data/Arcade/SlimeSlasher/ability/Player Hero Slash/title"
+        }
+    }
+}

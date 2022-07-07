@@ -1,0 +1,24 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "displaySettings": {
+        "orientation": 1
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Human Troop Footman",
+            "Human Leader WindKnight",
+            "Goblin Troop Club",
+            "Goblin Leader OrcBrute"
+        ],
+        "usedBehaviors": [
+            "Event PlayAnim Attack"
+        ]
+    }
+}

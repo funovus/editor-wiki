@@ -1,0 +1,320 @@
+{
+    "effects": {
+        "Arcade NTB Basic Attack Fire CollisionCheck": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.3
+                    }
+                },
+                "maxUnitCount": 1,
+                "validators": [
+                    "TargetUnit Is ElementFire"
+                ],
+                "effect": "Arcade NTB Basic Attack Fire Set",
+                "location": 2
+            }
+        },
+        "Arcade NTB Basic Attack Fire Set": {
+            "set": {
+                "targetType": 1,
+                "effectList": [
+                    "Arcade NTB Player Basic Attack Fire Impact",
+                    "Kill Caster"
+                ]
+            }
+        },
+        "Arcade NTB Basic Attack Nature CollisionCheck": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.3
+                    }
+                },
+                "maxUnitCount": 1,
+                "validators": [
+                    "TargetUnit Is ElementNature"
+                ],
+                "effect": "Arcade NTB Basic Attack Nature Set",
+                "location": 2
+            }
+        },
+        "Arcade NTB Basic Attack Nature Set": {
+            "set": {
+                "targetType": 1,
+                "effectList": [
+                    "Arcade NTB Player Basic Attack Nature Impact",
+                    "Kill Caster"
+                ]
+            }
+        },
+        "Arcade NTB Basic Attack Water CollisionCheck": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.3
+                    }
+                },
+                "maxUnitCount": 1,
+                "validators": [
+                    "TargetUnit Is ElementWater"
+                ],
+                "effect": "Arcade NTB Basic Attack Water Set",
+                "location": 2
+            }
+        },
+        "Arcade NTB Basic Attack Water Set": {
+            "set": {
+                "targetType": 1,
+                "effectList": [
+                    "Arcade NTB Player Basic Attack Water Impact",
+                    "Kill Caster"
+                ]
+            }
+        },
+        "Arcade NTB Decay Small Blue": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "periodicDurations": [
+                    15
+                ]
+            }
+        },
+        "Arcade NTB Decay Small Green": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "periodicDurations": [
+                    15
+                ]
+            }
+        },
+        "Arcade NTB Decay Small Red": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "periodicDurations": [
+                    15
+                ]
+            }
+        },
+        "Arcade NTB OffScreenSearch": {
+            "parent": "",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 50,
+                        "length": 2
+                    }
+                },
+                "caster": 2,
+                "filter": {
+                    "air": 0,
+                    "invulerable": 2
+                },
+                "effect": "Arcade NTB RemoveScore"
+            }
+        },
+        "Arcade NTB OffScreenSearch Vertical": {
+            "parent": "",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 2,
+                        "length": 50
+                    }
+                },
+                "caster": 2,
+                "filter": {
+                    "air": 0
+                },
+                "effect": "Arcade NTB RemoveScore"
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Damage": {
+            "damage": {
+                "damageAmount": 100
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Impact": {
+            "persistent": {
+                "targetType": 2,
+                "periodicCount": 1,
+                "startEffect": "Arcade NTB Player Basic Attack Fire ImpactSearch",
+                "location": 2,
+                "offsetStart": 8,
+                "offsetEnd": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire ImpactSearch": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 1.25
+                    }
+                },
+                "validators": [
+                    "TargetUnit Is ElementFire"
+                ],
+                "effect": "Arcade NTB Player Basic Attack Fire Damage",
+                "location": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Fire Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "Arcade NTB Player Basic Attack Fire Missile",
+                "effect": "DoNothing",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2,
+                "impactOffset": {
+                    "forward": 12
+                },
+                "mover": "Arcade NTB BasicAttackMover"
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Damage": {
+            "damage": {
+                "damageAmount": 100
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Impact": {
+            "persistent": {
+                "targetType": 2,
+                "periodicCount": 1,
+                "startEffect": "Arcade NTB Player Basic Attack Nature ImpactSearch",
+                "location": 2,
+                "offsetStart": 8,
+                "offsetEnd": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature ImpactSearch": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 1.25
+                    }
+                },
+                "validators": [
+                    "TargetUnit Is ElementNature"
+                ],
+                "effect": "Arcade NTB Player Basic Attack Nature Damage",
+                "location": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "Arcade NTB Player Basic Attack Nature Missile",
+                "effect": "DoNothing",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2,
+                "impactOffset": {
+                    "forward": 12
+                },
+                "mover": "Arcade NTB BasicAttackMover"
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Damage": {
+            "damage": {
+                "damageAmount": 100
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Impact": {
+            "persistent": {
+                "targetType": 2,
+                "periodicCount": 1,
+                "startEffect": "Arcade NTB Player Basic Attack Water ImpactSearch",
+                "location": 2,
+                "offsetStart": 8,
+                "offsetEnd": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Water ImpactSearch": {
+            "parent": "_StandardAreaSearch AllowAir",
+            "areaSearch": {
+                "targetType": 2,
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 1.25
+                    }
+                },
+                "validators": [
+                    "TargetUnit Is ElementWater"
+                ],
+                "effect": "Arcade NTB Player Basic Attack Water Damage",
+                "location": 2
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "Arcade NTB Player Basic Attack Water Missile",
+                "effect": "DoNothing",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "offsetStart": 7,
+                "offsetEnd": 2,
+                "impactOffset": {
+                    "forward": 12
+                },
+                "mover": "Arcade NTB BasicAttackMover"
+            }
+        },
+        "Arcade NTB RemoveScore": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "DoNothing",
+                "finalEffect": "Kill",
+                "periodicDurations": [
+                    1
+                ]
+            }
+        },
+        "Arcade NTB Spawn FX Blue": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "location": 3,
+                "periodicDurations": [
+                    3
+                ]
+            }
+        },
+        "Arcade NTB Spawn FX Green": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "location": 3,
+                "periodicDurations": [
+                    3
+                ]
+            }
+        },
+        "Arcade NTB Spawn FX Red": {
+            "persistent": {
+                "periodicCount": 1,
+                "finalEffect": "DoNothing",
+                "location": 3,
+                "periodicDurations": [
+                    3
+                ]
+            }
+        }
+    }
+}

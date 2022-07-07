@@ -1,0 +1,1 @@
+{ "GameEntityList": [ { "UnitName": "Hero", "Position": [ 16, 0, 16 ], "Rotation": [ 0, 0, 0, 1 ], "Player": 1 } ] }

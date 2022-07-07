@@ -1,0 +1,64 @@
+{
+    "expressions": {
+        "CustomStatusExpression": {
+            "multiply": {
+                "expressions": [
+                    {
+                        "namedExpression": {
+                            "name": "CustomStatusExpression_Width"
+                        }
+                    },
+                    {
+                        "divide": {
+                            "left": {
+                                "addExpressions": {
+                                    "expressions": [
+                                        {
+                                            "value": {
+                                                "behaviorDuration": {
+                                                    "behavior": "FlameStrike Countdown"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "multiply": {
+                                                "expressions": [
+                                                    {
+                                                        "value": {
+                                                            "constant": {
+                                                                "doubleValue": -1
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        "value": {
+                                                            "behaviorElapsedTime": {
+                                                                "behavior": "FlameStrike Countdown"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "right": {
+                                "behaviorDuration": {
+                                    "behavior": "FlameStrike Countdown"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "CustomStatusExpression_Width": {
+            "value": {
+                "constant": {
+                    "doubleValue": 102
+                }
+            }
+        }
+    }
+}

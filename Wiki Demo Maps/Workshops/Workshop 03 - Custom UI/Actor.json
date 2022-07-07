@@ -1,0 +1,77 @@
+{
+    "actors": {
+        "FlameStrike Attack FX": {
+            "actionActor": {
+                "effect": "FlameStrike Search",
+                "impactModel": "FlameStrike Impact FX"
+            }
+        },
+        "FlameStrike Bomb FX": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "bomb00_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "persistentEffectOn": {
+                                "effect": "FlameStrike Create"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "persistentEffectOff": {
+                                "effect": "FlameStrike Create"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "SOp UpBy Dot1",
+                    "FlameStrike Bomb SOp Spin"
+                ],
+                "modelScale": 2
+            }
+        },
+        "FlameStrike Bomb SOp Spin": {
+            "siteOperation": {
+                "rotate": {
+                    "dy": 480
+                }
+            }
+        },
+        "FlameStrike Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_fireball_imact_aoe"
+                },
+                "modelScale": 1
+            }
+        },
+        "Hero": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_no_weapon"
+                },
+                "modelScale": 2
+            }
+        }
+    }
+}

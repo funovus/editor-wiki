@@ -1,0 +1,58 @@
+
+-- VARIABLES
+local core = require("core")
+
+local filter_name = "Workshop02 - "
+
+DCEI.LogError(filter_name .. "Example of my log error")
+DCEI.LogMessage(filter_name .. "Example of my log message")
+DCEI.LogWarning(filter_name .. "Example of my log warning")
+
+-- TRIGGERS
+function OnMapStart()
+    core.HideDefaultUi()
+end
+
+local my_variable = 10
+function myFunction()
+    local my_variable = 256
+    DCEI.LogMessage(filter_name .. my_variable)
+end
+myFunction()
+DCEI.LogMessage(filter_name .. my_variable)
+
+-- create 5 Standard MeleeUnit
+-- create 1 BOB WHO IS NOT REAL
+
+-- Debug Commands
+function OnTextCommand(text_command)
+    local pos = DCEI.GetCameraCurrentFocalPoint()
+
+    if DCEI.IsDev() == false then
+        return
+    end
+
+    if text_command == "reveal" then
+         local enemies = DCEI.FindUnits("Super Secret Invisible Dude")
+         for i = 1, #enemies do
+             DCEI.ApplyBehavior(enemies[i], "Reveal") 
+         end
+
+     elseif string.sub(text_command, 1, 6) == "create" then
+        local quantity = string.sub(text_command, 8, 8)
+        local type = string.sub(text_command, 10)
+
+         for i = 1, quantity do
+             DCEI.CreateUnitAsync(1, 1, type, pos.x, pos.y + 1.4)
+             DCEI.CreateUnitAsync(-1, -1, type, pos.x + 1, pos.y + 1.4)
+         end
+     end
+ 
+     DCEI.ShowFeedbackMessage(text_command)
+ end
+
+-- INITIALIZE
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+
+-- REGISTER EVENTS
+DCEI.TriggerAddTextCommandEvent(OnTextCommand)

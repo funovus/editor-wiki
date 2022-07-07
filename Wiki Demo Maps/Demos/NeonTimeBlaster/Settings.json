@@ -1,0 +1,38 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Arcade NTB Background Star",
+            "Arcade NTB Player Hero Fire",
+            "Arcade NTB Target",
+            "Arcade NTB Player Hero Nature",
+            "Arcade NTB Player Hero Water",
+            "Arcade NTB Ooze Fire 01",
+            "Arcade NTB Ooze Water 01",
+            "Arcade NTB Ooze Nature 01"
+        ],
+        "usedEffects": [
+            "Arcade NTB Player Basic Attack Fire Launch",
+            "Arcade NTB Player Basic Attack Nature Launch",
+            "Arcade NTB Player Basic Attack Water Launch",
+            "Arcade NTB Decay Small Red",
+            "Arcade NTB Decay Small Blue",
+            "Arcade NTB Decay Small Green",
+            "Arcade NTB Spawn FX Blue",
+            "Arcade NTB Spawn FX Green",
+            "Arcade NTB Spawn FX Red"
+        ],
+        "usedBehaviors": [
+            "Arcade NTB Star Variable Speed",
+            "Arcade NTB Star Beat",
+            "Arcade NTB Beat Behavior"
+        ]
+    }
+}

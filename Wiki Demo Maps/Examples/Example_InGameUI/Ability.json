@@ -1,0 +1,108 @@
+{
+    "abilities": {
+        "Demo Ability 1": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 10
+            },
+            "commandCardIndex": 1,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_red",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 1"
+        },
+        "Demo Ability 2": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 20
+            },
+            "commandCardIndex": 2,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_brown",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 2"
+        },
+        "Demo Ability 3": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 30
+            },
+            "commandCardIndex": 3,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_gold",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 3"
+        },
+        "Demo Ability 4": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 40
+            },
+            "commandCardIndex": 4,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_green",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 4"
+        },
+        "Demo Ability 5": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 50
+            },
+            "commandCardIndex": 5,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_blue",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 5"
+        },
+        "Demo Ability 6": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "DoNothing",
+            "stats": {
+                "period": 0.25
+            },
+            "cost": {
+                "mana": 60
+            },
+            "commandCardIndex": 6,
+            "commandCardIcon": "icon_ingame_towerslot_upgrade_purple",
+            "description": "Ability desciption is defined in Ability data.",
+            "title": "Ability 6"
+        },
+        "Player Hero Slash": {
+            "abilityType": 2,
+            "castType": 1,
+            "effect": "Player Hero Slash Create",
+            "stats": {
+                "prepTime": 0.0625,
+                "finishTime": 0.5625
+            },
+            "cost": {
+                "mana": 10
+            },
+            "description": "data/Arcade/SlimeSlasher/ability/Player Hero Slash/description",
+            "title": "data/Arcade/SlimeSlasher/ability/Player Hero Slash/title"
+        }
+    }
+}

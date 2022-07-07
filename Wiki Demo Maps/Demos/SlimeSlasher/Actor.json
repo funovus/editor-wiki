@@ -1,0 +1,812 @@
+{
+    "actors": {
+        "Enemy Caster": {
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_green"
+                },
+                "preserveOnUnitRemove": false,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy SlimeGreen Death FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1.5
+            }
+        },
+        "Enemy SlimeBlue": {
+            "parent": "_StandardUnit RemoveOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_blue"
+                },
+                "preserveOnUnitRemove": false,
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1.5,
+                "unselectable": true
+            }
+        },
+        "Enemy SlimeGreen": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_green"
+                },
+                "preserveOnUnitRemove": false,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy SlimeGreen Death FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Slime DeathAnimation"
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 1.5,
+                "unselectable": true
+            }
+        },
+        "Enemy SlimeGreen Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_warhawk_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 64,
+                                        "g": 255,
+                                        "b": 128
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "SOp UpBy Dot1",
+                    "SOp HoldPosition"
+                ],
+                "modelScale": 1.2
+            }
+        },
+        "Enemy SlimeYellow": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_gold"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy SlimeYellow Death FX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStart": {
+                                "weapon": "Enemy SlimeYellow Attack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "windup",
+                                    "duration": 0.5
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "reset_fx",
+                                    "duration": 0.5625
+                                }
+                            },
+                            {
+                                "removeTimer": {
+                                    "name": "fx01"
+                                }
+                            },
+                            {
+                                "removeTimer": {
+                                    "name": "fx02"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "windup"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "dead"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {}
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "fx01",
+                                    "duration": 1,
+                                    "repeat": true
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "fx02",
+                                    "duration": 0.66,
+                                    "repeat": true
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "fx01"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy SlimeYellow FX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "fx02"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy SlimeYellow FX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "reset_fx"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "fx01",
+                                    "duration": 1,
+                                    "repeat": true
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "fx02",
+                                    "duration": 0.66,
+                                    "repeat": true
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Slime DeathAnimation"
+                ],
+                "walkAnimationSpeed": 0.7,
+                "modelScale": 2,
+                "unselectable": true
+            }
+        },
+        "Enemy SlimeYellow Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Enemy SlimeYellow Attack Damage",
+                "impactModel": "Enemy SlimeYellow Attack Impact FX"
+            }
+        },
+        "Enemy SlimeYellow Attack Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_teslatower_impact"
+                }
+            }
+        },
+        "Enemy SlimeYellow Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_warhawk_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 480,
+                                        "g": 444,
+                                        "b": 128
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "SOp UpBy Dot1",
+                    "SOp HoldPosition"
+                ],
+                "modelScale": 1.2
+            }
+        },
+        "Enemy SlimeYellow FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_teslatower_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "scale",
+                                    "valueExpression": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 4
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "birth",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.85,
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1,
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.15,
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 4
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.3,
+                                    "duration": 0.1
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ],
+                "modelScale": 0.2
+            }
+        },
+        "Player Hero": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "name": "windknight"
+                },
+                "preserveOnUnitRemove": true,
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {
+                                "ability": "Player Hero Slash"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 4
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "slash_preswing",
+                                    "duration": 0.15
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "slash_preswing"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Hero Slash Launch FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Player Hero DeathEvents"
+                ],
+                "walkAnimationSpeed": 1.7,
+                "modelScale": 1.1,
+                "selectionBonusRadius": -0.63,
+                "unselectable": true
+            }
+        },
+        "Player Hero Slash Launch FX": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "thunderbird_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "lifetime",
+                                    "duration": 0.32
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "lifetime"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSite": "SiteWeapon",
+                "hostSiteOperations": [
+                    "Player Hero Slash Launch SOp Offset"
+                ],
+                "modelScale": 8
+            }
+        },
+        "Player Hero Slash Launch SOp Offset": {
+            "siteOperation": {
+                "offset": {
+                    "x": 0.6,
+                    "y": 0.6,
+                    "orientation": 1
+                }
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Events Enemy State Debugger": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "Enemy State Default"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "g": 255
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOff": {
+                            "behavior": "Enemy State Default"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 255
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Player Hero DeathEvents": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "playAnimation": {
+                                "clipId": 1
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "decay",
+                                "duration": 0.4375
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "decay"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DownBy Dot5"
+                                ],
+                                "duration": 0.5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "animationFinish": {
+                            "clip": 1
+                        }
+                    },
+                    "actions": [
+                        {
+                            "destroy": {}
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "conditions": [
+                        {
+                            "compare": {
+                                "left": {
+                                    "variable": {
+                                        "name": "shock"
+                                    }
+                                },
+                                "right": {
+                                    "constant": {
+                                        "value": 1
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 128,
+                                    "g": 128,
+                                    "b": 128
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "DeathEffect Shock"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setVariable": {
+                                "name": "shock",
+                                "valueExpression": {
+                                    "constant": {
+                                        "value": 1
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOff": {
+                            "behavior": "DeathEffect Shock"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "remove_shock",
+                                "duration": 0.25
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "remove_shock"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setVariable": {
+                                "name": "shock",
+                                "valueExpression": {
+                                    "constant": {}
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Slime DeathAnimation": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "death",
+                                "duration": 0.15
+                            }
+                        },
+                        {
+                            "playAnimation": {
+                                "clipId": 1
+                            }
+                        },
+                        {
+                            "setVariable": {
+                                "name": "dead",
+                                "valueExpression": {
+                                    "constant": {
+                                        "value": 1
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DownBy Dot25"
+                                ],
+                                "duration": 0.25
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "death"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "destroy": {}
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "unitRemove": {}
+                    },
+                    "actions": [
+                        {
+                            "destroy": {}
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

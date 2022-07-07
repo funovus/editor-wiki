@@ -1,0 +1,32 @@
+local core = require("core")
+
+-- Variables
+local UNIT_NAME = "Standard MeleeUnit"
+local UNIT_POSITIONS = {
+    {17, 17},
+    {17, 16},
+    {17, 15},
+    {20, 17},
+    {20, 16},
+    {20, 15}
+}
+
+-- Triggers
+function OnMapStart()
+    core.HideDefaultUi()
+    SpawnEnemies()
+end
+
+function SpawnEnemies()
+    local team_id = -1
+    local player_id = -1
+    local dx, dy = 0, -1
+
+    for i = 1, #UNIT_POSITIONS do
+        local p = UNIT_POSITIONS[i]
+        DCEI.CreateUnitAsync(team_id, player_id, UNIT_NAME, p[1], p[2], dx, dy)
+    end
+end
+
+-- Initialization
+OnMapStart()

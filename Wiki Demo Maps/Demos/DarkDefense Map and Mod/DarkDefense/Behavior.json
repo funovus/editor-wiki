@@ -1,0 +1,80 @@
+{
+    "behaviors": {
+        "Base Upgrade Center ShowSword": {},
+        "Enemy Boss Scaling": {
+            "modifiers": {
+                "maxHealthModifier": {
+                    "multiplierFactor": 0.6
+                },
+                "weaponDamageModifier": {
+                    "unscaled": 1
+                },
+                "abilityDamageModifier": {
+                    "unscaled": 1
+                }
+            },
+            "deathResponse": {
+                "chance": 1,
+                "effect": "Enemy Boss Gold Bounty",
+                "targetType": 3
+            }
+        },
+        "Enemy Waypoint Finish": {
+            "finalEffect": "Enemy Waypoint Finish Trigger",
+            "behaviorValidatorsRemove": [
+                "Waypoint Finished"
+            ]
+        },
+        "Enemy Waypoint Finish Trigger": {},
+        "Enemy Waypoint Start": {
+            "startEffect": "GameSystem SetWaypointsNearest"
+        },
+        "Player Archer Weapon Damage Tag": {
+            "maxStackCount": 9999,
+            "behaviorTagArray": [
+                {
+                    "name": "gt_damageTag",
+                    "count": 1
+                }
+            ]
+        },
+        "Player Castle Chunk HitResponse": {
+            "damageResponse": {
+                "chance": 1,
+                "effect": "Player Castle Chunk HitResponse Trigger",
+                "damageModifier": {
+                    "multiplierFactor": 4
+                }
+            },
+            "behaviorTagArray": [
+                {
+                    "name": "gt_damageTag",
+                    "count": 1
+                }
+            ]
+        },
+        "Player Castle Chunk HitResponse Trigger": {
+            "duration": 0.0625,
+            "behaviorTagArray": [
+                {
+                    "name": "gt_damageTag",
+                    "count": 1
+                }
+            ]
+        },
+        "Player Hero Dragoon SummonTroop TimedLife": {
+            "duration": 8,
+            "finalEffect": "Remove"
+        },
+        "Player Hero PauseManaGeneration": {
+            "modifiers": {
+                "manaRegenerationModifier": {
+                    "multiplierFactor": -1
+                }
+            }
+        },
+        "Player Hero Revive FX": {
+            "duration": 0.125
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "weapons": {
+        "Demo Banker Missile Smite": {
+            "parent": "_StandardRangedWeapon",
+            "effectName": "Demo Banker Missile Smite",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "stats": {
+                "preSwing": 0,
+                "backSwing": 0,
+                "period": 0.125,
+                "range": 1.5,
+                "scanRange": 2,
+                "arc": 360
+            },
+            "distanceExtendMode": 0,
+            "targetFilter": {
+                "neutral": 2
+            }
+        },
+        "Demo Sine Missile": {
+            "parent": "_StandardRangedWeapon",
+            "effectName": "Demo Sine Missile Initial",
+            "stats": {
+                "randomPreswingDelayMax": 0.5,
+                "backSwing": 0,
+                "period": 0.0625,
+                "range": 50,
+                "scanRange": 50,
+                "arc": 360
+            },
+            "targetFilter": {
+                "primarySortKeys": {
+                    "key": 0
+                }
+            }
+        }
+    }
+}

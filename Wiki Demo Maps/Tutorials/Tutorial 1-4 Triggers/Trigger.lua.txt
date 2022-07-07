@@ -1,0 +1,16 @@
+
+DCEI.LogMessage("Hello Lua!")
+
+DCEI.CreateUnitAsync(1, 1, "Hero IceMage", 16, 16)
+
+local enemy_unit_name = "Standard MeleeUnit"
+local enemy_points = {
+    {20, 15},
+    {20, 16},
+    {20, 17}
+}
+
+for i = 1, 3, 1 do
+    local point = enemy_points[i]
+    DCEI.CreateUnitAsync(-1, -1, enemy_unit_name, point[1], point[2])
+end

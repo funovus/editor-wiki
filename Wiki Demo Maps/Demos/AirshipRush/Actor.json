@@ -1,0 +1,1273 @@
+{
+    "actors": {
+        "Enemy Boss Warship": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_goblin_warship"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX",
+                                    "hostSite": "SiteDeath"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Enemy Boss ChainMissile Launch Enable"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "attack_warm_up",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "attack_warm_up"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "attack",
+                                    "duration": 0.625,
+                                    "repeat": true
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "attack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Enemy Boss ChainMissile Launch Enable"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "attack_off",
+                                    "duration": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "attack_off"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "removeTimer": {
+                                    "name": "attack"
+                                }
+                            },
+                            {
+                                "stopAnimation": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Enemy DamageResponse"
+                ],
+                "hostSites": {
+                    "SiteDeath": {
+                        "offset": {
+                            "up": 0.25
+                        }
+                    }
+                },
+                "modelScale": 4,
+                "hostSiteOperations": [
+                    "SOp FaceSouth"
+                ],
+                "unselectable": true
+            }
+        },
+        "Enemy Boss Warship Caster": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "boss_goblin_warship"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 3
+            }
+        },
+        "Enemy Goblin": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_flyer_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {
+                                "ability": "Enemy Goblin Missile Launch"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardUnit DeathAnimation"
+                ],
+                "modelScale": 2.25,
+                "unselectable": true
+            }
+        },
+        "Enemy Goblin 2": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_flyer_gold"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {
+                                "ability": "Enemy Goblin Missile Launch"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardUnit DeathAnimation",
+                    "Events Enemy DamageResponse"
+                ],
+                "modelScale": 2.25,
+                "unselectable": true
+            }
+        },
+        "Enemy Goblin Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_explosion_small"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Enemy Goblin FromWarship": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_flyer_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {
+                                "ability": "Enemy Goblin Missile Launch"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardUnit DeathAnimation"
+                ],
+                "modelScale": 2.25
+            }
+        },
+        "Enemy Goblin Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_ship_normal_missile"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Enemy Whelp": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dragonling_red"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX",
+                                    "hostSite": "SiteDeath"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteDeath": {
+                        "offset": {
+                            "up": 0.25
+                        }
+                    }
+                },
+                "modelScale": 1.5,
+                "unselectable": true
+            }
+        },
+        "Enemy Whelp 2": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dragonling_gold"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Enemy Goblin Death FX",
+                                    "hostSite": "SiteDeath"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Enemy DamageResponse"
+                ],
+                "hostSites": {
+                    "SiteDeath": {
+                        "offset": {
+                            "up": 0.25
+                        }
+                    }
+                },
+                "modelScale": 1.5,
+                "unselectable": true
+            }
+        },
+        "Enemy Whelp Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_spell_fireball_missile"
+                },
+                "modelScale": 0.4
+            }
+        },
+        "GameSystem Caster": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                }
+            }
+        },
+        "Player Ship": {
+            "parent": "_StandardUnitMinimal",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ship_default_body"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Ship Cannon"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Player Ship Engine"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 1
+                                }
+                            },
+                            {
+                                "broadcastCustomEvent": {
+                                    "actor": "_Addon",
+                                    "identifier": "EventDeath"
+                                }
+                            },
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp 45x",
+                                        "SOp DownBy 2"
+                                    ],
+                                    "duration": 1
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.5,
+                                    "duration": 2
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "animationFinish": {
+                                "clip": 1
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Player Ship Missile Launch Anim"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "sendCustomEvent": {
+                                    "actor": "Player Ship Cannon",
+                                    "identifier": "EventAttack"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events Player Ship DeathAnimation",
+                    "Events Player Ship Banking"
+                ],
+                "hostSites": {
+                    "SiteEngine": {
+                        "offset": {
+                            "forward": -0.5,
+                            "up": 0.5
+                        }
+                    },
+                    "d1": {
+                        "offset": {
+                            "forward": 0.5,
+                            "right": -0.1,
+                            "up": 0.2
+                        }
+                    },
+                    "d2": {
+                        "offset": {
+                            "forward": 0.2,
+                            "right": 0.2
+                        }
+                    },
+                    "d3": {
+                        "offset": {
+                            "right": -0.2,
+                            "up": 0.1
+                        }
+                    },
+                    "d4": {
+                        "offset": {
+                            "forward": -0.3,
+                            "right": 0.3
+                        }
+                    },
+                    "d5": {
+                        "offset": {
+                            "forward": -0.6,
+                            "right": -0.1,
+                            "up": 0.3
+                        }
+                    },
+                    "d6": {
+                        "offset": {
+                            "forward": 0.4,
+                            "up": 0.1
+                        }
+                    }
+                },
+                "modelScale": 0.75,
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ],
+                "selectionBonusRadius": -0.9,
+                "unselectable": true
+            }
+        },
+        "Player Ship Cannon": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ship_default_cannon"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventAttack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "removeTimer": {
+                                    "name": "timer_attack"
+                                }
+                            },
+                            {
+                                "playAnimation": {}
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "timer_attack_pre",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "timer_attack_pre"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "timer_attack",
+                                    "duration": 0.375
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "timer_attack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "stopAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDeath"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.5,
+                                    "duration": 2
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSite": "SiteCannon",
+                "hostSiteOperations": [
+                    "SOp 270"
+                ],
+                "modelScale": 0.75,
+                "aliases": [
+                    "_Addon"
+                ]
+            }
+        },
+        "Player Ship Cannon Attack FX": {
+            "actionActor": {
+                "effect": "Player Ship Missile Launch",
+                "launchSite": "SiteCannon",
+                "targetSite": "why doesnt this work?"
+            }
+        },
+        "Player Ship Caster": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ship_default_body"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.75
+            }
+        },
+        "Player Ship Death Explosion FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_explosion_small"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "scale",
+                                    "valueExpression": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 3
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "birth",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.4
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.6
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.8
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "SOp HoldPosition"
+                ]
+            }
+        },
+        "Player Ship Engine": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_engine_exhaust_fire"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDeath"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSite": "SiteEngine",
+                "modelScale": 0.75,
+                "aliases": [
+                    "_Addon"
+                ]
+            }
+        },
+        "Player Ship Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_drow_mage_blue_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Player Ship Missile Scan"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.75
+            }
+        },
+        "Player Ship Missile Attack FX": {
+            "actionActor": {
+                "effect": "Player Ship Missile Scan ImpactSet",
+                "impactModel": "Player Ship Missile Impact FX",
+                "targetSiteOperations": [
+                    "SOp MoveBy Dot25"
+                ]
+            }
+        },
+        "Player Ship Missile Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_drow_mage_blue_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Enemy Boss Warship CollisionScan Missile Impact"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Player Ship SOp Bank Left": {
+            "siteOperation": {
+                "rotate": {
+                    "z": 30,
+                    "orientation": 1
+                }
+            }
+        },
+        "Player Ship SOp Bank Right": {
+            "siteOperation": {
+                "rotate": {
+                    "z": -30,
+                    "orientation": 1
+                }
+            }
+        },
+        "SOp 45x": {
+            "siteOperation": {
+                "rotate": {
+                    "x": 45,
+                    "orientation": 1
+                }
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Events Enemy DamageResponse": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "Enemy DamageResponse Flash"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 500,
+                                    "g": 500,
+                                    "b": 500
+                                }
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "flash",
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "flash"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Player Ship Banking": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "Player Ship Banking Right"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp FaceNorth",
+                                    "Player Ship SOp Bank Right"
+                                ],
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "Player Ship Banking Left"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp FaceNorth",
+                                    "Player Ship SOp Bank Left"
+                                ],
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "Player Ship Banking None"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp FaceNorth"
+                                ],
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Player Ship DeathAnimation": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d1"
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "t1",
+                                "duration": 0.15
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "t2",
+                                "duration": 0.3
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "t3",
+                                "duration": 0.45
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "t4",
+                                "duration": 0.6
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "t5",
+                                "duration": 0.75
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "t1"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d2"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "t2"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d3"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "t3"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d4"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "t4"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d5"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "t5"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Player Ship Death Explosion FX",
+                                "hostSite": "d6"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

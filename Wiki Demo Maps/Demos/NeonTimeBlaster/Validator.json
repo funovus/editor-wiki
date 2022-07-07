@@ -1,0 +1,34 @@
+{
+    "validators": {
+        "TargetUnit Is ElementFire": {
+            "expression": {
+                "value": {
+                    "behaviorStackCount": {
+                        "unit": 2,
+                        "behavior": "GameAttribute ElementFire"
+                    }
+                }
+            }
+        },
+        "TargetUnit Is ElementNature": {
+            "expression": {
+                "value": {
+                    "behaviorStackCount": {
+                        "unit": 2,
+                        "behavior": "GameAttribute ElementNature"
+                    }
+                }
+            }
+        },
+        "TargetUnit Is ElementWater": {
+            "expression": {
+                "value": {
+                    "behaviorStackCount": {
+                        "unit": 2,
+                        "behavior": "GameAttribute ElementWater"
+                    }
+                }
+            }
+        }
+    }
+}

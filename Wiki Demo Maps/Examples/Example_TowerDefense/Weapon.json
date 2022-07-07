@@ -1,0 +1,12 @@
+{
+    "weapons": {
+        "Tower Weapon": {
+            "parent": "_StandardRangedWeapon",
+            "effectName": "Tower Weapon Damage",
+            "stats": {
+                "preSwing": 0.375,
+                "backSwing": 0.375
+            }
+        }
+    }
+}

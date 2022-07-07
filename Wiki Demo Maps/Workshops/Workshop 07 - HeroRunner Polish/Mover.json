@@ -1,0 +1,23 @@
+{
+    "movers": {
+        "Demo Sine Missile Mover Left": {
+            "sineWave": {
+                "amplitude": 4,
+                "peakCount": 1,
+                "speed": 12
+            }
+        },
+        "Demo Sine Missile Mover Right": {
+            "sineWave": {
+                "amplitude": -4,
+                "peakCount": 1,
+                "speed": 12
+            }
+        },
+        "Test Orbit": {
+            "orbiting": {
+                "bindToOwner": true
+            }
+        }
+    }
+}

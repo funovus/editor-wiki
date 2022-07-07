@@ -1,0 +1,815 @@
+{
+    "actors": {
+        "Base Build Economy": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ship_default_body"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Base Upgrade Economy Platform"
+                                }
+                            },
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Stealth"
+                                }
+                            },
+                            {
+                                "playAnimation": {
+                                    "clipId": 9
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5,
+                "hostSiteOperations": [
+                    "Base Build Economy SOp Rotate"
+                ]
+            }
+        },
+        "Base Build Economy SOp Rotate": {
+            "siteOperation": {
+                "rotate": {
+                    "y": 270,
+                    "orientation": 1
+                }
+            }
+        },
+        "Base Upgrade Archer": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "arrowtower_rank01"
+                },
+                "modelScale": 1.5
+            }
+        },
+        "Base Upgrade Center": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "towerslot_hauntedworld"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Base Upgrade Center Sword"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Base Upgrade Center ShowSword"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "sendCustomEvent": {
+                                    "actor": "_Sword",
+                                    "identifier": "EventShowSword"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Base Upgrade Center ShowSword"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "sendCustomEvent": {
+                                    "actor": "_Sword",
+                                    "identifier": "EventHideSword"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Base Upgrade Center Sword": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "item_sword"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "sendCustomEvent": {
+                                    "identifier": "EventHideSword"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventHideSword"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            },
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp UpBy Dot25"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventShowSword"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {
+                                    "visibility": true
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Base Upgrade Center Sword Dust FX"
+                                }
+                            },
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp DefaultActor Offset"
+                                    ],
+                                    "duration": 0.3
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp UpBy Dot25"
+                ],
+                "modelScale": 3,
+                "aliases": [
+                    "_Sword"
+                ]
+            }
+        },
+        "Base Upgrade Center Sword Dust FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_ship_landing_dust"
+                },
+                "modelScale": 0.3
+            }
+        },
+        "Base Upgrade Economy": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "airship_cargo"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Base Upgrade Economy Birth FX"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 2,
+                                    "duration": 0.1
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "b1",
+                                    "duration": 0.11
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "b1"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.4,
+                                    "duration": 0.05
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "b2",
+                                    "duration": 0.06
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "b2"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.5,
+                                    "duration": 0.05
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.7,
+                "hostSiteOperations": [
+                    "Base Upgrade Economy SOp Rotate",
+                    "Base Upgrade Economy SOp Offset"
+                ]
+            }
+        },
+        "Base Upgrade Economy Birth FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_build_huge"
+                },
+                "hostSiteOperations": [
+                    "SOp UpBy Dot5"
+                ]
+            }
+        },
+        "Base Upgrade Economy Platform": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "shipslot_forest"
+                },
+                "hostSiteOperations": [
+                    "SOp 270",
+                    "SOp HoldPosition"
+                ],
+                "modelScale": 1.25
+            }
+        },
+        "Base Upgrade Economy SOp Offset": {
+            "siteOperation": {
+                "offset": {
+                    "y": -0.25,
+                    "orientation": 1
+                }
+            }
+        },
+        "Base Upgrade Economy SOp Rotate": {
+            "siteOperation": {
+                "rotate": {
+                    "x": 270,
+                    "z": 270,
+                    "orientation": 1
+                }
+            }
+        },
+        "Base Upgrade Fighter": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "barracks_rank01"
+                },
+                "modelScale": 1.4
+            }
+        },
+        "Enemy Boss ZombieOgre": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "zombie_ogre"
+                },
+                "walkAnimationSpeed": 0.35
+            }
+        },
+        "Enemy Boss ZombieOgre Jungle": {
+            "parent": "Enemy Boss ZombieOgre",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation"
+                }
+            }
+        },
+        "Enemy Zombie": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "zombie"
+                }
+            }
+        },
+        "Enemy Zombie Jungle": {
+            "parent": "Enemy Zombie",
+            "unitActor": {}
+        },
+        "Player Archer": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "name": "arrowtower_unit_rank01"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Unit Birth FX"
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1,
+                                    "duration": 0.3
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteWeapon": {
+                        "offset": {
+                            "forward": 0.1,
+                            "up": 0.35
+                        }
+                    }
+                },
+                "modelScale": 0.1
+            }
+        },
+        "Player Archer Weapon Attack FX 025": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Archer Weapon Launch 025"
+            }
+        },
+        "Player Archer Weapon Attack FX 050": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Archer Weapon Launch 050"
+            }
+        },
+        "Player Archer Weapon Attack FX 075": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Archer Weapon Launch 075"
+            }
+        },
+        "Player Archer Weapon Attack FX 100": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Archer Weapon Launch 100"
+            }
+        },
+        "Player Archer Weapon Attack FX Impact": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Archer Weapon Damage",
+                "impactModel": "Player Archer Weapon Impact FX"
+            }
+        },
+        "Player Archer Weapon Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_arrow_tower_hit"
+                }
+            }
+        },
+        "Player Archer Weapon Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "arrowtower_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Archer Weapon Missile Trail FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FollowMovement Orientation"
+                ]
+            }
+        },
+        "Player Archer Weapon Missile Trail FX": {
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "general_trail"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorOrphan": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Player Castle Chunk": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Player Castle Gate": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "forestworld_castle_door"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVisibility": {}
+                            },
+                            {
+                                "create": {
+                                    "actor": "Player Castle Gate Piece",
+                                    "hostSite": "FrontLeft"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Player Castle Gate Piece",
+                                    "hostSite": "FrontRight"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Player Castle Gate Piece",
+                                    "hostSite": "BackLeft",
+                                    "hostSiteOperations": [
+                                        "SOp 180"
+                                    ]
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Player Castle Gate Piece",
+                                    "hostSite": "BackRight",
+                                    "hostSiteOperations": [
+                                        "SOp 180"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Castle Gate Explosion FX"
+                                }
+                            },
+                            {
+                                "broadcastCustomEvent": {
+                                    "actor": "_Addon",
+                                    "identifier": "EventDeath"
+                                }
+                            },
+                            {
+                                "shakeCamera": {
+                                    "value": 1
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "BackLeft": {
+                        "offset": {
+                            "forward": -0.3,
+                            "right": 0.5
+                        }
+                    },
+                    "BackRight": {
+                        "offset": {
+                            "forward": -0.3,
+                            "right": -0.5
+                        }
+                    },
+                    "FrontLeft": {
+                        "offset": {
+                            "forward": 0.3,
+                            "right": 0.5
+                        }
+                    },
+                    "FrontRight": {
+                        "offset": {
+                            "forward": 0.3,
+                            "right": -0.5
+                        }
+                    }
+                }
+            }
+        },
+        "Player Castle Gate Explosion FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_explosion_small"
+                },
+                "modelScale": 2.5
+            }
+        },
+        "Player Castle Gate Piece": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "forestworld_castle_door"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventDeath"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "aliases": [
+                    "_Addon"
+                ]
+            }
+        },
+        "Player Fighter": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "barracks_troop_rank01"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Unit Birth FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.75
+            }
+        },
+        "Player Fighter Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Fighter Weapon Damage",
+                "impactModel": "Player Fighter Weapon Impact FX"
+            }
+        },
+        "Player Fighter Weapon Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_hit_impact00"
+                }
+            }
+        },
+        "Player Hero Dragoon": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "dragoon"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitAbilityStart": {
+                                "ability": "Player Hero Dragoon SummonTroops"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events StandardUnit Selectable"
+                ],
+                "walkAnimationSpeed": 2.5,
+                "modelScale": 0.9
+            }
+        },
+        "Player Hero Dragoon SummonTroop": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "reinforce_troop_elite"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Unit Birth FX"
+                                }
+                            },
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "ElementFire"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOff": {
+                                "behavior": "Player Hero Dragoon SummonTroop TimedLife"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Player Hero Dragoon SummonTroop TimeOut FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "remove",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "remove"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 0.75
+            }
+        },
+        "Player Hero Dragoon SummonTroop TimeOut FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_drow_mage_red_impact"
+                }
+            }
+        },
+        "Player Hero Dragoon Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Player Hero Dragoon Weapon Damage",
+                "impactModel": "Player Hero Dragoon Weapon Impact FX"
+            }
+        },
+        "Player Hero Dragoon Weapon Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_dragoon_weapon_impact"
+                }
+            }
+        },
+        "Player Hero Revive FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_hero_revive"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Player Hero Revive FX"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {}
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Player Unit Birth FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_undead_birth"
+                },
+                "modelScale": 1.5
+            }
+        }
+    }
+}

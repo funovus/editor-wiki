@@ -1,0 +1,232 @@
+{
+    "effects": {
+        "DeathEffect Fire Apply": {
+            "applyBehavior": {
+                "behavior": "DeathEffect Fire",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "DeathEffect Ice Apply": {
+            "applyBehavior": {
+                "behavior": "DeathEffect Ice",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "DeathEffect Shock Apply": {
+            "applyBehavior": {
+                "behavior": "DeathEffect Shock",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "Enemy SlimeYellow Attack ActionState": {
+            "applyBehavior": {
+                "behavior": "Enemy State Action",
+                "target": 3,
+                "stackCount": 1,
+                "duration": 0.625
+            }
+        },
+        "Enemy SlimeYellow Attack Create": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Enemy SlimeYellow Attack Set",
+                "finalEffect": "Enemy SlimeYellow Attack Launch",
+                "location": 7,
+                "periodicDurations": [
+                    0.375
+                ]
+            }
+        },
+        "Enemy SlimeYellow Attack Damage": {
+            "damage": {
+                "damageAmount": 1
+            }
+        },
+        "Enemy SlimeYellow Attack ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Enemy SlimeYellow Attack Damage",
+                    "DeathEffect Shock Apply"
+                ]
+            }
+        },
+        "Enemy SlimeYellow Attack Launch": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "startEffect": "GameSystem Debug Hook",
+                "impactLocation": 8,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "impactOffset": {
+                    "forward": 3
+                },
+                "mover": "Enemy SlimeYellow Attack"
+            }
+        },
+        "Enemy SlimeYellow Attack Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.25
+                    }
+                },
+                "effect": "Enemy SlimeYellow Attack ImpactSet"
+            }
+        },
+        "Enemy SlimeYellow Attack SearchBehavior Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy SlimeYellow Attack SearchBehavior",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Enemy SlimeYellow Attack SearchBehavior Remove": {
+            "removeBehavior": {
+                "behavior": "Enemy SlimeYellow Attack SearchBehavior",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Enemy SlimeYellow Attack Set": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Enemy SlimeYellow Attack ActionState",
+                "finalEffect": "Enemy SlimeYellow Attack TargetAcquired Apply",
+                "location": 7
+            }
+        },
+        "Enemy SlimeYellow Attack TargetAcquired Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy SlimeYellow Attack TargetAcquired",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "Enemy State Default Apply": {
+            "applyBehavior": {
+                "behavior": "Enemy State Default",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "GameSystem BoundarySearch Horizontal": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 26,
+                        "length": 2
+                    }
+                },
+                "effect": "Kill"
+            }
+        },
+        "GameSystem BoundarySearch Horizontal Create": {
+            "persistent": {
+                "periodicCount": 99999,
+                "location": 2,
+                "periodicDurations": [
+                    1
+                ],
+                "periodicEffects": [
+                    "GameSystem BoundarySearch Horizontal"
+                ]
+            }
+        },
+        "GameSystem BoundarySearch Vertical": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "rectangle": {
+                        "width": 2,
+                        "length": 22
+                    }
+                },
+                "effect": "Kill"
+            }
+        },
+        "GameSystem BoundarySearch Vertical Create": {
+            "persistent": {
+                "periodicCount": 99999,
+                "location": 2,
+                "periodicDurations": [
+                    1
+                ],
+                "periodicEffects": [
+                    "GameSystem BoundarySearch Vertical"
+                ]
+            }
+        },
+        "GameSystem Debug Hook": {
+            "applyBehavior": {
+                "behavior": "GameSystem Debug Hook",
+                "target": 3,
+                "stackCount": 1,
+                "duration": 0.0625
+            }
+        },
+        "Kill": {
+            "remove": {
+                "whichUnit": 1
+            }
+        },
+        "KillAll": {
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 16
+                    }
+                },
+                "effect": "Kill"
+            }
+        },
+        "Player Hero Slash Create": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "Player Hero Slash Search",
+                "periodicDurations": [
+                    0.0625
+                ],
+                "periodicEffects": [
+                    "Player Hero Slash Search"
+                ]
+            }
+        },
+        "Player Hero Slash Damage": {
+            "damage": {
+                "damageAmount": 10
+            }
+        },
+        "Player Hero Slash ImpactSet": {
+            "set": {
+                "effectList": [
+                    "Player Hero Slash Damage",
+                    "Player Score Multiplier Apply"
+                ]
+            }
+        },
+        "Player Hero Slash Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circleSector": {
+                        "outerRadius": 1.3,
+                        "angle": 170
+                    }
+                },
+                "effect": "Player Hero Slash ImpactSet"
+            }
+        },
+        "Player Score Multiplier Apply": {
+            "applyBehavior": {
+                "behavior": "Player Score Multiplier",
+                "target": 3,
+                "stackCount": 1
+            }
+        }
+    }
+}

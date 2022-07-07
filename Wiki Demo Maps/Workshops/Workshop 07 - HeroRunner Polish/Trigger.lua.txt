@@ -1,0 +1,384 @@
+--[[===============================================================================
+-- HERO RUNNER MISSILES DEMO
+--
+-- Welcome to the Hero Runner Missiles Demo! We'll say some stuff here about it.
+=================================================================================]]
+--=================================================================================
+-- VARIABLES
+
+local core = require("core")
+
+--[[ As one who reads and writes quite a bit of code, I very much dislike "magic numbers"; literal values declared in code,
+    rather than assigned to variables. For most purposes, its always better to assign all values to variables. While this
+    has the effect of making code less concise, it greatly enhances readability. Keep this in mind when writing your own
+    code, especially if anyone else might ever have need to read it.]]
+-- Shared
+local TICK_TIME = 0.0625 -- In game time seconds.
+
+local PLAYER_TEAM = 1
+local PLAYER_ID = 0
+
+local ENEMY_TEAM = -1
+local ENEMY_ID = -1
+
+local MISSILE_ID = 0 -- Player that owns missile units.
+
+local SCENE_TEAM = 1 -- Team of scrolling scene units.
+local SCENE_PLAYER = 1 -- Player that owns scrolling scene units. Assigned to user Player because the editor presently only allows Enemy or Player.
+
+-- Camera variables
+local CAMERA_FOCUS = {X = 16, Y = 14} --{X = 14, Y = 16}
+local CAMERA_PITCH = 30 --45
+local CAMERA_YAW = -51
+
+-- Player and player character variables
+local PLAYER_HERO_TYPE = "Demo Hero"
+local PLAYER_SPAWN = {X = 16, Y = 12}
+local PlayerHero
+
+-- Scrolling scene variables
+local SCROLL_BOUNDS = {START = 40, END = 0} -- Scroll bounds as Y-axis value. Scene units generate at start, removed at end.
+local SCROLL_SPEED = 4 -- In game space per game time second. Designed to (probably) support change at runtime.
+local SCROLL_SPAWN_DISTANCE = 5 -- In game space. Time between spawning in seconds equals SCROLL_SPAWN_DISTANCE / SCROLL_SPEED
+local SCROLL_SPAWNS = { -- Unit types for scrolling scene, and the X-axis value and rotation at which they spawn.
+    {TYPE = "Environment Temple Floor", X = 13.5},
+    {TYPE = "Environment Temple Floor", X = 18.5},
+    {TYPE = "Environment Temple Wall", X = 9.5},
+    {TYPE = "Environment Temple Lower Wall", X = 22.25},
+    {TYPE = "Environment Temple Roof", X = 5.75},
+    {TYPE = "Environment Temple Lower Floor", X = 26.25}
+}
+local ScrollTickCounter = 0 -- Counts ticks for scrolling spawns.
+local IsSceneScrolling = true -- Just in case you wanna stop scrolling.
+
+--[[
+-- Orbiting missile variables
+local ORB_GROUP = -- The orbital missile units, and the unit type, orbital radius and speed in radians of each.
+    {
+        {TYPE = "Demo Orbital Missile Blue", UNIT = nil, RADIUS = 1.75, SPEED = -math.pi},
+        {TYPE = "Demo Orbital Missile Red", UNIT = nil, RADIUS = 1.25, SPEED = math.pi},
+        {TYPE = "Demo Orbital Missile Green", UNIT = nil, RADIUS = 0.75, SPEED = -2 * math.pi}
+    }
+
+-- Banker missile variables
+local BANKER_TYPE = "Demo Banker Missile"
+--local BANKER_TARGET_REGION = DCEI.FindRegion("BankerTargetArea") -- Area within which banker missiles find targets.
+local BANKER_SPAWN_REGION = DCEI.FindRegion("BankerSpawnArea") -- Area within which banker missiles spawn.
+local BANKER_FLIGHT_TIME = 2 -- In game time seconds. Flight time from origin to target.
+local BANKER_CONTROL_BOUNDS = {UPPER = 8, LOWER = 4} -- Used in the random generation of banker control offsets for its strafe arc.
+local BANKER_IMPACT_DISTANCE = 0.5 -- Distance threshold at which impact is achieved, upon which banker returns to origin
+local BANKER_PHASE = 
+    {
+        IDLE = 1,
+        APPROACH = 2,
+        RETURN = 3
+    }
+local BankerGroup = {} -- Initialise an empty table for the banker missile units, their current phases and targets
+    -- content schema: {unit, origin = {x, y}, target = {x, y}, control = {x, y}, phase, controlXOffset, flightTime, targetUnit}
+]]
+--=================================================================================
+-- TRIGGERS
+
+-- This function callback initialises the UI, camera, units, and such.
+function OnMapStart()
+    -- Hide the default UI
+    core.HideDefaultUi()
+
+    -- Configure camera
+    DCEI.SetCameraFocus(CAMERA_FOCUS.X, CAMERA_FOCUS.Y)
+    DCEI.SetCameraPitchSmoothOvertime(CAMERA_PITCH, 0)
+    DCEI.SetCameraYawSmoothOvertime(CAMERA_YAW, 0)
+
+    -- Spawn player character
+    PlayerHero = DCEI.CreateUnitAsync(PLAYER_TEAM, PLAYER_ID, PLAYER_HERO_TYPE, PLAYER_SPAWN.X, PLAYER_SPAWN.Y)
+
+    --[[
+    -- Spawn banker missiles
+    --ConstructBankerMissile(BANKER_TYPE, {x = 16, y = 2}) -- We'll do this properly here in a bit.
+    ConstructBankerMissile()
+
+    -- Create button to spawn more.
+    local root = DCEI.GetUiRoot()
+
+    local button = DCEI.NewButton(root)
+    DCEI.SetBottomAlignmentInParent(button)
+    DCEI.SetSize(button, 128, 96)
+    DCEI.SetOnClickCallback(button, OnButtonClick)
+
+    local text = DCEI.NewText(button)
+    DCEI.SetCenterAlignment(text)
+    DCEI.SetSize(text, 128, 64)
+    DCEI.SetText(text, "MORE BIRD!")
+    --]]
+end
+
+--[[ One may find it preferable at times to perform all updates in the same trigger/thread. While it can be more
+    efficient to perform all periodic updates this way, it may impair readability. In the case of the Dream Engine,
+    individual threads may be limited to 1000 actions. Either way, unless you're optimising for performance gains
+    in response to specific performance issues, best practice is to organise (or scope) your code according to each
+    piece (or unit) of code's purpose.]]
+--[[
+-- This function callback updates the position of orb missiles as they move in an orbital pattern around the player hero.
+function OnOrbUpdate()
+    -- If the player hero is valid (does exist and isn't dead), we'll update the positions of the orbs. Otherwise, remove them.
+    if IsUnitValid(PlayerHero) then
+
+        local heroPos = DCEI.GetUnitPosition2D(PlayerHero)
+
+        -- For each orb unit, we check if its valid, create a new one if not. Then update its orbital position.
+        for i = 1, #ORB_GROUP do
+            -- If the hero is valid and an orb unit isn't, create a new one.
+            if not IsUnitValid(ORB_GROUP[i].UNIT) then
+                ORB_GROUP[i].UNIT = DCEI.CreateUnitAsync(PLAYER_TEAM, MISSILE_ID, ORB_GROUP[i].TYPE, heroPos.x, heroPos.y)
+            end
+            -- Update the orbital positions of the orb unit.
+            local newPos = PolarOffsetFromUnit2D(PlayerHero, ORB_GROUP[i].RADIUS, AngleBetweenUnits2D(PlayerHero, ORB_GROUP[i].UNIT) + (ORB_GROUP[i].SPEED * TICK_TIME))
+            DCEI.SetUnitPosition2DWithInterpolation(ORB_GROUP[i].UNIT, newPos.x, newPos.y)
+        end
+
+    else
+
+        -- Destroy orb units because the player hero died. Sad face.
+        for i = 1, #ORB_GROUP do
+            -- If the hero isn't valid and an orb unit is, kill it.
+            if IsUnitValid(ORB_GROUP[i].UNIT) then
+                DCEI.KillUnit(ORB_GROUP[i].UNIT)
+                DCEI.RemoveUnitSync(ORB_GROUP[i].UNIT)
+            end
+        end
+
+    end
+end
+
+-- This function callback updates the movement of banker missiles, guiding them to enemy targets and then back to their origin.
+function OnBankerUpdate()
+    -- get enemy unit collection, because we may use it.
+    local enemyUnits = DCEI.FindUnitsByPlayerId(ENEMY_ID)
+
+    -- for each banker missile
+    for i = 1, #BankerGroup do
+
+        -- If the banker is idle, find a new target and approach it.
+        if BankerGroup[i].phase == BANKER_PHASE.IDLE and #enemyUnits > 0 and IsUnitValid(PlayerHero) then
+            BankerGroup[i].phase = BANKER_PHASE.APPROACH
+            BankerGroup[i].targetUnit = enemyUnits[math.random(1,#enemyUnits)]
+            BankerGroup[i].target = DCEI.GetUnitPosition2D(BankerGroup[i].targetUnit)
+            BankerGroup[i].controlXOffset = RandomControlOffset()
+            BankerGroup[i].control = {x = BankerGroup[i].target.x + BankerGroup[i].controlXOffset, y = BankerGroup[i].target.y-2}
+            BankerGroup[i].flightTime = 0
+        end
+
+        -- If the player hero dies on approach, have the banker return.
+        if BankerGroup[i].phase == BANKER_PHASE.APPROACH and not IsUnitValid(PlayerHero) then
+            BankerGroup[i].phase = BANKER_PHASE.RETURN
+            BankerGroup[i].target = DCEI.GetUnitPosition2D(BankerGroup[i].unit)
+            BankerGroup[i].controlXOffset = -BankerGroup[i].controlXOffset
+            BankerGroup[i].control = {x = BankerGroup[i].target.x + BankerGroup[i].controlXOffset, y = BankerGroup[i].target.y-2}
+            BankerGroup[i].flightTime = 0
+        end
+
+        -- If the banker missile is close enough to the target, impact and return.
+        if BankerGroup[i].phase == BANKER_PHASE.APPROACH and DistanceBetweenUnitAndPoint(BankerGroup[i].unit, BankerGroup[i].target) <= BANKER_IMPACT_DISTANCE then
+            -- IMPACT! Instant kill is rather OP, but hell, its a demo.
+            if IsUnitValid(BankerGroup[i].targetUnit) then
+                --DCEI.KillUnit(BankerGroup[i].targetUnit)
+            end
+            -- Then the banker missile returns.
+            BankerGroup[i].phase = BANKER_PHASE.RETURN
+            --BankerGroup[i].targetUnit = nil -- Strictly speaking, this isn't necessary; this code doesn't access targetUnit without first validating it.
+            BankerGroup[i].target = DCEI.GetUnitPosition2D(BankerGroup[i].unit)
+            BankerGroup[i].controlXOffset = -BankerGroup[i].controlXOffset
+            BankerGroup[i].control = {x = BankerGroup[i].target.x + BankerGroup[i].controlXOffset, y = BankerGroup[i].target.y-2}
+            BankerGroup[i].flightTime = 0
+        end
+
+        -- If the banker missile is still approaching, update its position along a bezier curve toward the target.
+        if BankerGroup[i].phase == BANKER_PHASE.APPROACH then
+            -- If the target unit is still alive, it may have moved, so we update the target and control points.
+            if IsUnitValid(BankerGroup[i].targetUnit) then
+                BankerGroup[i].target = DCEI.GetUnitPosition2D(BankerGroup[i].targetUnit)
+                BankerGroup[i].control = {x = BankerGroup[i].target.x + BankerGroup[i].controlXOffset, y = BankerGroup[i].target.y-2}
+            end
+            -- Then we advance the flight time and use it to determine where along the bezier curve path we'll move the banker missile.
+            BankerGroup[i].flightTime = BankerGroup[i].flightTime + (TICK_TIME / BANKER_FLIGHT_TIME)
+            local pos = PointFromQuadraticBezierPath2D(BankerGroup[i].origin, BankerGroup[i].control, BankerGroup[i].target, BankerGroup[i].flightTime)
+            --DCEI.TurnUnitTowards(BankerGroup[i].unit, pos.x, pos.y)
+            DCEI.SetUnitPosition2DWithInterpolation(BankerGroup[i].unit, pos.x, pos.y)
+        end
+
+        -- If the banker missile is close enough to origin, it becomes idle.
+        if BankerGroup[i].phase == BANKER_PHASE.RETURN and DistanceBetweenUnitAndPoint(BankerGroup[i].unit, BankerGroup[i].origin) <= BANKER_IMPACT_DISTANCE then
+            -- Then the banker missile arrives and returns to idle.
+            BankerGroup[i].phase = BANKER_PHASE.IDLE
+        end
+
+        -- If the banker missile is still returning, update its position along a bezier curve toward the origin.
+        if BankerGroup[i].phase == BANKER_PHASE.RETURN then
+            -- We advance the flight time and use it to determine where along the bezier curve path we'll move the banker missile.
+            -- Note that target and origin have been switched below.
+            BankerGroup[i].flightTime = BankerGroup[i].flightTime + (TICK_TIME / BANKER_FLIGHT_TIME)
+            local pos = PointFromQuadraticBezierPath2D(BankerGroup[i].target, BankerGroup[i].control, BankerGroup[i].origin, BankerGroup[i].flightTime)
+            --DCEI.TurnUnitTowards(BankerGroup[i].unit, pos.x, pos.y)
+            DCEI.SetUnitPosition2DWithInterpolation(BankerGroup[i].unit, pos.x, pos.y)
+        end
+
+    end
+end
+]]
+-- This function callback updates the position of each scrolling scene unit and spawns new scrolling scene units.
+function OnSceneUpdate()
+    -- If the scene is still scrolling, we want to create new scene units and update the position of all scene units.
+    if IsSceneScrolling == true then
+        ScrollTickCounter = ScrollTickCounter + 1
+
+        -- Once the current scene units have moved far enough, we spawn the next row.
+        if (ScrollTickCounter * TICK_TIME) == (SCROLL_SPAWN_DISTANCE / SCROLL_SPEED) then
+            ScrollTickCounter = 0
+            -- Spawn a new row of scene units from the information encoded in SCROLL_SPAWNS
+            for i = 1, #SCROLL_SPAWNS do
+                DCEI.CreateUnitAsync(
+                    SCENE_TEAM,
+                    SCENE_PLAYER,
+                    SCROLL_SPAWNS[i].TYPE,
+                    SCROLL_SPAWNS[i].X,
+                    SCROLL_BOUNDS.START
+                )
+            end
+        end
+
+        -- Translate all scene units toward the scene bound end along Y-axis. Destroy them if they cross you- er, it! =D
+        local units = DCEI.FindUnitsByPlayerId(SCENE_PLAYER)
+        for _, u in ipairs(units) do
+            local newPos = DCEI.GetUnitPosition2D(u)
+            if newPos.y > SCROLL_BOUNDS.END then
+                DCEI.SetUnitPosition2DWithInterpolation(u, newPos.x, newPos.y - (SCROLL_SPEED * TICK_TIME))
+            else
+                -- Kill and remove scene units once they pass the end bounds.
+                DCEI.KillUnit(u)
+                DCEI.RemoveUnitSync(u)
+            end
+        end
+    end
+end
+
+-- We wanna go ahead and clean up enemies that make it to the end of the path.
+-- If this were a complete game, there are several alternative designs we could use to handle this.
+function OnEnterKillzone()
+    local unit = DCEI.TriggeringUnit
+    if DCEI.GetUnitPlayerId(unit) == ENEMY_ID then
+        DCEI.KillUnit(unit)
+        DCEI.RemoveUnitSync(unit)
+    end
+end
+
+function OnButtonClick()
+    ConstructBankerMissile()
+end
+
+--=================================================================================
+-- FUNCTIONS
+
+-- Returns true if unit exists and isn't dead.
+function IsUnitValid(unit)
+    -- Remember to verify against nil before passing it to functions, especially if it could cause a critical failure.
+    -- In this case, short circuiting stops the second evaluation if the first is false (if the unit reference is nil).
+    return unit ~= nil and DCEI.GetHealth(unit) >= 1
+end
+
+-- Gonna put some region unit group utility function here. Need it for banker area targeting.
+
+-- Returns a point {x, y} at range [0..1] from start point {x, y} toward end point {x, y} along a line path.
+function PointFromLinearPath2D(start, stop, range)
+    return {
+        x = (1 - range) * start.x + range * stop.x,
+        y = (1 - range) * start.y + range * stop.y
+    }
+end
+
+-- Returns a point {x, y} at range [0..1] from start point {x, y} toward end point {x, y} along a curved path offset by control point {x, y}.
+function PointFromQuadraticBezierPath2D(start, control, stop, range)
+    return {
+        x = (1 - range) * ((1 - range) * start.x + range * control.x) +
+            range * ((1 - range) * control.x + range * stop.x),
+        y = (1 - range) * ((1 - range) * start.y + range * control.y) +
+            range * ((1 - range) * control.y + range * stop.y)
+    }
+end
+
+-- Returns distance between two points {x, y}.
+function DistanceBetweenPoints(pointA, pointB)
+    return math.sqrt((pointB.x - pointA.x) ^ 2 + (pointB.y - pointA.y) ^ 2 * 1.0)
+end
+
+-- Returns distance between a unit's position and a point {x, y}.
+function DistanceBetweenUnitAndPoint(unitA, pointB)
+    return DistanceBetweenPoints(DCEI.GetUnitPosition2D(unitA), pointB)
+end
+
+-- Returns distance between two units' positions.
+function DistanceBetweenUnits(unitA, unitB)
+    return DistanceBetweenPoints(DCEI.GetUnitPosition2D(unitA), DCEI.GetUnitPosition2D(unitB))
+end
+
+-- Returns an angle in radians between two points {x, y}.
+function AngleBetweenPoints2D(pointA, pointB)
+    return math.atan(pointB.y - pointA.y, pointB.x - pointA.x)
+end
+
+-- Returns an angle in radians between a unit's position and a point {x, y}.
+function AngleBetweenUnitAndPoint2D(unitA, pointB)
+    return AngleBetweenPoints2D(DCEI.GetUnitPosition2D(unitA), pointB)
+end
+
+-- Returns an angle in radians between two units' positions.
+function AngleBetweenUnits2D(unitA, unitB)
+    return AngleBetweenPoints2D(DCEI.GetUnitPosition2D(unitA), DCEI.GetUnitPosition2D(unitB))
+end
+
+-- Returns a point {x, y} offset from center point {x, y} at radius distance and angle in radians.
+function PolarOffsetFromPoint2D(center, radius, angle)
+    return {x = center.x + (radius * math.cos(angle)), y = center.y + (radius * math.sin(angle))}
+end
+
+-- Returns a point {x, y} offset from unit's position at radius distance and angle in radians.
+function PolarOffsetFromUnit2D(unit, radius, angle)
+    return PolarOffsetFromPoint2D(DCEI.GetUnitPosition2D(unit), radius, angle)
+end
+
+-- This is far less general purpose than the above. Sometimes you may have need to write functions to construct data structures according to strict specifications.
+-- Creates a banker missile and adds it to the BankerGroup as part of a table containing fields used by the banker missile update trigger.
+function ConstructBankerMissile()
+    point = DCEI.GetRandomPointInRegion(BANKER_SPAWN_REGION)
+    u = DCEI.CreateUnitAsync(PLAYER_TEAM, MISSILE_ID, BANKER_TYPE, point.x, point.y)
+    o = DCEI.GetUnitPosition2D(u)
+    table.insert(
+        BankerGroup,
+        {unit = u, origin = o, target, control, phase = BANKER_PHASE.IDLE, controlXOffset, flightTime, targetUnit}
+    )
+end
+
+-- This will return a value in a range that will make for a visually appealing control offset.
+-- With a bit more work, this could be generalised to something useful.
+function RandomControlOffset()
+    -- We want to avoid lower values entirely, and generate positive or negative values.
+    if math.random(0, 1) == 1 then
+        return (math.random() + math.random(BANKER_CONTROL_BOUNDS.LOWER - 1, BANKER_CONTROL_BOUNDS.UPPER - 1))
+    end
+    return -(math.random() + math.random(BANKER_CONTROL_BOUNDS.LOWER - 1, BANKER_CONTROL_BOUNDS.UPPER - 1))
+end
+
+--=================================================================================
+-- INITIALIZE
+
+-- Start the game after everything has initialised.
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+-- Update the position of the scrolling scene 1/TICK_TIME times each gametime second.
+DCEI.TriggerAddTimerEventPeriodicIndefinite(OnSceneUpdate, TICK_TIME, false)
+-- Clean-up the units that get to the end by removing them.
+DCEI.TriggerAddUnitEnterRegionEvent(DCEI.UnitAny, DCEI.FindRegion("Killzone"), OnEnterKillzone)
+--[[
+-- Update the position of the orb missiles 1/TICK_TIME times each gametime second.
+DCEI.TriggerAddTimerEventPeriodicIndefinite(OnOrbUpdate, TICK_TIME, false)
+-- Update the move orders of the banker missiles 1/TICK_TIME times each gametime second.
+DCEI.TriggerAddTimerEventPeriodicIndefinite(OnBankerUpdate, TICK_TIME, false)
+]]

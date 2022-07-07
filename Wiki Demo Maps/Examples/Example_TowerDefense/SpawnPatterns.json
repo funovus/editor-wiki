@@ -1,0 +1,125 @@
+{
+    "spawnPatterns": {
+        "Line Center": {
+            "interval": {
+                "min": 2,
+                "max": 2
+            },
+            "dispersal": {
+                "min": 0.5,
+                "max": 0.5
+            }
+        },
+        "Line Left": {
+            "interval": {
+                "min": 2,
+                "max": 2
+            },
+            "dispersal": {
+                "min": 0.1,
+                "max": 0.1
+            }
+        },
+        "Line Right": {
+            "interval": {
+                "min": 2,
+                "max": 2
+            },
+            "dispersal": {
+                "min": 0.9,
+                "max": 0.9
+            }
+        },
+        "Random Standard": {
+            "interval": {
+                "min": 1.9,
+                "max": 2.1
+            },
+            "dispersal": {
+                "min": 0.1,
+                "max": 0.9
+            }
+        },
+        "Random Tight": {
+            "interval": {
+                "min": 1.9,
+                "max": 2.1
+            },
+            "dispersal": {
+                "min": 0.4,
+                "max": 0.6
+            }
+        }
+    },
+    "spawnPatternGroups": {
+        "2x1 Melee": {
+            "spawnGroupPattern": [
+                {
+                    "unit": "Creep Melee"
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 1
+                }
+            ]
+        },
+        "2x2 Melee": {
+            "spawnGroupPattern": [
+                {
+                    "unit": "Creep Melee",
+                    "offset": -0.3
+                },
+                {
+                    "unit": "Creep Melee",
+                    "offset": 0.3
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 1,
+                    "offset": -0.3
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 1,
+                    "offset": 0.3
+                }
+            ]
+        },
+        "6x Melee 1x Range Ring": {
+            "spawnGroupPattern": [
+                {
+                    "unit": "Creep Melee",
+                    "offset": 0.2
+                },
+                {
+                    "unit": "Creep Melee",
+                    "offset": -0.2
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 0.5,
+                    "offset": 0.35
+                },
+                {
+                    "unit": "Creep Ranged",
+                    "delay": 0.5
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 0.5,
+                    "offset": -0.35
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 1,
+                    "offset": 0.2
+                },
+                {
+                    "unit": "Creep Melee",
+                    "delay": 1,
+                    "offset": -0.2
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "effects": {
+        "Create Crop: Tree": {
+            "spawn": {
+                "unit": "Crop Tree",
+                "count": 1,
+                "ownerPlayId": 1,
+                "location": 2,
+                "effect": "Plant Crop: Apply Growth State"
+            }
+        },
+        "Crop Harvest Search": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "maxUnitCount": 1,
+                "filter": {
+                    "unit": 0
+                },
+                "effect": "Kill"
+            }
+        },
+        "Plant Crop: Apply Growth State": {
+            "applyBehavior": {
+                "behavior": "Crop State: Growing",
+                "target": 1,
+                "stackCount": 1,
+                "duration": 8
+            }
+        },
+        "Plant Crop: Apply Ready State": {
+            "applyBehavior": {
+                "behavior": "Crop State: Ready",
+                "target": 1,
+                "stackCount": 1
+            }
+        }
+    }
+}

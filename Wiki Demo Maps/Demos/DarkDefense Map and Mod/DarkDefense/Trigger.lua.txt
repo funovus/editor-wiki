@@ -1,0 +1,498 @@
+local core = require("core")
+local waves = GameModules["DarkDefense_WaveGenerator"]
+
+-- Variables
+local ARCHER_POSITIONS = {}
+local FIGHTER_POSITIONS = {}
+local HERO_POSITIONS = {
+    {37.5, 10.5}
+}
+
+local PLAYER_ARCHER_COUNT = 0
+local PLAYER_ARCHERS = {}
+local PLAYER_FIGHTER_COUNT = 0
+local PLAYER_FIGHTERS = {}
+
+local PLAYER_ARCHER = "Player Archer"
+local PLAYER_FIGHTER = "Player Fighter"
+
+local CASTLE_GATE
+local CASTLE_CHUNKS = {}
+local CASTLE_GATE_NAME = "Player Castle Gate"
+local CASTLE_CHUNK_NAME = "Player Castle Chunk"
+local CASTLE_CENTER_NAME = "Base Upgrade Center"
+local CASTLE_CENTER
+
+local CASTLE_ECONOMY
+local CASTLE_ECONOMY_BUILD = "Base Build Economy"
+local CASTLE_ECONOMY_UPGRADE = "Base Upgrade Economy"
+local CASTLE_ECONOMY_LEVEL = 0
+local GOLD_PER_ECONOMY_LEVEL = 5
+
+local CASTLE_CENTER_SWORD = "Base Upgrade Center ShowSword"
+
+local HERO_NAMES = {}
+local HERO_PAUSE_MANA = "Player Hero PauseManaGeneration"
+
+local UPGRADE_ARCHER = "Base Upgrade Archer"
+local UPGRADE_FIGHTER = "Base Upgrade Fighter"
+
+local WAYPOINT_FINISH = "Enemy Waypoint Finish Trigger"
+
+local CURRENT_WAVE = {}
+local GAME_OVER = false
+
+local CAMERA_CURRENT = 1
+local CAMERA_LOCATION = {
+    {37.5, 10},
+    {30.5, 10}
+}
+
+local DEBUG = false
+
+-- Triggers
+function OnMapInitialization()
+    local initial_archers = 4
+
+    DCEI.SetEnabledCameraClamp(false)
+    DCEI.HideFastForwardButton()
+    DCEI.HideShipSpellMenu()
+
+    CheckDebugActions()
+
+    SetPlayerArcherFormation()
+    SetPlayerFighterFormation()
+    CreateCastle()
+
+    CreateInitialHeroes()
+    UpdateEconomyDisplay()
+    for n = 1, initial_archers do
+        AddArcher()
+    end
+
+    DCEI.PauseCallWaveTimer()
+    waves.GenerateWaves()
+end
+
+function OnCastAbility()
+    local u = DCEI.TriggeringUnit
+    local a = DCEI.TriggeringAbilityName
+
+    if a == UPGRADE_ARCHER then
+        AddArcher()
+    elseif a == UPGRADE_FIGHTER then
+        AddFighter()
+    elseif a == CASTLE_ECONOMY_BUILD or a == CASTLE_ECONOMY_UPGRADE then
+        AddEconomy()
+    end
+end
+
+function OnUnitSelected()
+    local u = DCEI.TriggeringUnit
+    -- DCEI.LogMessage("Unit is selected: " .. DCEI.UnitName(u))
+
+    if DCEI.UnitType(u) == "Structure" then
+        DCEI.ShowAbilitiesUi(0, u)
+    end
+
+    if u == CASTLE_CENTER then
+        SwitchCamera()
+    end
+end
+
+function OnUnitDeselected()
+    local u = DCEI.TriggeringUnit
+    -- DCEI.LogMessage("Unit is deselected: " .. DCEI.UnitName(u))
+
+    if DCEI.UnitType(u) == "Structure" then
+        DCEI.HideAbilitiesUi(0, u)
+    end
+end
+
+function OnUnitBehaviorAdd()
+    local u = DCEI.TriggeringUnit
+    local b = DCEI.TriggeringBehaviorName
+    local name = DCEI.UnitName(u)
+
+    if b == "Player Castle Chunk HitResponse Trigger" then
+        ProcessCastleDamage(u)
+    elseif b == WAYPOINT_FINISH then
+        DCEI.CastAbility("Enemy ConvertToJungle", u, u)
+    end
+end
+
+function OnUnitSpawn()
+    local u = DCEI.TriggeringUnit
+    local id = DCEI.GetUnitPlayerId(u)
+
+    if id == -1 then
+        -- this is necessary to prevent "jungle" creeps from running away
+        SendUnitDownLane(u)
+        table.insert(CURRENT_WAVE, u)
+    end
+end
+
+function OnUnitDied()
+    local u = DCEI.TriggeringUnit
+    local id = DCEI.GetUnitPlayerId(u)
+
+    if id == -1 then
+        for n = 1, #CURRENT_WAVE do
+            local unit = CURRENT_WAVE[n]
+            if unit == u then
+                table.remove(CURRENT_WAVE, n)
+                CheckIfWaveIsOver()
+                break
+            end
+        end
+    end
+end
+
+function OnWaveStatusChange()
+    local wave_status = DCEI.TriggeringWaveStatus
+    local wave_id = DCEI.TriggeringWaveId
+
+    if wave_status == "CountDown" then
+        DCEI.PauseCallWaveTimer()
+    elseif wave_status == "Spawning" then
+        WaveStartActions()
+        waves.CheckToSpawnBoss(wave_id)
+    end
+end
+
+function CheckDebugActions()
+    local ship = DCEI.FindUnit("Ship")
+    if DEBUG then
+        DCEI.ShowShipSpellMenu()
+        DCEI.ShowAbilitiesUi(1, ship)
+        DCEI.ShowUnitStatusUi(2, ship)
+    end
+end
+
+function SwitchCamera()
+    CAMERA_CURRENT = (CAMERA_CURRENT % 2) + 1
+
+    local x, y = CAMERA_LOCATION[CAMERA_CURRENT][1], CAMERA_LOCATION[CAMERA_CURRENT][2]
+    DCEI.SetCameraFocus(x, y, 0.25)
+    DCEI.DeselectUnitSync(CASTLE_CENTER)
+
+    if CAMERA_CURRENT == 1 then
+        DCEI.ShowCallWaveIndicators()
+        DCEI.RemoveBehavior(CASTLE_CENTER, CASTLE_CENTER_SWORD)
+    else
+        DCEI.HideCallWaveIndicators()
+        DCEI.ApplyBehavior(CASTLE_CENTER, CASTLE_CENTER_SWORD)
+    end
+end
+
+function CheckIfWaveIsOver()
+    if #CURRENT_WAVE == 0 and not GAME_OVER then
+        WaveEndActions()
+    end
+end
+
+function WaveStartActions()
+    local name = HERO_NAMES[1]
+    local hero = DCEI.FindUnit(name)
+    local full_mana = 100
+
+    DCEI.SetMana(hero, full_mana)
+    DCEI.RemoveBehavior(hero, HERO_PAUSE_MANA)
+    MakeFightersFaceForward()
+end
+
+function WaveEndActions()
+    ResetCastle()
+    ResetHeroes()
+    ResetFighters()
+
+    -- grant gold from economy
+    GrantEconomyReward()
+
+    -- make next wave available
+    DCEI.ResumeCallWaveTimer()
+end
+
+function ResetCastle()
+    local full_health = DCEI.GetUnitTypeHealth(CASTLE_GATE_NAME)
+    DCEI.SetHealth(CASTLE_GATE, full_health)
+
+    -- heal the castle twice, as it seems possible (but rare) that castle can take damage in same frame as last enemy is defeated
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SetHealth(CASTLE_GATE, full_health)
+        end,
+        0.25
+    )
+end
+
+function ResetHeroes()
+    -- heal hero and reset mana
+    local name = HERO_NAMES[1]
+    local hero = DCEI.FindUnit(name)
+
+    if DCEI.UnitIsAlive(hero) then
+        local full_health = DCEI.GetUnitTypeHealth(name)
+        DCEI.SetMana(hero, 0)
+        DCEI.ApplyBehavior(hero, HERO_PAUSE_MANA)
+        DCEI.SetHealth(hero, full_health)
+    else
+        SpawnHero()
+    end
+end
+
+function ResetFighters()
+    local full_health = 999
+
+    for n = 1, PLAYER_FIGHTER_COUNT do
+        DCEI.LogMessage("-- checking fighter #" .. n)
+        local u = PLAYER_FIGHTERS[n]
+
+        if DCEI.UnitIsAlive(u) then
+            DCEI.SetHealth(u, full_health)
+            DCEI.TurnUnitTowards(u, 1, 0)
+        else
+            local x, y = FIGHTER_POSITIONS[n].x, FIGHTER_POSITIONS[n].y
+            PLAYER_FIGHTERS[n] = DCEI.CreateUnitAsync(1, 1, PLAYER_FIGHTER, x, y, 1, 0)
+        end
+    end
+end
+
+function MakeFightersFaceForward()
+    for _, u in ipairs(PLAYER_FIGHTERS) do
+        DCEI.TurnUnitTowards(u, 1, 0)
+    end
+end
+
+function SendUnitDownLane(unit)
+    local p = DCEI.GetUnitPosition2D(unit)
+    p.x = 35.25 + 0.375
+    DCEI.MoveAttack(unit, p.x, p.y)
+end
+
+function ProcessCastleDamage(castle_chunk)
+    local name = DCEI.UnitName(castle_chunk)
+    local health_max = DCEI.GetUnitTypeHealth(name)
+    local health_cur = DCEI.GetHealth(castle_chunk)
+
+    local damage = health_max - health_cur
+    local castle_health = DCEI.GetHealth(CASTLE_GATE) - damage
+
+    if castle_health > 0 then
+        -- DCEI.LogMessage("-- damage processed: " .. damage)
+        DCEI.SetHealth(castle_chunk, health_max)
+        DCEI.SetHealth(CASTLE_GATE, DCEI.GetHealth(CASTLE_GATE) - damage)
+    elseif not GAME_OVER then
+        DestroyCastle()
+        GameOver()
+    end
+end
+
+function CreateCastle()
+    local min_y = 6
+    local max_y = 15
+    local x = 34.75 + 0.125
+
+    for y = min_y, max_y, 0.5 do
+        local u = DCEI.CreateUnitAsync(1, 1, CASTLE_CHUNK_NAME, x, y)
+        table.insert(CASTLE_CHUNKS, u)
+    end
+
+    x, y = 34.76, 10.5
+    CASTLE_GATE = DCEI.CreateUnitAsync(1, 1, CASTLE_GATE_NAME, x, y, 1, 0)
+    DCEI.ShowShipHealthBar(CASTLE_GATE)
+
+    x, y = 30, 13.75
+    CASTLE_CENTER = DCEI.CreateUnitAsync(1, 1, CASTLE_CENTER_NAME, x, y)
+
+    x, y = 26, 10.5
+    CASTLE_ECONOMY = DCEI.CreateUnitAsync(1, 1, CASTLE_ECONOMY_BUILD, x, y)
+end
+
+function DestroyCastle()
+    DCEI.KillUnit(CASTLE_GATE)
+    -- for _, u in ipairs(CASTLE_CHUNKS) do
+    --     DCEI.RemoveUnitSync(u)
+    -- end
+end
+
+function AddEconomy()
+    local position = DCEI.GetUnitPosition2D(CASTLE_ECONOMY)
+
+    if CASTLE_ECONOMY_LEVEL == 0 then
+        DCEI.RemoveUnitSync(CASTLE_ECONOMY)
+        CASTLE_ECONOMY = DCEI.CreateUnitAsync(1, 1, CASTLE_ECONOMY_UPGRADE, position.x, position.y)
+    end
+
+    CASTLE_ECONOMY_LEVEL = CASTLE_ECONOMY_LEVEL + 1
+    UpdateEconomyDisplay()
+end
+
+function UpdateEconomyDisplay()
+    local reward_amount = GOLD_PER_ECONOMY_LEVEL * CASTLE_ECONOMY_LEVEL
+    local economy_display = "Economy Lv. " .. CASTLE_ECONOMY_LEVEL .. "\n" .. "(+" .. reward_amount .. "g per wave)"
+    DCEI.ShowObjective(economy_display)
+end
+
+function GrantEconomyReward()
+    local reward_amount = GOLD_PER_ECONOMY_LEVEL * CASTLE_ECONOMY_LEVEL
+    DCEI.LogMessage("Awarding " .. reward_amount .. " gold from economy")
+    DCEI.AddGold(1, reward_amount)
+end
+
+function SetPlayerArcherFormation()
+    local min_x = 31
+    local max_x = 33.5
+    local min_y = 8
+    local max_y = 12.5
+
+    for x = min_x, max_x, 0.5 do
+        for y = max_y, min_y, -0.5 do
+            table.insert(ARCHER_POSITIONS, {x = x, y = y})
+        end
+    end
+end
+
+function SetPlayerFighterFormation()
+    local min_x = 36
+    local max_x = 36.75
+    local min_y = 6.25
+    local max_y = 14.25
+
+    for x = min_x, max_x, 0.75 do
+        for y = max_y, min_y, -0.75 do
+            table.insert(FIGHTER_POSITIONS, {x = x, y = y})
+        end
+    end
+
+    local table = {table.unpack(FIGHTER_POSITIONS)}
+
+    for n = 0, 1 do
+        local v = n * 11
+        FIGHTER_POSITIONS[v + 1] = table[v + 6]
+        FIGHTER_POSITIONS[v + 2] = table[v + 5]
+        FIGHTER_POSITIONS[v + 3] = table[v + 7]
+        FIGHTER_POSITIONS[v + 4] = table[v + 4]
+        FIGHTER_POSITIONS[v + 5] = table[v + 8]
+        FIGHTER_POSITIONS[v + 6] = table[v + 3]
+        FIGHTER_POSITIONS[v + 7] = table[v + 9]
+        FIGHTER_POSITIONS[v + 8] = table[v + 2]
+        FIGHTER_POSITIONS[v + 9] = table[v + 10]
+        FIGHTER_POSITIONS[v + 10] = table[v + 1]
+        FIGHTER_POSITIONS[v + 11] = table[v + 11]
+    end
+end
+
+function AddArcher()
+    local d = {1, 0}
+
+    if PLAYER_ARCHER_COUNT < #ARCHER_POSITIONS then
+        PLAYER_ARCHER_COUNT = PLAYER_ARCHER_COUNT + 1
+        local x = ARCHER_POSITIONS[PLAYER_ARCHER_COUNT].x
+        local y = ARCHER_POSITIONS[PLAYER_ARCHER_COUNT].y
+
+        local u = DCEI.CreateUnitAsync(1, 1, PLAYER_ARCHER, x, y, d[1], d[2])
+        table.insert(PLAYER_ARCHERS, u)
+
+        DCEI.LogMessage(">> Adding Archer " .. PLAYER_ARCHER_COUNT .. " at " .. x .. ", " .. y)
+    else
+        DCEI.LogMessage(">> Maximum Archer Count Reached")
+    end
+end
+
+function AddFighter()
+    local d = {1, 0}
+
+    if PLAYER_FIGHTER_COUNT < #FIGHTER_POSITIONS then
+        PLAYER_FIGHTER_COUNT = PLAYER_FIGHTER_COUNT + 1
+        local x = FIGHTER_POSITIONS[PLAYER_FIGHTER_COUNT].x
+        local y = FIGHTER_POSITIONS[PLAYER_FIGHTER_COUNT].y
+
+        local u = DCEI.CreateUnitAsync(1, 1, PLAYER_FIGHTER, x, y, d[1], d[2])
+        table.insert(PLAYER_FIGHTERS, u)
+
+        DCEI.LogMessage(">> Adding Fighter " .. PLAYER_FIGHTER_COUNT .. " at " .. x .. ", " .. y)
+    else
+        DCEI.LogMessage(">> Maximum Fighter Count Reached")
+    end
+end
+
+function CreateInitialHeroes()
+    local p = HERO_POSITIONS[1]
+    local d = {1, 0}
+    local hero_name = "Player Hero Dragoon"
+
+    table.insert(HERO_NAMES, hero_name)
+    local u = DCEI.CreateUnitAsync(1, 1, hero_name, p[1], p[2], d[1], d[2])
+    DCEI.ShowUnitStatusUiInSlot(3, u, #HERO_NAMES)
+    DCEI.ShowAbilitiesUiInSlot(2, u, #HERO_NAMES)
+end
+
+function SpawnHero()
+    local index = 1
+
+    local d = {1, 0}
+    local p = HERO_POSITIONS[index]
+    local hero_name = HERO_NAMES[index]
+
+    local hero = DCEI.CreateUnitAsync(1, 1, hero_name, p[1], p[2], d[1], d[2])
+    DCEI.ApplyBehavior(hero, "Player Hero Revive FX")
+    DCEI.ShowUnitStatusUiInSlot(3, hero, index)
+    DCEI.ShowAbilitiesUiInSlot(2, hero, index)
+end
+
+function GameOver()
+    local title = "Game Over"
+    local body = "On that fateful day, our enemies overwhelmed our defenses and the last castle fell..."
+    local button = "Curses"
+    GAME_OVER = true
+
+    DCEI.ShowMessageWithButtonText(title, body, button)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            DCEI.SetDefeat()
+        end,
+        0.1
+    )
+end
+
+-- TEST
+function Test_SpawnZombies()
+    local x = core.RandomInteger(36, 41)
+    local y = 10.5
+
+    DCEI.CreateUnitAsync(-1, -1, "Enemy Zombie", x, y)
+
+    DCEI.TriggerAddTimerEventElapsed(
+        function()
+            Test_SpawnZombies()
+        end,
+        2
+    )
+end
+
+function Test_SpawnArchers()
+    local min_x = 31
+    local max_x = 33.5
+    local min_y = 8
+    local max_y = 13
+
+    local d = {1, 0}
+
+    for x = min_x, max_x, 0.5 do
+        for y = min_y, max_y, 0.5 do
+            DCEI.CreateUnitAsync(1, 1, PLAYER_ARCHER, x, y, d[1], d[2])
+        end
+    end
+end
+
+-- Initialization
+OnMapInitialization()
+DCEI.TriggerAddWaveStatusChangeEvent(OnWaveStatusChange)
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)
+DCEI.TriggerAddUnitSpawnEvent(DCEI.UnitAny, OnUnitSpawn)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)
+DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnCastAbility)
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd)

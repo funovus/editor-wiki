@@ -1,0 +1,123 @@
+{
+    "actors": {
+        "Creep Goblin": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                }
+            }
+        },
+        "Creep Golem": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "golem_crystal_green"
+                }
+            }
+        },
+        "Creep Hobgoblin": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "hobgoblin"
+                }
+            }
+        },
+        "Creep Hobgoblin Elite": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "hobgoblin_armored"
+                }
+            }
+        },
+        "Creep Ogre": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ogre"
+                }
+            }
+        },
+        "Creep Ooze": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_green"
+                }
+            }
+        },
+        "Creep Ooze Big": {
+            "parent": "_StandardUnit DecayOnDeath",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_biggest"
+                },
+                "modelScale": 3
+            }
+        },
+        "Goal": {
+            "modelActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "shipslot_forest"
+                },
+                "hostSiteOperations": [
+                    "SOp FaceSouth"
+                ],
+                "modelScale": 1.5
+            }
+        },
+        "Standard MeleeUnit": {
+            "unitActor": {
+                "resource": {
+                    "name": "barracks_troop_rank03_armored"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Goal"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "modelScale": 2
+            }
+        },
+        "Standard RangedUnit": {
+            "unitActor": {
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitWeaponStart": {}
+                        },
+                        "actions": [
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp FollowEvent Orientation"
+                                    ],
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

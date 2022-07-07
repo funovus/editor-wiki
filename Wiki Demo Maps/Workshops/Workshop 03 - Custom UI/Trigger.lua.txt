@@ -1,0 +1,42 @@
+-- LIBRARIES
+local core = require("core")
+local ui = GameModules["Workshop 03 - Custom UI Mod"]
+
+-- VARIABLES
+local HERO = DCEI.FindUnit("Hero")
+
+-- TRIGGERS
+function OnMapStart()
+    core.HideDefaultUi()
+    core.HookupJoystick(HERO)
+
+    -- generate UI menu
+    ui.Initialize()
+
+    -- pass hookup function to UI mod
+    ui.HookupStatusBar = HookupStatusBar
+
+    CreateSomeUI()
+end
+
+function CreateSomeUI()
+
+
+
+end
+
+function CastFlameStrike()
+    local ability = "FlameStrike"
+
+    if HERO then
+        DCEI.CastAbility(ability, HERO, HERO)
+    end
+end
+
+function HookupStatusBar()
+    ui.status = ui.NewCustomStatus(HERO)
+    ui.status.AbilityCommand = CastFlameStrike
+end
+
+-- INITIALIZE
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)

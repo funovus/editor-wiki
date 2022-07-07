@@ -1,0 +1,10 @@
+{
+    "behaviors": {
+        "Remove Creep On Waypoint Finished": {
+            "finalEffect": "Remove",
+            "behaviorValidatorsRemove": [
+                "Waypoint Finished"
+            ]
+        }
+    }
+}

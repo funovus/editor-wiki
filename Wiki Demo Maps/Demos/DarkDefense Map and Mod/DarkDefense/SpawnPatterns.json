@@ -1,0 +1,14 @@
+{
+    "spawnPatterns": {
+        "Random Standard (Fast)": {
+            "interval": {
+                "min": 0.375,
+                "max": 0.4375
+            },
+            "dispersal": {
+                "min": 0.1,
+                "max": 0.9
+            }
+        }
+    }
+}

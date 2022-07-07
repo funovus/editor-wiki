@@ -1,0 +1,35 @@
+{
+    "units": {
+        "Crop Tree": {
+            "baseUnit": "_CropTemplate"
+        },
+        "Crop_Caster": {
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "abilityList": [
+                    "Place Crop: Tree",
+                    "Harvest Crops"
+                ]
+            }
+        },
+        "Planting Cursor": {
+            "baseUnit": "_StandardHelper"
+        },
+        "_CropTemplate": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unit": {
+                    "unitType": 2
+                },
+                "movement": {
+                    "moveSpeed": 0
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 4
+                    }
+                }
+            }
+        }
+    }
+}

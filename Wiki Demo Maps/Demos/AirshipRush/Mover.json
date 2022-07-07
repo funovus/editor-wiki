@@ -1,0 +1,32 @@
+{
+    "movers": {
+        "Enemy Goblin Deathrattle Missile": {
+            "guidance": {
+                "acceleration": 4,
+                "speed": 8,
+                "maxSpeed": 8
+            }
+        },
+        "Enemy Goblin Missile": {
+            "guidance": {
+                "acceleration": 8,
+                "speed": 10,
+                "maxSpeed": 10
+            }
+        },
+        "Enemy Whelp Missile": {
+            "guidance": {
+                "acceleration": 8,
+                "speed": 10,
+                "maxSpeed": 10
+            }
+        },
+        "Player Ship Missile": {
+            "guidance": {
+                "acceleration": 8,
+                "speed": 10,
+                "maxSpeed": 10
+            }
+        }
+    }
+}

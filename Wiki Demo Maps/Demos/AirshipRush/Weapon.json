@@ -1,0 +1,50 @@
+{
+    "weapons": {
+        "Enemy Boss ChainMissile Launch": {
+            "effectName": "Enemy Boss ChainMissile Create",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.25,
+                "period": 0.5,
+                "range": 16,
+                "scanRange": 16
+            },
+            "targetFilter": {
+                "structure": 2
+            }
+        },
+        "Enemy Whelp 2 Missile Launch": {
+            "effectName": "Enemy Whelp 2 Missile Create",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "stats": {
+                "period": 2,
+                "range": 16,
+                "scanRange": 16
+            },
+            "targetFilter": {
+                "structure": 2
+            },
+            "disabled": true
+        },
+        "Enemy Whelp Missile Launch": {
+            "effectName": "Enemy Whelp Missile Create",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "stats": {
+                "period": 2,
+                "range": 16,
+                "scanRange": 16
+            },
+            "targetFilter": {
+                "structure": 2
+            },
+            "disabled": true
+        }
+    }
+}

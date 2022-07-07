@@ -1,0 +1,10 @@
+{
+    "movers": {
+        "Enemy SlimeYellow Attack": {
+            "ballistic": {
+                "flightTime": 0.25,
+                "gravity": 11
+            }
+        }
+    }
+}

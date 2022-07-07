@@ -1,0 +1,221 @@
+-- The lanes we are using to spawn the waves.
+local lanes = {
+    "MainDirect",
+    "Upper",
+    "Lower"
+}
+
+-- The list of units to use in waves. These units must be declared in the map settings as well.
+local unit_names = {
+    "Creep Goblin",
+    "Creep Golem",
+    "Creep Hobgoblin",
+    "Creep Hobgoblin Elite",
+    "Creep Ogre",
+    "Creep Ooze",
+    "Creep Ooze Big"
+}
+
+-- All possible formations of creep groups.
+local formations = {
+    {1},
+    {1, 1},
+    {1, 1, 1},
+    {1, 1, 1, 1},
+    {1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 2},
+    {2, 1},
+    {1, 2, 1},
+    {2, 2},
+    {2, 1, 2},
+    {2, 3},
+    {3, 3},
+    {2, 2, 2},
+    {2, 3, 2},
+    {2, 2, 2, 1},
+    {2, 2, 2, 2},
+    {2, 3, 3}
+}
+
+local formation_offsets = {
+    {0},
+    {-0.25, 0.25},
+    {-0.4, 0, 0.4}
+}
+
+local formation_delay_offsets = {
+    {0},
+    {0, 0},
+    {-0.2, 0.2, -0.2}
+}
+
+-- Random integer generator based on seed ensures same wave patterns each time the map is played
+local random = DCEI.NewRandomGenerator(123456)
+function RandomInteger(max)
+    return DCEI.NextRandomInteger(random, max)
+end
+
+-- Copy and shuffle a table to create randomness.
+function CopyAndShuffleTable(values)
+    local result = {table.unpack(values)}
+
+    for i = #result, 2, -1 do
+        local j = RandomInteger(i)
+        result[i], result[j] = result[j], result[i]
+    end
+
+    return result
+end
+
+-- Returns a generator that generates values randomly selected from a table.
+function CreateGenerator(values)
+    local next_values = nil
+
+    return {
+        Next = function()
+            if not next_values or #next_values == 0 then
+                next_values = CopyAndShuffleTable(values)
+            end
+            local i = RandomInteger(#next_values)
+            local result = next_values[i]
+            table.remove(next_values, i)
+            return result
+        end
+    }
+end
+
+-- Generate 32 creep group patterns
+local group_pattern_limit = 32
+local group_patterns = {}
+
+local unit_generator = CreateGenerator(unit_names)
+local formation_generator = CreateGenerator(formations)
+
+-- group patterns are created by combining a random unit type with a random formation
+while #group_patterns < group_pattern_limit do
+    -- Pick a formation
+    local formation = formation_generator.Next()
+    -- Pick a random number of unit types
+    local unit_types_count = RandomInteger(3)
+    local unit_types = {}
+    while #unit_types < unit_types_count do
+        table.insert(unit_types, unit_generator.Next())
+    end
+    -- Make a creep group with these unit types & formation.
+    local group = {}
+    local current_delay = 0
+    local total_health = 0
+
+    local unit_total = 0
+    
+    for _, count in ipairs(formation) do
+        local unit_type = unit_types[RandomInteger(#unit_types)]
+        for i = 1, count do
+            table.insert(
+                group,
+                {
+                    unit = unit_type,
+                    delay = current_delay + formation_delay_offsets[count][i],
+                    offset = formation_offsets[count][i]
+                }
+            )
+            unit_total = unit_total + 1
+        end
+
+        current_delay = current_delay + 1
+        total_health = total_health + count * DCEI.GetUnitTypeHealth(unit_type)
+    end
+    table.insert(
+        group_patterns,
+        {name = string.format("GP%d", #group_patterns + 1), group = group, delay = current_delay, health = total_health}
+    )
+
+    local new_pattern = group_patterns[#group_patterns]
+    DCEI.LogMessage("-- generated " .. new_pattern.name .. " | " .. new_pattern.group[1].unit .. " | x" .. unit_total .. " | " .. new_pattern.health)
+end
+
+-- Register all group patterns
+for _, pattern in ipairs(group_patterns) do
+    DCEI.RegisterSpawnGroup(pattern.name, pattern.group)
+end
+
+function SelectGroupWithHealthLimit(limit)
+    local group_index = RandomInteger(#group_patterns)
+
+    for i = 1, #group_patterns do
+        local index = math.fmod(group_index + i, #group_patterns) + 1
+        local group = group_patterns[index]
+        if group.health <= limit then
+            return group
+        end
+    end
+
+    return nil
+end
+
+-- Callback function to generate the next wave.
+function GenerateNextWave()
+    -- Id of the wave we are currently generating (starting with 1)
+    local wave_id = DCEI.TriggeringWaveId
+
+    -- Pick a number of groups with the group patterns until the total health is large enough.
+    local target_health = wave_id * 10 + 40
+    local groups = {}
+    local total_health = 0
+    local lane_health = 0
+    local current_lane = RandomInteger(#lanes)
+    local lane_total_delay = {}
+
+    while total_health < target_health do
+        local group = SelectGroupWithHealthLimit(target_health - total_health)
+        if not group then
+            break
+        end
+
+        local delay = lane_total_delay[current_lane] or 0
+        table.insert(
+            groups,
+            {
+                route_name = lanes[current_lane],
+                initial_delay = delay,
+                group_pattern = group.name,
+                -- unit = group.group[1].unit,    -- can use unit OR group_pattern like in SpawnWave subgroup
+                pattern = "Line Long",
+                count = 1
+            }
+        )
+        lane_total_delay[current_lane] = delay + group.delay + 2
+
+        total_health = total_health + group.health
+        lane_health = lane_health + group.health
+
+        if lane_health > 2000 then
+            lane_health = 0
+            current_lane = math.fmod(current_lane, #lanes) + 1
+        end
+    end
+
+    -- Describe the wave we want to generate
+    local wave = {
+        total_gold = 100 + 50 * wave_id,
+        bonus_gold = wave_id == 1 and 300 or 100,
+        start_delay = 1,
+        call_wave_countdown = 30,
+        groups = groups,
+        behaviors = {
+            -- Increase creep power for every 5 waves.
+            {name = "MorePower", stack = math.floor(wave_id / 3)}
+        }
+    }
+
+    DCEI.AddSpawnWave(wave)
+end
+
+-- Tell the engine we want to generate infinite waves in addition to what's
+-- defined in the wave data, and set a callback function to generate these
+-- waves. The callback function will be invoked when the previous wave is
+-- in count-down.
+DCEI.AddDynamicSpawnWaves(-1, GenerateNextWave)

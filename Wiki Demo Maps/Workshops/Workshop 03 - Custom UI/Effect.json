@@ -1,0 +1,42 @@
+{
+    "effects": {
+        "FlameStrike Countdown Apply": {
+            "applyBehavior": {
+                "behavior": "FlameStrike Countdown",
+                "target": 3,
+                "stackCount": 1
+            }
+        },
+        "FlameStrike Create": {
+            "persistent": {
+                "periodicCount": 1,
+                "startEffect": "FlameStrike Countdown Apply",
+                "finalEffect": "FlameStrike Search",
+                "location": 2,
+                "periodicDurations": [
+                    1
+                ]
+            }
+        },
+        "FlameStrike Damage": {
+            "damage": {
+                "damageAmount": 120
+            }
+        },
+        "FlameStrike Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 1
+                    }
+                },
+                "filter": {
+                    "player": 0,
+                    "ally": 0
+                },
+                "effect": "FlameStrike Damage"
+            }
+        }
+    }
+}

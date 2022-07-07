@@ -1,0 +1,633 @@
+{
+    "actors": {
+        "Goblin Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_creep_death_medium"
+                },
+                "modelScale": 0.75
+            }
+        },
+        "Goblin Death FX Big": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_shared_creep_death_huge"
+                },
+                "modelScale": 0.75
+            }
+        },
+        "Goblin Leader OrcBrute": {
+            "parent": "_StandardTroop Enemy",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "hobgoblin_armored"
+                },
+                "eventMacros": [
+                    "Events Goblin Death FX Big"
+                ],
+                "hostSites": {
+                    "SiteHit": {
+                        "offset": {
+                            "forward": 0.25,
+                            "up": 0.375
+                        }
+                    }
+                },
+                "walkAnimationSpeed": 1.5,
+                "modelScale": 1.5
+            }
+        },
+        "Goblin Troop Club": {
+            "parent": "_StandardTroop Enemy",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_green"
+                },
+                "eventMacros": [
+                    "Events Goblin Death FX"
+                ],
+                "walkAnimationSpeed": 1.5,
+                "modelScale": 1.5
+            }
+        },
+        "Human Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_poof_01"
+                },
+                "modelScale": 0.9
+            }
+        },
+        "Human Death FX Big": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_poof_01"
+                },
+                "modelScale": 1.5
+            }
+        },
+        "Human Leader WindKnight": {
+            "parent": "_StandardTroop",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "windknight"
+                },
+                "eventMacros": [
+                    "Events Human Death FX Big"
+                ],
+                "walkAnimationSpeed": 1.5,
+                "modelScale": 1.5
+            }
+        },
+        "Human Troop Footman": {
+            "parent": "_StandardTroop",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "barracks_troop_rank03"
+                },
+                "eventMacros": [
+                    "Events Human Death FX"
+                ],
+                "walkAnimationSpeed": 2
+            }
+        },
+        "Leader Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Standard Leader Weapon Damage",
+                "impactModel": "Shared Impact FX",
+                "impactModelDetached": true
+            }
+        },
+        "Shared Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_chosen_weapon_impact"
+                },
+                "modelScale": 0.5
+            }
+        },
+        "Troop Weapon Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Standard Troop Weapon Damage",
+                "impactModel": "Shared Impact FX",
+                "impactModelDetached": true
+            }
+        },
+        "_StandardTroop": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "dead",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "dead"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {}
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Event PlayAnim Attack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events HitReaction"
+                ]
+            }
+        },
+        "_StandardTroop Enemy": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "dead",
+                                    "valueExpression": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "dead"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {}
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "behaviorOn": {
+                                "behavior": "Event PlayAnim Attack"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events HitReaction Enemy"
+                ]
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Events Goblin Death FX": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "death_fx",
+                                "duration": 0.6875
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "death_fx"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Goblin Death FX",
+                                "hostSiteOperations": [
+                                    "SOp MoveBy Dot25"
+                                ]
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "next_frame"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "next_frame"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "destroy": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Goblin Death FX Big": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "death_fx",
+                                "duration": 0.6875
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "death_fx"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Goblin Death FX Big",
+                                "hostSiteOperations": [
+                                    "SOp MoveBy Dot25"
+                                ]
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "next_frame"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "next_frame"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "destroy": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events HitReaction": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "System HitReaction Trigger"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 655,
+                                    "g": 255,
+                                    "b": 255
+                                }
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "flash_duration",
+                                "duration": 0.25
+                            }
+                        },
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp BackBy Dot25"
+                                ],
+                                "duration": 0.125
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "offset_duration",
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "flash_duration"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "offset_duration"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DefaultActor Offset"
+                                ],
+                                "duration": 0.0625
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events HitReaction Enemy": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "System HitReaction Trigger"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 505,
+                                    "g": 505,
+                                    "b": 505
+                                }
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "flash_duration",
+                                "duration": 0.25
+                            }
+                        },
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp BackBy Dot25"
+                                ],
+                                "duration": 0.125
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "offset_duration",
+                                "duration": 0.125
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "flash_duration"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setTintColor": {
+                                "color": {
+                                    "r": 255,
+                                    "g": 255,
+                                    "b": 255
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "offset_duration"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DefaultActor Offset"
+                                ],
+                                "duration": 0.0625
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Human Death FX": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "decay",
+                                "duration": 0.75
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "death_fx",
+                                "duration": 0.875
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "decay"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DownBy Dot25"
+                                ],
+                                "duration": 0.5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "death_fx"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Human Death FX",
+                                "hostSiteOperations": [
+                                    "SOp BackBy Dot25",
+                                    "SOp AbsoluteHeight 0"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events Human Death FX Big": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "unitDeath": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "decay",
+                                "duration": 0.75
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "death_fx",
+                                "duration": 0.875
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "decay"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "SOp DownBy Dot25"
+                                ],
+                                "duration": 0.5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "death_fx"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "Human Death FX Big",
+                                "hostSiteOperations": [
+                                    "SOp BackBy Dot25",
+                                    "SOp AbsoluteHeight 0"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

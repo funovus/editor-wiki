@@ -1,0 +1,574 @@
+{
+    "effects": {
+        "Arena Rocket Launch": {
+            "launchMissile": {
+                "missileUnit": "Arena Rocket",
+                "effect": "Arena Rocket Search",
+                "launchLocation": 2,
+                "impactLocation": 2,
+                "launchOffset": {
+                    "up": 56
+                },
+                "mover": "Arena Rocket Launch"
+            }
+        },
+        "Arena Rocket Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {}
+        },
+        "Hazard ArcherTower Damage": {
+            "damage": {}
+        },
+        "Hazard ArcherTower Launch": {
+            "launchMissile": {
+                "missileUnit": "Hazard ArcherTower Missile",
+                "effect": "Hazard ArcherTower Damage",
+                "mover": "Hazard ArcherTower Launch"
+            }
+        },
+        "Hazard Fire Damage": {
+            "parent": "_ElementalDamage_Fire",
+            "damage": {
+                "damageAmount": 0.2
+            }
+        },
+        "Hazard Fire Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.625
+                    }
+                },
+                "effect": "Hazard Fire Damage"
+            }
+        },
+        "Knockback Launch": {
+            "launchMissile": {
+                "missileDeathType": 1,
+                "launchLocation": 4,
+                "impactLocation": 2,
+                "useMissileHeightAtDestination": true,
+                "mover": "Knockback Launch"
+            }
+        },
+        "PowerUp IceGem Apply Buff": {
+            "applyBehavior": {
+                "behavior": "PowerUp IceGem Buff",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "PowerUp IceGem Scan Impact": {
+            "set": {
+                "effectList": [
+                    "PowerUp IceGem Apply Buff",
+                    "Kill Source"
+                ]
+            }
+        },
+        "PowerUp IceGem Scan Search": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.4375
+                    }
+                },
+                "maxUnitCount": 1,
+                "source": 2,
+                "effect": "PowerUp IceGem Scan Impact"
+            }
+        },
+        "PowerUp IceGem Spawn": {
+            "spawn": {
+                "unit": "PowerUp IceGem",
+                "count": 1,
+                "owner": 3,
+                "location": 2
+            }
+        },
+        "PowerUp IceGem Spawn Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "PowerUp IceGem Missile",
+                "effect": "PowerUp IceGem Spawn",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "PowerUp Spawn Launch"
+            }
+        },
+        "PowerUp IceGem Spawn Randomizer": {
+            "persistent": {
+                "periodicCount": 1,
+                "periodicEffects": [
+                    "PowerUp IceGem Spawn Launch"
+                ],
+                "periodicOffsetSelectMode": 1,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": -2,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -4,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2
+                    },
+                    {
+                        "forward": -2.5
+                    },
+                    {
+                        "forward": -3
+                    },
+                    {
+                        "forward": -3.5
+                    },
+                    {
+                        "forward": -4
+                    },
+                    {
+                        "forward": -2,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2,
+                        "right": 1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -4,
+                        "right": 1
+                    }
+                ]
+            }
+        },
+        "PowerUp LightningPotion Apply Buff": {
+            "applyBehavior": {
+                "behavior": "PowerUp LightningPotion Buff",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "PowerUp LightningPotion Buff BeamDamage": {
+            "damage": {
+                "damageAmount": 2
+            }
+        },
+        "PowerUp LightningPotion Buff BeamSearch": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 5
+                    }
+                },
+                "maxUnitCount": 1,
+                "filter": {
+                    "primarySortKeys": {
+                        "key": 3
+                    }
+                },
+                "effect": "PowerUp LightningPotion Buff BeamDamage"
+            }
+        },
+        "PowerUp LightningPotion Scan Impact": {
+            "set": {
+                "effectList": [
+                    "PowerUp LightningPotion Apply Buff",
+                    "Kill Source"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Scan Search": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.4375
+                    }
+                },
+                "maxUnitCount": 1,
+                "source": 2,
+                "effect": "PowerUp LightningPotion Scan Impact"
+            }
+        },
+        "PowerUp LightningPotion Spawn": {
+            "spawn": {
+                "unit": "PowerUp LightningPotion",
+                "count": 1,
+                "owner": 3,
+                "location": 2
+            }
+        },
+        "PowerUp LightningPotion Spawn Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "PowerUp LightningPotion Missile",
+                "effect": "PowerUp LightningPotion Spawn",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "PowerUp Spawn Launch"
+            }
+        },
+        "PowerUp LightningPotion Spawn Randomizer": {
+            "persistent": {
+                "periodicCount": 1,
+                "periodicEffects": [
+                    "PowerUp LightningPotion Spawn Launch"
+                ],
+                "periodicOffsetSelectMode": 1,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": -2,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -4,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2
+                    },
+                    {
+                        "forward": -2.5
+                    },
+                    {
+                        "forward": -3
+                    },
+                    {
+                        "forward": -3.5
+                    },
+                    {
+                        "forward": -4
+                    },
+                    {
+                        "forward": -2,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2,
+                        "right": 1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -4,
+                        "right": 1
+                    }
+                ]
+            }
+        },
+        "PowerUp SuperMushroom Apply Buff": {
+            "applyBehavior": {
+                "behavior": "PowerUp SuperMushroom Buff",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "PowerUp SuperMushroom Buff Knockback": {
+            "persistent": {
+                "periodicCount": 1,
+                "offsetStart": 5,
+                "offsetEnd": 1,
+                "periodicEffects": [
+                    "Knockback Launch"
+                ],
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 2
+                    }
+                ]
+            }
+        },
+        "PowerUp SuperMushroom Buff Knockback Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.75
+                    }
+                },
+                "effect": "PowerUp SuperMushroom Buff Knockback",
+                "offset": {
+                    "forward": 0.25
+                }
+            }
+        },
+        "PowerUp SuperMushroom Scan Impact": {
+            "set": {
+                "effectList": [
+                    "PowerUp SuperMushroom Apply Buff",
+                    "Kill Source"
+                ]
+            }
+        },
+        "PowerUp SuperMushroom Scan Search": {
+            "parent": "_StandardAreaSearch Friendly",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 0.4375
+                    }
+                },
+                "maxUnitCount": 1,
+                "source": 2,
+                "effect": "PowerUp SuperMushroom Scan Impact"
+            }
+        },
+        "PowerUp SuperMushroom Spawn": {
+            "spawn": {
+                "unit": "PowerUp Mushroom",
+                "count": 1,
+                "owner": 3,
+                "location": 2
+            }
+        },
+        "PowerUp SuperMushroom Spawn Launch": {
+            "launchMissile": {
+                "targetType": 2,
+                "missileUnit": "PowerUp Mushroom Missile",
+                "effect": "PowerUp SuperMushroom Spawn",
+                "launchLocation": 7,
+                "impactLocation": 2,
+                "mover": "PowerUp Spawn Launch"
+            }
+        },
+        "PowerUp SuperMushroom Spawn Randomizer": {
+            "persistent": {
+                "periodicCount": 1,
+                "periodicEffects": [
+                    "PowerUp SuperMushroom Spawn Launch"
+                ],
+                "periodicOffsetSelectMode": 1,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": -2,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3,
+                        "right": -1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -1
+                    },
+                    {
+                        "forward": -4,
+                        "right": -1
+                    },
+                    {
+                        "forward": -2,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": -0.5
+                    },
+                    {
+                        "forward": -2
+                    },
+                    {
+                        "forward": -2.5
+                    },
+                    {
+                        "forward": -3
+                    },
+                    {
+                        "forward": -3.5
+                    },
+                    {
+                        "forward": -4
+                    },
+                    {
+                        "forward": -2,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -4,
+                        "right": 0.5
+                    },
+                    {
+                        "forward": -2,
+                        "right": 1
+                    },
+                    {
+                        "forward": -2.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3,
+                        "right": 1
+                    },
+                    {
+                        "forward": -3.5,
+                        "right": 1
+                    },
+                    {
+                        "forward": -4,
+                        "right": 1
+                    }
+                ]
+            }
+        },
+        "_ElementalDamage_Fire": {
+            "damage": {
+                "expressions": [
+                    {
+                        "namedExpression": {
+                            "name": "FireDamage"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+{ "GameEntityList": [ { "UnitName": "Base Upgrade Archer", "Position": [ 31.75, 0, 6.75 ], "Rotation": [ 0, 0, 0, 1 ], "Player": 1 }, { "UnitName": "Base Upgrade Fighter", "Position": [ 33.25, 0, 6.75 ], "Rotation": [ 0, 0, 0, 1 ], "Player": 1 } ] }

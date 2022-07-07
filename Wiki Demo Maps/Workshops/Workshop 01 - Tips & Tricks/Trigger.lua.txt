@@ -1,0 +1,361 @@
+-- LIBRARIES
+local core = require("core")
+
+-- VARIABLES
+local GAME = {
+    instance = 0,
+    score = 0
+}
+local HELPERS = {}
+
+local HERO = nil
+
+-- FUNCTIONS
+function InitializeHelpers()
+    local text = "Rocket Dodge"
+    HELPERS.arena_select = NewHelper(32, 22, text, StartArenaGameFromDevMode)
+
+    text = "Ice" .. "\n" .. "PowerUp"
+    HELPERS.powerup_ice = NewHelper(29.5, 18, text, SpawnPowerUp_Ice)
+    text = "Shock" .. "\n" .. "PowerUp"
+    HELPERS.powerup_shock = NewHelper(27.5, 18, text, SpawnPowerUp_Shock)
+    text = "Super" .. "\n" .. "PowerUp"
+    HELPERS.powerup_super = NewHelper(25.5, 18, text, SpawnPowerUp_Super)
+
+    text = "Spawn" .. "\n" .. "Slimes"
+    HELPERS.spawn_slimes = NewHelper(27.5, 10, text, SpawnSlimes)
+
+    text = "Fire Form"
+    HELPERS.fire_form = NewHelper(35, 18, text, ReplaceHero_FireType)
+    text = "Water Form"
+    HELPERS.water_form = NewHelper(37, 18, text, ReplaceHero_WaterType)
+end
+
+function ReplaceHero_FireType()
+    ReplaceHero("Goblin Red")
+end
+function ReplaceHero_WaterType()
+    ReplaceHero("Goblin Blue")
+end
+
+function SpawnPowerUp_Ice()
+    DCEI.CreateEffect("PowerUp IceGem Spawn Randomizer", HELPERS.powerup_ice)
+end
+function SpawnPowerUp_Shock()
+    DCEI.CreateEffect("PowerUp LightningPotion Spawn Randomizer", HELPERS.powerup_shock)
+end
+function SpawnPowerUp_Super()
+    DCEI.CreateEffect("PowerUp SuperMushroom Spawn Randomizer", HELPERS.powerup_super)
+end
+
+function SpawnSlimes()
+    local unit_type = "Slime"
+    local base_x, base_y = 27.5, 10
+
+    for n = 1, 20 do
+        -- generate random facing for each slime
+        local dx = math.random(-1, 0) + math.random()
+        local dy = math.random(-1, 0) + math.random()
+
+        -- generate random point in circle with radius = 2
+        local radius = 2
+        local a = math.random() * 2 * math.pi
+        local r = radius * math.sqrt(math.random())
+        local x_offset = r * math.cos(a)
+        local y_offset = r * math.sin(a)
+
+        -- offset base coordinates with point in circle
+        local x = base_x + x_offset
+        local y = base_y + y_offset
+
+        DCEI.CreateUnitAsync(-1, -1, unit_type, x, y, dx, dy)
+    end
+end
+
+function NewHelper(x, y, label, on_select)
+    local dx, dy = 0, 1
+    local unit_type = "Select Helper"
+    local helper = DCEI.CreateUnitAsync(1, 1, unit_type, x, y, dx, dy)
+
+    -- hookup select function
+    if on_select then
+        DCEI.TriggerAddUnitSelectedEvent(helper, on_select)
+    end
+
+    -- hookup unit label
+    local options = {
+        offset = {
+            right = 0,
+            up = 1,
+            front = 0
+        }
+    }
+    DCEI.ShowUnitLabel(helper, "<size=50%>" .. label, options)
+
+    return helper
+end
+
+function AdvanceGameInstance()
+    GAME.instance = GAME.instance + 1
+end
+
+function SetupArenaCamera()
+    DCEI.ClearCameraFocusUnit()
+    DCEI.SetCameraFocus(32, 33.5, 0)
+    DCEI.SetEnabledCameraClamp(true)
+end
+
+function StartArenaGameFromDevMode()
+    SpawnHero()
+    StartArenaGame()
+end
+
+function StartArenaGame()
+    SetupArenaCamera()
+
+    if not HERO then
+        SpawnHero()
+    end
+
+    DisplayCountdownSequence()
+
+    DCEI.Wait(1)
+    StartRocketSequence()
+end
+
+function StartRocketSequence()
+    local instance = GAME.instance
+
+    -- 2 rockets every 1.0 seconds for 5 seconds
+    SpawnManyRockets(2, 1, 5, instance)
+
+    -- 2 rockets every 0.5 seconds for 5 seconds
+    SpawnManyRockets(2, 0.5, 5, instance)
+
+    -- 2 rockets every 0.25 seconds for 5 seconds
+    SpawnManyRockets(2, 0.25, 5, instance)
+
+    -- 2 rockets every 0.125 seconds for 5 seconds
+    SpawnManyRockets(2, 0.125, 5, instance)
+
+    -- short break before final sequence
+    DCEI.Wait(2)
+
+    -- 72 rockets every 2 seconds for 10 seconds
+    SpawnManyRockets(72, 2, 10, instance)
+
+    -- win game after surviving the rocket sequence
+    DCEI.Wait(3)
+
+    if instance == GAME.instance then
+        OnGameWin()
+    end
+end
+
+function SpawnManyRockets(count_per_interval, interval, duration, instance)
+    local count = math.floor(duration / interval)
+
+    for n = 1, count do
+        if GAME.instance ~= instance then
+            -- interrupt launching rockets if game instance changes
+            return
+        end
+
+        for j = 1, count_per_interval do
+            SpawnRandomRocket()
+        end
+
+        DCEI.Wait(interval)
+    end
+end
+
+function SpawnRandomRocket()
+    local d2 = math.random(1, 2)
+    local regions = {
+        {
+            -- region 1 (vertical rectangle)
+            min_x = 27,
+            max_x = 37,
+            min_y = 28,
+            max_y = 40
+        },
+        {
+            -- region 2 (horizontal rectangle)
+            min_x = 25,
+            max_x = 39,
+            min_y = 30,
+            max_y = 38
+        }
+    }
+
+    -- generate random coordinates from an arena region
+    local x = math.random(regions[d2].min_x, regions[d2].max_x) + math.random() - 1
+    local y = math.random(regions[d2].min_y, regions[d2].max_y) + math.random() - 1
+
+    local effect = "Arena Rocket Launch"
+    core.CreateEffect(effect, x, y)
+end
+
+function DisplayCountdownSequence()
+    -- countdown display "3", "2", "1", "Dodge!"
+    local formatting = "<size=300%>" .. "<color=yellow>"
+
+    for n = 3, 1, -1 do
+        DCEI.ShowFeedbackMessage(formatting .. n)
+        DCEI.Wait(1)
+    end
+
+    local text = "Dodge!"
+    DCEI.ShowFeedbackMessage(formatting .. text)
+end
+
+function SpawnHero(x, y)
+    local unit_type = "Goblin"
+    local dx, dy = 0, -1
+
+    -- if x, y not specified, spawn hero in arena
+    x, y = x or 32, y or 32
+
+    -- there can only be one HERO
+    if HERO ~= nil and DCEI.UnitExists(HERO) then
+        DCEI.RemoveUnitSync(HERO)
+    end
+
+    HERO = DCEI.CreateUnitAsync(1, 1, unit_type, x, y, dx, dy)
+
+    -- hookup joystick
+    core.HookupJoystick(HERO)
+end
+
+function ReplaceHero(unit_type)
+    unit_type = unit_type or "Goblin"
+
+    if HERO ~= nil and DCEI.UnitExists(HERO) then
+        local pos = DCEI.GetUnitPosition2D(HERO)
+        local dir = DCEI.GetUnitFacing2D(HERO)
+
+        DCEI.RemoveUnitSync(HERO)
+
+        HERO = DCEI.CreateUnitAsync(1, 1, unit_type, pos.x, pos.y, dir.x, dir.y)
+
+        core.HookupJoystick(HERO)
+
+        DCEI.ClearCameraFocusUnit()
+        DCEI.SetCameraFocusUnit(HERO, 0)
+    end
+end
+
+function OnGameLose()
+    local text = "<size=200%>" .. "<color=red>" .. "YOU DIED"
+
+    -- wait to see hero death animation
+    DCEI.Wait(1)
+
+    GAME.score = 0
+    GameOverSequence(text)
+
+    if DCEI.IsDev() then
+        StartDevMode()
+    else
+        StartArenaGame()
+    end
+end
+
+function OnGameWin()
+    local text = "<size=200%>" .. "<color=yellow>" .. "VICTORY ACHIEVED"
+
+    GAME.score = GAME.score + 1
+    GameOverSequence(text)
+
+    if DCEI.IsDev() then
+        StartDevMode()
+    else
+        StartArenaGame()
+    end
+end
+
+function GameOverSequence(message)
+    local options = {
+        color = {r = 0, g = 0, b = 0},
+        duration = 0.5
+    }
+
+    -- fade out
+    DCEI.ShowScreenMask(1, options)
+    DCEI.Wait(options.duration)
+
+    -- reset game state
+    RestartGameActions()
+
+    -- show game over message
+    DCEI.ShowFeedbackMessage(message)
+    DCEI.Wait(1)
+
+    -- fade in
+    DCEI.ShowScreenMask(0, options)
+    DCEI.Wait(options.duration)
+    DCEI.HideScreenMask()
+end
+
+function RestartGameActions()
+    local unit_type = "Arena Rocket"
+    local active_rockets = DCEI.FindUnits(unit_type)
+
+    -- remove any active rockets
+    for _, unit in pairs(active_rockets) do
+        DCEI.RemoveUnitSync(unit)
+    end
+
+    -- respawn hero and advance game instance
+    SpawnHero()
+    AdvanceGameInstance()
+
+    -- show win streak
+    if GAME.score > 0 then
+        DCEI.ShowObjective("Score: " .. GAME.score)
+    else
+        DCEI.HideObjective()
+    end
+end
+
+function StartDevMode()
+    SpawnHero(32, 16)
+
+    -- unlock camera and follow hero
+    DCEI.SetEnabledCameraClamp(false)
+    DCEI.SetCameraFocusUnit(HERO, 0)
+end
+
+-- TRIGGERS
+function OnMapStart()
+    -- map setup
+    InitializeHelpers()
+    core.HideDefaultUi()
+
+    -- start game in different modes depending on dev settings
+    if DCEI.IsDev() then
+        StartDevMode()
+    else
+        StartArenaGame()
+    end
+end
+
+function OnUnitDied()
+    local u = DCEI.TriggeringUnit
+
+    -- restart game if hero dies
+    if u == HERO then
+        OnGameLose()
+    end
+end
+
+function OnUnitSelect()
+    local u = DCEI.TriggeringUnit
+
+    DCEI.DeselectUnitSync(u)
+end
+
+-- INITIALIZE
+DCEI.TriggerAddTimerEventElapsed(OnMapStart, 0)
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelect)
+DCEI.TriggerAddUnitDiedEvent(DCEI.UnitAny, OnUnitDied)

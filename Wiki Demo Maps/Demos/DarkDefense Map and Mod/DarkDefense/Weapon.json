@@ -1,0 +1,93 @@
+{
+    "weapons": {
+        "Enemy Boss ZombieOgre Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Enemy Boss ZombieOgre Weapon Damage",
+            "stats": {
+                "range": 0.5,
+                "scanRange": 0.5
+            }
+        },
+        "Enemy Zombie Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Enemy Zombie Weapon Damage"
+        },
+        "Player Archer Weapon 025": {
+            "parent": "_StandardRangedWeapon",
+            "effectName": "Player Archer Weapon Launch 025",
+            "validators": [
+                "No Overkill"
+            ],
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.25,
+                "period": 0.667,
+                "range": 4,
+                "scanRange": 4
+            }
+        },
+        "Player Archer Weapon 050": {
+            "parent": "Player Archer Weapon 025",
+            "effectName": "Player Archer Weapon Launch 050",
+            "validators": [
+                "No Overkill"
+            ],
+            "stats": {
+                "minimalRange": 4,
+                "range": 6,
+                "scanRange": 6
+            }
+        },
+        "Player Archer Weapon 075": {
+            "parent": "Player Archer Weapon 025",
+            "effectName": "Player Archer Weapon Launch 075",
+            "validators": [
+                "No Overkill"
+            ],
+            "stats": {
+                "minimalRange": 6,
+                "range": 9,
+                "scanRange": 9
+            }
+        },
+        "Player Archer Weapon 100": {
+            "parent": "Player Archer Weapon 025",
+            "effectName": "Player Archer Weapon Launch 100",
+            "validators": [
+                "No Overkill"
+            ],
+            "stats": {
+                "minimalRange": 9,
+                "range": 12,
+                "scanRange": 12
+            }
+        },
+        "Player Castle Chunk Engage": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "DoNothing"
+        },
+        "Player Fighter Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Player Fighter Weapon Damage",
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.25,
+                "period": 0.667
+            }
+        },
+        "Player Hero Dragoon Weapon": {
+            "parent": "_StandardMeleeWeapon",
+            "effectName": "Player Hero Dragoon Weapon Damage",
+            "stats": {
+                "preSwing": 0.25,
+                "backSwing": 0.25,
+                "period": 0.667
+            }
+        },
+        "_StandardMeleeWeapon": {
+            "targetFilter": {
+                "ground": 0
+            }
+        }
+    }
+}

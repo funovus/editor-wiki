@@ -1,0 +1,16 @@
+{
+    "effects": {
+        "Secret Super Dude Search": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circle": {
+                        "radius": 3
+                    }
+                },
+                "effect": "DoNothing"
+            }
+        },
+        "Standard Damage": {}
+    }
+}

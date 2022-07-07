@@ -1,0 +1,135 @@
+{
+    "units": {
+        "Arena Rocket": {
+            "baseUnit": "_CMissile"
+        },
+        "Goblin": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 3
+                }
+            },
+            "healthBar": {
+                "type": 3
+            }
+        },
+        "Goblin Blue": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 3
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "System Fire Weakness"
+                ]
+            },
+            "healthBar": {
+                "type": 3
+            }
+        },
+        "Goblin Red": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 3
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "System Fire Resistance"
+                ]
+            },
+            "healthBar": {
+                "type": 3
+            }
+        },
+        "Hazard ArcherTower": {
+            "baseUnit": "_CBuilding",
+            "references": {
+                "weaponList": [
+                    "Hazard ArcherTower Weapon"
+                ]
+            }
+        },
+        "Hazard ArcherTower Missile": {
+            "components": {
+                "unit": {
+                    "unitType": 1
+                }
+            }
+        },
+        "Hazard Fire": {
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "behaviorList": [
+                    "Hazard Fire"
+                ]
+            }
+        },
+        "PowerUp IceGem": {
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "behaviorList": [
+                    "PowerUp IceGem Scan"
+                ]
+            }
+        },
+        "PowerUp IceGem Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "PowerUp LightningPotion": {
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "behaviorList": [
+                    "PowerUp LightningPotion Scan"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Missile": {
+            "baseUnit": "_CMissile"
+        },
+        "PowerUp Mushroom": {
+            "baseUnit": "_StandardHelper",
+            "references": {
+                "behaviorList": [
+                    "PowerUp SuperMushroom Scan"
+                ]
+            }
+        },
+        "PowerUp Mushroom Missile": {
+            "baseUnit": "_StandardHelper"
+        },
+        "Select Helper": {
+            "baseUnit": "_StandardHelper",
+            "components": {
+                "unitStats": {
+                    "selectable": true
+                }
+            }
+        },
+        "Slime": {
+            "baseUnit": "_CUnit"
+        }
+    }
+}

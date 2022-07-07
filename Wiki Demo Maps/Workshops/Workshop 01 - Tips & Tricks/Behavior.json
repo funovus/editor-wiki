@@ -1,0 +1,62 @@
+{
+    "behaviors": {
+        "Hazard Fire": {
+            "periodicInterval": 0.25,
+            "periodicEffect": "Hazard Fire Search"
+        },
+        "PowerUp IceGem Buff": {
+            "duration": 1.5,
+            "modifiers": {
+                "flags": {
+                    "suppressMovement": true,
+                    "suppressWeapon": true,
+                    "suppressAbility": true,
+                    "suppressTurning": true
+                }
+            }
+        },
+        "PowerUp IceGem Scan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "PowerUp IceGem Scan Search"
+        },
+        "PowerUp LightningPotion Buff": {
+            "duration": 16,
+            "periodicInterval": 0.75,
+            "periodicEffect": "PowerUp LightningPotion Buff BeamSearch"
+        },
+        "PowerUp LightningPotion Scan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "PowerUp LightningPotion Scan Search"
+        },
+        "PowerUp SuperMushroom Buff": {
+            "duration": 8,
+            "periodicInterval": 0.25,
+            "periodicEffect": "PowerUp SuperMushroom Buff Knockback Search",
+            "modifiers": {
+                "moveSpeedModifier": {
+                    "scaled": 0.5
+                }
+            }
+        },
+        "PowerUp SuperMushroom Scan": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "PowerUp SuperMushroom Scan Search"
+        },
+        "System Fire Resistance": {
+            "behaviorTagArray": [
+                {
+                    "name": "gt_fire_resist",
+                    "count": 50
+                }
+            ]
+        },
+        "System Fire Weakness": {
+            "behaviorTagArray": [
+                {
+                    "name": "gt_fire_weak",
+                    "count": 100
+                }
+            ]
+        }
+    }
+}

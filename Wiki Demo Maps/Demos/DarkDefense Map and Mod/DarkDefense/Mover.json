@@ -1,0 +1,32 @@
+{
+    "movers": {
+        "Player Archer Weapon Missile 025": {
+            "ballistic": {
+                "flightTime": 0.25,
+                "flightTimeRange": 0.0625,
+                "gravity": 36
+            }
+        },
+        "Player Archer Weapon Missile 050": {
+            "ballistic": {
+                "flightTime": 0.375,
+                "flightTimeRange": 0.0625,
+                "gravity": 30
+            }
+        },
+        "Player Archer Weapon Missile 075": {
+            "ballistic": {
+                "flightTime": 0.5,
+                "flightTimeRange": 0.125,
+                "gravity": 24
+            }
+        },
+        "Player Archer Weapon Missile 100": {
+            "ballistic": {
+                "flightTime": 0.625,
+                "flightTimeRange": 0.125,
+                "gravity": 24
+            }
+        }
+    }
+}

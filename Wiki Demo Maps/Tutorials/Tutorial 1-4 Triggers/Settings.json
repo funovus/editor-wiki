@@ -1,0 +1,16 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Hero IceMage",
+            "Standard MeleeUnit"
+        ]
+    }
+}

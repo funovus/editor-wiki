@@ -1,0 +1,15 @@
+{
+    "weapons": {
+        "Enemy SlimeYellow Attack": {
+            "effectName": "Enemy SlimeYellow Attack Create",
+            "independentTargetAcquisition": true,
+            "independentPreAndBackSwing": true,
+            "canFireWhileMoving": true,
+            "stats": {
+                "period": 2,
+                "range": 3,
+                "scanRange": 3
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "cameraSettings": {
+        "focalPointX": 13.5999879837036,
+        "focalPointY": 26.3567066192627,
+        "allowZoom": true,
+        "allowPanX": false,
+        "allowPanY": false,
+        "panAreaCenterX": 13.6000003814697,
+        "panAreaCenterY": 29.8999996185303,
+        "panAreaLengthX": 23.2723197937012,
+        "skipIntroSequence": true
+    }
+}

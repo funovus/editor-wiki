@@ -1,0 +1,76 @@
+local core = require("core")
+local ui = DCEI.GetUiRoot()
+
+local frame = DCEI.NewHStack(ui)
+DCEI.SetSpacing(frame, 20)
+DCEI.SetBottomAlignmentInParent(frame)
+DCEI.SetVerticalOffsetInParent(frame, 10)
+
+local image = DCEI.NewFrame(frame)
+DCEI.SetSize(image, 64, 64)
+DCEI.SetBackgroundImageExpression(image, "selected.Info.Icon")
+
+local info = DCEI.NewVStack(frame)
+
+local name_text = DCEI.NewText(info)
+DCEI.SetTextExpression(name_text, "Name: {selected.Info.Name}")
+DCEI.SetMinSize(name_text, 400, 0)
+
+local health_text = DCEI.NewText(info)
+DCEI.SetTextExpression(
+    health_text,
+    "Health: {selected.Health.Current}/{selected.Health.Max} ({selected.Health.Percentage}%)"
+)
+DCEI.SetMinSize(health_text, 400, 0)
+
+local health_bar = DCEI.NewFrame(info)
+DCEI.SetBackgroundImage(health_bar, "health_bar_boss_empty")
+DCEI.SetSize(health_bar, 500, 20)
+local health_fill = DCEI.NewFrame(health_bar)
+DCEI.SetBackgroundImage(health_fill, "health_bar_boss_fill")
+DCEI.SetBackgroundImageFillAmountExpression(health_fill, "selected.Health.Fraction")
+DCEI.SetSize(health_fill, 500, 20)
+
+local mana_text = DCEI.NewText(info)
+DCEI.SetTextExpression(mana_text, "Mana: {selected.Mana.Current}/{selected.Mana.Max} ({selected.Mana.Percentage}%)")
+DCEI.SetMinSize(mana_text, 400, 0)
+
+local mana_bar = DCEI.NewFrame(info)
+DCEI.SetBackgroundImage(mana_bar, "bar_portrait_health_empty")
+DCEI.SetSize(mana_bar, 500, 20)
+local mana_fill = DCEI.NewFrame(mana_bar)
+DCEI.SetBackgroundImage(mana_fill, "bar_portrait_health_fill")
+DCEI.SetBackgroundImageFillAmountExpression(mana_fill, "selected.Mana.Fraction")
+DCEI.SetSize(mana_fill, 500, 20)
+
+DCEI.SetActive(frame, false)
+
+-- Keep track of the unit we are displaying UI for.
+local selected = nil
+
+function OnUnitSelected()
+    local unit = DCEI.TriggeringUnit
+    DCEI.BindUnit("selected", unit)
+
+    -- Show the UI when an unit is first selected.
+    if selected == nil then
+        DCEI.SetActive(frame, true)
+    end
+    selected = unit
+end
+
+function OnUnitDeselected()
+    local unit = DCEI.TriggeringUnit
+
+    -- Hide the UI when the unit we are displaying the UI for is deselected.
+    if unit == selected then
+        DCEI.BindUnit("selected", DCEI.UnitNull)
+        DCEI.SetActive(frame, false)
+        selected = nil
+    end
+end
+
+DCEI.TriggerAddUnitSelectedEvent(DCEI.UnitAny, OnUnitSelected)
+DCEI.TriggerAddUnitDeselectedEvent(DCEI.UnitAny, OnUnitDeselected)
+-- hide standard UI
+core.HideDefaultUi()

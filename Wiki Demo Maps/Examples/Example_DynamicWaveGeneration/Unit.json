@@ -1,0 +1,119 @@
+{
+    "units": {
+        "Creep Goblin": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 1.5
+                }
+            }
+        },
+        "Creep Golem": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 50
+                },
+                "movement": {
+                    "moveSpeed": 0.5
+                }
+            }
+        },
+        "Creep Hobgoblin": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "movement": {
+                    "moveSpeed": 1
+                }
+            }
+        },
+        "Creep Hobgoblin Elite": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 20
+                },
+                "movement": {
+                    "moveSpeed": 1
+                }
+            }
+        },
+        "Creep Ogre": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 30
+                },
+                "movement": {
+                    "moveSpeed": 0.75
+                }
+            }
+        },
+        "Creep Ooze": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 5
+                },
+                "movement": {
+                    "moveSpeed": 1
+                }
+            }
+        },
+        "Creep Ooze Big": {
+            "baseUnit": "_StandardCreep",
+            "components": {
+                "health": {
+                    "maxHealth": 20
+                },
+                "movement": {
+                    "moveSpeed": 0.75
+                }
+            }
+        },
+        "Standard MeleeUnit": {
+            "components": {
+                "health": {
+                    "maxHealth": 9000
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 4
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Goal Defender Buff"
+                ]
+            }
+        },
+        "Standard RangedUnit": {
+            "components": {
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 4
+                    }
+                }
+            }
+        },
+        "_StandardCreep": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 6
+                    }
+                }
+            },
+            "references": {
+                "weaponList": [
+                    "Standard MeleeUnit Weapon"
+                ]
+            }
+        }
+    }
+}

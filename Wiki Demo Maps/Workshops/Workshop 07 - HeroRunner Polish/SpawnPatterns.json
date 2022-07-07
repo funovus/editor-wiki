@@ -1,0 +1,34 @@
+{
+    "spawnPatterns": {
+        "Horde Mass": {
+            "interval": {
+                "min": 0,
+                "max": 0.5
+            },
+            "dispersal": {
+                "min": 0,
+                "max": 1
+            }
+        },
+        "Horde Stream": {
+            "interval": {
+                "min": 0.25,
+                "max": 1
+            },
+            "dispersal": {
+                "min": 0,
+                "max": 1
+            }
+        },
+        "Horde Wall": {
+            "interval": {
+                "min": 0,
+                "max": 0
+            },
+            "dispersal": {
+                "min": 0,
+                "max": 1
+            }
+        }
+    }
+}

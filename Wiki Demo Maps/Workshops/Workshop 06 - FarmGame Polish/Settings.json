@@ -1,0 +1,27 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "displaySettings": {
+        "orientation": 0
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Planting Cursor"
+        ],
+        "usedEffects": [
+            "Crop Harvest Search"
+        ],
+        "usedBehaviors": [
+            "Cursor Invalid"
+        ],
+        "usedAtlasAssets": [
+            "Assets/Bundles/UI/Atlas/WildSkyInGame.spriteatlas"
+        ]
+    }
+}

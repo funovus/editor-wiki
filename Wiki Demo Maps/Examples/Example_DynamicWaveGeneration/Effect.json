@@ -1,0 +1,9 @@
+{
+    "effects": {
+        "Standard Damage": {
+            "damage": {
+                "damageAmount": 5
+            }
+        }
+    }
+}

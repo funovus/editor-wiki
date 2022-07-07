@@ -1,0 +1,52 @@
+{
+    "validators": {
+        "TargetUnit Is Alive": {
+            "expression": {
+                "value": {
+                    "health": {
+                        "unit": 2
+                    }
+                }
+            }
+        },
+        "TargetUnit Is Missile": {
+            "unitFilter": {
+                "validateUnitFilter": 1,
+                "whichUnit": 1
+            }
+        },
+        "TargetUnit Is PlayerShip": {
+            "unitType": {
+                "unitTypeName": "Player Ship",
+                "whichUnit": 1
+            }
+        },
+        "TargetUnit Is PlayerShipMissile": {
+            "unitType": {
+                "unitTypeName": "Player Ship Missile",
+                "whichUnit": 1
+            }
+        },
+        "TargetUnit No CollisionScan": {
+            "expression": {
+                "compare": {
+                    "left": {
+                        "value": {
+                            "tagCount": {
+                                "unit": 2,
+                                "tagName": "gt_collisionScan"
+                            }
+                        }
+                    },
+                    "right": {
+                        "value": {
+                            "constant": {
+                                "int32Value": 0
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

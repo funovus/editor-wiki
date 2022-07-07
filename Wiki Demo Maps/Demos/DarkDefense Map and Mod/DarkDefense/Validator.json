@@ -1,0 +1,59 @@
+{
+    "validators": {
+        "No Overkill": {
+            "expression": {
+                "compare": {
+                    "left": {
+                        "subtract": {
+                            "left": {
+                                "value": {
+                                    "health": {
+                                        "unit": 2
+                                    }
+                                }
+                            },
+                            "right": {
+                                "value": {
+                                    "behaviorStackCount": {
+                                        "unit": 2,
+                                        "behavior": "Player Archer Weapon Damage Tag"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "op": 2,
+                    "right": {
+                        "value": {
+                            "constant": {
+                                "int32Value": 0
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Waypoint Finished": {
+            "negate": false,
+            "expression": {
+                "compare": {
+                    "left": {
+                        "value": {
+                            "remainingPathDistance": {
+                                "unit": 2
+                            }
+                        }
+                    },
+                    "op": 3,
+                    "right": {
+                        "value": {
+                            "constant": {
+                                "doubleValue": 0.1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

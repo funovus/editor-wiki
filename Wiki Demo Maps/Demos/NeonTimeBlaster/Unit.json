@@ -1,0 +1,388 @@
+{
+    "units": {
+        "Arcade NTB Background Star": {
+            "components": {
+                "unit": {
+                    "unitType": 1
+                },
+                "unitStats": {
+                    "radius": 0,
+                    "immortal": false,
+                    "ground": false,
+                    "air": true,
+                    "selectable": false,
+                    "targetPriority": 0,
+                    "selectionPriority": -1,
+                    "ignoreCollision": true
+                },
+                "movement": {
+                    "moveSpeed": 7
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Standard HelperTag",
+                    "Arcade NTB Invulnerable 0.25s"
+                ]
+            },
+            "displayName": "data/GameData/unit/_StandardHelper/display_name"
+        },
+        "Arcade NTB OffScreen Remover": {
+            "components": {
+                "unitStats": {
+                    "radius": 0.15,
+                    "selectable": false
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Arcade NTB OffScreen ScoreRemove"
+                ]
+            },
+            "displayName": "data/GameData/unit/_CUnit/display_name"
+        },
+        "Arcade NTB OffScreen Remover Vertical": {
+            "components": {
+                "unitStats": {
+                    "radius": 0.15,
+                    "selectable": false
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "Arcade NTB OffScreen ScoreRemove Vertical"
+                ]
+            },
+            "displayName": "data/GameData/unit/_CUnit/display_name"
+        },
+        "Arcade NTB Ooze Fire 01": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "unitStats": {
+                    "radius": 0.1,
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 25
+                },
+                "movement": {
+                    "moveSpeed": 1.8
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementFire",
+                    "GameSystem Enemy"
+                ]
+            },
+            "displayName": "data/Arcade/NeonTimeBlaster/unit/Arcade NTB Ooze Fire 01/display_name"
+        },
+        "Arcade NTB Ooze Nature 01": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "unitStats": {
+                    "radius": 0.1,
+                    "ground": false,
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 25
+                },
+                "movement": {
+                    "moveSpeed": 1.8
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementNature",
+                    "GameSystem Enemy"
+                ]
+            },
+            "displayName": "data/Arcade/NeonTimeBlaster/unit/Arcade NTB Ooze Nature 01/display_name"
+        },
+        "Arcade NTB Ooze Water 01": {
+            "baseUnit": "_StandardEnemy",
+            "components": {
+                "unitStats": {
+                    "radius": 0.1,
+                    "ground": false,
+                    "air": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 25
+                },
+                "movement": {
+                    "moveSpeed": 1.8
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementWater",
+                    "GameSystem Enemy"
+                ]
+            },
+            "displayName": "data/Arcade/NeonTimeBlaster/unit/Arcade NTB Ooze Water 01/display_name"
+        },
+        "Arcade NTB Player Basic Attack Fire Missile": {
+            "baseUnit": "_CMissile",
+            "references": {
+                "behaviorList": [
+                    "Arcade NTB Basic Attack Fire CollisionCheck"
+                ]
+            }
+        },
+        "Arcade NTB Player Basic Attack Nature Missile": {
+            "baseUnit": "_CMissile",
+            "references": {
+                "behaviorList": [
+                    "Arcade NTB Basic Attack Nature CollisionCheck"
+                ]
+            }
+        },
+        "Arcade NTB Player Basic Attack Water Missile": {
+            "baseUnit": "_CMissile",
+            "references": {
+                "behaviorList": [
+                    "Arcade NTB Basic Attack Water CollisionCheck"
+                ]
+            }
+        },
+        "Arcade NTB Player Hero Fire": {
+            "baseUnit": "_NTB_HeroTemplate",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "air": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 440
+                },
+                "mana": {
+                    "startMana": 100,
+                    "regeneration": 5
+                },
+                "movement": {
+                    "moveSpeed": 15
+                },
+                "turning": {
+                    "turningSpeed": 99999
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 10
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementFire"
+                ]
+            },
+            "displayName": "data/GameData/unit/Hero DwarfSmith/display_name",
+            "ingameIcon": "icon_ingame_hero_tower_smith"
+        },
+        "Arcade NTB Player Hero Nature": {
+            "baseUnit": "_NTB_HeroTemplate",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "air": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 440
+                },
+                "mana": {
+                    "startMana": 100,
+                    "regeneration": 5
+                },
+                "movement": {
+                    "moveSpeed": 15
+                },
+                "turning": {
+                    "turningSpeed": 99999
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 10
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementNature"
+                ]
+            },
+            "displayName": "data/GameData/unit/Hero DwarfSmith/display_name",
+            "ingameIcon": "icon_ingame_hero_tower_smith"
+        },
+        "Arcade NTB Player Hero Water": {
+            "baseUnit": "_NTB_HeroTemplate",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "air": true,
+                    "selectable": false,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 440
+                },
+                "mana": {
+                    "startMana": 100,
+                    "regeneration": 5
+                },
+                "movement": {
+                    "moveSpeed": 15
+                },
+                "turning": {
+                    "turningSpeed": 99999
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 10
+                    }
+                }
+            },
+            "references": {
+                "behaviorList": [
+                    "GameAttribute ElementWater"
+                ]
+            },
+            "displayName": "data/GameData/unit/Hero DwarfSmith/display_name",
+            "ingameIcon": "icon_ingame_hero_tower_smith"
+        },
+        "Arcade NTB Target": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "ground": false,
+                    "air": true,
+                    "selectable": true,
+                    "ignoreCollision": true
+                },
+                "health": {
+                    "maxHealth": 100,
+                    "regeneration": 45,
+                    "regenerationDelay": 5
+                },
+                "mana": {
+                    "maxMana": 100,
+                    "startMana": 1
+                },
+                "movement": {
+                    "moveSpeed": 99
+                },
+                "turning": {
+                    "turningSpeed": 99999
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 1.625,
+                            "engageRadius": 1.625,
+                            "resetRadius": 1.375
+                        }
+                    }
+                }
+            }
+        },
+        "Ship": {
+            "baseUnit": "_CUnit"
+        },
+        "_NTB_HeroTemplate": {
+            "baseUnit": "_CUnit",
+            "components": {
+                "unitStats": {
+                    "radius": 0.2,
+                    "selectable": true
+                },
+                "health": {
+                    "maxHealth": 100,
+                    "regeneration": 45,
+                    "regenerationDelay": 5
+                },
+                "mana": {
+                    "maxMana": 100,
+                    "startMana": 1
+                },
+                "movement": {
+                    "moveSpeed": 3
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 1.625,
+                            "engageRadius": 1.625,
+                            "resetRadius": 1.375
+                        }
+                    }
+                }
+            }
+        },
+        "_StandardEnemy": {
+            "baseUnit": "",
+            "components": {
+                "unitStats": {
+                    "ground": false,
+                    "air": true,
+                    "selectable": false
+                },
+                "health": {
+                    "maxHealth": 100
+                },
+                "movement": {
+                    "moveSpeed": 0.625
+                },
+                "turning": {
+                    "turningSpeed": 240
+                },
+                "behavior": {
+                    "genericControllableUnit": {
+                        "leashRadius": 500
+                    }
+                }
+            },
+            "displayName": "data/Arcade/NeonTimeBlaster/unit/_StandardEnemy/display_name"
+        }
+    }
+}

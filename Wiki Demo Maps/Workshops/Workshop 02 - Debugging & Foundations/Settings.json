@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedBehaviors": [
+            "Reveal"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "expressions": {
+        "Plus 0-10 Damage": {
+            "value": {
+                "random": {
+                    "int32Value": {
+                        "max": 10
+                    }
+                }
+            }
+        }
+    }
+}

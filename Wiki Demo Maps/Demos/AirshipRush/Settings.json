@@ -1,0 +1,33 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "GameSystem Caster",
+            "Player Ship",
+            "Player Ship Caster",
+            "Enemy Goblin",
+            "Enemy Goblin 2",
+            "Enemy Whelp",
+            "Enemy Whelp 2",
+            "Enemy Boss Warship"
+        ],
+        "usedEffects": [
+            "GameSystem Boundary Search"
+        ],
+        "usedBehaviors": [
+            "Player Ship Missile Launch Anim",
+            "Enemy Whelp Missile Launch Enable",
+            "Enemy Boss ChainMissile Launch Enable",
+            "Player Ship Banking Left",
+            "Player Ship Banking Right",
+            "Player Ship Banking None"
+        ]
+    }
+}

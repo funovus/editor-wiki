@@ -1,0 +1,136 @@
+{
+    "effects": {
+        "Standard Leader Weapon AOE": {
+            "parent": "_StandardAreaSearch",
+            "areaSearch": {
+                "areaSearchType": {
+                    "circleSector": {
+                        "outerRadius": 1,
+                        "angle": 120
+                    }
+                },
+                "effect": "Standard Leader Weapon Damage",
+                "location": 7,
+                "useSourceFacing": true,
+                "offset": {
+                    "forward": 0.5
+                }
+            }
+        },
+        "Standard Leader Weapon Damage": {
+            "damage": {
+                "damageAmount": 25,
+                "expressions": [
+                    {
+                        "namedExpression": {
+                            "name": "Plus 0-10 Damage"
+                        }
+                    }
+                ]
+            }
+        },
+        "Standard Troop Weapon Damage": {
+            "damage": {
+                "damageAmount": 10,
+                "expressions": [
+                    {
+                        "namedExpression": {
+                            "name": "Plus 0-10 Damage"
+                        }
+                    }
+                ]
+            }
+        },
+        "System Death Knockback Create": {
+            "persistent": {
+                "periodicCount": 1,
+                "location": 1,
+                "offsetStart": 7,
+                "offsetEnd": 7,
+                "periodicEffects": [
+                    "System Death Knockback Launch"
+                ],
+                "periodicOffsetSelectMode": 1,
+                "periodicEffectOffsets": [
+                    {
+                        "forward": 0.75,
+                        "right": -0.1
+                    },
+                    {
+                        "forward": 0.75,
+                        "right": -0.05
+                    },
+                    {
+                        "forward": 0.75
+                    },
+                    {
+                        "forward": 0.75,
+                        "right": 0.05
+                    },
+                    {
+                        "forward": 0.75,
+                        "right": 0.1
+                    },
+                    {
+                        "forward": 0.875,
+                        "right": -0.1
+                    },
+                    {
+                        "forward": 0.875,
+                        "right": -0.05
+                    },
+                    {
+                        "forward": 0.875
+                    },
+                    {
+                        "forward": 0.875,
+                        "right": 0.05
+                    },
+                    {
+                        "forward": 0.875,
+                        "right": 0.1
+                    },
+                    {
+                        "forward": 1,
+                        "right": -0.1
+                    },
+                    {
+                        "forward": 1,
+                        "right": -0.05
+                    },
+                    {
+                        "forward": 1
+                    },
+                    {
+                        "forward": 1,
+                        "right": 0.05
+                    },
+                    {
+                        "forward": 1,
+                        "right": 0.1
+                    }
+                ]
+            }
+        },
+        "System Death Knockback Launch": {
+            "launchMissile": {
+                "useMissileHeightAtDestination": true,
+                "mover": "Death Knockback"
+            }
+        },
+        "System HitReaction Apply Trigger": {
+            "applyBehavior": {
+                "behavior": "System HitReaction Trigger",
+                "target": 1,
+                "stackCount": 1
+            }
+        },
+        "System HitReaction Remove Trigger": {
+            "removeBehavior": {
+                "behavior": "System HitReaction Trigger",
+                "target": 1,
+                "stackCount": 1
+            }
+        }
+    }
+}

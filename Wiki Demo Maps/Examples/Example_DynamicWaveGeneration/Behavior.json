@@ -1,0 +1,33 @@
+{
+    "behaviors": {
+        "Goal Defender Buff": {
+            "modifiers": {
+                "attackSpeedModifier": {
+                    "scaled": 1
+                },
+                "weaponDamageModifier": {
+                    "unifiedFactor": 9
+                },
+                "abilityDamageModifier": {
+                    "unifiedFactor": 9
+                },
+                "weaponRangeModifier": {
+                    "scaled": 1
+                },
+                "weaponScanRangeModifier": {
+                    "scaled": 1
+                }
+            }
+        },
+        "MorePower": {
+            "modifiers": {
+                "maxHealthModifier": {
+                    "multiplierFactor": 0.1
+                },
+                "weaponDamageModifier": {
+                    "additiveFactor": 0.1
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1262 @@
+{
+    "actors": {
+        "Arena Rocket": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "bfrocket_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Arena Rocket Warning"
+                                }
+                            },
+                            {
+                                "create": {
+                                    "actor": "Arena Rocket Trail FX",
+                                    "hostSite": "Trail"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "Trail": {
+                        "offset": {
+                            "forward": -0.5
+                        }
+                    }
+                },
+                "modelScale": 1.5
+            }
+        },
+        "Arena Rocket Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Arena Rocket Search",
+                "impactModel": "Arena Rocket Impact FX"
+            }
+        },
+        "Arena Rocket Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_cannontower_bfrocket_impact"
+                },
+                "hostSiteOperations": [
+                    "SOp AbsoluteHeight Dot01"
+                ]
+            }
+        },
+        "Arena Rocket Trail FX": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_cannontower_bfrocket_missile"
+                }
+            }
+        },
+        "Arena Rocket Warning": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_indicator_white"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setTintColor": {
+                                    "color": {
+                                        "r": 255
+                                    }
+                                }
+                            },
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1,
+                                    "duration": 2
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp AbsoluteHeight 0",
+                    "SOp FaceNorth"
+                ],
+                "modelScale": 0.1
+            }
+        },
+        "Goblin": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_no_weapon"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Buffs"
+                ],
+                "modelScale": 2
+            }
+        },
+        "Goblin Blue": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_blue"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Buffs"
+                ],
+                "modelScale": 2
+            }
+        },
+        "Goblin Red": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "goblin_no_weapon_fire"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitRemove": {}
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Buffs"
+                ],
+                "modelScale": 2
+            }
+        },
+        "Hazard ArcherTower": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "darkspire_rank01_base"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "Hazard ArcherTower Turret",
+                                    "hostSite": "SiteUnit"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteUnit": {
+                        "offset": {
+                            "up": 0.5
+                        }
+                    }
+                }
+            }
+        },
+        "Hazard ArcherTower Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "Hazard ArcherTower Launch",
+                "impactModel": "Hazard ArcherTower Impact FX"
+            }
+        },
+        "Hazard ArcherTower Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_necromancer_deathcoil_impact"
+                }
+            }
+        },
+        "Hazard ArcherTower Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "skull_flying"
+                }
+            }
+        },
+        "Hazard ArcherTower Turret": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "name": "skeleton_archer"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitWeaponStart": {}
+                        },
+                        "actions": [
+                            {
+                                "setSiteOperations": {
+                                    "siteOperations": [
+                                        "SOp FollowEvent Orientation"
+                                    ],
+                                    "duration": 0.5
+                                }
+                            },
+                            {
+                                "playAnimation": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitWeaponStop": {}
+                        },
+                        "actions": [
+                            {
+                                "stopAnimation": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSites": {
+                    "SiteWeapon": {
+                        "offset": {
+                            "forward": 0.3,
+                            "up": 0.3
+                        }
+                    }
+                }
+            }
+        },
+        "Hazard Fire": {
+            "unitActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_boss_fire01_fire_region"
+                }
+            }
+        },
+        "Hazard Fire Attack FX": {
+            "parent": "",
+            "actionActor": {
+                "effect": "Hazard Fire Damage",
+                "impactModel": "Hazard Fire Impact FX"
+            }
+        },
+        "Hazard Fire Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_status_burn_impact"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "setVariable": {
+                                    "name": "scale",
+                                    "valueExpression": {
+                                        "randomInt": {
+                                            "minValue": 1,
+                                            "maxValue": 4
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "birth",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 1
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.7
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 2
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.9
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 3
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "birth"
+                            }
+                        },
+                        "conditions": [
+                            {
+                                "compare": {
+                                    "left": {
+                                        "variable": {
+                                            "name": "scale"
+                                        }
+                                    },
+                                    "right": {
+                                        "constant": {
+                                            "value": 4
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 1.3
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth"
+                ]
+            }
+        },
+        "PowerUp Glow": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_itemdrop_ring"
+                },
+                "hostSiteOperations": [
+                    "PowerUp SOp GlowHeight"
+                ],
+                "modelScale": 0.8
+            }
+        },
+        "PowerUp IceGem": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "darkspire_rank02_crystal"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Frozen"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp IceGem Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 1.1,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp IceGem Buff FX Expire": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_status_freeze_death"
+                },
+                "hostSiteOperations": [
+                    "SOp HoldPosition"
+                ],
+                "modelScale": 4
+            }
+        },
+        "PowerUp IceGem Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_status_freeze_death"
+                },
+                "modelScale": 1
+            }
+        },
+        "PowerUp IceGem Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "darkspire_rank02_crystal"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "applyMeshEffect": {
+                                    "effect": "Frozen"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp IceGem Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 1.1,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp LightningPotion": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "potiondealer_healing_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp LightningPotion Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "loop_pulse",
+                                    "duration": 0.5,
+                                    "repeat": true
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "loop_pulse"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp LightningPotion Pulse FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 2,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Buff Attack FX": {
+            "parent": "_FX Attack SingleTarget",
+            "actionActor": {
+                "effect": "PowerUp LightningPotion Buff BeamDamage",
+                "impactModel": "PowerUp LightningPotion Buff Impact FX",
+                "beamModel": "PowerUp LightningPotion Buff Beam FX",
+                "launchSite": "_orbiter",
+                "launchSiteOperations": [
+                    "SOp UpBy Dot25"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Buff Beam FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "BeamAnimation",
+                    "name": "beam_general"
+                },
+                "modelScale": 3
+            }
+        },
+        "PowerUp LightningPotion Buff FX Orbiter": {
+            "parent": "_UnitModelAddition",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_teslatower_orb"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "onCustomEvent": {
+                                "identifier": "EventKill"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "setModelScale": {
+                                    "modelScale": 0.2,
+                                    "duration": 0.25
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.25
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "hostSiteOperations": [
+                    "SOp FaceNorth",
+                    "PowerUp LightningPotion Buff FX Orbiter SOp Height",
+                    "PowerUp LightningPotion Buff FX Orbiter SOp Orbit"
+                ],
+                "modelScale": 2,
+                "aliases": [
+                    "_orbiter"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Buff FX Orbiter SOp Height": {
+            "siteOperation": {
+                "offset": {
+                    "y": 0.5
+                }
+            }
+        },
+        "PowerUp LightningPotion Buff FX Orbiter SOp Orbit": {
+            "siteOperation": {
+                "rotation": {
+                    "radius": 1,
+                    "speed": 135
+                }
+            }
+        },
+        "PowerUp LightningPotion Buff Impact FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_teslatower_impact"
+                }
+            }
+        },
+        "PowerUp LightningPotion Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_creep_death_energy_green"
+                },
+                "modelScale": 1
+            }
+        },
+        "PowerUp LightningPotion Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "potiondealer_healing_missile"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp LightningPotion Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "actorCreate": {}
+                        },
+                        "actions": [
+                            {
+                                "createTimer": {
+                                    "name": "loop_pulse",
+                                    "duration": 0.5,
+                                    "repeat": true
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "loop_pulse"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp LightningPotion Pulse FX"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 2,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp LightningPotion Pulse FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_tower_teslatower_impact"
+                }
+            }
+        },
+        "PowerUp Mushoom Buff FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_hero_upgraded_buff"
+                },
+                "hostSiteOperations": [
+                    "SOp HoldPosition"
+                ],
+                "modelScale": 2
+            }
+        },
+        "PowerUp Mushoom Death FX": {
+            "parent": "_FX OneShot SelfRemoving",
+            "modelActor": {
+                "resource": {
+                    "type": "ParticleAnimation",
+                    "name": "vfx_creep_death_ooze_purple"
+                },
+                "modelScale": 1
+            }
+        },
+        "PowerUp Mushroom": {
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "hauntedworld_mushroom00"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp Mushoom Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 1.5,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp Mushroom Missile": {
+            "unitActor": {
+                "resource": {
+                    "type": "PropModel",
+                    "name": "hauntedworld_mushroom00"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "unitDeath": {}
+                        },
+                        "actions": [
+                            {
+                                "create": {
+                                    "actor": "PowerUp Mushoom Death FX"
+                                }
+                            },
+                            {
+                                "createTimer": {
+                                    "name": "death",
+                                    "duration": 0.01
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "actorTerm": {
+                            "onTimer": {
+                                "name": "death"
+                            }
+                        },
+                        "actions": [
+                            {
+                                "destroy": {}
+                            }
+                        ]
+                    }
+                ],
+                "eventMacros": [
+                    "Events PowerUp Item"
+                ],
+                "modelScale": 1.5,
+                "hostSiteOperations": [
+                    "PowerUp SOp BaseHeight"
+                ]
+            }
+        },
+        "PowerUp SOp BaseHeight": {
+            "siteOperation": {
+                "offset": {
+                    "y": 0.1
+                }
+            }
+        },
+        "PowerUp SOp GlowHeight": {
+            "siteOperation": {
+                "absoluteY": {
+                    "y": 0.1
+                }
+            }
+        },
+        "PowerUp SOp MaxHeight": {
+            "siteOperation": {
+                "offset": {
+                    "y": 0.6
+                }
+            }
+        },
+        "PowerUp SOp Spin": {
+            "siteOperation": {
+                "rotate": {
+                    "dy": -45
+                }
+            }
+        },
+        "Select Helper": {
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "towerslot_forestworld"
+                },
+                "events": [
+                    {
+                        "actorTerm": {
+                            "selectionOn": {}
+                        },
+                        "actions": [
+                            {
+                                "playAnimation": {
+                                    "clipId": 4
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "Slime": {
+            "parent": "_StandardUnit",
+            "unitActor": {
+                "resource": {
+                    "type": "GpuAnimation",
+                    "name": "ooze_blue"
+                }
+            }
+        }
+    },
+    "actorEventMacros": {
+        "Events PowerUp Buffs": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "PowerUp SuperMushroom Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setModelScale": {
+                                "modelScale": 6,
+                                "duration": 0.3
+                            }
+                        },
+                        {
+                            "create": {
+                                "actor": "PowerUp Mushoom Buff FX"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOff": {
+                            "behavior": "PowerUp SuperMushroom Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setModelScale": {
+                                "modelScale": 2,
+                                "duration": 0.3
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "PowerUp IceGem Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "applyMeshEffect": {
+                                "effect": "Frozen"
+                            }
+                        },
+                        {
+                            "playAnimation": {
+                                "clipId": 2
+                            }
+                        },
+                        {
+                            "pauseAnimation": {
+                                "clipId": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOff": {
+                            "behavior": "PowerUp IceGem Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "removeMeshEffect": {
+                                "effect": "Frozen"
+                            }
+                        },
+                        {
+                            "create": {
+                                "actor": "PowerUp IceGem Buff FX Expire"
+                            }
+                        },
+                        {
+                            "resumeAnimation": {
+                                "clipId": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOn": {
+                            "behavior": "PowerUp LightningPotion Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "create": {
+                                "actor": "PowerUp LightningPotion Buff FX Orbiter"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "behaviorOff": {
+                            "behavior": "PowerUp LightningPotion Buff"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "sendCustomEvent": {
+                                "actor": "_orbiter",
+                                "identifier": "EventKill"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "Events PowerUp Item": {
+            "events": [
+                {
+                    "actorTerm": {
+                        "actorCreate": {}
+                    },
+                    "actions": [
+                        {
+                            "createTimer": {
+                                "name": "birth",
+                                "duration": 0.01
+                            }
+                        },
+                        {
+                            "create": {
+                                "actor": "PowerUp Glow"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "birth"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "PowerUp SOp MaxHeight",
+                                    "PowerUp SOp Spin"
+                                ],
+                                "duration": 2.25
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "loop_raise",
+                                "duration": 2.25
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "loop_raise"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "PowerUp SOp BaseHeight",
+                                    "PowerUp SOp Spin"
+                                ],
+                                "duration": 2.25
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "loop_lower",
+                                "duration": 2.25
+                            }
+                        }
+                    ]
+                },
+                {
+                    "actorTerm": {
+                        "onTimer": {
+                            "name": "loop_lower"
+                        }
+                    },
+                    "actions": [
+                        {
+                            "setSiteOperations": {
+                                "siteOperations": [
+                                    "PowerUp SOp MaxHeight",
+                                    "PowerUp SOp Spin"
+                                ],
+                                "duration": 2.25
+                            }
+                        },
+                        {
+                            "createTimer": {
+                                "name": "loop_raise",
+                                "duration": 2.25
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

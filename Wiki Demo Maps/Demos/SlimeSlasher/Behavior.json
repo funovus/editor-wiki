@@ -1,0 +1,43 @@
+{
+    "behaviors": {
+        "Custom Value": {
+            "maxStackCount": 999
+        },
+        "DeathEffect Fire": {
+            "refreshStack": true,
+            "duration": 0.25
+        },
+        "DeathEffect Ice": {
+            "refreshStack": true,
+            "duration": 0.25
+        },
+        "DeathEffect Shock": {
+            "refreshStack": true,
+            "duration": 0.25
+        },
+        "Enemy SlimeYellow Attack SearchBehavior": {
+            "periodicInterval": 0.0625,
+            "periodicEffect": "Enemy SlimeYellow Attack Search"
+        },
+        "Enemy SlimeYellow Attack TargetAcquired": {
+            "duration": 0.25
+        },
+        "Enemy State Action": {
+            "finalEffect": "Enemy State Default Apply"
+        },
+        "Enemy State Default": {
+            "behaviorValidatorsRemove": [
+                "Enemy State Action"
+            ]
+        },
+        "Enemy State Default Delayed": {
+            "duration": 0.0625,
+            "finalEffect": "Enemy State Default Apply"
+        },
+        "GameSystem Debug Hook": {},
+        "Player Score Multiplier": {
+            "refreshStack": true,
+            "duration": 0.125
+        }
+    }
+}

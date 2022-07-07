@@ -1,0 +1,31 @@
+{
+    "settings": {
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedUnits": [
+            "Goblin",
+            "PowerUp Mushroom",
+            "PowerUp IceGem",
+            "PowerUp LightningPotion",
+            "Select Helper",
+            "Slime",
+            "Goblin Blue",
+            "Goblin Red"
+        ],
+        "usedEffects": [
+            "Arena Rocket Launch",
+            "PowerUp IceGem Spawn Randomizer",
+            "PowerUp LightningPotion Spawn Randomizer",
+            "PowerUp SuperMushroom Spawn Randomizer"
+        ],
+        "usedAtlasAssets": [
+            "Assets/Bundles/UI/Atlas/ItemAtlas00.spriteatlas"
+        ]
+    }
+}

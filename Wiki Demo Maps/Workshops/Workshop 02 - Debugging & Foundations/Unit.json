@@ -1,0 +1,55 @@
+{
+    "units": {
+        "Invisible Goof": {
+            "baseUnit": "_CUnit",
+            "references": {
+                "behaviorList": [
+                    "Sinister Searching Behavior "
+                ]
+            }
+        },
+        "Standard MeleeUnit": {
+            "components": {
+                "unitStats": {
+                    "radius": 0.5
+                },
+                "health": {
+                    "maxHealth": 100
+                },
+                "behavior": {
+                    "tdTypes": {
+                        "behaviorType": 2,
+                        "unitBattleData": {
+                            "enemySearchRange": 3,
+                            "resetRadius": 0.5
+                        }
+                    }
+                }
+            },
+            "cardName": "Stupid Sheep :D "
+        },
+        "Standard MeleeUnit Rabbit": {
+            "components": {
+                "unitStats": {
+                    "radius": 0.5
+                },
+                "health": {
+                    "maxHealth": 100
+                }
+            },
+            "cardName": "Roger Rabbit"
+        },
+        "Standard MeleeUnit Turkey": {
+            "baseUnit": "Standard MeleeUnit",
+            "cardName": "Totalitarian Turkey"
+        },
+        "Super Secret Invisible Dude": {
+            "baseUnit": "_CUnit",
+            "references": {
+                "behaviorList": [
+                    "Sinister Searching Behavior "
+                ]
+            }
+        }
+    }
+}

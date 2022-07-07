@@ -1,0 +1,9 @@
+{
+    "effects": {
+        "Tower Weapon Damage": {
+            "damage": {
+                "damageAmount": 999
+            }
+        }
+    }
+}

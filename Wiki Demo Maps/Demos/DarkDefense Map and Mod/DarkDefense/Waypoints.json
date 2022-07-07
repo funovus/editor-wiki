@@ -1,0 +1,1 @@
+{ "RoutesData": { "Main": { "PointPairs": [ { "LeftPoint": { "X": 48.49, "Y": 0, "Z": 6.07 }, "RightPoint": { "X": 48.44, "Y": 0, "Z": 15.07 } }, { "LeftPoint": { "X": 35.53, "Y": 0, "Z": 5.55 }, "RightPoint": { "X": 35.47, "Y": 0, "Z": 15.45 } } ], "DisableRally": false } } }

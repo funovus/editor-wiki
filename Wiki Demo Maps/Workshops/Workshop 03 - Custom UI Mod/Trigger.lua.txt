@@ -1,0 +1,1345 @@
+
+-- VARIABLES
+local ui = {
+    root = DCEI.GetUiRoot(),
+    
+    -- UI layers
+    world = nil,
+    lower = nil,
+    upper = nil,
+    super = nil,
+
+    -- UI components
+    main_menu = nil,
+}
+
+-- TRIGGERS
+function ui.Initialize()
+    -- UI layers
+    ui.world = NewFullscreenFrame()
+    ui.lower = NewFullscreenFrame()
+    ui.upper = NewFullscreenFrame()
+    ui.super = NewFullscreenFrame()
+
+    -- UI components
+    ui.main_menu = NewMainMenu(ui.lower)
+    HookupMainMenuData()
+
+    ui.main_menu:SetPage(1)
+    -- ui.main_menu:SetPage(10)
+
+    local is_instant = true
+    ui.main_menu:Collapse(is_instant)
+end
+
+function NewFullscreenFrame()
+    local layout = DCEI.NewFrame(ui.root)
+    DCEI.SetMatchParent(layout, true, true)
+
+    return layout
+end
+
+-- UI COMPONENTS
+function NewMainMenuLayout(parent)
+    local layout = {}
+    layout.height = 675
+    layout.width = 1200
+
+    local frame = DCEI.NewFrame(parent)
+    local container = DCEI.NewFrame(frame)
+
+    local background = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(background, "frame_slot01")
+    DCEI.SetSize(background, layout.width, layout.height)
+    
+    -- scrolling sidebar
+    local sidebar_frame = DCEI.NewFrame(container)
+    DCEI.SetBackgroundImage(sidebar_frame, "frame_slot00")
+    DCEI.SetLeftAlignmentInParent(sidebar_frame)
+    DCEI.SetSize(sidebar_frame, 296, layout.height)
+
+    local text = "Table Of Contents"
+    local sidebar_title = DCEI.NewText(sidebar_frame)
+    DCEI.SetTopAlignmentInParent(sidebar_title)
+    DCEI.SetVerticalOffsetInParent(sidebar_title, -20)
+    DCEI.SetText(sidebar_title, "<size=120%>" .. "<color=yellow>" .. text)
+
+    local sidebar_scroll = DCEI.NewVScroll(sidebar_frame)
+    DCEI.SetTopAlignmentInParent(sidebar_scroll)
+    DCEI.SetVerticalOffsetInParent(sidebar_scroll, -60)
+    
+    local sidebar_content = DCEI.GetScrollContent(sidebar_scroll)
+    DCEI.SetSize(sidebar_scroll, 296, 595)
+    DCEI.SetSpacing(sidebar_content, 12)
+    DCEI.SetPaddingTop(sidebar_content, 4)
+
+    -- page container
+    local page_container = DCEI.NewFrame(container)
+    DCEI.SetSize(page_container, 904, layout.height)
+    DCEI.SetHorizontalOffsetInParent(page_container, 148)
+
+    -- minimize/maximize button
+    local minify_button = DCEI.NewButton(frame)
+    DCEI.SetBackgroundImage(minify_button, "btn_blue")
+    DCEI.SetTopAlignmentInParent(minify_button)
+    DCEI.SetRightAlignmentInParent(minify_button)
+    DCEI.SetHorizontalOffsetInParent(minify_button, 4)
+    DCEI.SetVerticalOffsetInParent(minify_button, 4)
+    DCEI.SetSize(minify_button, 48, 48)
+    
+    local minify_label = DCEI.NewText(minify_button)
+    DCEI.SetText(minify_label, "<size=200%>" .. "-")
+    
+    -- export
+    layout.container = container
+    layout.page_container = page_container
+    layout.sidebar_scroll = sidebar_scroll
+    layout.sidebar_content = sidebar_content
+    layout.minify_button = minify_button
+    layout.minify_label = minify_label
+    return layout
+end
+
+function NewMainMenu_NavButton(parent)
+    local layout = {}
+
+    local frame = DCEI.NewButton(parent)
+    DCEI.SetSize(frame, 240, 92)
+    DCEI.SetBackgroundImageColor(frame, 0, 0, 0, 0.5)
+    
+    local vstack = DCEI.NewVStack(frame)
+    DCEI.SetSpacing(vstack, 6)
+
+    local title_label = DCEI.NewText(vstack)
+    
+    local subtitle_label = DCEI.NewText(vstack)
+    
+    -- functions
+    function layout:SetButtonText(title, subtitle)
+        DCEI.SetText(title_label, "<color=green>" .. title)
+        DCEI.SetText(subtitle_label, "<size=80%>" .. subtitle)
+    end
+
+    -- export
+    layout.frame = frame
+    return layout
+end
+
+function NewMainMenu_NavPage(parent)
+    local layout = {}
+
+    local frame = DCEI.NewFrame(parent)
+    DCEI.SetSize(frame, 904, 675)
+    DCEI.SetPadding(frame, 32)
+
+    local title = DCEI.NewText(frame)
+    DCEI.SetTopAlignmentInParent(title)
+
+    -- export
+    layout.frame = frame
+    layout.title = title
+    return layout
+end
+
+function NewMainMenu(parent)
+    -- define UI layout
+    local layout = NewMainMenuLayout(parent)
+    layout.is_expanded = true
+    
+    -- add nav buttons and pages
+    layout.nav_buttons = {}
+    layout.nav_pages = {}
+    for n = 1, 10 do
+        layout.nav_pages[n] = NewMainMenu_NavPage(layout.page_container)
+        layout.nav_buttons[n] = NewMainMenu_NavButton(layout.sidebar_content) 
+    end
+
+    -- navigation functions
+    function layout:SetPage(index)
+        for _, page in ipairs(self.nav_pages) do
+            DCEI.SetActive(page.frame, false)
+        end
+
+        DCEI.SetActive(self.nav_pages[index].frame, true)
+    end
+
+    -- expand/collapse functions
+    function layout:Collapse(is_instant)
+        self.is_expanded = false
+
+        -- update minify button
+        DCEI.SetText(layout.minify_label, "<size=200%>" .. "+")
+        DCEI.SetBackgroundImage(layout.minify_button, "btn_blue2")
+        
+        -- background collapse animation
+        local k1, k2 = 1, 0
+        local duration = is_instant and 0 or 0.3
+        local ease = "InCubic"
+        DCEI.AnimateScale(layout.container, {x = k1, y = k1, z = k1}, {x = k2, y = k2, z = k2}, duration, ease)
+        
+        local k1, k2 = 0, (layout.height / 2)
+        DCEI.AnimateVerticalOffset(layout.container, k1, k2, duration, ease)
+        
+        local k1, k2 = 0, (layout.width / 2)
+        DCEI.AnimateHorizontalOffset(layout.container, k1, k2, duration, ease)
+    end
+    
+    function layout:Expand()
+        self.is_expanded = true
+        
+        -- update minify button
+        DCEI.SetText(layout.minify_label, "<size=200%>" .. "-")
+        DCEI.SetBackgroundImage(layout.minify_button, "btn_blue")
+        
+        -- background expand animation
+        local k1, k2 = 0, 1
+        local duration = 0.3
+        local ease = "InCubic"
+        DCEI.AnimateScale(layout.container, {x = k1, y = k1, z = k1}, {x = k2, y = k2, z = k2}, duration, ease)
+        
+        local k1, k2 = (layout.height / 2), 0
+        DCEI.AnimateVerticalOffset(layout.container, k1, k2, duration, ease)
+        
+        local k1, k2 = (layout.width / 2), 0
+        DCEI.AnimateHorizontalOffset(layout.container, k1, k2, duration, ease)
+        
+        -- this wait helps reset the scroll position correctly after expanding
+        DCEI.Wait(0)
+
+        -- reset scroll position otherwise it will be modified by animations
+        DCEI.SetScrollPosition(layout.sidebar_scroll, 0)
+    end
+
+    function layout:OnMinify()
+        if self.is_expanded then
+            self:Collapse()
+        else
+            self:Expand()
+        end
+    end
+
+    -- callbacks
+    DCEI.SetOnClickCallback(
+        layout.minify_button, 
+        function()
+            layout:OnMinify()
+        end
+    )
+
+    for k, button in ipairs(layout.nav_buttons) do
+        DCEI.SetOnClickCallback(
+            button.frame,
+            function()
+                layout:SetPage(k)
+            end
+        )
+    end
+
+    return layout
+end
+
+function HookupMainMenuData()
+    local pages = {
+        {
+            title = "Chapter 1",
+            subtitle = "The Basics",
+            page_func = CreateMainMenu_Page01
+        },
+        {
+            title = "Chapter 2",
+            subtitle = "Frame Types",
+            page_func = CreateMainMenu_Page02
+        },
+        {
+            title = "Chapter 3",
+            subtitle = "Frame Manipulation",
+            page_func = CreateMainMenu_Page03
+        },
+        {
+            title = "Chapter 4",
+            subtitle = "Text Labels",
+            page_func = CreateMainMenu_Page04
+        },
+        {
+            title = "Chapter 5",
+            subtitle = "Stacks",
+            page_func = CreateMainMenu_Page05
+        },
+        {
+            title = "Chapter 6",
+            subtitle = "Scrolls",
+            page_func = CreateMainMenu_Page06
+        },
+        {
+            title = "Chapter 7",
+            subtitle = "Masks",
+            page_func = CreateMainMenu_Page07
+        },
+        {
+            title = "Chapter 8",
+            subtitle = "Inputs",
+            page_func = CreateMainMenu_Page08
+        },
+        {
+            title = "Chapter 9",
+            subtitle = "Animations",
+            page_func = CreateMainMenu_Page09
+        },
+        {
+            title = "Chapter 10",
+            subtitle = "Status Bars",
+            page_func = CreateMainMenu_Page10
+        },
+    }
+
+    -- hookup nav button and page data
+    for k, page in ipairs(pages) do
+        ui.main_menu.nav_buttons[k]:SetButtonText(page.title, page.subtitle)
+        DCEI.SetText(ui.main_menu.nav_pages[k].title, "<size=200%>" .. page.subtitle)
+
+        if page.page_func then
+            page.page_func(ui.main_menu.nav_pages[k].frame)
+        end
+    end
+end
+
+
+-- 01 THE BASICS
+function CreateMainMenu_Page01(parent)
+    local parent_frames = {}
+    local child_frames = {}
+    
+    for n = 1, 4 do
+        -- create four 100x100 red parent frames
+        parent_frames[n] = DCEI.NewFrame(parent)
+        DCEI.SetBackgroundImageColor(parent_frames[n], 1, 0, 0, 0.6)
+        DCEI.SetMinSize(parent_frames[n], 100, 100)
+        
+        -- create a 100x100 blue green frames inside each frame
+        child_frames[n] = DCEI.NewFrame(parent_frames[n])
+        DCEI.SetBackgroundImageColor(child_frames[n], 0, 1, 0, 0.6)
+        DCEI.SetMinSize(child_frames[n], 100, 100)
+    end
+    
+    -- top left
+    DCEI.SetHorizontalOffsetInParent(parent_frames[1], -100)
+    DCEI.SetVerticalOffsetInParent(parent_frames[1], 100)
+    DCEI.SetMaxSize(child_frames[1], 100, 50)
+    
+    -- top right
+    DCEI.SetHorizontalOffsetInParent(parent_frames[2], 100)
+    DCEI.SetVerticalOffsetInParent(parent_frames[2], 100)
+    DCEI.SetMaxSize(child_frames[2], 50, 100)
+    
+    -- bottom right
+    DCEI.SetHorizontalOffsetInParent(parent_frames[3], 100)
+    DCEI.SetVerticalOffsetInParent(parent_frames[3], -100)
+    DCEI.SetTopAlignmentInParent(child_frames[3])
+    DCEI.SetLeftAlignmentInParent(child_frames[3])
+    DCEI.SetMaxSize(child_frames[3], 50, 50)
+    
+    -- bottom left
+    DCEI.SetHorizontalOffsetInParent(parent_frames[4], -100)
+    DCEI.SetVerticalOffsetInParent(parent_frames[4], -100)
+    DCEI.SetPadding(parent_frames[4], 10)
+    DCEI.SetBottomAlignmentInParent(child_frames[4])
+    DCEI.SetRightAlignmentInParent(child_frames[4])
+    DCEI.SetMaxSize(child_frames[4], 50, 50)
+end
+
+-- 02 FRAME TYPES
+function CreateMainMenu_Page02(parent)
+    local button_is_pressed = false
+
+    local type_stack = DCEI.NewHStack(parent)
+    DCEI.SetSpacing(type_stack, 25)
+
+    local label_stack = DCEI.NewHStack(parent)
+    DCEI.SetVerticalOffsetInParent(label_stack, -100)
+    DCEI.SetSpacing(label_stack, 25)
+
+    -- frame
+    local frame = DCEI.NewFrame(type_stack)
+    DCEI.SetSize(frame, 100, 100)
+    DCEI.SetBackgroundImage(frame, "frame03")
+    
+    -- button
+    local button = DCEI.NewButton(type_stack)
+    DCEI.SetSize(button, 100, 100)
+    -- default background image is "btn_green"
+    -- default padding is 12
+
+    local visualized_button_padding = DCEI.NewFrame(button)
+    DCEI.SetBackgroundImageColor(visualized_button_padding, 0, 0, 0, 0.8)
+    DCEI.SetSize(visualized_button_padding, 76, 76)
+    DCEI.SetActive(visualized_button_padding, false)
+
+    -- text
+    local text_frame = DCEI.NewText(type_stack)
+    DCEI.SetMinSize(text_frame, 100, 100)
+
+    -- vstack
+    local vstack = DCEI.NewVStack(type_stack)
+    DCEI.SetBackgroundImageColor(vstack, 0, 0, 0, 0.3)
+    
+    local stacked_frames = {}
+    for n = 1, 3 do
+        stacked_frames[n] = DCEI.NewFrame(vstack)
+        DCEI.SetSize(stacked_frames[n], 100, 50)
+        DCEI.SetBackgroundImage(stacked_frames[n], "frame03")
+    end
+    DCEI.SetBackgroundImageColor(stacked_frames[1], 1, 0, 0, 1)
+    DCEI.SetBackgroundImageColor(stacked_frames[2], 0, 1, 0, 1)
+    DCEI.SetBackgroundImageColor(stacked_frames[3], 0, 0, 1, 1)
+    
+    -- vscroll
+    local vscroll = DCEI.NewVScroll(type_stack)
+    DCEI.SetBackgroundImageColor(vscroll, 0, 0, 0, 0.3)
+    DCEI.SetSize(vscroll, 100, 100)
+
+    local vscroll_content = DCEI.GetScrollContent(vscroll)
+    local scrollable_frames = {}
+    for n = 1, 3 do
+        scrollable_frames[n] = DCEI.NewFrame(vscroll_content)
+        DCEI.SetSize(scrollable_frames[n], 100, 50)
+        DCEI.SetBackgroundImage(scrollable_frames[n], "frame03")
+    end
+    DCEI.SetBackgroundImageColor(scrollable_frames[1], 1, 0, 0, 1)
+    DCEI.SetBackgroundImageColor(scrollable_frames[2], 0, 1, 0, 1)
+    DCEI.SetBackgroundImageColor(scrollable_frames[3], 0, 0, 1, 1)
+    
+    -- mask + frame
+    local mask = DCEI.NewMask(type_stack)
+    DCEI.SetSize(mask, 100, 100)
+
+    local masked_frame = DCEI.NewFrame(mask)
+    DCEI.SetSize(masked_frame, 200, 200)
+    DCEI.SetTopAlignmentInParent(masked_frame)
+    DCEI.SetBackgroundImage(masked_frame, "btn_unit_wildsky_goblin_assassin")
+
+    -- input
+    local input = DCEI.NewInput(type_stack)
+    DCEI.SetSize(input, 100, 32)
+
+    -- frame labels for the label_stack
+    local text = "Frame"
+    local frame_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(frame_label, 100)
+    DCEI.SetText(frame_label, text)
+    
+    local text = "Button"
+    local button_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(button_label, 100)
+    DCEI.SetText(button_label, text)
+    
+    local text = "Text"
+    local text_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(text_label, 100)
+    DCEI.SetText(text_label, text)
+    
+    local text = "V Stack"
+    local stack_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(stack_label, 100)
+    DCEI.SetText(stack_label, text)
+    
+    local text = "V Scroll"
+    local scroll_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(scroll_label, 100)
+    DCEI.SetText(scroll_label, text)
+    
+    local text = "Mask"
+    local mask_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(mask_label, 100)
+    DCEI.SetText(mask_label, text)
+    
+    local text = "Input"
+    local input_label = DCEI.NewText(label_stack)
+    DCEI.SetMinSize(input_label, 100)
+    DCEI.SetText(input_label, text)
+
+    -- button callback
+    local function OnButtonPress()
+        button_is_pressed = not button_is_pressed
+        DCEI.SetActive(visualized_button_padding, button_is_pressed)
+    end
+
+    DCEI.SetOnClickCallback(button, OnButtonPress)
+end
+
+-- 03 FRAME MANIPULATION
+function CreateMainMenu_Page03(parent)
+    local button_state = {
+        active = true,
+        rotation = 0,
+        rotation3d = 0,
+    }
+
+    local hstack = DCEI.NewHStack(parent)
+    DCEI.SetSpacing(hstack, 50)
+
+    local frames = {}
+    local buttons = {}
+    local button_labels = {}
+    for n = 1, 3 do
+        local vstack = DCEI.NewVStack(hstack)
+        DCEI.SetSpacing(vstack, 20)
+
+        local frame_container = DCEI.NewFrame(vstack)
+        DCEI.SetSize(frame_container, 150, 150)
+
+        local frame = DCEI.NewFrame(frame_container)
+        DCEI.SetBackgroundImage(frame, "frame_gold")
+        DCEI.SetSize(frame, 150, 150)
+        
+        local icon = DCEI.NewFrame(frame)
+        DCEI.SetBackgroundImage(icon, "btn_unit_wildsky_goblin_assassin")
+        DCEI.SetSize(icon, 150, 150)
+        
+        local button = DCEI.NewButton(vstack)
+        DCEI.SetSize(button, 200, 100)
+        
+        local button_label = DCEI.NewText(button)
+        DCEI.SetTextFontSize(button_label, 20)
+
+        frames[n] = frame
+        buttons[n] = button
+        button_labels[n] = button_label
+    end
+
+    local text = "SetActive" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.active)
+    DCEI.SetText(button_labels[1], text)
+
+    local text =  "SetRotation" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.rotation)
+    DCEI.SetText(button_labels[2], text)
+    
+    local text = "SetRotation3D" .. "\n" .. "<color=#00ffff>" .. "0, " .. tostring(button_state.rotation3d) .. ", 0"
+    DCEI.SetText(button_labels[3], text)
+    
+    -- button callback functions
+    local function OnActivePress()
+        local index = 1
+        button_state.active = not button_state.active
+        
+        -- flip frame active state
+        DCEI.SetActive(frames[index], button_state.active)
+        
+        local text = "SetActive" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.active)
+        DCEI.SetText(button_labels[index], text)
+    end
+    
+    local function OnRotatePress()
+        local index = 2
+        local angle_increment = 45
+        local max_rotation = 360
+        button_state.rotation = (button_state.rotation + angle_increment) % max_rotation
+        
+        -- increase 2d rotation by 45
+        DCEI.SetRotation(frames[index], button_state.rotation)
+        
+        local text = "SetRotation" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.rotation)
+        DCEI.SetText(button_labels[index], text)
+    end
+    
+    local function OnRotate3DPress()
+        local index = 3
+        local max_rotation = 360
+        local angle_increment = 180
+        button_state.rotation3d = (button_state.rotation3d + angle_increment) % max_rotation
+        
+        -- flip 3d rotation
+        DCEI.SetRotation3D(frames[index], 0, button_state.rotation3d, 0)
+        
+        local text = "SetRotation3D" .. "\n" .. "<color=#00ffff>" .. "0, " .. tostring(button_state.rotation3d) .. ", 0"
+        DCEI.SetText(button_labels[index], text)
+    end
+    
+    -- button callbacks
+    DCEI.SetOnClickCallback(buttons[1], OnActivePress)
+    DCEI.SetOnClickCallback(buttons[2], OnRotatePress)
+    DCEI.SetOnClickCallback(buttons[3], OnRotate3DPress)
+end
+
+-- 04 TEXT
+function CreateMainMenu_Page04(parent)
+    local button_state = {
+        outline = true,
+        font_size = 22,
+        font_color = {r = 1, g = 1, b = 1}
+    }
+
+    local hstack = DCEI.NewHStack(parent)
+    DCEI.SetSpacing(hstack, 50)
+
+    local frames = {}
+    local labels = {}
+    local buttons = {}
+    local button_labels = {}
+
+    for n = 1, 3 do
+        local vstack = DCEI.NewVStack(hstack)
+        DCEI.SetSpacing(vstack, 20)
+
+        local frame = DCEI.NewFrame(vstack)
+        DCEI.SetBackgroundImage(frame, "shape00")
+        DCEI.SetBackgroundImageColor(frame, 0, 0, 0, 0.6)
+        DCEI.SetSize(frame, 240, 120)
+        
+        local label = DCEI.NewText(frame)
+        DCEI.SetMaxSize(label, 228, 120)
+
+        local button = DCEI.NewButton(vstack)
+        DCEI.SetSize(button, 200, 100)
+        
+        local button_label = DCEI.NewText(button)
+        DCEI.SetTextFontSize(button_label, 20)
+        
+        frames[n] = frame
+        labels[n] = label
+        buttons[n] = button
+        button_labels[n] = button_label
+    end
+    
+    -- set label text
+    -- for more text tags check http://digitalnativestudios.com/textmeshpro/docs/rich-text/
+    local text = "Text supports <size=125%><color=yellow>rich</color></size> text <u>tags</u> of all " .. "<color=red>" .. "co" .. "<color=#00FF00>" .. "lo" .. "<color=blue>" .. "rs."
+    DCEI.SetText(labels[1], "<size=75%>" .. text)
+    
+    local text = "Wrap text by setting <color=yellow>MaxSize</color> of the text frame."
+    DCEI.SetText(labels[2], "<size=75%>" .. text)
+    
+    local text = "<align=\"left\">" .. "Use text tags to set text <color=yellow>alignment</color>." .. "\n\n" .. "<align=\"right\">" .. "Or create line breaks."
+    DCEI.SetText(labels[3], "<size=75%>" .. text)
+
+    -- set initial button text
+    local text = "SetTextOutline" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.outline)
+    DCEI.SetText(button_labels[1], text)
+
+    local text = "SetTextFontSize" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.font_size)
+    DCEI.SetText(button_labels[2], text)
+
+    local text = "SetTextColor" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.font_color.r) .. ", " .. tostring(button_state.font_color.g) .. ", " .. tostring(button_state.font_color.b)
+    DCEI.SetText(button_labels[3], text)
+    
+    -- button callback functions
+    local function OnOutlinePress()
+        local index = 1
+        button_state.outline = not button_state.outline
+        
+        -- flip frame outline state
+        DCEI.SetTextOutline(labels[index], button_state.outline)
+        
+        local text = "SetTextOutline" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.outline)
+        DCEI.SetText(button_labels[index], text)
+    end
+    
+    local function OnFontSizePress()
+        local index = 2
+        button_state.font_size = (button_state.font_size == 22) and 32 or 22
+        
+        -- toggle between font size 22 (default) and 32
+        DCEI.SetTextFontSize(labels[index], button_state.font_size)
+        
+        local text = "SetTextFontSize" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.font_size)
+        DCEI.SetText(button_labels[index], text)
+    end
+    
+    local function OnFontColorPress()
+        local index = 3
+        button_state.font_color.g = (button_state.font_color.g == 1) and 0 or 1
+        button_state.font_color.b = (button_state.font_color.b == 1) and 0 or 1
+        
+        -- toggle between white and red font color
+        local color = button_state.font_color
+        DCEI.SetTextColor(labels[index], color.r, color.g, color.b)
+        
+        local text = "SetTextColor" .. "\n" .. "<color=#00ffff>" .. tostring(button_state.font_color.r) .. ", " .. tostring(button_state.font_color.g) .. ", " .. tostring(button_state.font_color.b)
+        DCEI.SetText(button_labels[index], text)
+    end
+
+    -- button callbacks
+    DCEI.SetOnClickCallback(buttons[1], OnOutlinePress)
+    DCEI.SetOnClickCallback(buttons[2], OnFontSizePress)
+    DCEI.SetOnClickCallback(buttons[3], OnFontColorPress)
+end
+
+-- 05 STACKS
+function CreateMainMenu_Page05(parent)
+    local stack_visualized = false
+    local stack_images = {
+        "icon_enhance_arrowtower_huntersmark",
+        "icon_enhance_barracks_secondwind",
+        "icon_enhance_crusader_punish",
+        "icon_enhance_darkspire_curse",
+        "icon_enhance_druidtower_stormcaller",
+        "icon_enhance_frosttower_tempestaura",
+        "icon_enhance_lighthouse_guardian",
+        "icon_enhance_leviathan_water_spout",
+        "icon_enhance_potiondealer_healing_potion",
+        "icon_enhance_stoneguard_stoneskin",
+        "icon_enhance_sunsanctum_solar_beam",
+        "icon_enhance_teslatower_capacitor",
+    }
+
+    -- stack demo
+    local max_horizontal_items = 6
+    local max_vertical_items = 4
+
+    local item_size = 64
+    local item_spacing = 10
+    local item_padding = 0
+
+    local stack_items = {}
+
+    local container = DCEI.NewFrame(parent)
+    DCEI.SetBackgroundImage(container, "shape00")
+    DCEI.SetBackgroundImageColor(container, 0, 0, 0, 0.4)
+    DCEI.SetVerticalOffsetInParent(container, 50)
+
+    local container_width = (item_size * max_horizontal_items) + (item_spacing * (max_horizontal_items - 1)) + (2 * item_padding)
+    local container_height = (item_size * max_vertical_items) + (item_spacing * (max_vertical_items - 1)) + (2 * item_padding)
+    DCEI.SetSize(container, container_width, container_height)
+
+    local vstack = DCEI.NewVStack(container)
+    DCEI.SetTopAlignmentInParent(vstack)
+    DCEI.SetLeftAlignmentInParent(vstack)
+    DCEI.SetSpacing(vstack, item_spacing)
+    DCEI.SetPadding(vstack, item_padding)
+    
+    -- 5x hstacks stacked inside a vstack
+    local hstacks = {}
+    for n = 1, max_vertical_items do
+        local hstack = DCEI.NewHStack(vstack)
+        DCEI.SetLeftAlignmentInParent(hstack)
+        DCEI.SetSpacing(hstack, item_spacing)
+
+        hstacks[n] = hstack
+    end
+    
+    -- stack buttons
+    local button_stack = DCEI.NewHStack(parent)
+    DCEI.SetBottomAlignmentInParent(button_stack)
+    DCEI.SetVerticalOffsetInParent(button_stack, 48)
+    DCEI.SetSpacing(button_stack, 20)
+    
+    local buttons = {}
+    local button_labels = {}
+    for n = 1, 3 do
+        local button = DCEI.NewButton(button_stack)
+        DCEI.SetSize(button, 200, 100)
+        
+        local label = DCEI.NewText(button)
+        
+        buttons[n] = button
+        button_labels[n] = label
+    end
+    
+    -- button label text
+    local text = "Add Item"
+    DCEI.SetText(button_labels[1], "<size=75%>" .. text)
+    
+    local text = "Remove Item"
+    DCEI.SetText(button_labels[2], "<size=75%>" .. text)
+    
+    local text = "Visualize" .. "\n" .. "<color=#00FFFF>" .. tostring(stack_visualized) 
+    DCEI.SetText(button_labels[3], "<size=75%>" .. text)
+    
+    -- functions
+    local function CheckItemButtonState()
+        -- disable add item button if max items added
+        if #stack_items == max_horizontal_items * max_vertical_items then
+            DCEI.EnableButton(buttons[1], false)
+        else
+            DCEI.EnableButton(buttons[1], true)
+        end
+
+        --disable remove item button if no items to remove
+        if #stack_items == 0 then
+            DCEI.EnableButton(buttons[2], false)
+        else
+            DCEI.EnableButton(buttons[2], true)
+        end
+    end
+
+    local function RemoveAllStackItems()
+        for _, item in ipairs(stack_items) do
+            DCEI.Destroy(item)
+        end
+
+        stack_items = {}
+    end
+
+    local function AddStackItem()
+        if #stack_items < max_vertical_items * max_horizontal_items then
+            -- add a new stack item if stacks aren't full
+            local row = math.floor(#stack_items / max_horizontal_items) + 1
+    
+            local item = DCEI.NewFrame(hstacks[row])
+            DCEI.SetSize(item, item_size, item_size)
+    
+            local image = stack_images[math.random(1, #stack_images)]
+            DCEI.SetBackgroundImage(item, image)
+    
+            table.insert(stack_items, item)
+        else
+            -- remove all stack items if all stacks are full
+            RemoveAllStackItems()
+        end
+
+        CheckItemButtonState()
+    end
+
+    local function RemoveStackItem()
+        local index = #stack_items
+
+        -- only remove items if there are items to remove
+        if index > 0 then
+            DCEI.Destroy(stack_items[index])
+            table.remove(stack_items, index)
+        end
+
+        CheckItemButtonState()
+    end
+
+    local function ToggleStackVisibility()
+        -- flip stack visualization state
+        stack_visualized = not stack_visualized
+        local alpha = stack_visualized and 0.6 or 0
+
+        -- flip between 0% and 60% alpha on each vstack/hstack
+        for _, hstack in ipairs(hstacks) do
+            DCEI.SetBackgroundImageColor(hstack, 0, 0, 0, alpha)
+        end
+
+        DCEI.SetBackgroundImageColor(vstack, 0, 0, 0, alpha)
+
+        local text = "Visualize" .. "\n" .. "<color=#00FFFF>" .. tostring(stack_visualized) 
+        DCEI.SetText(button_labels[3], "<size=75%>" .. text)
+    end
+
+    CheckItemButtonState()
+
+    -- button callbacks
+    DCEI.SetOnClickCallback(buttons[1], AddStackItem)
+    DCEI.SetOnClickCallback(buttons[2], RemoveStackItem)
+    DCEI.SetOnClickCallback(buttons[3], ToggleStackVisibility)
+end
+
+-- 06 SCROLLS
+function CreateMainMenu_Page06(parent)
+    local state = {
+        is_visualized = false
+    }
+
+    local container = DCEI.NewFrame(parent)
+    DCEI.SetBackgroundImage(container, "shape00")
+    DCEI.SetBackgroundImageColor(container, 0, 0, 0, 0.4)
+    
+    local hscroll = DCEI.NewHScroll(container)
+    DCEI.SetSize(hscroll, 340, 120)
+    
+    local hscroll_content = DCEI.GetScrollContent(hscroll)
+    DCEI.SetPadding(hscroll_content, 10)
+    DCEI.SetSpacing(hscroll_content, 10)
+    -- DCEI.SetPaddingRight(hscroll_content, 120)
+    
+    -- create scroll items
+    local hscroll_items = {}
+    for n = 1, 6 do
+        local item = DCEI.NewFrame(hscroll_content)
+
+        local button = DCEI.NewButton(item)
+        DCEI.SetSize(button, 100, 100)
+        DCEI.SetBackgroundImage(button, "btn_unit_wildsky_goblin_assassin")
+        
+        local label = DCEI.NewText(button)
+        DCEI.SetBottomAlignmentInParent(label)
+        DCEI.SetText(label, n)
+        
+        hscroll_items[n] = item
+    end
+    
+    -- button stack
+    local button_stack = DCEI.NewHStack(parent)
+    DCEI.SetBottomAlignmentInParent(button_stack)
+    DCEI.SetVerticalOffsetInParent(button_stack, 48)
+    DCEI.SetSpacing(button_stack, 20)
+    
+    local items = {}
+    local buttons = {}
+    local button_labels = {}
+    for n = 1, 6 do
+        local button = DCEI.NewButton(button_stack)
+        DCEI.SetSize(button, 100, 100)
+        
+        local text = "Set" .. "\n" .. "Pos " .. n
+        local label = DCEI.NewText(button)
+        DCEI.SetText(label, text)
+        
+        buttons[n] = button
+        button_labels[n] = label
+    end
+    
+    -- customize visualize button
+    local text = "Visualize" .. "\n" .. "<color=#00FFFF>" .. tostring(state.is_visualized) 
+    DCEI.SetText(button_labels[6], "<size=75%>" .. text)
+    DCEI.SetSize(buttons[6], 200, 100)
+    
+    -- functions    
+    local function SetScrollPosition(offset)
+        DCEI.SetScrollPosition(hscroll, offset)
+    end
+    
+    local function ToggleScrollVisualization()
+        state.is_visualized = not state.is_visualized
+        local alpha = state.is_visualized and 0.5 or 0
+        
+        -- toggle between 0% and 50% alpha on scroll, scroll content, and each item frame
+        DCEI.SetBackgroundImageColor(hscroll, 1, 0, 0, alpha)
+        DCEI.SetBackgroundImageColor(hscroll_content, 0, 1, 0, alpha)
+        
+        for _, item in ipairs(hscroll_items) do
+            DCEI.SetBackgroundImageColor(item, 0, 0, 1, alpha)
+        end
+        
+        local text = "Visualize" .. "\n" .. "<color=#00FFFF>" .. tostring(state.is_visualized) 
+        DCEI.SetText(button_labels[6], "<size=75%>" .. text)
+    end
+
+    -- callbacks
+    for n = 1, 5 do
+        local offset = (n * 110) - 110
+
+        DCEI.SetOnClickCallback(
+            buttons[n],
+            function()
+                SetScrollPosition(offset)
+            end
+        )
+    end
+
+    DCEI.SetOnClickCallback(buttons[6], ToggleScrollVisualization)
+end
+
+-- 07 MASKS
+function CreateMainMenu_Page07(parent)
+    local mask_stack = DCEI.NewHStack(parent)
+    DCEI.SetSpacing(mask_stack, 50)
+
+    -- frame with just image
+    local image_only = DCEI.NewFrame(mask_stack)
+    DCEI.SetBackgroundImageColor(image_only, 0, 0, 0, 0.5)
+    DCEI.SetSize(image_only, 197, 172)
+    
+    local image = DCEI.NewFrame(image_only)
+    DCEI.SetBackgroundImage(image, "tutorial_earth_surfer")
+    DCEI.SetSize(image, 177, 152)
+
+    local text = "Original Image"
+    local image_label = DCEI.NewText(image_only)
+    DCEI.SetVerticalOffsetInParent(image_label, -120)
+    DCEI.SetText(image_label, text)
+    
+    -- frame with image + mask
+    local mask_plus_image = DCEI.NewFrame(mask_stack)
+    DCEI.SetBackgroundImageColor(mask_plus_image, 0, 0, 0, 0.5)
+    DCEI.SetSize(mask_plus_image, 197, 172)
+    
+    local mask = DCEI.NewMask(mask_plus_image)
+    DCEI.SetHorizontalOffsetInParent(mask, -25)
+    DCEI.SetVerticalOffsetInParent(mask, 25)
+    DCEI.SetSize(mask, 100, 100)
+    
+    local masked_image = DCEI.NewFrame(mask)
+    DCEI.SetBackgroundImage(masked_image, "tutorial_earth_surfer")
+    DCEI.SetHorizontalOffsetInParent(masked_image, 25)
+    DCEI.SetVerticalOffsetInParent(masked_image, -25)
+    DCEI.SetSize(masked_image, 177, 152)
+    
+    local text = "Mask + Image"
+    local image_mask_label = DCEI.NewText(mask_plus_image)
+    DCEI.SetVerticalOffsetInParent(image_mask_label, -120)
+    DCEI.SetText(image_mask_label, text)
+    
+    -- frame with just mask image
+    local mask_only = DCEI.NewFrame(mask_stack)
+    DCEI.SetBackgroundImageColor(mask_only, 0, 0, 0, 0.5)
+    DCEI.SetSize(mask_only, 197, 172)
+    
+    local mask_image = DCEI.NewFrame(mask_only)
+    DCEI.SetHorizontalOffsetInParent(mask_image, -25)
+    DCEI.SetVerticalOffsetInParent(mask_image, 25)
+    DCEI.SetBackgroundImageColor(mask_image, 1, 1, 1, 0.5)
+    DCEI.SetSize(mask_image, 100, 100)
+
+    local text = "Mask Visualized"
+    local mask_label = DCEI.NewText(mask_only)
+    DCEI.SetVerticalOffsetInParent(mask_label, -120)
+    DCEI.SetText(mask_label, text)
+    
+    -- masks can also use white textures to define mask area
+    -- DCEI.SetBackgroundImage(mask, "icon_passive_ability_mask02")
+    -- DCEI.SetBackgroundImage(mask_image, "icon_passive_ability_mask02")
+end
+
+-- 08 INPUTS
+function CreateMainMenu_Page08(parent)
+    local vstack = DCEI.NewVStack(parent)
+    DCEI.SetVerticalOffsetInParent(vstack, -50)
+    DCEI.SetSpacing(vstack, 25)
+
+    local input_stack = DCEI.NewHStack(vstack)
+    DCEI.SetBackgroundImage(input_stack, "shape00")
+    DCEI.SetBackgroundImageColor(input_stack, 0, 0, 0, 0.4)
+    DCEI.SetPadding(input_stack, 25)
+    DCEI.SetSpacing(input_stack, 25)
+
+    -- input
+    local text = "What's your name?"
+    local input = DCEI.NewInput(input_stack)
+    DCEI.SetInputPlaceholder(input, text)
+    DCEI.SetSize(input, 200, 32)
+
+    -- confirm button
+    local confirm_button = DCEI.NewButton(input_stack)
+    DCEI.SetSize(confirm_button, 100, 60)
+    
+    local text = "Confirm"
+    local confirm_label = DCEI.NewText(confirm_button)
+    DCEI.SetText(confirm_label, "<size=75%>" .. text)
+
+    -- clear button
+    local clear_button = DCEI.NewButton(input_stack)
+    DCEI.SetSize(clear_button, 100, 60)
+    
+    local text = "Clear"
+    local clear_label = DCEI.NewText(clear_button)
+    DCEI.SetText(clear_label, "<size=75%>" .. text)
+
+    -- display frame
+    local display_container = DCEI.NewFrame(vstack)
+    DCEI.SetSize(display_container, 450, 200)
+    
+    local display_frame = DCEI.NewFrame(display_container)
+    DCEI.SetBackgroundImage(display_frame, "shape00")
+    DCEI.SetBackgroundImageColor(display_frame, 0, 0, 0, 0.4)
+    DCEI.SetSize(display_frame, 450, 100)
+    DCEI.SetPadding(display_frame, 25)
+
+    local display_label = DCEI.NewText(display_frame)
+    DCEI.SetLeftAlignmentInParent(display_label)
+
+    -- initially hide display frame
+    DCEI.SetActive(display_frame, false)
+
+    -- functions
+    local function OnSetName()
+        local name = DCEI.GetInputText(input)
+
+        if name ~= "" then
+            -- set and show display text
+            local text = "> " .. "Hello" .. " " .. "<color=yellow>" .. name .. "</color>" .. "!"
+            DCEI.SetText(display_label, text)
+    
+            DCEI.SetActive(display_frame, true)
+            
+            -- clear current input
+            DCEI.SetInputText(input, "")
+        else
+            -- display warning message if name is invalid
+            local text = "Invalid name"
+            DCEI.ShowFeedbackMessage("<color=red>" .. text)
+        end
+    end
+    
+    local function OnClearName()
+        DCEI.SetActive(display_frame, false)
+        
+        DCEI.SetInputText(input, "")
+    end
+
+    -- callbacks
+    DCEI.SetOnClickCallback(confirm_button, OnSetName)
+    DCEI.SetOnClickCallback(clear_button, OnClearName)
+end
+
+-- 09 ANIMATIONS
+function CreateMainMenu_Page09(parent)
+    local vstack = DCEI.NewVStack(parent)
+    DCEI.SetVerticalOffsetInParent(vstack, -50)
+    DCEI.SetSpacing(vstack, 50)
+
+    local animation_container = DCEI.NewFrame(vstack)
+    DCEI.SetBackgroundImage(animation_container, "shape00")
+    DCEI.SetBackgroundImageColor(animation_container, 0, 0, 0, 0.4)
+    DCEI.SetSize(animation_container, 600, 300)
+    DCEI.SetPadding(animation_container, 50)
+
+    -- top path and ball (red / linear)
+    local path_linear = DCEI.NewFrame(animation_container)
+    DCEI.SetBackgroundImage(path_linear, "shape00")
+    DCEI.SetBackgroundImageColor(path_linear, 0, 0, 0, 0.4)
+    DCEI.SetVerticalOffsetInParent(path_linear, 60)
+    DCEI.SetHorizontalOffsetInParent(path_linear, -25)
+    DCEI.SetSize(path_linear, 400, 10)
+
+    local ball_linear = DCEI.NewFrame(animation_container)
+    DCEI.SetBackgroundImage(ball_linear, "active_point_big")
+    DCEI.SetBackgroundImageColor(ball_linear, 1, 0, 0.3, 1)
+    DCEI.SetLeftAlignmentInParent(ball_linear)
+    DCEI.SetVerticalOffsetInParent(ball_linear, 60)
+    DCEI.SetSize(ball_linear, 50, 50)
+    
+    -- bottom path and ball (blue / easing)
+    local path_easing = DCEI.NewFrame(animation_container)
+    DCEI.SetBackgroundImage(path_easing, "shape00")
+    DCEI.SetBackgroundImageColor(path_easing, 0, 0, 0, 0.4)
+    DCEI.SetVerticalOffsetInParent(path_easing, -60)
+    DCEI.SetHorizontalOffsetInParent(path_easing, -25)
+    DCEI.SetSize(path_easing, 400, 10)
+
+    local ball_easing = DCEI.NewFrame(animation_container)
+    DCEI.SetBackgroundImage(ball_easing, "active_point_big")
+    DCEI.SetLeftAlignmentInParent(ball_easing)
+    DCEI.SetVerticalOffsetInParent(ball_easing, -60)
+    DCEI.SetSize(ball_easing, 50, 50)
+    
+    -- buttons stack
+    local button_stack = DCEI.NewHStack(vstack)
+    DCEI.SetSpacing(button_stack, 25)
+
+    local buttons = {}
+    local button_labels = {}
+    for n = 1, 4 do
+        local button = DCEI.NewButton(button_stack)
+        DCEI.SetSize(button, 200, 100)
+
+        local label = DCEI.NewText(button)
+
+        buttons[n] = button
+        button_labels[n] = label
+    end
+
+    local text = "Animate Offset" .. "\n" .. "<color=#00FFFF>" .. "InOutSine"
+    DCEI.SetText(button_labels[1], "<size=75%>" .. text)
+    
+    local text = "Animate Alpha" .. "\n" .. "<color=#00FFFF>" .. "InOutCubic"
+    DCEI.SetText(button_labels[2], "<size=75%>" .. text)
+    
+    local text = "Animate Scale" .. "\n" .. "<color=#00FFFF>" .. "InOutBack"
+    DCEI.SetText(button_labels[3], "<size=75%>" .. text)
+
+    local text = "Reset"
+    DCEI.SetText(button_labels[4], "<size=75%>" .. text)
+    DCEI.SetSize(buttons[4], 100, 100)
+
+    -- functions
+    local function OnAnimationOffset()
+        local k1, k2 = 0, 400
+        local duration = 2
+
+        local ease = "Linear"
+        DCEI.AnimateHorizontalOffset(ball_linear, k1, k2, duration, ease)
+        
+        local ease = "InOutSine"
+        DCEI.AnimateHorizontalOffset(ball_easing, k1, k2, duration, ease)
+    end
+    
+    local function OnAnimateAlpha()
+        local k1, k2 = 1, 0
+        local duration = 2
+        
+        local ease = "Linear"
+        DCEI.AnimateAlpha(ball_linear, k1, k2, duration, ease)
+        
+        local ease = "InOutCubic"
+        DCEI.AnimateAlpha(ball_easing, k1, k2, duration, ease)
+    end
+    
+    local function OnAnimateScale()
+        local k1, k2 = 1, 2
+        local duration = 1
+        
+        local ease = "Linear"
+        DCEI.AnimateScale(ball_linear, {x = k1, y = k1, z = k1}, {x = k2, y = k2, z = k2}, duration, ease)
+        
+        local ease = "InOutBack"
+        DCEI.AnimateScale(ball_easing, {x = k1, y = k1, z = k1}, {x = k2, y = k2, z = k2}, duration, ease)
+    end
+    
+    local function OnAnimationReset()
+        local duration = 0
+        local ease = "Linear"
+        
+        DCEI.AnimateHorizontalOffset(ball_linear, 0, 0, duration, ease)
+        DCEI.AnimateHorizontalOffset(ball_easing, 0, 0, duration, ease)
+        
+        DCEI.AnimateAlpha(ball_linear, 1, 1, duration, ease)
+        DCEI.AnimateAlpha(ball_easing, 1, 1, duration, ease)
+        
+        DCEI.AnimateScale(ball_linear, {x = 1, y =1, z = 1}, {x = 1, y = 1, z = 1}, duration, ease)
+        DCEI.AnimateScale(ball_easing, {x = 1, y =1, z = 1}, {x = 1, y = 1, z = 1}, duration, ease)
+    end
+
+    -- callbacks
+    DCEI.SetOnClickCallback(buttons[1], OnAnimationOffset)
+    DCEI.SetOnClickCallback(buttons[2], OnAnimateAlpha)
+    DCEI.SetOnClickCallback(buttons[3], OnAnimateScale)
+    DCEI.SetOnClickCallback(buttons[4], OnAnimationReset)
+end
+
+-- 10 UNIT STATUS
+function CreateMainMenu_Page10(parent)
+    local status_state = {
+        is_visible = false
+    }
+
+    local button = DCEI.NewButton(parent)
+    DCEI.SetSize(button, 200, 100)
+
+    local text = "UnitStatus" .. "\n" .. "<color=#00FFFF>" .. (status_state.is_visible and "show" or "hide")
+    local label = DCEI.NewText(button)
+    DCEI.SetText(label, text)
+    
+    -- functions
+    local function OnStatusToggle()
+        status_state.is_visible = not status_state.is_visible
+
+        local text = "UnitStatus" .. "\n" .. "<color=#00FFFF>" .. (status_state.is_visible and "show" or "hide")
+        DCEI.SetText(label, text)
+
+        if status_state.is_visible then
+            -- hookup ability reference
+            if ui.HookupStatusBar then
+                ui.HookupStatusBar()
+            end
+        else
+            -- destroy status frame and clear reference
+            if ui.status then
+                DCEI.Destroy(ui.status.frame)
+                ui.status = nil
+            end
+        end
+    end
+
+    -- callbacks
+    DCEI.SetOnClickCallback(button, OnStatusToggle)
+end
+
+function NewCustomStatusLayout()
+    local layout = {}
+
+    local frame = DCEI.NewFrame(ui.root)
+
+    local hstack = DCEI.NewHStack(frame)
+    DCEI.SetBackgroundImage(hstack, "shape00")
+    DCEI.SetBackgroundImageColor(hstack, 0, 0, 0, 0.9)
+    DCEI.SetSpacing(hstack, 1)
+
+    local vstack = DCEI.NewVStack(hstack)
+    
+    -- status bars
+    local health_text = DCEI.NewText(frame)
+    DCEI.SetTopAlignmentInParent(health_text)
+    DCEI.SetVerticalOffsetInParent(health_text, 16)
+    DCEI.SetTextFontSize(health_text, 16)
+    DCEI.SetText(health_text, "")
+
+    local health_bar = DCEI.NewFrame(vstack)
+    DCEI.SetBackgroundImage(health_bar, "ui_squareround")
+    DCEI.SetBackgroundImageColor(health_bar, 0, 0, 0, 1)
+    DCEI.SetPadding(health_bar, 1)
+    
+    local health_fill = DCEI.NewFrame(health_bar)
+    DCEI.SetBackgroundImage(health_fill, "shape_square_sharp_32x32")
+    DCEI.SetBackgroundImageColor(health_fill, 0, 1, 0, 1)
+    DCEI.SetSize(health_fill, 80, 12)
+    
+    local mana_bar = DCEI.NewFrame(vstack)
+    DCEI.SetBackgroundImage(mana_bar, "ui_squareround")
+    DCEI.SetBackgroundImageColor(mana_bar, 0, 0, 0, 1)
+    DCEI.SetPadding(mana_bar, 1)
+    
+    local mana_fill = DCEI.NewFrame(mana_bar)
+    DCEI.SetBackgroundImage(mana_fill, "shape_square_sharp_32x32")
+    DCEI.SetBackgroundImageColor(mana_fill, 108/255, 192/255, 228/255, 1)
+    DCEI.SetSize(mana_fill, 80, 6)
+
+    -- special status bar used to show behavior duration countdown
+    local special_bar = DCEI.NewFrame(frame)
+    DCEI.SetBackgroundImage(special_bar, "ui_squareround")
+    DCEI.SetBackgroundImageColor(special_bar, 0, 0, 0, 1)
+    DCEI.SetBottomAlignmentInParent(special_bar)
+    DCEI.SetVerticalOffsetInParent(special_bar, -12)
+    DCEI.SetPadding(special_bar, 1)
+
+    local special_sizer = DCEI.NewFrame(special_bar)
+    DCEI.SetSize(special_sizer, 102, 8)
+
+    local special_fill = DCEI.NewFrame(special_bar)
+    DCEI.SetBackgroundImage(special_fill, "shape_square_sharp_32x32")
+    DCEI.SetBackgroundImageColor(special_fill, 1, 1, 0, 1)
+    DCEI.SetLeftAlignmentInParent(special_fill)
+    DCEI.SetSize(special_fill, 102, 8)
+
+    -- ability button
+    local button = DCEI.NewButton(hstack)
+    DCEI.SetBackgroundImage(button, "icon_enhance_flamecannon_furnace")
+    DCEI.SetSize(button, 22, 22)
+
+    -- export
+    layout.frame = frame
+    layout.health_fill = health_fill
+    layout.health_text = health_text
+    layout.mana_fill = mana_fill
+    layout.special_bar = special_bar
+    layout.special_fill = special_fill
+    layout.button = button
+    return layout
+end
+
+function ui.NewCustomStatus(unit)
+    local layout = NewCustomStatusLayout()
+
+    -- attachment options
+    local options = {
+        offset = {up = 1.2},
+        center_at_unit_origin = true
+    }
+
+    -- create data binding
+    layout.unit_id = GenerateUnitBindID(unit)
+    DCEI.BindUnit(layout.unit_id, unit)
+
+    -- health and mana fill expression
+    DCEI.SetBackgroundImageFillAmountExpression(layout.health_fill, layout.unit_id .. ".Health.Fraction")
+    DCEI.SetBackgroundImageFillAmountExpression(layout.mana_fill, layout.unit_id .. ".Mana.Fraction")
+
+    -- health text expression
+    DCEI.SetTextExpression(layout.health_text, "{" .. layout.unit_id .. ".Health.Current}/{" .. layout.unit_id .. ".Health.Max}")
+
+    -- special fill expression
+    DCEI.SetWidthExpression(layout.special_fill, layout.unit_id .. ".Expression.CustomStatusExpression")
+
+    -- attach to unit
+    DCEI.AttachToUnit(layout.frame, unit, options)
+
+    -- functions
+    local function OnAbilityCommandPress()
+        if layout.AbilityCommand then
+            layout.AbilityCommand()
+        end
+    end
+
+    DCEI.SetOnClickCallback(layout.button, OnAbilityCommandPress)
+
+    return layout
+end
+
+-- quick and dirty unique unit id generator
+local unit_id = {}
+function GenerateUnitBindID(unit)
+    table.insert(unit_id, unit)
+    return "unit_" .. #unit_id
+end
+
+return ui

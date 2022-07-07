@@ -1,0 +1,23 @@
+{
+    "settings": {
+        "version": "0.0.1",
+        "dependencies": [
+            "Workshop 03 - Custom UI Mod"
+        ],
+        "registryDependencies": [
+            {
+                "identifier": "core",
+                "version": "^1.0.0"
+            }
+        ]
+    },
+    "triggerSettings": {
+        "usedAtlasAssets": [
+            "Assets/Bundles/UI/Atlas/UnitThumbnailsAtlas.spriteatlas",
+            "Assets/Bundles/UI/Atlas/CardInfo00.spriteatlas",
+            "Assets/Bundles/UI/Atlas/TutorialAtlas.spriteatlas",
+            "Assets/Bundles/UI/Atlas/ItemAtlas00.spriteatlas",
+            "Assets/Bundles/UI/Atlas/WildSkyInGame.spriteatlas"
+        ]
+    }
+}
