@@ -1,0 +1,2 @@
+- <i>table</i> `offset` as `{up = 0, front = 0, right = 0}`.
+- <i>boolean</i> `center_at_unit_origin` when true, uses the unit's origin point rather than status bar height for UI 

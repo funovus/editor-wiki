@@ -1,0 +1,33 @@
+.git_configuration:
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    # If you use ":", you need to quote the entire string. Otherwise gitlab-ci yaml parser has
+    # issues with it...
+    - 'echo Current directory: `pwd`'
+    - 'echo Current commit sha: ${CI_COMMIT_SHA}'
+    # Check if the working directory is initialized (whether it's a git repo or not).
+    - GITDIR=`git rev-parse --git-dir 2>/dev/null || true`
+    - if [ "${GITDIR}" != ".git" ]; then
+    -   git init
+    -   git remote add origin git@gitlab.corp.dreamcraft.com:${CI_PROJECT_PATH}.git
+    - else
+    -   git remote set-url origin git@gitlab.corp.dreamcraft.com:${CI_PROJECT_PATH}.git
+    - fi
+    - git fetch --recurse-submodules=no origin ${CI_COMMIT_SHA}
+    - git reset --hard FETCH_HEAD
+    - git clean -fd
+
+deploy:
+  extends: .git_configuration
+  only:
+    - master
+    - /^\d+[.]\d+[.]x$/
+    - web
+    - schedules
+  tags:
+    - deploy
+  stage: deploy
+  script:
+    - cd indexer && yarn install && cd ..
+    - node indexer ${CI_COMMIT_BRANCH} .
