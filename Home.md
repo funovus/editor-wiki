@@ -15,6 +15,7 @@
 * [Custom UI via XML Overview](Using-XML-For-UI)
 * [Input Controller Overview](Input-Controller-Overview)
 * [Text Sprite Assets](Text-Sprite-Assets)
+* [See more helpful guides](https://www.notion.so/funovus/ada979ff3c6d48ee9482633fa776cdf5?v=1e8ba7c02f6049dea1339bab0f2ef702&pvs=4)
 
 ## Resources
 ### Data
