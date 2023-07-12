@@ -25,69 +25,6 @@
 		</ul>
 	</details>
 	<details>
-		<summary>Core</summary>
-		<ul>
-			<li>
-			<a href="#core">Core</a>
-			</li>
-			<details>
-				<summary>Functions</summary>
-				<ul>
-					<li>
-					<a href="#hidedefaultui">HideDefaultUi</a>
-					</li>
-				</ul>
-			</details>
-			<details>
-				<summary>Properties</summary>
-				<ul>
-					<li>
-					<a href="#color">Color</a>
-					</li>
-					<li>
-					<a href="#debug">Debug</a>
-					</li>
-					<li>
-					<a href="#effect">Effect</a>
-					</li>
-					<li>
-					<a href="#event">Event</a>
-					</li>
-					<li>
-					<a href="#gamespeed">GameSpeed</a>
-					</li>
-					<li>
-					<a href="#input">Input</a>
-					</li>
-					<li>
-					<a href="#math">Math</a>
-					</li>
-					<li>
-					<a href="#point">Point</a>
-					</li>
-					<li>
-					<a href="#random">Random</a>
-					</li>
-					<li>
-					<a href="#string">String</a>
-					</li>
-					<li>
-					<a href="#table">Table</a>
-					</li>
-					<li>
-					<a href="#timer">Timer</a>
-					</li>
-					<li>
-					<a href="#unit">Unit</a>
-					</li>
-					<li>
-					<a href="#util">Util</a>
-					</li>
-				</ul>
-			</details>
-		</ul>
-	</details>
-	<details>
 		<summary>Debug</summary>
 		<ul>
 			<li>
@@ -256,6 +193,57 @@
 		</ul>
 	</details>
 	<details>
+		<summary>Point</summary>
+		<ul>
+			<li>
+			<a href="#point">Point</a>
+			</li>
+			<details>
+				<summary>Functions</summary>
+				<ul>
+					<li>
+					<a href="#getanglebetweenpoints">GetAngleBetweenPoints</a>
+					</li>
+					<li>
+					<a href="#getarcdistancebetweenangles">GetArcDistanceBetweenAngles</a>
+					</li>
+					<li>
+					<a href="#getdistancebetweenpoints">GetDistanceBetweenPoints</a>
+					</li>
+					<li>
+					<a href="#getinterpolatedpoint">GetInterpolatedPoint</a>
+					</li>
+					<li>
+					<a href="#getpointfromxy">GetPointFromXY</a>
+					</li>
+					<li>
+					<a href="#getpointwithpolaroffset">GetPointWithPolarOffset</a>
+					</li>
+					<li>
+					<a href="#getrandompointinmap">GetRandomPointInMap</a>
+					</li>
+					<li>
+					<a href="#getvectorbetweenpoints">GetVectorBetweenPoints</a>
+					</li>
+					<li>
+					<a href="#getvectorfromangle">GetVectorFromAngle</a>
+					</li>
+				</ul>
+			</details>
+			<details>
+				<summary>Properties</summary>
+				<ul>
+					<li>
+					<a href="#x">x</a>
+					</li>
+					<li>
+					<a href="#y">y</a>
+					</li>
+				</ul>
+			</details>
+		</ul>
+	</details>
+	<details>
 		<summary>PresentationDebug</summary>
 		<ul>
 			<li>
@@ -323,6 +311,69 @@
 				<ul>
 					<li>
 					<a href="#new-2">New</a>
+					</li>
+				</ul>
+			</details>
+		</ul>
+	</details>
+	<details>
+		<summary>SimulationCore</summary>
+		<ul>
+			<li>
+			<a href="#simulationcore">SimulationCore</a>
+			</li>
+			<details>
+				<summary>Functions</summary>
+				<ul>
+					<li>
+					<a href="#hidedefaultui">HideDefaultUi</a>
+					</li>
+				</ul>
+			</details>
+			<details>
+				<summary>Properties</summary>
+				<ul>
+					<li>
+					<a href="#color">Color</a>
+					</li>
+					<li>
+					<a href="#debug">Debug</a>
+					</li>
+					<li>
+					<a href="#effect">Effect</a>
+					</li>
+					<li>
+					<a href="#event">Event</a>
+					</li>
+					<li>
+					<a href="#gamespeed">GameSpeed</a>
+					</li>
+					<li>
+					<a href="#input">Input</a>
+					</li>
+					<li>
+					<a href="#math">Math</a>
+					</li>
+					<li>
+					<a href="#point">Point</a>
+					</li>
+					<li>
+					<a href="#random">Random</a>
+					</li>
+					<li>
+					<a href="#string">String</a>
+					</li>
+					<li>
+					<a href="#table">Table</a>
+					</li>
+					<li>
+					<a href="#timer">Timer</a>
+					</li>
+					<li>
+					<a href="#unit">Unit</a>
+					</li>
+					<li>
+					<a href="#util">Util</a>
 					</li>
 				</ul>
 			</details>
@@ -503,6 +554,43 @@
 		</ul>
 	</details>
 	<details>
+		<summary>Unit</summary>
+		<ul>
+			<li>
+			<a href="#unit">Unit</a>
+			</li>
+			<details>
+				<summary>Functions</summary>
+				<ul>
+					<li>
+					<a href="#damage">Damage</a>
+					</li>
+					<li>
+					<a href="#getfacingangle">GetFacingAngle</a>
+					</li>
+					<li>
+					<a href="#getid">GetId</a>
+					</li>
+					<li>
+					<a href="#holdposition">HoldPosition</a>
+					</li>
+					<li>
+					<a href="#sendactormessage">SendActorMessage</a>
+					</li>
+					<li>
+					<a href="#setbehaviorcount">SetBehaviorCount</a>
+					</li>
+					<li>
+					<a href="#setfacingangle">SetFacingAngle</a>
+					</li>
+					<li>
+					<a href="#setfacingpoint">SetFacingPoint</a>
+					</li>
+				</ul>
+			</details>
+		</ul>
+	</details>
+	<details>
 		<summary>Util</summary>
 		<ul>
 			<li>
@@ -534,6 +622,30 @@
 					</li>
 				</ul>
 			</details>
+		</ul>
+	</details>
+	<details>
+		<summary>actor_message</summary>
+		<ul>
+			<li>
+			<a href="#actor_message">actor_message</a>
+			</li>
+		</ul>
+	</details>
+	<details>
+		<summary>behaviorName</summary>
+		<ul>
+			<li>
+			<a href="#behaviorname">behaviorName</a>
+			</li>
+		</ul>
+	</details>
+	<details>
+		<summary>effectName</summary>
+		<ul>
+			<li>
+			<a href="#effectname">effectName</a>
+			</li>
 		</ul>
 	</details>
 </div>
@@ -635,79 +747,6 @@ DCEI.SetFrameImageColor(DCEI.GetUiRootFrame(), {r = faded_black[1], g = faded_bl
 @*param* `rgba` — e.g. {0, 0, 0, 160} (0-255 values)
 
 @*return* `e.g.` — {0, 0, 0, 0.63} (0-1 values)
-
-
----
-
-# Core
-
-With the exception of `Core.HideDefaultUi`, Core mostly includes other class scripts, which are documented separately.
-
-## HideDefaultUi
-
-
-```lua
-function Core.HideDefaultUi()
-```
-
-Hides the default game-UI, such as wave and gold counter and ship spell menu.
-
-## Color
-
-Class script for converting colors between different formats (hex, RGBA 0-255, RGBA 0-1)
-
-## Debug
-
-Contains debugging functions to make it easier to debug between presentation and simulation layers.
-
-## Effect
-
-Class script for manipulating effects
-
-## Event
-
-Class script for sending events to presentation layer
-
-## GameSpeed
-
-Class script for manipulating game speed
-
-## Input
-
-Class script for controlling user input, e.g. virtual joysticks
-
-## Math
-
-Class script for performing math operations
-
-## Point
-
-Class script for manipulating game-points, e.g. `{x, y}` tables that correspond to positions on the in-game map
-
-## Random
-
-Class script for generating random values
-
-## String
-
-Class script for manipulating strings
-
-## Table
-
-Class script for manipulating lua tables and dictionaries
-
-## Timer
-
-Timer class script useful for repeating, single-use, or infinite timers using game time, real time, or OS time.
-Can run functions on completion, every tick, or on a given condition. More performant than other methods of creating timers.
-
-## Unit
-
-Class script for manipulating units
-
-## Util
-
-Class script for miscellaneous helper functions
 
 
 ---
@@ -1054,6 +1093,255 @@ function OsTimer.New(args: any)
 
 ---
 
+# Point
+
+## GetAngleBetweenPoints
+
+
+```lua
+function Point.GetAngleBetweenPoints(p1: PointObj, p2: PointObj)
+  -> number
+```
+
+Returns the angle between two points in degrees. The result will be between `-180` and `180` as follows:
+```
+        90
+        |
+ 180____|____ 0
+-180    |
+        |
+       -90
+```
+##### Example Usage
+```lua
+local map_center_point = {x = 16, y = 16}
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local unit = DCEI.CreateUnit(1, 1, unit_type, 12, 12)
+
+local pos = DCEI.GetUnitPosition2D(unit)
+-- pos = {x = 12, y = 12}
+
+local angle = Core.Point.GetAngleBetweenPoints(pos, map_center_point)
+-- 45 degrees between spawned unit position and map center
+```
+
+@*param* `p1` — e.g. {x = 12, y = 12}
+
+@*param* `p2` — e.g. {x = 12, y = 12}
+
+## GetArcDistanceBetweenAngles
+
+
+```lua
+function Point.GetArcDistanceBetweenAngles(angle1: number, angle2: number)
+  -> number
+```
+
+Returns the angle between two angles. This value will be between `0` and `180`.
+
+##### Example Usage
+```lua
+function GetNearestFacingEnemy( unit, enemies )
+    local unit_pos = DCEI.GetUnitPosition2D(unit)
+    local unit_angle = Core.Unit.GetFacingAngle(unit)
+    local nearest_angle = 180
+    local nearest_enemy
+
+    for _, enemy in pairs(enemies) do
+        local enemy_pos = DCEI.GetUnitPosition2D(enemy)
+        local enemy_angle = Core.Point.GetAngleBetweenPoints(unit_pos, enemy_pos)
+
+        -- gets the angle between the unit-facing angle and the unit-to-enemy angle
+        local angle = Core.Point.GetArcDistanceBetweenAngles( unit_angle, enemy_angle )
+
+        if angle < nearest_angle then
+            nearest_enemy = enemy
+            nearest_angle = angle
+        end
+    end
+
+    return nearest_enemy
+end
+```
+
+## GetDistanceBetweenPoints
+
+
+```lua
+function Point.GetDistanceBetweenPoints(p1: PointObj, p2: PointObj)
+  -> number
+```
+
+Returns the distance between two points.
+
+##### Example Usage
+```lua
+local map_center_point = {x = 16, y = 16}
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local unit = DCEI.CreateUnit(1, 1, unit_type, 12, 12)
+
+local pos = DCEI.GetUnitPosition2D(unit)
+-- pos = {x = 12, y = 12}
+
+local distance = Core.Point.GetDistanceBetweenPoints(pos, map_center_point)
+-- distance = 5.65
+```
+
+@*param* `p1` — ex. {x = 16, y = 16}
+
+@*param* `p2` — ex. {x = 16, y = 16}
+
+## GetInterpolatedPoint
+
+
+```lua
+function Point.GetInterpolatedPoint(p1: PointObj, p2: PointObj, fraction: number)
+  -> table
+```
+
+Returns a point along the line between two points, determined by the given fraction (0 - 1).
+
+##### Example Usage
+```lua
+local map_center_point = {x = 16, y = 16}
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local unit = DCEI.CreateUnit(1, 1, unit_type, 12, 12)
+
+local pos = DCEI.GetUnitPosition2D(unit)
+-- pos = {x = 12, y = 12}
+
+local p1 = Core.Point.GetInterpolatedPoint(pos, map_center_point, 0)
+-- p1 = {x = 12, y = 12}, the same as pos
+
+local p2 = Core.Point.GetInterpolatedPoint(pos, map_center_point, 1)
+-- p2 = {x = 16, y = 16}, the same as map_center_point
+
+local p3 = Core.Point.GetInterpolatedPoint(pos, map_center_point, 0.5)
+-- p3 = {x = 14, y = 14}, the midpoint between the two
+```
+
+@*param* `p1` — ex. {x = 16, y = 16}
+
+@*param* `p2` — ex. {x = 16, y = 16}
+
+## GetPointFromXY
+
+
+```lua
+function Point.GetPointFromXY(x: any, y: any)
+  -> table
+```
+
+Returns a point from `x` and `y` coordinates.
+
+##### Example Usage
+```lua
+local map_center_point = Core.Point.GetPointFromXY(16, 16)
+-- map_center_point = {x = 16, y = 16}
+```
+
+## GetPointWithPolarOffset
+
+
+```lua
+function Point.GetPointWithPolarOffset(x: number, y: number, angle: number, distance: number)
+  -> table
+```
+
+Returns a point offset by a `distance` towards an `angle` (in degrees).
+
+##### Example Usage
+```lua
+local pos = DCEI.GetUnitPosition2D(unit)
+local facing = Core.Unit.GetFacingAngle(unit)
+
+local distance = 4
+local forward_point = Core.Point.GetPointWithPolarOffset( pos.x, pos.y, facing, angle)
+
+-- teleports a unit forward a distance of 4
+DCEI.SetUnitPosition2D(unit, forward_point.x, forward_point.y)
+```
+
+## GetRandomPointInMap
+
+
+```lua
+function Point.GetRandomPointInMap(args: GetRandomPointInMapOptions)
+  -> table
+```
+
+Returns a random point within the map bounds. Has table `args` with `padding` option (default `2`) to shrink the random point area.
+
+##### Example Usage
+```lua
+-- if the map has dimensions of 32 x 32 the point will be generated between (4, 4) and (27, 27)
+-- note that for a map of 32 x 32 the playable dimensions will span (0, 0) to (31, 31)
+local options = { padding = 2 }
+local pos = Core.Point.GetRandomPointInMap(options)
+
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+DCEI.CreateUnit(1, 1, unit_type, pos.x, pos.y)
+```
+
+## GetVectorBetweenPoints
+
+
+```lua
+function Point.GetVectorBetweenPoints(p1: PointObj, p2: PointObj)
+  -> table
+```
+
+Returns an xy vector between two points.
+
+##### Example Usage
+```lua
+local v = Core.Point.GetVectorBetweenPoints(p1, p2)
+local angle_between_points = Math.atan2(v.y, v.x)
+```
+
+@*param* `p1` — ex. {x = 16, y = 16}
+
+@*param* `p2` — ex. {x = 16, y = 16}
+
+## GetVectorFromAngle
+
+
+```lua
+function Point.GetVectorFromAngle(angle: number)
+  -> table
+```
+
+Returns an xy vector from an angle (in degrees).
+
+##### Example Usage
+```lua
+local v = Core.Point.GetVectorFromAngle(45)
+-- v is {x = 0.7, y = 0.7}
+
+DCEI.TurnUnitTowardsWithDuration(unit, v.x, v.y, 1)
+```
+
+## x
+
+
+```lua
+number
+```
+
+x value of the point
+
+## y
+
+
+```lua
+number
+```
+
+y value of the point
+
+
+---
+
 # PresentationDebug
 
 ## LogLastSimulationStackTrace
@@ -1173,6 +1461,79 @@ By default, Real timers update every 0.0625 seconds (this can be overridden with
 function RealTimer.New(args: any)
   -> RealTimer
 ```
+
+
+---
+
+# SimulationCore
+
+With the exception of `Core.HideDefaultUi`, Core mostly includes other class scripts, which are documented separately.
+
+## HideDefaultUi
+
+
+```lua
+function SimulationCore.HideDefaultUi()
+```
+
+Hides the default game-UI, such as wave and gold counter and ship spell menu.
+
+## Color
+
+Class script for converting colors between different formats (hex, RGBA 0-255, RGBA 0-1)
+
+## Debug
+
+Contains debugging functions to make it easier to debug between presentation and simulation layers.
+
+## Effect
+
+Class script for manipulating effects
+
+## Event
+
+Class script for sending events to presentation layer
+
+## GameSpeed
+
+Class script for manipulating game speed
+
+## Input
+
+Class script for controlling user input, e.g. virtual joysticks
+
+## Math
+
+Class script for performing math operations
+
+## Point
+
+Class script for manipulating game-points, e.g. `{x, y}` tables that correspond to positions on the in-game map
+
+## Random
+
+Class script for generating random values
+
+## String
+
+Class script for manipulating strings
+
+## Table
+
+Class script for manipulating lua tables and dictionaries
+
+## Timer
+
+Timer class script useful for repeating, single-use, or infinite timers using game time, real time, or OS time.
+Can run functions on completion, every tick, or on a given condition. More performant than other methods of creating timers.
+
+## Unit
+
+Class script for manipulating units
+
+## Util
+
+Class script for miscellaneous helper functions
 
 
 ---
@@ -1998,6 +2359,179 @@ Sets the function that will be called when the timer updates by overwriting the 
 
 ---
 
+# Unit
+
+## Damage
+
+
+```lua
+function Unit.Damage(unit: any, amount: any)
+```
+
+Deals damage to a unit (without a caster).
+
+##### Example Usage
+```lua
+Core.Unit.Damage(unit, 5)
+```
+
+## GetFacingAngle
+
+
+```lua
+function Unit.GetFacingAngle(unit: any)
+  -> number
+```
+
+Returns the facing angle of the unit. The result will be between `-180` and `180` as follows:
+```
+        90
+        |
+ 180____|____ 0
+-180    |
+        |
+       -90
+```
+
+##### Example Usage
+```lua
+local pos = DCEI.GetUnitPosition2D(unit)
+local facing = Core.Unit.GetFacingAngle(unit)
+
+local distance = 4
+local forward_point = Core.Point.GetPointWithPolarOffset( pos.x, pos.y, facing, angle)
+
+-- teleports a unit forward a distance of 4
+DCEI.SetUnitPosition2D(unit, forward_point.x, forward_point.y)
+```
+ GetUnitFacingAngle
+
+## GetId
+
+
+```lua
+function Unit.GetId(unit: Unit)
+  -> string
+```
+
+Returns a unique unit id as a `string`, which is useful for [data binding](https://wiki.funovus.com/release/Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindunitdatastring-name-unit-unit). The returned id will never change and never be associated with another unit.
+
+##### Example Usage
+```lua
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local unit = DCEI.CreateUnit(1, 1, unit_type, 16, 16)
+
+-- returns an id such as "u4x1xxx4"
+local id = Core.Unit.GetId(unit)
+DCEI.BindUnitData(id, unit)
+```
+
+## HoldPosition
+
+
+```lua
+function Unit.HoldPosition(unit: Unit)
+```
+
+Makes a unit with a movement order stop moving. Does not affect the targeting or firing of weapons and abilities.
+
+##### Example Usage
+```lua
+Core.Unit.HoldPosition(unit)
+```
+
+## SendActorMessage
+
+
+```lua
+function Unit.SendActorMessage(unit: any, action: string|"broadcastCustomEvent"|"create"|"destroy"|"pauseAnimation"...(+12), ...unknown)
+```
+
+Sends an actor message to the specified unit. This function a variable number of arguments depending on the parameter of the actor message.
+Note that the parameters are listed **in order**.
+
+See [actor actions](https://wiki.funovus.com/release/Data-ActorEvent#actions) for details of each actor action.
+
+##### Example Usage
+```lua
+-- tints the unit bright red and plays its attack animation over 2 seconds
+Core.Unit.SendActorMessage(unit, "setTintColor", {255, 0, 0})
+Core.Unit.SendActorMessage(unit, "playAnimationWithDuration", "attack", 2)
+```
+
+```lua
+action:
+    | "create" -- terms: actor, host_site
+    | "destroy"
+    | "sendCustomEvent" -- terms: identifier
+    | "broadcastCustomEvent" -- terms: identifier
+    | "setModelScale" -- terms: modelScale, duration
+    | "setVisibility" -- terms: visibility
+    | "playAnimation" -- terms: clipId
+    | "playAnimationWithDuration" -- terms: clipId, clipDuration
+    | "stopAnimation" -- terms: clipId
+    | "pauseAnimation" -- terms: clipId
+    | "resumeAnimation" -- terms: clipId
+    | "setShadow" -- terms: shadowDisplay
+    | "setModel" -- terms: type, name
+    | "setTintColor" -- terms: color {r, g, b}
+    | "setTeamColor" -- terms: color {r, g, b, a}, secondColor {r, g, b, a}
+    | "setScaleMultiplier" -- terms: scale {x, y, z}
+```
+
+## SetBehaviorCount
+
+
+```lua
+function Unit.SetBehaviorCount(unit: Unit, behavior: string, count: number)
+```
+
+Sets the stack count of a [behavior](https://wiki.funovus.com/release/Data-Behavior) on the `unit`.
+
+##### Example Usage
+```lua
+local behavior = DCEI.Behavior("Damage Taken None")
+Core.Unit.SetBehaviorCount(unit, behavior, 1)
+```
+
+## SetFacingAngle
+
+
+```lua
+function Unit.SetFacingAngle(unit: Unit, angle: number, duration: number)
+```
+
+Sets a unit's rotation to the specified `angle` (in degrees) over the `duration`. A `duration` of 0 will turn the unit instantly.
+
+##### Example Usage
+```lua
+-- makes the unit instantly turn 90 degrees clockwise
+local facing = Core.Unit.GetFacingAngle(unit)
+
+facing = facing - 90
+Core.Unit.SetFacingAngle(unit, facing, 0)
+```
+
+## SetFacingPoint
+
+
+```lua
+function Unit.SetFacingPoint(unit: Unit, x: number, y: number, duration: number)
+```
+
+Sets a unit's rotation towards the specified point over the `duration`.  A `duration` of 0 will turn the unit instantly.
+
+##### Example Usage
+```lua
+local pos = DCEI.GetUnitPosition2D(other_unit)
+
+-- makes the unit face the other_unit over 0.5 seconds
+Core.Unit.SetFacingPoint(unit, pos.x, pos.y, 0.5)
+```
+
+
+---
+
 # Util
 
 ## AddToProtectedValue
@@ -2126,3 +2660,38 @@ Core.Util.LogDumpSimple(array)
 -- logs: { [1] = 4,[2] = 8,[3] = 15,[4] = 16,[5] = 23,[6] = 42,["poorly_formatted_nested_table"] = table: 0000018EFCA12490,}
 
 ```
+
+
+---
+
+# actor_message
+
+```lua
+actor_message:
+    | "create" -- terms: actor, host_site
+    | "destroy"
+    | "sendCustomEvent" -- terms: identifier
+    | "broadcastCustomEvent" -- terms: identifier
+    | "setModelScale" -- terms: modelScale, duration
+    | "setVisibility" -- terms: visibility
+    | "playAnimation" -- terms: clipId
+    | "playAnimationWithDuration" -- terms: clipId, clipDuration
+    | "stopAnimation" -- terms: clipId
+    | "pauseAnimation" -- terms: clipId
+    | "resumeAnimation" -- terms: clipId
+    | "setShadow" -- terms: shadowDisplay
+    | "setModel" -- terms: type, name
+    | "setTintColor" -- terms: color {r, g, b}
+    | "setTeamColor" -- terms: color {r, g, b, a}, secondColor {r, g, b, a}
+    | "setScaleMultiplier" -- terms: scale {x, y, z}
+```
+
+
+---
+
+# behaviorName
+
+
+---
+
+# effectName
