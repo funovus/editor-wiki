@@ -1149,7 +1149,7 @@ Pulls player current guild info. Callback parameter returns the [guild](Guild-Sy
 [](example-usage-start)
 ```lua
 DCEI.WildCastlePullGuild(function(guild) 
-    core.LogDump(guild)
+    Core.Util.LogDump(guild)
 end)
 ```
 [](example-usage-end)
@@ -1186,7 +1186,7 @@ Searches for a guild; return list of possible results. Callback parameter return
 ```lua
 DCEI.WildCastleSearchGuild("search term", function(results_table) 
     -- Table of "guild" tables
-    core.LogDump(results_table)
+    Core.Util.LogDump(results_table)
 end)
 ```
 [](example-usage-end)

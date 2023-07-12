@@ -2838,11 +2838,11 @@ Toggles scroll frame snapping on or off. When enabled, there are a suite of othe
 #### Example Usage
 [](example-usage-start)
 ```lua
-local gmui = require("gmui")
+local GMUI = require("GMUI")
 
 function InitializeScrollFrame()
     -- Assuming "ScrollFrame" is an HScroll containing items 200 wide with spacing & padding of 15
-    local scroll = gmui.Layout:New({ name = "ScrollFrame" })
+    local scroll = GMUI.Layout.New({ name = "ScrollFrame" })
     local count = DCEI.GetChildrenFrameCount(scroll.Frame)
 
     DCEI.SetScrollFrameScrollDecelerationRate(scroll.Frame, 100)
@@ -2881,11 +2881,11 @@ Sets the size of steps between snap points on scroll frame snapping. Most likely
 #### Example Usage
 [](example-usage-start)
 ```lua
-local gmui = require("gmui")
+local GMUI = require("GMUI")
 
 function InitializeScrollFrame()
     -- Assuming "ScrollFrame" is an HScroll containing items 200 wide with spacing & padding of 15
-    local scroll = gmui.Layout:New({ name = "ScrollFrame" })
+    local scroll = GMUI.Layout.New({ name = "ScrollFrame" })
     local count = DCEI.GetChildrenFrameCount(scroll.Frame)
 
     DCEI.SetScrollFrameScrollDecelerationRate(scroll.Frame, 100)
@@ -2924,11 +2924,11 @@ Sets the number of steps. In the most common use case, you would want to set thi
 #### Example Usage
 [](example-usage-start)
 ```lua
-local gmui = require("gmui")
+local GMUI = require("GMUI")
 
 function InitializeScrollFrame()
     -- Assuming "ScrollFrame" is an HScroll containing items 200 wide with spacing & padding of 15
-    local scroll = gmui.Layout:New({ name = "ScrollFrame" })
+    local scroll = GMUI.Layout.New({ name = "ScrollFrame" })
     local count = DCEI.GetChildrenFrameCount(scroll.Frame)
 
     DCEI.SetScrollFrameScrollDecelerationRate(scroll.Frame, 100)
@@ -2967,11 +2967,11 @@ Sets the threshold for scroll frame snapping. The threshold his how close a user
 #### Example Usage
 [](example-usage-start)
 ```lua
-local gmui = require("gmui")
+local GMUI = require("GMUI")
 
 function InitializeScrollFrame()
     -- Assuming "ScrollFrame" is an HScroll containing items 200 wide with spacing & padding of 15
-    local scroll = gmui.Layout:New({ name = "ScrollFrame" })
+    local scroll = GMUI.Layout.New({ name = "ScrollFrame" })
     local count = DCEI.GetChildrenFrameCount(scroll.Frame)
 
     DCEI.SetScrollFrameScrollDecelerationRate(scroll.Frame, 100)
@@ -3010,11 +3010,11 @@ Set how fast the snapping to the next step will occur for scroll frames with sna
 #### Example Usage
 [](example-usage-start)
 ```lua
-local gmui = require("gmui")
+local GMUI = require("GMUI")
 
 function InitializeScrollFrame()
     -- Assuming "ScrollFrame" is an HScroll containing items 200 wide with spacing & padding of 15
-    local scroll = gmui.Layout:New({ name = "ScrollFrame" })
+    local scroll = GMUI.Layout.New({ name = "ScrollFrame" })
     local count = DCEI.GetChildrenFrameCount(scroll.Frame)
 
     DCEI.SetScrollFrameScrollDecelerationRate(scroll.Frame, 100)

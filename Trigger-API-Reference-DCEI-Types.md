@@ -2687,7 +2687,7 @@ See https://easings.net/en for visual examples.
 ```lua
 function AnimateSparkle(self, frame)
     local k1, k2 = 0, 1
-    local duration = core.Random(1, 2, 2)
+    local duration = Core.Random.GetNumber(1, 2)
     local ease = "OutQuart"
     local animation = DCEI.AnimateFrameAlpha(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Yoyo")
@@ -2702,7 +2702,7 @@ function AnimateSparkle(self, frame)
     local k1, k2 = { z = start_rotation }, { z = start_rotation - 90 }
     local ease = "Linear"
     local duration = 1
-    local duration = core.Random(1.5, 2.5, 2)
+    local duration = Core.Random.GetNumber(1.5, 2.5)
     local animation = DCEI.AnimateFrameRotation(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Incremental")
 end
@@ -2740,7 +2740,7 @@ When the animation finishes, it continues to play additively. An animation rotat
 ```lua
 function AnimateSparkle(self, frame)
     local k1, k2 = 0, 1
-    local duration = core.Random(1, 2, 2)
+    local duration = Core.Random.GetNumber(1, 2)
     local ease = "OutQuart"
     local animation = DCEI.AnimateFrameAlpha(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Yoyo")
@@ -2755,7 +2755,7 @@ function AnimateSparkle(self, frame)
     local k1, k2 = { z = start_rotation }, { z = start_rotation - 90 }
     local ease = "Linear"
     local duration = 1
-    local duration = core.Random(1.5, 2.5, 2)
+    local duration = Core.Random.GetNumber(1.5, 2.5)
     local animation = DCEI.AnimateFrameRotation(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Incremental")
 end

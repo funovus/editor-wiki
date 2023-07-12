@@ -1848,6 +1848,30 @@ local timer = Core.Timer.Game.New()
 timer:SetDuration(15)
 ```
 
+## SetGlobalTickRate
+
+
+```lua
+(method) Timer.SetGlobalTickRate(value: number)
+```
+
+Used to set the global tick rate of `Game` and `Real` timers (default is `0.0625` seconds). The global tick rate must be set *before* any timers are created to take effect.
+It may be useful to lower the global tick rate (in increments of 1/16 seconds) to improve performance, particularly if you're using complex timer conditions.
+
+##### Example Usage
+```lua
+Core.Timer.SetGlobalTickRate(0.25)
+
+local real_timer = Core.Timer.Real.New()
+
+function real_timer:Tick()
+    local decimals = 2
+    local time_elapsed = self:GetTimeElapsed()
+    local formatted_time = Core.String.FormatTimeMinutes(time_elapsed, decimals)
+    DCEI.LogMessage("Time Elapsed: " .. formatted_time)
+end
+```
+
 ## SetPaused
 
 

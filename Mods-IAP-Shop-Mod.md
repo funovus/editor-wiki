@@ -220,7 +220,7 @@ ui.shop:RemoveAllItems()
 
 
 ### ui.shop:AddTimerUpdateFunction( <i>string</i> timer_id, <i>function</i> update_function )
-Adds an update function to the shop's update timer. The shop's update timer is a [Real Timer](Mods-Legacy-core#timers) that pauses itself when the shop is hidden and resumes itself when the shop is shown. Any update functions added in this way will be executed each time the shop's update timer ticks, using the [global tick rate](Mods-Legacy-core#setglobaltimertickrate).
+Adds an update function to the shop's update timer. The shop's update timer is a [Real Timer](Mods-Core#RealTimer) that pauses itself when the shop is hidden and resumes itself when the shop is shown. Any update functions added in this way will be executed each time the shop's update timer ticks, using the [global tick rate](Mods-Core#SetGlobalTickRate).
 
 This can be useful for creating your own custom timer displays or otherwise want to constantly update something while the shop is open.
 
