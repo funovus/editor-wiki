@@ -150,7 +150,7 @@ Register a used actor.
 ```lua
 --this creates an vfx model actor on your unit
 on_hit = DCEI.Actor("COMBAT AreaAttack Impact FX")
-core.SendActorMessage(target_unit, "create", on_hit)
+Core.Unit.SendActorMessage(target_unit, "create", on_hit)
 ```
 [](example-usage-end)
 
@@ -196,6 +196,7 @@ See [Simple Units Guide.](https://funovus.notion.site/Simple-Units-Introduction-
 
 #### Parameters
 [](parameters-start)
+- *string* `unit` the unit name to register.
 
 [](parameters-end)
 
@@ -458,17 +459,19 @@ string Particle(string particle)
 ```
 #### Description
 [](description-start)
-
+Register a used particle. Data used in Lua has to be registered in order for it to be loaded in-game.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `particle` the particle name to register.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local explosion_particle = DCEI.Particle("Explosion")
+```
 [](example-usage-end)
 
 [](extra-section-start)

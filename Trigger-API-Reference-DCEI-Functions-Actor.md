@@ -67,7 +67,7 @@ DCEI.SendActorAction(unit, action_id, "Standard MeleeUnit")
 
 [](extra-section-start)
 #### Related
-- [SendActorMessage()](Mods-Legacy-core#sendactormessage)
+- [SendActorMessage()](Mods-Core#sendactormessage)
 - [Actions](Data-ActorEvent#actions)
 [](extra-section-end)
 
@@ -98,7 +98,7 @@ DCEI.SendActorAction(unit, action_id, "Standard MeleeUnit")
 
 [](extra-section-start)
 #### Related
-- [SendActorMessage()](Mods-Legacy-core#sendactormessage)
+- [SendActorMessage()](Mods-Core#sendactormessage)
 - [Actions](Data-ActorEvent#actions)
 [](extra-section-end)
 
