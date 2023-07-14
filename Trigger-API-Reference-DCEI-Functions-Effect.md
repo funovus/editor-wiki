@@ -87,17 +87,26 @@ void CreateEffectAtSelf(string effectName, unit target)
 ```
 #### Description
 [](description-start)
-
+Creates an effect targeting a unit. The unit is also the source and caster.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `effectName` the name of the effect to create.
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `target` the unit to target with the effect.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local test_subject = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local kill_effect = DCEI.Effect("Kill")
+DCEI.CreateEffectAtSelf(kill_effect, test_subject)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -148,17 +157,31 @@ void CreateEffectAtTarget(string effectName, unit target, unit caster, unit sour
 ```
 #### Description
 [](description-start)
-
+Create an effect targeting a unit via a source unit as if cast by another unit.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `effectName` the name of the effect to create.
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `target` the unit to target with the effect.
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `caster` the unit that is considered to be the caster of the effect.
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `source` the unit to treat as the effect source.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```LUA
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local x_offset = 2
+local caster = DCEI.CreateUnit(team_id, player_id, unit_type, x - x_offset, y)
+local source = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local target = DCEI.CreateUnit(team_id, player_id, unit_type, x + x_offset, y)
+local kill_effect = DCEI.Effect("Kill")
+DCEI.CreateEffectAtTarget(kill_effect, target, caster, source)
+```
 [](example-usage-end)
 
 [](extra-section-start)

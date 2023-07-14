@@ -316,16 +316,37 @@ Windowed
 ```
 #### Description
 [](description-start)
+`ExclusiveFullScreen`
+An exclusive full-screen mode where the application takes complete control of the screen, hiding other windows and overlays. Stretches the screen if the resolution does not fit.
 
+`FullScreenWindow`
+A windowed version of the FullScreen mode. If the resolution is too small and the ratio doesn't match the screen, it creates black borders.
+
+`MaximizedWindow`
+Emulates the FullScreen mode by stretching the window borders to fit the entire screen. Functionally similar to FullScreenWindow.
+
+`Windowed`
+Starts the game in its own window.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+DCEI.SetResolution(1000, 500, "Windowed")
+-- Logs after a timer so the game has time to update.
+DCEI.TriggerAddTimerEventElapsed(function()
+    local resolution = DCEI.GetCurrentResolution()
+    DCEI.LogMessage("Width: " .. resolution.width)
+    DCEI.LogMessage("Height: " .. resolution.height)
+    DCEI.LogMessage("Mode: " .. resolution.mode)
+end, 0)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[SetResolution](Trigger-API-Reference-DCEI-Functions-Service#setresolution-3)
+[GetCurrentResolution](Trigger-API-Reference-DCEI-Functions-Service#getcurrentresolution-0)
 [](extra-section-end)
 
 ## UnitBehaviorStatus
@@ -650,6 +671,7 @@ DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnAbilityUse)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [GetAbilityCost](Trigger-API-Reference-DCEI-Functions-Ability#getabilitycost-1)
 [](extra-section-end)
 
@@ -773,6 +795,7 @@ DCEI.ShowUnitLabel(unit, "Unit", label_options)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [ShowUnitLabel](Trigger-API-Reference-DCEI-Functions-UI#showunitlabel-3)
 [HideUnitLabel](Trigger-API-Reference-DCEI-Functions-UI#hideunitlabel-1)
 [](extra-section-end)
@@ -813,6 +836,7 @@ DCEI.AttachFrameToUnit(frame, unit, options)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [AttachFrameToUnit](Trigger-API-Reference-DCEI-Functions-Custom-UI#attachframetounit-4)
 [](extra-section-end)
 

@@ -72,6 +72,7 @@ Loads and plays the given map. The map to load must be within the same project.
 #### Parameters
 [](parameters-start)
 - *string* `path` the path to the map, or just the map name if both maps are in the same folder.
+- *string* `projectName` the name of the project folder that the map is under.
 - *string* `data` any data that is passed to the new level.
 - *object* `usedUnits` a table declaring any units used by the new level, if not declared locally already.
 
@@ -79,13 +80,21 @@ Loads and plays the given map. The map to load must be within the same project.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local LEVEL_2_MAP = "Maps/Level2"
+local PROJECT_NAME = "Zombie Smasher 3"
 
+Core.Timer.Real.New({
+    duration = 3,
+    action = function()
+        DCEI.PlayLevel(LEVEL_2_MAP, PROJECT_NAME, nil, nil)
+    end,
+})
+```
 [](example-usage-end)
 
 [](extra-section-start)
-```lua
-DCEI.PlayLevel("Workshop 02 - Debugging & Foundations", nil, nil, nil)
-```
+
 [](extra-section-end)
 
 ## string GetPlayLevelData() {getplayleveldata-0}

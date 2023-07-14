@@ -35,7 +35,14 @@ Returns if the music is enabled or not.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local music_enabled = DCEI.IsMusicEnabled()
+if music_enabled then
+    DCEI.LogMessage("Music is enabled")
+else
+    DCEI.LogMessage("Music is disabled")
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -53,7 +60,14 @@ Returns if the sound is enabled.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local sound_enabled = DCEI.IsSoundEnabled()
+if sound_enabled then
+    DCEI.LogMessage("Sound is enabled")
+else
+    DCEI.LogMessage("Sound is disabled")
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -66,17 +80,25 @@ void SetMasterVolume(float volume)
 ```
 #### Description
 [](description-start)
-
+Sets the master volume for both music and sound. The function automatically clamps the volume value between 0 and 1.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *float* `volume` the level of volume to set the master volume to. It should be a value between 0 and 1, where 0 is silence and 1 is maximum volume.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+DCEI.SetMasterVolume(1)
+Core.Timer.Real.New({
+    duration = 3,
+    action = function()
+        DCEI.SetMasterVolume(0.2)
+    end,
+})
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -89,12 +111,15 @@ float GetMasterVolume()
 ```
 #### Description
 [](description-start)
-
+Gets the value of the master volume. 0 is silence and 1 is the maximum value.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local master_volume = DCEI.GetMasterVolume()
+DCEI.LogMessage("The master volume is: " + master_volume)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -129,7 +154,11 @@ Boss1
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.PlayMusic("Boss1", true)
+function OnClickRMB()
+    DCEI.PlayMusic("Boss1", false)
+end
+
+DCEI.TriggerAddMouseDownEvent(1, OnClickRMB)
 ```
 [](example-usage-end)
 
@@ -143,7 +172,7 @@ void SetMusicVolume(float volume)
 ```
 #### Description
 [](description-start)
-Sets the music volume.
+Sets the music volume to a value between 0 and 1. Cannot be used on the game's first frame as the music hasn't initialized yet.
 [](description-end)
 
 #### Parameters
@@ -155,7 +184,10 @@ Sets the music volume.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetMusicVolume(0.5)
+function OnClickRMB()
+    DCEI.SetMusicVolume(0.1)
+end
+DCEI.TriggerAddMouseDownEvent(1, OnClickRMB)
 ```
 [](example-usage-end)
 
@@ -169,12 +201,15 @@ float GetMusicVolume()
 ```
 #### Description
 [](description-start)
-
+Gets the value of the music volume. 0 is silence and 1 is the maximum value.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local music_volume = DCEI.GetMusicVolume()
+DCEI.LogMessage("The music volume is: " + music_volume)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -236,6 +271,7 @@ void PlaySound(string nameOrPath, float volume = 1)
 #### Description
 [](description-start)
 Plays the given sound at the given volume. A given volume of 0 will playback at the default volume. While volume doesn't have an explicit maximum value, it's recommended to keep this under 5.
+The sound must be declared by register api [Sound](Trigger-API-Reference-DCEI-Functions-General#sound-1).
 [](description-end)
 
 #### Parameters
@@ -248,7 +284,9 @@ Plays the given sound at the given volume. A given volume of 0 will playback at 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.PlaySound("ancienttree_ability_01", 0.5)
+local sound = DCEI.Sound("dryad_bewitch_cast")
+local volume = 5
+DCEI.PlaySound(sound, volume)
 ```
 [](example-usage-end)
 
@@ -262,17 +300,22 @@ void SetSoundVolume(float volume)
 ```
 #### Description
 [](description-start)
-
+Sets the overall sound volume to a value between 0 and 1.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *float* `volume` the new sound volume.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+DCEI.SetSoundVolume(0.5)
+local sound = DCEI.Sound("dryad_bewitch_cast")
+local volume = 0
+DCEI.PlaySound(sound, volume)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -285,12 +328,15 @@ float GetSoundVolume()
 ```
 #### Description
 [](description-start)
-
+Gets the value of the sound volume. 0 is silence and 1 is the maximum value.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local sound_volume = DCEI.GetSoundVolume()
+DCEI.LogMessage("The sound volume is: " + sound_volume)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -316,7 +362,11 @@ Play sound for a specific player. Only useful in multiplayer.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local sound = DCEI.Sound("dryad_bewitch_cast")
+local volume = 1
+DCEI.PlaySoundForPlayer(sound, 1, volume)
+```
 [](example-usage-end)
 
 [](extra-section-start)

@@ -689,7 +689,8 @@ Returns a point on the closest waypoint path to the given coordinants.
 
 #### Parameters
 [](parameters-start)
-- *float* `x` x coordinant of point to find nearest path point to
+- *float* `x` the x coordinant of point to find nearest path point to
+- *float* `z` the z coordinant of point to find nearest path point to
 - *bool* `ignoreRallyDisabledLanes` if true, ignores waypoint paths with the "rallyDisabled" flag checked.
 
 [](parameters-end)
