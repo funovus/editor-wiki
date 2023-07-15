@@ -944,7 +944,6 @@ Settings used for APIs such as `DCEI.CreateSimpleUnit` and `DCEI.RegisterSimpleL
 #### Example Usage
 [](example-usage-start)
 ```lua
-
 local unit_data = {
     Collider = {
         belongs_to_layer_mask = 1,
@@ -971,7 +970,6 @@ local unit = DCEI.CreateSimpleUnit(
     still_velocity.x,
     still_velocity.y
 )
-
 ```
 [](example-usage-end)
 
@@ -1065,12 +1063,15 @@ bool enabled
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_mover = { enabled = true }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1090,12 +1091,15 @@ bool enabled
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_local_avoidance = { enabled = true }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1117,12 +1121,16 @@ float remove_actor_after_killed_seconds
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
+Used by the `SimpleUnitTypeOptions` type which is used by the `DCEI.RegisterSimpleUnitType` API. Provides options to start timers for removing or killing a unit based on specified time intervals or after it has been killed.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_removal_timer = { remove_unit_after_seconds = nil, kill_unit_after_seconds = 1, remove_actor_after_killed_seconds = 3 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1367,16 +1375,20 @@ float frame_rate
 ```
 #### Description
 [](description-start)
-
+Used in `SimpleUnitAnimatorOptions`. Provides options to change the animation on a simple unit.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_removal_timer = { enabled = true, frame_rate = 30 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [SimpleUnitAnimatorOptions](#simpleunitanimatoroptions)
 [](extra-section-end)
 
 ## SimpleUnitShadowOptions
@@ -1393,16 +1405,20 @@ float shadow_radius
 ```
 #### Description
 [](description-start)
-
+Used in `SimpleUnitAnimatorOptions`. Provides options to change the shadow on a simple unit.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local shadow_options = { enabled = true, shadow_radius = 0.5 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [SimpleUnitAnimatorOptions](#simpleunitanimatoroptions)
 [](extra-section-end)
 
 ## SimpleUnitAnimatorOptions
@@ -1420,16 +1436,23 @@ SimpleUnitAnimationOptions animation_options
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
+Used by the `SimpleUnitTypeOptions` type which is used by the `DCEI.RegisterSimpleUnitType` API. Provides options for various visual effects for simple units.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local shadow_data = { enabled = true, shadow_radius = 0.5 }
+local death_particle_data = { [1] = 5, [2] = 10 }
+local animation_data = { enabled = true, frame_rate = 30 }
+local animator_options = { shadow_options = shadow_data, death_particle_effects = shadow_data, animation_options = animation_data }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+- [SimpleUnitTypeOptions](#simpleunittypeoptions)
 [](extra-section-end)
 
 ## SimpleParticleSpawnOptions
@@ -1447,12 +1470,15 @@ Dictionary<string, ParticleProperties> subsystem_properties
 ```
 #### Description
 [](description-start)
-
+Options for the *[DCEI.RegisterSimpleParticle](Trigger-API-Reference-DCEI-Functions-Unit#registersimpleparticle-1)* API.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.RegisterSimpleParticle(option)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -2646,12 +2672,31 @@ double elo
 ```
 #### Description
 [](description-start)
-
+Used for [DCEI.AsyncPvp.UseBotOpponent()](Trigger-API-Reference-DCEI-Functions-AsyncPvp#usebotopponent-3)
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+Demo map with source code: https://platform.wildsky.dev/arcade/game/775
+```lua
+DCEI.SetOnClickCallback(
+    use_bot_button,
+    function()
+        local bot = {uuid = "bot:1234", tag = "bx", name = "bx", elo = 0, board = "bb", board_win_count = 0, board_lose_count = 0, board_time = os.time()}
+        DCEI.AsyncPvp.UseBotOpponent(
+            session_info.id,
+            bot,
+            function(result)
+                if not result then
+                    return
+                end
+                session_info.current_opponent = bot
+                controller:SetSessionInfo(session_info)
+            end
+        )
+    end
+)
+```
 [](example-usage-end)
 
 [](extra-section-start)

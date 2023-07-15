@@ -184,17 +184,23 @@ void SetDisableWaveAutoStart(bool disable)
 ```
 #### Description
 [](description-start)
-
+Sets the wave auto-start behavior. When disable is set to true, the wave auto-start feature is disabled. When disable is set to false, the wave auto-start feature is enabled.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *bool* `disable` A boolean value indicating whether to disable wave auto-start.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+function Wave05()
+    DCEI.SetDisableWaveAutoStart(true) -- Pause waves
+    DCEI.Wait(4)
+    DCEI.StartWaves() -- Force waves to start anyway
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -242,7 +248,6 @@ Show a dot-style mana bar.
 #### Parameters
 [](parameters-start)
 - *[unit](Trigger-API-Reference-DCEI-Types#unit)* `unit` the unit to create the mana bar for.
-
 [](parameters-end)
 
 #### Example Usage
@@ -769,7 +774,14 @@ Hides the fast forward button.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HIdeFastForwardButton()
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.HideFastForwardButton()
+end)
+
 ```
 [](example-usage-end)
 
@@ -789,7 +801,13 @@ Disable the quit button.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.DisableQuitButton()
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.DisableQuitButton()
+end)
 ```
 [](example-usage-end)
 
@@ -808,7 +826,15 @@ Hide Wild Sky ship spell menu.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.HideShipSpellMenu()
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)

@@ -1401,17 +1401,27 @@ void SetDefaultSimpleDamageNumberStyle(SimpleDamageNumberStyleOptions options)
 ```
 #### Description
 [](description-start)
-
+Sets the default style for simple damage numbers.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[SimpleDamageNumberStyleOptions](Trigger-API-Reference-DCEI-Types#simpledamagenumberstyleoptions)* `options` the settings for this style.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+DCEI.SetDefaultSimpleDamageNumberStyle({
+    font_type = 1,
+    duration_seconds = 0.9,
+    distance_between_digits = {
+        x = 0.4,
+        y = 0,
+        z = 0,
+    },
+})
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1668,17 +1678,20 @@ void RegisterSimpleParticle(SimpleParticleSpawnOptions options)
 ```
 #### Description
 [](description-start)
-
+Register a simple particle.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[SimpleParticleSpawnOptions](Trigger-API-Reference-DCEI-Types#simpleparticlespawnoptions)* `options` the settings for this style.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.RegisterSimpleParticle(option)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -3964,7 +3977,7 @@ bool UnitExists(unit unit)
 ```
 #### Description
 [](description-start)
-Returns true is a units exists.
+Returns true if a units exists.
 [](description-end)
 
 #### Parameters
@@ -4002,17 +4015,46 @@ bool SimpleUnitExists(unit unit)
 ```
 #### Description
 [](description-start)
-
+Returns true if a simple unit exists.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[unit](Trigger-API-Reference-DCEI-Types#simpleunitoptions)* `unit` the simple unit to check.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local unit_data = {
+    Collider = {
+        belongs_to_layer_mask = 1,
+        collides_with_layer_mask = 3,
+        take_damage = false,
+        radius = 3,
+    },
+    Unit = {
+        type_name = DCEI.Unit("Collector"),
+        max_health = 1,
+    },
+}
+local position = {x = 15, y = 15}
+local facing_down = {x = 0, y = -1}
+local still_velocity = {x = 0, y = 0}
+local unit = DCEI.CreateSimpleUnit(
+    player_id,
+    unit_data.Unit,
+    unit_data.Collider,
+    position.x,
+    position.y,
+    facing_down.x,
+    facing_down.y,
+    still_velocity.x,
+    still_velocity.y
+)
+local exists = DCEI.SimpleUnitExists(unit)
+DCEI.LogMessage(tostring(exists))
+```
 [](example-usage-end)
 
 [](extra-section-start)

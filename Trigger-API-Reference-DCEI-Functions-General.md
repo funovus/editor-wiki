@@ -470,6 +470,7 @@ Register a used particle. Data used in Lua has to be registered in order for it 
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Placeholder example
 local explosion_particle = DCEI.Particle("Explosion")
 ```
 [](example-usage-end)

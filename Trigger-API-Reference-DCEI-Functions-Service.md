@@ -272,7 +272,7 @@ Show the game settings menu. Only works on mobile.
 [](example-usage-start)
 ```lua
 local layout = GMUI.Layout.New({
-    parent = ui.Root,
+    parent = DCEI.GetUiRootFrame(),
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
@@ -437,7 +437,7 @@ Attempts to delete the mail with the given ID.
 [](example-usage-start)
 ```lua
 local layout = GMUI.Layout.New({
-    parent = ui.Root,
+    parent = DCEI.GetUiRootFrame(),
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
@@ -557,7 +557,7 @@ Shows the SMS invitation screen. Only works on mobile or web builds.
 [](example-usage-start)
 ```lua
 local layout = GMUI.Layout.New({
-    parent = ui.Root,
+    parent = DCEI.GetUiRootFrame(),
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
@@ -583,7 +583,7 @@ Restarts the application. Only works on mobile.
 [](example-usage-start)
 ```lua
 local layout = GMUI.Layout.New({
-    parent = ui.Root,
+    parent = DCEI.GetUiRootFrame(),
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
@@ -609,7 +609,7 @@ Closes the application. Works in the editor, unlike `RestartApplication()`.
 [](example-usage-start)
 ```lua
 local layout = GMUI.Layout.New({
-    parent = ui.Root,
+    parent = DCEI.GetUiRootFrame(),
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
@@ -692,12 +692,20 @@ object GetSupportedResolutions()
 ```
 #### Description
 [](description-start)
-
+Returns a table of supported resolutions. The format of each resolution entry is `{{width = 640, height = 480}, {width = 720, height = 400}, etc.}`. If multiple monitors are detected, the function will include the same resolution entry for each supported screen. 
+For example, `{{width = 1760, height = 900}, {width = 1760, height = 900}, {width = 1920, height = 1080}}` indicates support for two monitors with resolutions 1760x900 and one monitor with resolution 1920x1080."
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local resolutions = DCEI.GetSupportedResolutions()
 
+-- Print the supported resolutions
+for i, resolution in ipairs(resolutions) do
+    DCEI.LogMessage("Resolution " .. i .. ": " .. resolution.width .. "x" .. resolution.height)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -722,7 +730,13 @@ Opens a web url in the user's default browser.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#void-openurlstring-url")
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#void-openurlstring-url")
+end)
 ```
 [](example-usage-end)
 
@@ -1103,12 +1117,13 @@ void GenerateDeepLink(string payload, TypedCallback<string> callback)
 ```
 #### Description
 [](description-start)
-
+Generates a deep link from the given payload data.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `payload` the data being used to generate the deep link.
+- *TypedCallback\<string>* `callback` the callback that will be called with the created deep link url on success, or nil on failure.
 [](parameters-end)
 
 #### Callback Parameters
@@ -1120,7 +1135,12 @@ void GenerateDeepLink(string payload, TypedCallback<string> callback)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+-- Placeholder example
+DCEI.GenerateDeepLink("", function(url)
+    DCEI.LogMessage(url)
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1133,12 +1153,14 @@ void TriggerAddDeepLinkEvent(TypedCallback<string> callback)
 ```
 #### Description
 [](description-start)
-
+If the game is opened via a deep link, the callback will be called with the payload string that's originally used to create the deep link.
+Depending on if the game is installed, clicking on a deep link either opens the game or redirects the user to the store page. You can use it to generate invitation links and give rewards to invited players.
+Note that deep link APIs only work on mobile devices and require external service setup before use. Ask the engineers if you want to use them in your game.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *TypedCallback\<string>* `callback` the callback that will be called with the payload string that's originally used to create the deep link.
 [](parameters-end)
 
 #### Callback Parameters
@@ -1150,7 +1172,12 @@ void TriggerAddDeepLinkEvent(TypedCallback<string> callback)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.TriggerAddDeepLinkEvent(function(payload)
+    DCEI.LogMessage(payload)
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1458,6 +1485,8 @@ Update your guild settings. Passes [guild](Guild-System#guild) result to callbac
 
 #### Parameters
 [](parameters-start)
+- *string* `announcement` the announcement text for the guild
+- *int* `guildJoinType` see [guildJoinType](Guild-System#guild_join_type) for more information
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1494,6 +1523,9 @@ Update ther player's guild badge. Passes [guild](Guild-System#guild) result to c
 
 #### Parameters
 [](parameters-start)
+- *int* `background` the identifier for the background of the guild badge
+- *int* `pattern` the identifier for the pattern of the guild badge.
+- *int* `icon` the identifier for the icon of the guild badge.
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1529,6 +1561,9 @@ Update player badge. Passes [guild](Guild-System#guild) result to callback funct
 
 #### Parameters
 [](parameters-start)
+- *int* `background` the identifier for the background of the player badge
+- *int* `pattern` the identifier for the pattern of the player badge.
+- *int* `icon` the identifier for the icon of the player badge.
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1564,6 +1599,7 @@ Post player contribution to the guild board. Passes [guild](Guild-System#guild) 
 
 #### Parameters
 [](parameters-start)
+- *int* `contribution` the amount of contribution that the player has given
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)

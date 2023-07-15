@@ -109,7 +109,7 @@ Each user belongs to a group; both season rank and daily rank are for that group
 
 #### Parameters
 [](parameters-start)
-- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`
+- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`.
 - *TypedCallback\<object>* `callback` the callback function to handle the returned user info.
 
 [](parameters-end)
@@ -215,12 +215,13 @@ void AsyncPvp.GetDefenseHistory(string season, TypedCallback<object> callback)
 ```
 #### Description
 [](description-start)
-
+Retrieves the defense history for the season.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`.
+- *TypedCallback\<object>* `callback` the callback function to handle the returned data.
 [](parameters-end)
 
 #### Callback Parameters
@@ -232,7 +233,48 @@ void AsyncPvp.GetDefenseHistory(string season, TypedCallback<object> callback)
 
 #### Example Usage
 [](example-usage-start)
+Demo map with source code: https://platform.wildsky.dev/arcade/game/775
+```lua
+DCEI.AsyncPvp.GetCurrentSeasonInfo(function(result)
+    season = result
+    season_info:SetSeasonInfo(season)
+    DCEI.AsyncPvp.GetCurrentUserInfo(season.id, function(result)
+        user_info:SetUserInfo(result)
+        if result.board == nil or #result.board == 0 then
+            DCEI.AsyncPvp.SetDefenseBoard(season.id, string.format("b%s", DCEI.GetUserTag()), function()
+                self:Refresh()
+            end)
+        else
+            DCEI.AsyncPvp.GetDefenseHistory(season.id, function(result)
+                defense_history:SetDefenseHistory(result.entries)
+            end)
+        end
+    end)
+    session_info:ClearSessionInfo()
+end)
 
+-- DefenseHistory
+function controller:SetDefenseHistory(entries)
+    DCEI.SetListFrameItemCount(list, #entries)
+    DCEI.SetListFrameItemDataCallback(list, function(item, index)
+        local entry = entries[index]
+        local player = entry.attacker
+        local text = DCEI.GetChildFrameById(item, "text")
+        DCEI.SetTextFrameText(
+            text,
+            string.format(
+                "%s, %s, %s, %d, %s",
+                entry.session_id,
+                os.date("%x %X", entry.time),
+                player.tag,
+                entry.result,
+                entry.payload
+            )
+        )
+    end)
+    DCEI.RefreshListFrameItems(list, 1, #entries)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -245,12 +287,14 @@ void AsyncPvp.SetDefenseProtectionTime(string season, int timestamp, TypedCallba
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`.
+- *int* `timestamp` The current time.
+- *TypedCallback\<object>* `callback` the callback function to handle the returned data.
 [](parameters-end)
 
 #### Callback Parameters
@@ -262,7 +306,12 @@ void AsyncPvp.SetDefenseProtectionTime(string season, int timestamp, TypedCallba
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.AsyncPvp.SetDefenseProtectionTime(season.id, 0, function(result)
+    -- Handle the result here
+    end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -297,7 +346,7 @@ NOTE: if a session hasn’t been finished with the FinishSeason API, NewSession(
 
 #### Parameters
 [](parameters-start)
-- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`
+- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`.
 - *TypedCallback\<object>* `callback` the callback function to handle the returned session data.
 
 [](parameters-end)
@@ -356,7 +405,7 @@ Similar to NewSession, the “opponent” field may be nil if the server can’t
 
 #### Parameters
 [](parameters-start)
-- *string* `session` The session id
+- *string* `session` The session id.
 - *TypedCallback\<object>* `callback` the callback function to handle the returned session data.
 
 [](parameters-end)
@@ -391,12 +440,26 @@ void AsyncPvp.FinishOpponent(string session, int result, string payload, TypedCa
 ```
 #### Description
 [](description-start)
+Use this API to send the result of a match. This should only be called if the current opponent is not nil. The “result” parameter is a number. 1 = win, -1 = lose, 0 = other.
 
+The server will return the following in the callback:
+
+```lua
+{
+  next_opponent = {
+    uuid = string, tag = string, name = string, elo = number, board = string
+  }
+}
+```
+If there are no more matches or no opponents can be found, "next_opponent" will be nil.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `session` The session id.
+- *int* `result` The result of the match.  1 = win, -1 = lose, 0 = other.
+- *string* `payload` The payload data.
+- *TypedCallback\<object>* `callback` the callback function to handle the returned session data.
 [](parameters-end)
 
 #### Callback Parameters
@@ -408,7 +471,24 @@ void AsyncPvp.FinishOpponent(string session, int result, string payload, TypedCa
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+DCEI.SetOnClickCallback(
+    win_button,
+    function()
+        DCEI.AsyncPvp.FinishOpponent(
+            session_info.id,
+            1,
+            "win",
+            function(result)
+                session_info.finished_opponents = session_info.finished_opponents + 1
+                session_info.current_opponent = result.next_opponent
+                session_info.elo = result.elo
+                controller:SetSessionInfo(session_info)
+            end
+        )
+    end
+)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -432,13 +512,12 @@ The server will return the following in the callback:
   }
 }
 ```
-
-The server will return a Lua table {next_opponent={uuid, tag, name, board, elo}}. If there are no more matches or no opponents can be found, "next_opponent" will be nil.
+If there are no more matches or no opponents can be found, "next_opponent" will be nil.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-- *string* `session` The session id
+- *string* `session` The session id.
 - *int* `result` The result of the match.  1 = win, -1 = lose, 0 = other.
 - *TypedCallback\<object>* `callback` the callback function to handle the returned session data.
 
@@ -505,15 +584,21 @@ The “uuid” field must have the prefix “bot:” for the server to distingui
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AsyncPvp.UseBotOpponent(
-    session_info.id,
-    bot,
-    function(result)
-        if not result then
-            return
-        end
-        session_info.current_opponent = bot
-        controller:SetSessionInfo(session_info)
+DCEI.SetOnClickCallback(
+    use_bot_button,
+    function()
+        local bot = {uuid = "bot:1234", tag = "bx", name = "bx", elo = 0, board = "bb", board_win_count = 0, board_lose_count = 0, board_time = os.time()}
+        DCEI.AsyncPvp.UseBotOpponent(
+            session_info.id,
+            bot,
+            function(result)
+                if not result then
+                    return
+                end
+                session_info.current_opponent = bot
+                controller:SetSessionInfo(session_info)
+            end
+        )
     end
 )
 ```
@@ -533,7 +618,7 @@ This API should only be called when the season is still active.
 
 Finish a session and apply elo rating changes. This can be called anytime as long as the session and season are both active. Usually you will call it after finishing 5 matches, but it can also be called sooner (e.g., when the user decide to quit the remaining matches).
 
-The API will returned a Lua table with the updated elo for the current user: {elo = number}.
+The API will returned a Lua table with the updated elo for the current user: `{ elo = number }`.
 
 NOTE: if a session has timed out, it’s up to the client to report the result with FinishSession. The server doesn’t enforce any session timeout rules (except that when the season has finished).
 [](description-end)
@@ -644,11 +729,13 @@ void AsyncPvp.GetDailyRankHistory(string season, TypedCallback<object> callback)
 ```
 #### Description
 [](description-start)
-
+Retrieves the daily rank history for the season.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
+- *string* `season` The season id from `AsyncPvp.GetCurrentSeasonInfo`
+- *TypedCallback\<object>* `callback` the callback function to handle the returned data
 
 [](parameters-end)
 
@@ -661,7 +748,39 @@ void AsyncPvp.GetDailyRankHistory(string season, TypedCallback<object> callback)
 
 #### Example Usage
 [](example-usage-start)
+Demo map with source code: https://platform.wildsky.dev/arcade/game/775
+```lua
+DCEI.AsyncPvp.GetCurrentSeasonInfo(function(result)
+    season = result
+    season_info:SetSeasonInfo(season)
+    DCEI.AsyncPvp.GetCurrentUserInfo(season.id, function(result)
+        user_info:SetUserInfo(result)
+        if result.board == nil or #result.board == 0 then
+            if season.status == 1 then
+                DCEI.AsyncPvp.SetDefenseBoard(season.id, string.format("b%s", DCEI.GetUserTag()), function()
+                    self:Refresh()
+                end)
+            end
+        else
+            DCEI.AsyncPvp.GetDailyRankHistory(season.id, function(result)
+                daily_rank_history:SetDailyRankHistory(result.entries)
+            end)
+        end
+    end)
+    session_info:ClearSessionInfo()
+end)
 
+-- Daily Rank History
+function controller:SetDailyRankHistory(entries)
+    DCEI.SetListFrameItemCount(list, #entries)
+    DCEI.SetListFrameItemDataCallback(list, function(item, index)
+        local entry = entries[index]
+        local text = DCEI.GetChildFrameById(item, "text")
+        DCEI.SetTextFrameText(text, string.format("%s, %d, %f", os.date("%x %X", entry.day), entry.rank, entry.elo))
+    end)
+    DCEI.RefreshListFrameItems(list, 1, #entries)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)

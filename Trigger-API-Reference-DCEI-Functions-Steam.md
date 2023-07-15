@@ -19,17 +19,22 @@ void Steam.UnlockAchievement(string achievementId)
 ```
 #### Description
 [](description-start)
-
+Unlocks the specified achievement in a Steam game.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `achievementId` the unique identifier of the achievement to be unlocked.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local achievementId = "DefeatStage3"
+if not DCEI.Steam.IsAchievementUnlocked(achievementId) then
+    DCEI.Steam.UnlockAchievement(achievementId)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -42,17 +47,22 @@ bool Steam.IsAchievementUnlocked(string achievementId)
 ```
 #### Description
 [](description-start)
-
+Checks if the specified achievement is unlocked in a Steam game. 
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `achievementId` the unique identifier of the achievement that is checked to determine if it has been unlocked.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local achievementId = "DefeatStage3"
+if not DCEI.Steam.IsAchievementUnlocked(achievementId) then
+    DCEI.Steam.UnlockAchievement(achievementId)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
