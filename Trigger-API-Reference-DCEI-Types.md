@@ -2232,8 +2232,16 @@ Color and duration options for `DCEI.ShowScreenMask`
 #### Example Usage
 [](example-usage-start)
 ```lua
-local screen_options = {color = {r = 255, g = 0, b = 255, a = 255}, duration = 5}
-DCEI.ShowScreenMask(0.5, screen_options)
+-- Creates the screen mask
+local mask_alpha = 0.5
+local screen_options = { color = { r = 255, g = 0, b = 255, a = 255 }, duration = 1 }
+DCEI.ShowScreenMask(mask_alpha, screen_options)
+
+-- Hides the mask after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideScreenMask()
+end, show_duration)
 ```
 [](example-usage-end)
 

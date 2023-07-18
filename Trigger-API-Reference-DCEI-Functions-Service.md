@@ -790,7 +790,14 @@ Requests an app store review. Only works on iOS devices.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RequestAppStoreReview()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.RequestAppStoreReview()
+end)
 ```
 [](example-usage-end)
 
@@ -817,7 +824,14 @@ Requests an in-app review. Only works on iOS devices.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RequestInAppReview(SuccessCallback, FailureCallback)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.RequestInAppReview(SuccessCallback, FailureCallback)
+end)
 ```
 [](example-usage-end)
 
@@ -2503,7 +2517,7 @@ Initializes an in-app purchase. This will pass the product IDs to both callback 
 [](parameters-start)
 - *TypedCallback\<string>* `purchaseCallback` the callback function on a successful purchase.
 - *List\<string>* `productIds` a table containing the in-app product IDs.
-- *TypedCallback\<bool>* `initializationCallback` the callback function for
+- *TypedCallback\<bool>* `initializationCallback` the callback function for initialization.
 
 [](parameters-end)
 
@@ -2518,7 +2532,16 @@ Initializes an in-app purchase. This will pass the product IDs to both callback 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.InitializeInAppPurchaseWithProductId(PurchaseCallback, {"prod_1", "prod_2"}, InitCallback)
+function PurchaseCallback(product_id)
+    -- Handle successful purchase
+end
+
+function InitCallback(success)
+    -- Handle initialization completion
+end
+
+local product_ids = {"prod_1", "prod_2"}
+DCEI.InitializeInAppPurchaseWithProductId(PurchaseCallback, product_ids, InitCallback)
 ```
 [](example-usage-end)
 
@@ -2554,6 +2577,14 @@ Initializes an in-app purchase. This will pass the product's ID to both callback
 #### Example Usage
 [](example-usage-start)
 ```lua
+function PurchaseCallback(product_id)
+    -- Handle successful purchase
+end
+
+function InitCallback(success)
+    -- Handle initialization completion
+end
+
 local product_list = DCEI.CreateCustomIapProductData()
 DCEI.InitializeInAppPurchaseWithProductData(PurchaseCallback, product_list, InitCallback)
 ```
@@ -2641,6 +2672,7 @@ Returns the in-app product's localized price, given its ID.
 [](example-usage-start)
 ```lua
 local localized_price = DCEI.GetIapProductLocalizedPrice(product_id)
+DCEI.LogMessage(localized_price)
 ```
 [](example-usage-end)
 

@@ -44,13 +44,28 @@ Changes how frequently a simulation update is called. The default of 1 means 16 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetUpdateFrequency(2)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local function SetUpdateFrequencyButton()
+    local update_freq = DCEI.GetUpdateFrequency()
+    if update_freq == 1 then
+        DCEI.SetUpdateFrequency(0.5)
+    else
+        DCEI.ClearUpdateFrequency()
+    end
+end
+
+DCEI.SetOnClickCallback(button_layout.Button, SetUpdateFrequencyButton)
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related
 - [SetSpeedFactor](#setspeedfactor-1)
+- [Core.GameSpeed](Mods-Core#gamespeed)
 [](extra-section-end)
 
 ## void ClearUpdateFrequency() {clearupdatefrequency-0}
@@ -65,7 +80,21 @@ Resets update frequency to the default frequency of 1, meaning 16 FPS.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ClearUpdateFrequency()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local function SetUpdateFrequencyButton()
+    local update_freq = DCEI.GetUpdateFrequency()
+    if update_freq == 1 then
+        DCEI.SetUpdateFrequency(0.5)
+    else
+        DCEI.ClearUpdateFrequency()
+    end
+end
+
+DCEI.SetOnClickCallback(button_layout.Button, SetUpdateFrequencyButton)
 ```
 [](example-usage-end)
 
@@ -85,7 +114,21 @@ Returns the update frequency.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetUpdateFrequency())
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local function SetUpdateFrequencyButton()
+    local update_freq = DCEI.GetUpdateFrequency()
+    if update_freq == 1 then
+        DCEI.SetUpdateFrequency(0.5)
+    else
+        DCEI.ClearUpdateFrequency()
+    end
+end
+
+DCEI.SetOnClickCallback(button_layout.Button, SetUpdateFrequencyButton)
 ```
 [](example-usage-end)
 
@@ -111,13 +154,28 @@ Sets the speed factor for the simulation. The speed factor applies a multiplier 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetSpeedFactor(0.5)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local function SetSpeedFactorButton()
+    local speed_factor = DCEI.GetSpeedFactor()
+    if speed_factor == 1 then
+        DCEI.SetSpeedFactor(0.5)
+    else
+        DCEI.SetSpeedFactor(1)
+    end
+end
+
+DCEI.SetOnClickCallback(button_layout.Button, SetSpeedFactorButton)
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related
 - [SetUpdateFrequency](Trigger-API-Reference-DCEI-Functions-Game#setupdatefrequency-1)
+- [Core.GameSpeed](Mods-Core#gamespeed)
 [](extra-section-end)
 
 ## float GetSpeedFactor() {getspeedfactor-0}
@@ -132,7 +190,21 @@ Returns the speed factor.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetSpeedFactor())
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local function SetSpeedFactorButton()
+    local speed_factor = DCEI.GetSpeedFactor()
+    if speed_factor == 1 then
+        DCEI.SetSpeedFactor(0.5)
+    else
+        DCEI.SetSpeedFactor(1)
+    end
+end
+
+DCEI.SetOnClickCallback(button_layout.Button, SetSpeedFactorButton)
 ```
 [](example-usage-end)
 
@@ -152,7 +224,14 @@ Ends the game in a victory.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetVictory()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetVictory()
+end)
 ```
 [](example-usage-end)
 
@@ -172,7 +251,14 @@ Ends the game in a defeat.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetDefeat()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetDefeat()
+end)
 ```
 [](example-usage-end)
 
@@ -199,7 +285,14 @@ End the game in a victory for given player, with the given result.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetVictoryForPlayer(1, "Win")
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetVictoryForPlayer(1, "Win")
+end)
 ```
 [](example-usage-end)
 
@@ -226,7 +319,14 @@ End the game in a defeat for given player, with the given result.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetVictoryForPlayer(1, "Lose")
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetVictoryForPlayer(1, "Lose")
+end)
 ```
 [](example-usage-end)
 

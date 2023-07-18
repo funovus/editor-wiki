@@ -482,6 +482,12 @@ Returns the camera's orthographic size.
 #### Example Usage
 [](example-usage-start)
 ```lua
+local max_size = 15
+local duration = 0
+local real_time = true
+DCEI.SetCameraMaxOrthographicSize(max_size)
+DCEI.SetCameraOrthographicSize(max_size, duration, real_time)
+
 local size = DCEI.GetCameraOrthographicSize()
 DCEI.LogMessage(size)
 ```
@@ -512,7 +518,12 @@ Sets the camera zoom distance for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraDistanceSmoothOvertimeForPlayer(1, 15, 2, false)
+local min_distance = DCEI.GetCameraMinDistance()
+local max_distance = DCEI.GetCameraMaxDistance()
+
+-- Sets the camera distance to the minimum, and zooms out to the maximum over 5 seconds
+DCEI.SetCameraDistanceSmoothOvertimeForPlayer(1, min_distance, 0, true)
+DCEI.SetCameraDistanceSmoothOvertimeForPlayer(1, max_distance, 5, true)
 ```
 [](example-usage-end)
 
@@ -540,7 +551,10 @@ Sets the camera pitch.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraPitchSmoothOvertime(35, 2, false)
+local pitch = 20
+local duration = 3
+local real_time = false
+DCEI.SetCameraPitchSmoothOvertime(pitch, duration, real_time)
 ```
 [](example-usage-end)
 
@@ -569,7 +583,11 @@ Sets the camera pitch for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraPitchSmoothOvertimeForPlayer(1, 35, 2, false)
+local player = 1
+local pitch = 20
+local duration = 3
+local real_time = false
+DCEI.SetCameraPitchSmoothOvertimeForPlayer(player, pitch, duration, real_time)
 ```
 [](example-usage-end)
 
@@ -588,7 +606,7 @@ Sets the camera yaw to the given angle.
 
 #### Parameters
 [](parameters-start)
-- *float* `targetYawDeg` the degrees of Yaw to target.
+- *float* `targetYawDeg` the yaw of the camera in degrees. A positive value produces a clockwise spin, while a negative value produces a counterclockwise spin. This value is not capped. Excessively high values with short durations may be inadvisable.
 - *float* `duration` the duration of the camera transition. A duration of 0 will cause the camera to instantly snap to the new yaw.
 - *bool* `useRealTime` if true, the duration is tracked via real time.
 
@@ -597,7 +615,10 @@ Sets the camera yaw to the given angle.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraYawSmoothOvertime(360, 4, false)
+local yaw = 360
+local duration = 3
+local real_time = false
+DCEI.SetCameraYawSmoothOvertime(yaw, duration, real_time)
 ```
 [](example-usage-end)
 
@@ -626,7 +647,11 @@ Sets the camera yaw to the given angle for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraYawSmoothOvertimeForPlayer(1, -360, 4, false)
+local player = 1
+local yaw = -720
+local duration = 3
+local real_time = false
+DCEI.SetCameraYawSmoothOvertimeForPlayer(player, yaw, duration, real_time)
 ```
 [](example-usage-end)
 
@@ -646,7 +671,16 @@ Returns the camera pitch.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetCameraPitch())
+local duration = 3
+DCEI.SetCameraPitchSmoothOvertime(11, 0, true)
+DCEI.SetCameraPitchSmoothOvertime(90, duration, true)
+Core.Timer.Real.New({
+    duration = duration,
+    tick = function()
+        local pitch = DCEI.GetCameraPitch()
+        DCEI.LogMessage(pitch)
+    end,
+})
 ```
 [](example-usage-end)
 
@@ -666,7 +700,15 @@ Returns the camera yaw.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetCameraYaw())
+local duration = 3
+DCEI.SetCameraYawSmoothOvertime(360, duration, true)
+Core.Timer.Real.New({
+    duration = duration,
+    tick = function()
+        local yaw = DCEI.GetCameraYaw()
+        DCEI.LogMessage(yaw)
+    end,
+})
 ```
 [](example-usage-end)
 
@@ -778,7 +820,8 @@ Return the camera bounds height.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetCameraBoundsHeight())
+local camera_bounds_height = DCEI.GetCameraBoundsHeight()
+DCEI.LogMessage(camera_bounds_height)
 ```
 [](example-usage-end)
 
@@ -798,7 +841,8 @@ Returns the camera bounds width.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(DCEI.GetCameraBoundsWidth())
+local camera_bounds_width = DCEI.GetCameraBoundsWidth()
+DCEI.LogMessage(camera_bounds_width)
 ```
 [](example-usage-end)
 
@@ -852,7 +896,13 @@ Toggles camera manipulation from player input.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.BlockCameraInput(true)
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.BlockCameraInput(true)
+end)
 ```
 [](example-usage-end)
 
@@ -879,7 +929,13 @@ Toggles camera manipulation from player input for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.BlockCameraInputForPlayer(1, true)
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.BlockCameraInputForPlayer(1, true)
+end)
 ```
 [](example-usage-end)
 
@@ -906,7 +962,9 @@ Moves the center of the camera visible area. This will move the players' camera(
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaCenter(1, 1)
+local camera_center_x = 0
+local camera_center_y = 15
+DCEI.SetCameraVisibleAreaCenter(camera_center_x, camera_center_y)
 ```
 [](example-usage-end)
 
@@ -932,7 +990,10 @@ Sets the camera visible area's width. Functions as if `bool updateMaxDistance` i
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaWidth(15)
+local visible_width = 30
+local visible_length = 30
+DCEI.SetCameraVisibleAreaWidth(visible_width)
+DCEI.SetCameraVisibleAreaLength(visible_length)
 ```
 [](example-usage-end)
 
@@ -958,8 +1019,10 @@ Sets the camera visible area's length. Functions as if `bool updateMaxDistance` 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaWidth(15)
-DCEI.SetCameraVisibleAreaLength(15)
+local visible_width = 30
+local visible_length = 30
+DCEI.SetCameraVisibleAreaWidth(visible_width)
+DCEI.SetCameraVisibleAreaLength(visible_length)
 ```
 [](example-usage-end)
 
@@ -986,7 +1049,10 @@ Sets the camera visible area's width. Should be accompanied by [SetCameraVisible
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaWidth(15, true)
+local visible_width = 10
+local visible_length = 10
+DCEI.SetCameraVisibleAreaWidth(visible_width, false)
+DCEI.SetCameraVisibleAreaLength(visible_length, false)
 ```
 [](example-usage-end)
 
@@ -1013,8 +1079,10 @@ Sets the camera visible area's length. Should be accompanied by [SetCameraVisibl
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaWidth(15)
-DCEI.SetCameraVisibleAreaLength(15, true)
+local visible_width = 10
+local visible_length = 10
+DCEI.SetCameraVisibleAreaWidth(visible_width, false)
+DCEI.SetCameraVisibleAreaLength(visible_length, false)
 ```
 [](example-usage-end)
 
@@ -1042,7 +1110,10 @@ Moves the center of the camera visible area for the given player. This will move
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetCameraVisibleAreaCenterForPlayer(1, -400, -400)
+local player = 1
+local camera_center_x = 0
+local camera_center_y = 15
+DCEI.SetCameraVisibleAreaCenterForPlayer(player, camera_center_x, camera_center_y)
 ```
 [](example-usage-end)
 

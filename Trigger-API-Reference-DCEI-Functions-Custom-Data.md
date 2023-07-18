@@ -21,7 +21,7 @@ object GetAllCustomData()
 ```
 #### Description
 [](description-start)
-Returns a table of all the custom data.
+Returns a table of all the custom data. To set the data, go to the Custom Data window.
 [](description-end)
 
 #### Example Usage

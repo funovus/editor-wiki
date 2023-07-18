@@ -119,7 +119,16 @@ Discard some VFX for better performance on low-end devices. The priority levels 
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
 
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetVfxPriorityLevel(2)
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)

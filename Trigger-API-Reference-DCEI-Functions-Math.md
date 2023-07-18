@@ -33,7 +33,10 @@ Returns a float between the min and max values. Use `math.random(min, max)` for 
 #### Example Usage
 [](example-usage-start)
 ```lua
-local random_float = DCEI.Random(1, 10)
+for _ = 1, 10, 1 do
+    local random_float = DCEI.Random(1, 10)
+    DCEI.LogMessage(random_float)
+end
 ```
 [](example-usage-end)
 
@@ -60,6 +63,10 @@ Returns a new random generator given a seed.
 [](example-usage-start)
 ```lua
 local random_gen = DCEI.CreateRandomGenerator(12345)
+local next_random = DCEI.NextRandomInteger(random_gen, 500)
+DCEI.LogMessage(next_random)
+next_random = DCEI.NextRandomInteger(random_gen, -500)
+DCEI.LogMessage(next_random)
 ```
 [](example-usage-end)
 
