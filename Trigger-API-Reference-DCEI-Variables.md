@@ -39,6 +39,7 @@ Returns the platform that the game is played on as one of the following string v
 [](example-usage-start)
 ```lua
 local platform = DCEI.Platform
+DCEI.LogMessage(platform)
 ```
 [](example-usage-end)
 

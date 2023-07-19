@@ -286,7 +286,8 @@ DCEI.ApplyBehaviorToSelf(target_unit, behavior, 1)
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[UnitBehaviorStatus](Trigger-API-Reference-DCEI-Types#unitbehaviorstatus)
 [](extra-section-end)
 
 ## string Sound(string sound) {sound-1}
@@ -1315,9 +1316,7 @@ Set effect field value for player with playerId. This is similar to effect hooks
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-  DCEI.SetEffectFieldValueForPlayer(1, DCEI.Effect("Standard Damage"), {"effects", "Standard Damage", "damage", "damageAmount"}, 15)
-
+DCEI.SetEffectFieldValueForPlayer(1, DCEI.Effect("Standard Damage"), {"effects", "Standard Damage", "damage", "damageAmount"}, 15)
 ```
 [](example-usage-end)
 
@@ -1344,7 +1343,17 @@ Applies a behavior modifier to a value, returning the scaled/modified value. Thi
 #### Example Usage
 [](example-usage-start)
 ```lua
-local example_value = DCEI.ApplyModifier({scaled = 5, unscaled = 0, additive_factor = 1, positive_unified_factor = 1, negative_unified_factor = 0, multiplier_factor = 1}, 5)
+local example_value = DCEI.ApplyModifier(
+    {
+        scaled = 5,
+        unscaled = 0,
+        additive_factor = 1,
+        positive_unified_factor = 1,
+        negative_unified_factor = 0,
+        multiplier_factor = 1,
+    },
+    5
+)
 DCEI.LogMessage(example_value)
 ```
 [](example-usage-end)

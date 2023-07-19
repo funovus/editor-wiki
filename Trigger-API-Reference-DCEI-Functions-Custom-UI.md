@@ -302,7 +302,12 @@ Returns the root UI frame.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local ui_root = DCEI.GetUiRootFrame()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetTextFrameText(button_layout.Label, "Button Example")
 ```
 [](example-usage-end)
 
@@ -382,7 +387,12 @@ Returns the root UI frame for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local ui_root = DCEI.GetUiRootFrameForPlayer(1)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrameForPlayer(1),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetTextFrameText(button_layout.Label, "Button Example")
 ```
 [](example-usage-end)
 
@@ -463,6 +473,7 @@ Returns the parent frame of the given UI frame.
 [](example-usage-start)
 ```lua
 local parent_frame = DCEI.GetParentFrame(frame)
+DCEI.CreateFrame(parent_frame)
 ```
 [](example-usage-end)
 
@@ -747,7 +758,7 @@ DCEI.SetFramePadding(container, 10)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 ```
 [](example-usage-end)
@@ -1708,6 +1719,55 @@ See [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Cont
 #### Example Usage
 [](example-usage-start)
 See [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28)
+```xml
+<Frame layout="flex" controller="controller" >
+    <Frame width="400" height="400" backgroundImage="golden_pass_overview" />
+</Frame>
+```
+
+```lua
+-- In trigger.lua.txt
+function CreateUi()
+    local ui = DCEI.CreateFrameFromXml(DCEI.GetUiRootFrame(), "GoldenPass")
+    -- Get a reference to the controller object.
+    local controller = DCEI.GetFrameController(ui)
+    while true do
+        -- Call public functions defined on the controller object.
+        controller:Animate()
+        DCEI.Wait(2)
+    end
+end
+
+-- In controller.lua.txt
+return function(ui)
+    local controller = {}
+
+    -- Define handlers of OnEnable/OnDisable event.
+    -- This implementation adds a floating animation to the UI frame.
+    function controller:OnEnable()
+        DCEI.LogMessage("Enable")
+    end
+    function controller:OnDisable()
+        DCEI.LogMessage("Disable")
+    end
+
+    -- Define the public interface of this controller. This one only has a single Animate function.
+    function controller:Animate()
+    DCEI.LogMessage("Test")
+    local s1, s2 = { x = 1, y = 1, z = 1 }, { x = 0.8, y = 0.8, z = 0.8 }
+    local duration = 1
+    local ease = "Linear"
+    local size_anim = DCEI.AnimateFrameScale(ui, s1, s2, duration, ease)
+    end
+
+    -- This OnPreview function will be called automatically when viewed in the UI previewer.
+    function controller:OnPreview()
+        DCEI.LogMessage("Preview")
+    end
+
+    return controller
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1906,7 +1966,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 
 DCEI.TriggerAddTimerEventElapsed(
@@ -2004,7 +2064,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 
 DCEI.TriggerAddTimerEventElapsed(
@@ -2040,7 +2100,23 @@ Sets the cell width for a grid.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetGridFrameCellWidth(test, 100)
+local grid = DCEI.CreateGridFrame(DCEI.GetUiRootFrame())
+DCEI.SetGridFrameCellHeight(grid, 100)
+DCEI.SetGridFrameCellWidth(grid, 100)
+DCEI.SetFrameSize(grid, 200, 200)
+
+local content1 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content1, "a")
+DCEI.SetFrameSize(content1, 100, 100)
+local content2 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content2, "b")
+DCEI.SetFrameSize(content2, 100, 100)
+local content3 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content3, "c")
+DCEI.SetFrameSize(content3, 100, 100)
+local content4 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content4, "d")
+DCEI.SetFrameSize(content4, 100, 100)
 ```
 [](example-usage-end)
 
@@ -2068,7 +2144,23 @@ Sets the cell height for a grid.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetGridFrameCellHeight(test, 100)
+local grid = DCEI.CreateGridFrame(DCEI.GetUiRootFrame())
+DCEI.SetGridFrameCellHeight(grid, 100)
+DCEI.SetGridFrameCellWidth(grid, 100)
+DCEI.SetFrameSize(grid, 200, 200)
+
+local content1 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content1, "a")
+DCEI.SetFrameSize(content1, 100, 100)
+local content2 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content2, "b")
+DCEI.SetFrameSize(content2, 100, 100)
+local content3 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content3, "c")
+DCEI.SetFrameSize(content3, 100, 100)
+local content4 = DCEI.CreateTextFrame(grid)
+DCEI.SetTextFrameText(content4, "d")
+DCEI.SetFrameSize(content4, 100, 100)
 ```
 [](example-usage-end)
 
@@ -2111,7 +2203,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
     
 local btn = DCEI.CreateButtonFrame(container)
@@ -2166,7 +2258,25 @@ Tweener AnimateCameraFrameViewportRotation(InGameUILayoutComponent ui, float x, 
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local unit = DCEI.CreateUnit(1, 1, DCEI.Unit("Standard MeleeUnit"), 16, 12, 0, -1)
 
+local container = DCEI.CreateVStackFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameImage(container, DCEI.Texture("frame01"))
+DCEI.SetFramePadding(container, 10)
+DCEI.SetFrameTopAlignmentInParent(container)
+DCEI.SetFrameLeftAlignmentInParent(container)
+
+local camera = DCEI.CreateCameraFrame(container)
+DCEI.SetFrameSize(camera, 150, 150)
+DCEI.SetCameraFrameViewportSize(camera, 200, 200)
+DCEI.SetCameraFrameViewportOrthographic(camera, true)
+DCEI.SetCameraFrameOrthographicViewportSize(camera, 1)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
+
+DCEI.AnimateCameraFrameViewportRotation(camera, 60, 30, 10, 3, "Linear")
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -2207,10 +2317,10 @@ DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
 DCEI.SetCameraFrameViewportOrthographic(camera, true)
 DCEI.SetCameraFrameOrthographicViewportSize(camera, 1)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
     
-local animation = DCEI.AnimateCameraFrameOrthographicViewportSize(camera, 2, 5, "Linear")
+DCEI.AnimateCameraFrameOrthographicViewportSize(camera, 2, 5, "Linear")
 ```
 [](example-usage-end)
 
@@ -2253,7 +2363,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 DCEI.SetCameraFrameCullingMask(camera, 1)
 ```
@@ -2322,7 +2432,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 DCEI.SetCameraFrameViewportOrthographic(camera, true)
 DCEI.SetCameraFrameOrthographicViewportSize(camera, 1)
@@ -2365,7 +2475,7 @@ DCEI.SetFrameLeftAlignmentInParent(container)
 local camera = DCEI.CreateCameraFrame(container)
 DCEI.SetFrameSize(camera, 150, 150)
 DCEI.SetCameraFrameViewportSize(camera, 200, 200)
-DCEI.SetCameraFrameViewportPosition(camera, 16, 1, 11)
+DCEI.SetCameraFrameViewportWorldPosition(camera, 16, 1, 11)
 DCEI.SetCameraFrameViewportRotation(camera, 35, 0, 0)
 DCEI.SetCameraFrameViewportOrthographic(camera, true)
 DCEI.SetCameraFrameOrthographicViewportSize(camera, 1)
@@ -4404,7 +4514,7 @@ InGameUILayoutComponent CreateListFrame(InGameUILayoutComponent parent)
 ```
 #### Description
 [](description-start)
-Create a virtualized list frame.
+Create a virtualized list frame. Virtual lists greatly improve the performance of long lists by only creating UI elements when the user scrolls. Elements outside of the scroll view won't be created or updated, saving on performance. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4431,7 +4541,7 @@ void SetListFrameItemName(InGameUILayoutComponent ui, string itemName)
 ```
 #### Description
 [](description-start)
-Set the XML name for virtualized list's item.
+Set the XML name for virtualized list's item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4460,7 +4570,7 @@ void SetListFrameItemSize(InGameUILayoutComponent ui, float itemSize)
 ```
 #### Description
 [](description-start)
-Set the size for virtualized list's item.
+Set the size for virtualized list's item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4489,7 +4599,7 @@ void SetListFrameItemDataCallback(InGameUILayoutComponent ui, TypedCallback<InGa
 ```
 #### Description
 [](description-start)
-Tell the virtual list how to create new items as well as how to bind the data to each item.
+Tell the virtual list how to create new items as well as how to bind the data to each item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4523,7 +4633,7 @@ void SetListFrameItemCount(InGameUILayoutComponent ui, int itemCount)
 ```
 #### Description
 [](description-start)
-Tell the virtual list we have more items and the list to manage item creation if needed.
+Tell the virtual list we have more items and the list to manage item creation if needed. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4554,7 +4664,8 @@ void RefreshListFrameItems(InGameUILayoutComponent ui, int startIndex, int endIn
 ```
 #### Description
 [](description-start)
-Refresh a range of list items when their underlying data has changed. The data callback registered with DCEI.[SetListFrameItemDataCallback](Trigger-API-Reference-DCEI-Functions-Custom-UI#setlistframeitemdatacallback-2)() will be called for each visible list item in the specified range to rebind data to UI.
+Refresh a range of list items when their underlying data has changed. The data callback registered with DCEI.[SetListFrameItemDataCallback](Trigger-API-Reference-DCEI-Functions-Custom-UI#setlistframeitemdatacallback-2)() will be called for each visible list item in the specified range to rebind data to UI. 
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4568,7 +4679,10 @@ Refresh a range of list items when their underlying data has changed. The data c
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetListFrameItemDataCallback(virtual_list, 1, 5)
+DCEI.SetOnClickCallback(refresh_button, function()
+    refresh_count = refresh_count + 1
+    DCEI.RefreshListFrameItems(virtual_list, 1, #virtual_items)
+end)
 ```
 [](example-usage-end)
 
@@ -4582,7 +4696,7 @@ InGameUILayoutComponent CreateSpineFrame(InGameUILayoutComponent parent)
 ```
 #### Description
 [](description-start)
-Creates a frame for Spine animations. See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
+Creates a frame for Spine animations. See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d).
 [](description-end)
 
 #### Parameters
@@ -4606,7 +4720,7 @@ void SetSpineFrameAsset(InGameUILayoutComponent ui, string name)
 ```
 #### Description
 [](description-start)
-See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
+Sets the Spine frame to the Spine asset. The asset must be in your map or mod’s `Assets\SpineAnimations` folder. See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d).
 [](description-end)
 
 #### Parameters
@@ -4618,7 +4732,17 @@ See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a
 
 #### Example Usage
 [](example-usage-start)
-See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
+```lua
+local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(container, 250, 250)
+local spine = DCEI.CreateSpineFrame(container)
+DCEI.SetSpineFrameAsset(spine, "texiao3")
+local animations = DCEI.GetSpineFrameAnimations(spine)
+for _, animation in ipairs(animations) do
+    DCEI.LogMessage("Animation: " .. animation)
+end
+DCEI.PlaySpineFrameAnimation(spine, animations[1], true, 1)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -4631,7 +4755,7 @@ object GetSpineFrameAnimations(InGameUILayoutComponent ui)
 ```
 #### Description
 [](description-start)
-See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
+Gets a table of spine animations from the given spine frame. See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
 [](description-end)
 
 #### Parameters
@@ -4642,7 +4766,17 @@ See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(container, 250, 250)
+local spine = DCEI.CreateSpineFrame(container)
+DCEI.SetSpineFrameAsset(spine, "texiao3")
+local animations = DCEI.GetSpineFrameAnimations(spine)
+for _, animation in ipairs(animations) do
+    DCEI.LogMessage("Animation: " .. animation)
+end
+DCEI.PlaySpineFrameAnimation(spine, animations[1], true, 1)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -4670,7 +4804,6 @@ See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a
 #### Example Usage
 [](example-usage-start)
 ```lua
-
 local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
 DCEI.SetFrameSize(container, 250, 250)
 local spine = DCEI.CreateSpineFrame(container)
@@ -4680,7 +4813,6 @@ for _, animation in ipairs(animations) do
     DCEI.LogMessage("Animation: " .. animation)
 end
 DCEI.PlaySpineFrameAnimation(spine, animations[1], true, 1)
-
 ```
 [](example-usage-end)
 
@@ -8306,18 +8438,50 @@ Sets a UI frame to be the pause menu, replacing the default pause menu UI and fu
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- create a custom pause menu
 local menu = DCEI.CreateFrame(DCEI.GetUiRootFrame())
 DCEI.SetFrameSize(menu, 400, 600)
 DCEI.SetFrameImage(menu, DCEI.Texture("frame01_purple"))
 DCEI.SetPauseMenuFrame(menu)
-
+    
 -- the pause menu is inactive by default but we can update it safely with UpdateFrame
 DCEI.UpdateFrame(
     menu,
     function()
         local resume_button = DCEI.CreateButtonFrame(menu)
         DCEI.SetFrameSize(resume_button, 200, 100)
-        DCEI.SetPauseMenuFrameResumeButton(resume_button)
+        DCEI.SetOnClickCallback(
+            resume_button, 
+            function()
+                DCEI.HidePauseMenuFrame(menu)
+            end
+        )
+    end
+)
+
+-- create a custom pause menu button
+local pause_button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameImage(pause_button, DCEI.Texture("btn_red"))
+DCEI.SetFrameTopAlignmentInParent(pause_button)
+DCEI.SetFrameLeftAlignmentInParent(pause_button)
+DCEI.SetFrameSize(pause_button, 200, 200)
+
+-- hookup the pause menu button callback
+DCEI.SetOnClickCallback(
+    pause_button,
+    function()
+        DCEI.ShowPauseMenuFrame(menu)
+    end
+)
+
+-- add custom pause menu callback
+DCEI.SetPauseMenuCallback(
+    function(pause)
+        if pause then
+            Core.GameSpeed.Set(0)
+        else
+            Core.GameSpeed.Set(1)
+        end
     end
 )
 ```
@@ -8326,15 +8490,15 @@ DCEI.UpdateFrame(
 [](extra-section-start)
 #### Related
 - [SetPauseButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframe-1)
-- [ShowPauseMenuFrame](#showpausemenuframe-0)
-- [HidePauseMenuFrame](#hidepausemenuframe-0)
-- [SetPauseMenuCallback](Trigger-API-Reference-DCEI-Events-Input#setpausemenucallback-1)
+- [ShowPauseMenuFrame()](#showpausemenuframe-0)
+- [HidePauseMenuFrame()](#hidepausemenuframe-0)
+- [SetPauseMenuCallback()](Trigger-API-Reference-DCEI-Events-Input#setpausemenucallback-1)
 - [SetPauseMenuFrameResumeButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframeresumebutton-1)
 - [SetPauseMenuFrameQuitButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframequitbutton-1)
 - [SetPauseMenuFrameRestartButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframerestartbutton-1)
 - [SetPauseMenuFramePlayLevelButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframeplaylevelbutton-3)
 - [SetPauseMenuFrameSettingsButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframesettingsbutton-1)
-- [SuppressPauseMenuOnApplicationPause](#suppresspausemenuonapplicationpause-0)
+- [SuppressPauseMenuOnApplicationPause()](#suppresspausemenuonapplicationpause-0)
 [](extra-section-end)
 
 ## void ShowPauseMenuFrame() {showpausemenuframe-0}
@@ -8343,12 +8507,59 @@ void ShowPauseMenuFrame()
 ```
 #### Description
 [](description-start)
-Show current pause menu
+Show the current pause menu.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+-- create a custom pause menu
+local menu = DCEI.CreateFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(menu, 400, 600)
+DCEI.SetFrameImage(menu, DCEI.Texture("frame01_purple"))
+DCEI.SetPauseMenuFrame(menu)
+    
+-- the pause menu is inactive by default but we can update it safely with UpdateFrame
+DCEI.UpdateFrame(
+    menu,
+    function()
+        local resume_button = DCEI.CreateButtonFrame(menu)
+        DCEI.SetFrameSize(resume_button, 200, 100)
+        DCEI.SetOnClickCallback(
+            resume_button, 
+            function()
+                DCEI.HidePauseMenuFrame(menu)
+            end
+        )
+    end
+)
 
+-- create a custom pause menu button
+local pause_button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameImage(pause_button, DCEI.Texture("btn_red"))
+DCEI.SetFrameTopAlignmentInParent(pause_button)
+DCEI.SetFrameLeftAlignmentInParent(pause_button)
+DCEI.SetFrameSize(pause_button, 200, 200)
+
+-- hookup the pause menu button callback
+DCEI.SetOnClickCallback(
+    pause_button,
+    function()
+        DCEI.ShowPauseMenuFrame(menu)
+    end
+)
+
+-- add custom pause menu callback
+DCEI.SetPauseMenuCallback(
+    function(pause)
+        if pause then
+            Core.GameSpeed.Set(0)
+        else
+            Core.GameSpeed.Set(1)
+        end
+    end
+)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -8367,7 +8578,52 @@ Hide the pause menu frame.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.HidePauseMenuFrame()
+-- create a custom pause menu
+local menu = DCEI.CreateFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(menu, 400, 600)
+DCEI.SetFrameImage(menu, DCEI.Texture("frame01_purple"))
+DCEI.SetPauseMenuFrame(menu)
+    
+-- the pause menu is inactive by default but we can update it safely with UpdateFrame
+DCEI.UpdateFrame(
+    menu,
+    function()
+        local resume_button = DCEI.CreateButtonFrame(menu)
+        DCEI.SetFrameSize(resume_button, 200, 100)
+        DCEI.SetOnClickCallback(
+            resume_button, 
+            function()
+                DCEI.HidePauseMenuFrame(menu)
+            end
+        )
+    end
+)
+
+-- create a custom pause menu button
+local pause_button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameImage(pause_button, DCEI.Texture("btn_red"))
+DCEI.SetFrameTopAlignmentInParent(pause_button)
+DCEI.SetFrameLeftAlignmentInParent(pause_button)
+DCEI.SetFrameSize(pause_button, 200, 200)
+
+-- hookup the pause menu button callback
+DCEI.SetOnClickCallback(
+    pause_button,
+    function()
+        DCEI.ShowPauseMenuFrame(menu)
+    end
+)
+
+-- add custom pause menu callback
+DCEI.SetPauseMenuCallback(
+    function(pause)
+        if pause then
+            Core.GameSpeed.Set(0)
+        else
+            Core.GameSpeed.Set(1)
+        end
+    end
+)
 ```
 [](example-usage-end)
 
@@ -8393,7 +8649,10 @@ Replace default music button to this UI.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.SetPauseMenuFrameMusicButton(new_music_btn)
+local music_button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(music_button, 200, 200)
+DCEI.SetFrameImage(music_button, DCEI.Texture("btn_blue"))
+DCEI.SetPauseMenuFrameMusicButton(music_button)
 ```
 [](example-usage-end)
 
@@ -8419,7 +8678,10 @@ Replace default sound button to this UI.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.SetPauseMenuFrameSoundButton(new_music_btn)
+local sound_button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(sound_button, 200, 200)
+DCEI.SetFrameImage(sound_button, DCEI.Texture("btn_blue"))
+DCEI.SetPauseMenuFrameMusicButton(sound_button)
 ```
 [](example-usage-end)
 
@@ -8718,7 +8980,16 @@ Suppresses the pause menu on application pause. This is necessary if your game f
 #### Example Usage
 [](example-usage-start)
 ```lua
+function ResolveAds(success)
+    if success then
+        -- deliver ad rewards to player
+    else
+        -- show error message for player
+    end
+end
+
 DCEI.SuppressPauseMenuOnApplicationPause()
+DCEI.ShowAds(ResolveAds)
 ```
 [](example-usage-end)
 

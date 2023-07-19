@@ -2300,7 +2300,11 @@ You can use AttachUnit to attach a ["Simple"](https://funovus.notion.site/Simpl
 ```lua
 local parent_unit = DCEI.FindUnit("Ship")
 local child_unit = DCEI.FindUnit("Archer")
-DCEI.AttachUnit(child_unit, parent_unit, {explicit_offset = {forward = 3}, use_child_facing = true, orientation_type ="WorldOrientation"})
+DCEI.AttachUnit(
+    child_unit,
+    parent_unit,
+    { explicit_offset = { forward = 3 }, use_child_facing = true, orientation_type = "WorldOrientation" }
+)
 ```
 [](example-usage-end)
 

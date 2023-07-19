@@ -47,14 +47,14 @@ This event triggers when a behavior's stack count increase. This function can al
 #### Example Usage
 [](example-usage-start)
 ```LUA
-DCEI.TriggerAddBehaviorStackIncreaseEvent(DCEI.UnitAny, OnUnitBehaviorIncrease, true)
-
 function OnUnitBehaviorIncrease(effect_context, stack_count_delta)
     local name = DCEI.TriggeringBehaviorName
     local u = DCEI.TriggeringUnit
     local unit_type = DCEI.GetUnitType(u)
     DCEI.LogMessage(unit_type .. " behavior " .. name .. " increased for a total of " .. stack_count_delta .. " stacks.")
 end
+
+DCEI.TriggerAddBehaviorStackIncreaseEvent(DCEI.UnitAny, OnUnitBehaviorIncrease, true)
 ```
 [](example-usage-end)
 
@@ -91,14 +91,14 @@ This event triggers when a behavior's stack count decrease. This function can al
 #### Example Usage
 [](example-usage-start)
 ```LUA
-DCEI.TriggerAddBehaviorStackDecreaseEvent(DCEI.UnitAny, OnUnitBehaviorDecrease, true)
-
 function OnUnitBehaviorDecrease(effect_context, stack_count_delta)
     local name = DCEI.TriggeringBehaviorName
     local u = DCEI.TriggeringUnit
     local unit_type = DCEI.GetUnitType(u)
     DCEI.LogMessage(unit_type .. " behavior " .. name .. " Decreased for a total of " .. stack_count_delta .. " stacks.")
 end
+
+DCEI.TriggerAddBehaviorStackDecreaseEvent(DCEI.UnitAny, OnUnitBehaviorDecrease, true)
 ```
 [](example-usage-end)
 
@@ -134,15 +134,15 @@ This event triggers when a behavior is added to a unit. This function can also p
 #### Example Usage
 [](example-usage-start)
 ```LUA
-DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd, true)
-
 function OnUnitBehaviorAdd(effect_context)
     local name = DCEI.TriggeringBehaviorName
     local u = DCEI.TriggeringUnit
     local unit_type = DCEI.GetUnitType(u)
-    local stacks = UnitBehaviorStackCount(u, name)
+    local stacks = DCEI.GetUnitBehaviorStackCount(u, name)
     DCEI.LogMessage(unit_type .. " had " .. name .. " added for a total of " .. stacks .. " stacks.")
 end
+
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd, true)
 ```
 [](example-usage-end)
 
@@ -220,7 +220,7 @@ function OnUnitBehaviorDisable()
     local name = DCEI.TriggeringBehaviorName
     local u = DCEI.TriggeringUnit
     local unit_type = DCEI.GetUnitType(u)
-    local stacks = UnitBehaviorStackCount(u, name)
+    local stacks = DCEI.GetUnitBehaviorStackCount(u, name)
     DCEI.LogMessage(stacks .. " stacks of " .. name .. " no long have any effect on " .. unit_type ..".")
 end
 
@@ -261,7 +261,7 @@ function OnUnitBehaviorEnable()
     local name = DCEI.TriggeringBehaviorName
     local u = DCEI.TriggeringUnit
     local unit_type = DCEI.GetUnitType(u)
-    local stacks = UnitBehaviorStackCount(u, name)
+    local stacks = DCEI.GetUnitBehaviorStackCount(u, name)
     DCEI.LogMessage(stacks .. " stacks of " .. name .. " on " .. unit_type .. " now work.")
 end
 

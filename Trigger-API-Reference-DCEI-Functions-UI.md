@@ -796,9 +796,13 @@ Displays floating text at the specified location.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local float_text_pos = {x = 20, y = 2, z = 20}
-local text_options = {offset = {right = 1, up = 10, front = 10}}
-DCEI.ShowFloatingText(float_text_pos, "Floating Text", 5, 1, 5, text_options)
+local float_text_pos = { x = 15, y = 2, z = 15 }
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local text_options = { offset = { right = 1, up = 2, front = 2 } }
+DCEI.ShowFloatingText(float_text_pos, text, duration, animation_type, animation_duration, text_options)
 ```
 [](example-usage-end)
 
@@ -829,9 +833,13 @@ Displays floating text at the specified location.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local float_text_pos = {x = 20, y = 2, z = 20}
-local text_options = {offset = {right = 1, up = 10, front = 10}}
-DCEI.ShowFloatingTextWithOptions(float_text_pos, "Floating Text", 5, 1, 5, text_options)
+local float_text_pos = { x = 15, y = 2, z = 15 }
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local text_options = { offset = { right = 1, up = 2, front = 2 } }
+DCEI.ShowFloatingTextWithOptions(float_text_pos, text, duration, animation_type, animation_duration, text_options)
 ```
 [](example-usage-end)
 
@@ -862,8 +870,13 @@ Displays floating text at the specified unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local label_options = {offset = {right = 1, up = 1, front = 1}, center_at_unit_origin = true, center_at_unit_top = true}
-DCEI.ShowFloatingTextAtUnit(unit, "Floating Text", 5, 0, 5, label_options)
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local label_options =
+    { offset = { right = 1, up = 1, front = 1 }, center_at_unit_origin = true, center_at_unit_top = true }
+DCEI.ShowFloatingTextAtUnit(unit, text, duration, animation_type, animation_duration, label_options)
 ```
 [](example-usage-end)
 

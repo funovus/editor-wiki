@@ -613,7 +613,7 @@ void SetWeather(int weatherStatus, float duration = 4)
 ```
 #### Description
 [](description-start)
-Sets a weather status over the given duration. Use 0 for an instant transition. Cannot set the heatwave option.
+Sets a weather status over the given duration. Use 0 for an instant transition. Cannot set the heatwave option. The weather can also be set under Project Settings > Map Settings > Weather.
 0 - None
 1 - Rain
 2 - Snow
@@ -852,7 +852,20 @@ Draws a line on the terrain, with color! Returns the lineId of the created line 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddLine({x = 1, y = 1, z = 15}, {x = 30, y = 1, z = 15}, 1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, false)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
+
 ```
 [](example-usage-end)
 
@@ -875,7 +888,6 @@ Draws a line on the terrain using repeating sprites. Returns the lineId of the c
 - *[Float3](Trigger-API-Reference-DCEI-Types#float3)* `endPos` the ending coordinates for the line.
 - *float* `width` the width of the line, in terms of tiles.
 - *[ColorRGBA](Trigger-API-Reference-DCEI-Types#colorrgba)* `color` the RGBA values for the line.  Also accepts hex codes, such as `"#32a852"`
-
 - *string* `spriteName` the name of the sprite to draw.
 - *float* `tex_multiplier` the multiplier for sprite scaling.
 
@@ -884,7 +896,20 @@ Draws a line on the terrain using repeating sprites. Returns the lineId of the c
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddLineWithSprite({x = 15, y = 1, z = 1}, {x = 15, y = 1, z = 30}, 1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, DCEI.Texture("airship_onMap"), 1)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local line_sprite = DCEI.Texture("airship_onMap")
+local tex_multiplier = 1
+local line_id = DCEI.AddLineWithSprite(start_pos, end_pos, width, color, line_sprite, tex_multiplier)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -910,7 +935,19 @@ Removes a line.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveLine(1)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -939,7 +976,19 @@ Moves a line's start and end points (and thus the line itself) to new locations 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.MoveLineWithInterpolation(2, {x = 1, y = 1, z = 15}, {x = 30, y = 1, z = 15}, 3)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Moves it
+local new_start_pos = { x = 15, y = 1, z = 15 }
+local new_end_pos = { x = 15, y = 1, z = 20 }
+local move_duration = 3
+DCEI.MoveLineWithInterpolation(line_id, new_start_pos, new_end_pos, move_duration)
 ```
 [](example-usage-end)
 
@@ -959,7 +1008,21 @@ Removes all lines.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveAllLines()
+-- Creates a group of lines
+for i = 1, 10, 1 do
+    local start_pos = { x = 10 + i, y = 1, z = 15 }
+    local end_pos = { x = 10 + i, y = 1, z = 20 }
+    local width = 0.5
+    local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+    local rect_cap = true
+    DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+end
+
+-- Removes them after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveAllLines()
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -986,7 +1049,20 @@ Changes a line's color.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ChangeLineColor(1, {r = 0.5, g = 0.5, b = 0, a = 0.5},)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Changes color after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    local new_color = { r = 0.1, g = 0.1, b = 0.75, a = 0.75 }
+    DCEI.ChangeLineColor(line_id, new_color)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1013,7 +1089,19 @@ Toggles the display of a line.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ChangeLineDisplay(1, false)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Hides it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.ChangeLineDisplay(line_id, false)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1046,7 +1134,22 @@ Draws a grid with lines. Returns a gridId integer if successful.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddGrid({x = 16, y = 0.5, z = 16}, 15, 15, 5, 15, 0.1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, false)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 5.5
+local height = 5.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = false
+local grid_id = DCEI.AddGrid(center, width, height, xCount, zCount, line_width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1081,7 +1184,23 @@ Draws a grid with lines made of repeating sprites. Returns a gridId integer if s
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddGridWithSprite({x = 16, y = 0.5, z = 16}, 15, 15, 5, 15, 0.5, {r = 0.5, g = 0.5, b = 0, a = 0.5}, DCEI.Texture("airship_onMap"), 1)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 10.5
+local height = 10.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.5
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local sprite = DCEI.Texture("airship_onMap")
+local tex_multiplier = 1
+local grid_id = DCEI.AddGridWithSprite(center, width, height, xCount, zCount, line_width, color, sprite, tex_multiplier)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1107,7 +1226,22 @@ Removes a grid.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveGrid(1)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 5.5
+local height = 5.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = false
+local grid_id = DCEI.AddGrid(center, width, height, xCount, zCount, line_width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1127,14 +1261,29 @@ Toggles a blurred version of your terrain in the background. Note that this back
 #### Parameters
 [](parameters-start)
 - *bool* `set` if true, enables the blurred background.
-- *float* `duration` the transition duration.
+- *float* `duration` the transition duration of the blur.
 
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetBlurredScreenCaptureAsBackground(true, 5)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the current screen as the background over 1 second when the button is pressed
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetBlurredScreenCaptureAsBackground(true, 1)
+
+    -- Removes it after 2 seconds
+    local reset_duration = 2
+    DCEI.TriggerAddTimerEventElapsed(function()
+        DCEI.SetBlurredScreenCaptureAsBackground(false, 0)
+    end, reset_duration)
+end)
 ```
 [](example-usage-end)
 

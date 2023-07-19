@@ -22,6 +22,7 @@ void SetCustomLightColor(string name, ColorRGB color, float duration)
 #### Description
 [](description-start)
 Change a custom light's color gradually over duration time.
+To create a custom light, go to Terrain Window > Lights
 [](description-end)
 
 #### Parameters
@@ -35,7 +36,10 @@ Change a custom light's color gradually over duration time.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.SetCustomLightColor("fire_light", {r = 0.5, g = 0.5, b = 0, a = 0.5}, 1)
+local name = "fire_light"
+local color = { r = 0.5, g = 0.5, b = 0, a = 0.5 }
+local duration = 3
+DCEI.SetCustomLightColor(name, color, duration)
 ```
 [](example-usage-end)
 
@@ -63,7 +67,10 @@ Change a custom light's intensity gradually over duration time.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.SetCustomLightIntensity("fire_light", 8, 1)
+local name = "fire_light"
+local intensity = 0.1
+local duration = 3
+DCEI.SetCustomLightIntensity(name, intensity, duration)
 ```
 [](example-usage-end)
 
@@ -91,7 +98,10 @@ Change a custom light's position gradually over duration time.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.SetCustomLightPosition("fire_light", {x = 1, y = 1, z = 15}, 1)
+local name = "fire_light"
+local pos = { x = 10, y = 1, z = 15 }
+local duration = 3
+DCEI.SetCustomLightPosition(name, pos, duration)
 ```
 [](example-usage-end)
 
@@ -117,11 +127,15 @@ Get the current RGB value of the light.
 #### Example Usage
 [](example-usage-start)
 ```Lua
-DCEI.GetCustomLightColor("fire_light")
+local light_color = DCEI.GetCustomLightColor("fire_light")
+DCEI.LogMessage("R: " .. light_color.r)
+DCEI.LogMessage("G: " .. light_color.g)
+DCEI.LogMessage("B: " .. light_color.b)
 ```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [ColorRGB](Trigger-API-Reference-DCEI-Types#colorrgb)
 [](extra-section-end)
 

@@ -565,7 +565,7 @@ function OnJoystickButton()
     end
 end
 
-DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, {icon = DCEI.Texture("icon_ingame_towerslot_barracks")})
+DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, { icon = DCEI.Texture("icon_ingame_towerslot_barracks") })
 ```
 [](example-usage-end)
 
