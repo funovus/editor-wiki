@@ -125,19 +125,19 @@ Attributes marked with **Supports data binding** indicate that the attribute can
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack xmlns:bind="https://platform.wildsky.dev/xml/ui/bind">
+<VStack layout="flex" xmlns:bind="https://platform.wildsky.dev/xml/ui/bind">
     <!-- Declare initial state values. -->
     <State name="red" booleanValue="false" />
     <!-- Show different background images depending on the state value and flip state value when clicked. -->
-    <Button bind:backgroundImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
+    <Button bind:frameImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
         <Text text="switch color" />
     </Button>
     <Text bind:text="state.red and 'red' or 'blue'" />
 </VStack>
 ```
-State variables can be declared using XML tag "State" and assgined an initial value (right now only boolean/number/string types are supported). To bind attributes to state variables, first add a declaration for the "bind" XML namespace to the outer most XML tag and then use "bind:xxx" attributes to bind attributes to a Lua expression. In the lua expression you can reference the current UI state variables through a Lua table named "state".
+State variables can be declared using XML tag "State" and assigned an initial value (right now only boolean/number/string types are supported). To bind attributes to state variables, first add a declaration for the "bind" XML namespace to the outer most XML tag and then use "bind:xxx" attributes to bind attributes to a Lua expression. In the lua expression you can reference the current UI state variables through a Lua table named "state".
 
-To access UI state variables in trigger, use [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#object-getframestatetransform-ui). E.g.:
+To access UI state variables in trigger, use [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1). E.g.:
 ```lua
 local state = DCEI.GetFrameState(ui)
 state.red = true
@@ -164,13 +164,13 @@ The ID of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5"/>
+<Frame layout="flex" id="frame" height="100" width="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [GetChildFrameById()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-getchildframebyidtransform-ui-string-id)
+- [GetChildFrameById()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getchildframebyid-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -190,14 +190,14 @@ The active status of the UI frame, where `true` is active and `false` is inactiv
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5" active="false" />
+<Frame layout="flex" id="frame" height="100" width="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" active="false" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [IsFrameActive()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bool-isframeactivetransform-ui)
-- [SetFrameActive()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeactivetransform-ui-bool-value)
+- [IsFrameActive()](Trigger-API-Reference-DCEI-Functions-Custom-UI#isframeactive-1)
+- [SetFrameActive()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeactive-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -217,16 +217,21 @@ The width of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5"/>
+<Frame layout="flex" id="frame" height="100" width="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [GetFrameWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#float-getframewidthtransform-ui)
-- [SetFrameSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframesizetransform-ui-float-width-float-height)
+- [GetFrameWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframewidth-1)
+- [SetFrameWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframewidth-2)
+- [SetFrameSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframesize-3)
 
 #### Related UI XML Properties:
+For flex layouts:
+- [heightPercent](Ui-FlexLayouts#widthpercent)
+
+For legacy layouts:
 - [matchParentWidth](#matchparentwidth)
 [](extra-section-end)
 
@@ -247,16 +252,21 @@ The height of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5"/>
+<Frame layout="flex" id="frame" height="100" width="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [GetFrameHeight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#float-getframeheighttransform-ui)
-- [SetFrameSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframesizetransform-ui-float-width-float-height)
+- [GetFrameHeight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframeheight-1)
+- [SetFrameHeight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeheight-2)
+- [SetFrameSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframesize-3)
 
 #### Related UI XML Properties:
+For flex layouts:
+- [heightPercent](Ui-FlexLayouts#heightpercent)
+
+For legacy layouts:
 - [matchParentHeight](#matchparentheight)
 [](extra-section-end)
 
@@ -277,13 +287,14 @@ The minimum width of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" minHeight="100" minWidth="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5" />
+<Frame layout="flex" id="frame" heightPercent="10" widthPercent="10" minHeight="500" minWidth="500" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameMinSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeminsizetransform-ui-float-width-float-height)
+- [SetFrameMinWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeminwidth-2)
+- [SetFrameMinSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeminsize-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -303,15 +314,14 @@ The maximum width of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" maxHeight="100" maxWidth="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5">
-    <Frame height="200" width="200" backgroundImageColor="r: 0, g: 0, b: 1, a: 0.5" />
-</Frame>
+<Frame layout="flex" id="frame" heightPercent="100" widthPercent="100" maxHeight="100" maxWidth="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameMaxSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframemaxsizetransform-ui-float-width-float-height)
+- [SetFrameMaxWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframemaxwidth-2)
+- [SetFrameMaxSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframemaxsize-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -331,13 +341,14 @@ The minimum height of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" minHeight="100" minWidth="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5" />
+<Frame layout="flex" id="frame" heightPercent="10" widthPercent="10" minHeight="500" minWidth="500" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameMinSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeminsizetransform-ui-float-width-float-height)
+- [SetFrameMinHeight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeminheight-2)
+- [SetFrameMinSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeminsize-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -357,15 +368,14 @@ The maximum height of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" maxHeight="100" maxWidth="100" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5">
-    <Frame height="200" width="200" backgroundImageColor="r: 0, g: 0, b: 1, a: 0.5" />
-</Frame>
+<Frame layout="flex" id="frame" heightPercent="100" widthPercent="100" maxHeight="100" maxWidth="100" frameImageColor="r: 1, g: 1, b: 1, a: 0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 Related Trigger Function(s):
-- [SetFrameMaxSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframemaxsizetransform-ui-float-width-float-height)
+- [SetFrameMaxHeight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframemaxheight-2)
+- [SetFrameMaxSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframemaxsize-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -393,7 +403,7 @@ The background image of the UI frame. This background image can be tinted by [ba
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImage()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagetransform-ui-string-name)
+- [SetFrameImage()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimage-2)
 
 #### Related UI XML Properties:
 - [backgroundImageExpression](#backgroundimageexpression)
@@ -417,17 +427,17 @@ The background image of the UI frame. This background image can be tinted by [ba
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame id="frame" height="100" width="100" backgroundImage="cart" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.5" />
+<Frame layout="flex" id="frame" height="100" width="100" frameImage="cart" frameImageColor="r: 1, g: 1, b: 1, a: 0.6" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImage()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagetransform-ui-string-name)
+- [SetFrameImage()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimage-2)
 
 #### Related UI XML Properties:
-- [backgroundImageExpression](#backgroundimageexpression)
-- [backgroundImageColor](#backgroundimagecolor)
+- [frameImageExpression](#frameImageExpression)
+- [frameImageColor](#frameImageColor)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -447,16 +457,16 @@ The padding of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="flex" padding="20" frameImage="frame01">
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePadding()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepaddingtransform-ui-float-padding)
+- [SetFramePadding()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepadding-2)
 
 #### Related UI XML Properties:
 - [paddingLeft](#paddingleft)
@@ -479,18 +489,20 @@ The padding of the UI frame.
 The left alignment status of the UI frame in its parent, where `true` is left-aligned and `false` is not.
 
 Note that setting left/right alignment won't work for frames that have their horizontal alignment determined by another source (ex, the children frames of a hstack). This can be worked around by wrapping the frame you want to reposition inside a blank frame.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try adding [justifyContent](Ui-FlexLayouts#justifycontent) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" leftAlignmentInParent="true" />
+<Frame layout="legacy" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" leftAlignmentInParent="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameLeftAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeleftalignmentinparenttransform-ui)
+- [SetFrameLeftAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeleftalignmentinparent-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -507,18 +519,20 @@ Note that setting left/right alignment won't work for frames that have their hor
 The right alignment status of the UI frame in its parent, where `true` is right-aligned and `false` is not.
 
 Note that setting left/right alignment won't work for frames that have their horizontal alignment determined by another source (ex, the children frames of a hstack). This can be worked around by wrapping the frame you want to reposition inside a blank frame.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try adding [justifyContent](Ui-FlexLayouts#justifycontent) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" rightAlignmentInParent="true" />
+<Frame layout="legacy" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" rightAlignmentInParent="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameRightAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframerightalignmentinparenttransform-ui)
+- [SetFrameRightAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframerightalignmentinparent-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -535,18 +549,20 @@ Note that setting left/right alignment won't work for frames that have their hor
 The top alignment status of the UI frame in its parent, where `true` is top-aligned and `false` is not.
 
 Note that setting top/bottom alignment won't work for frames that have their vertical alignment determined by another source (ex, the children frames of a vstack). This can be worked around by wrapping the frame you want to reposition inside a blank frame.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try using [alignSelf](Ui-FlexLayouts#alignSelf) or adding [alignItems](Ui-FlexLayouts#alignItems) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" topAlignmentInParent="true" />
+<Frame layout="legacy" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" topAlignmentInParent="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameTopAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframetopalignmentinparenttransform-ui)
+- [SetFrameTopAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframetopalignmentinparent-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -563,18 +579,20 @@ Note that setting top/bottom alignment won't work for frames that have their ver
 The bottom alignment status of the UI frame in its parent, where `true` is bottom-aligned and `false` is not.
 
 Note that setting top/bottom alignment won't work for frames that have their vertical alignment determined by another source (ex, the children frames of a vstack). This can be worked around by wrapping the frame you want to reposition inside a blank frame.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try using [alignSelf](Ui-FlexLayouts#alignSelf) or adding [alignItems](Ui-FlexLayouts#alignItems) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" bottomAlignmentInParent="true" />
+<Frame layout="legacy" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" bottomAlignmentInParent="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameBottomAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframebottomalignmentinparenttransform-ui)
+- [SetFrameBottomAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframebottomalignmentinparent-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -589,18 +607,20 @@ Note that setting top/bottom alignment won't work for frames that have their ver
 #### Description
 [](description-start)
 The center alignment status of the UI frame in its parent, where `true` is center-aligned and `false` is not. This is the default alignment for newly created frames.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try adding [justifyContent](Ui-FlexLayouts#justifycontent) or [alignItems](Ui-FlexLayouts#alignItems) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" centerAlignmentInParent="true" />
+<Frame layout="legacy" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" centerAlignmentInParent="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameCenterAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframecenteralignmentinparenttransform-ui)
+- [SetFrameCenterAlignmentInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframecenteralignmentinparent-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -620,13 +640,13 @@ The horizontal offset of the UI frame in its parent.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" horizontalOffsetInParent="100" />
+<Frame layout="flex" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" horizontalOffsetInParent="100" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameHorizontalOffsetInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframehorizontaloffsetinparenttransform-ui-float-value)
+- [SetFrameHorizontalOffsetInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframehorizontaloffsetinparent-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -646,13 +666,13 @@ The vertical offset of the UI frame in its parent.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 1, g: 1, b: 0.5, a: 1" verticalOffsetInParent="100" />
+<Frame layout="flex" height="100" width="100" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" verticalOffsetInParent="100" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameVerticalOffsetInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeverticaloffsetinparenttransform-ui-float-value)
+- [SetFrameVerticalOffsetInParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeverticaloffsetinparent-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -672,13 +692,13 @@ The horizontal flip status of the UI frame, where `true` is flipped and `false` 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" flipHorizontal="true" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" flipHorizontal="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [FlipFrameHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-flipframehorizontaltransform-ui)
+- [FlipFrameHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#flipframehorizontal-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -698,13 +718,13 @@ The vertical flip status of the UI frame, where `true` is flipped and `false` is
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" flipVertical="true" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" flipVertical="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [FlipFrameVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-flipframeverticaltransform-ui)
+- [FlipFrameVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#flipframevertical-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -719,20 +739,22 @@ The vertical flip status of the UI frame, where `true` is flipped and `false` is
 #### Description
 [](description-start)
 The match parent height status of the UI frame, where `true` is matching and `false` means there is a set height.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, use [heightPercent](Ui-FlexLayouts#heightpercent).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="300" width="300">
-    <Frame backgroundImage="cart" matchParentHeight="true" matchParentWidth="true" />
+<Frame layout="legacy" height="300" width="300" >
+    <Frame frameImage="cart" matchParentHeight="true" matchParentWidth="true" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameMatchParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframematchparenttransform-ui-bool-matchwidth-bool-matchheight)
+- [SetFrameMatchParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframematchparent-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -747,20 +769,22 @@ The match parent height status of the UI frame, where `true` is matching and `fa
 #### Description
 [](description-start)
 The match parent width status of the UI frame, where `true` is matching and `false` means there is a set width.
+
+This only works in legacy layouts. To achieve a similar effect in a flex layout, use [widthPercent](Ui-FlexLayouts#widthpercent).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="300" width="300">
-    <Frame backgroundImage="cart" matchParentHeight="true" matchParentWidth="true" />
+<Frame layout="legacy" height="300" width="300" >
+    <Frame frameImage="cart" matchParentHeight="true" matchParentWidth="true" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameMatchParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframematchparenttransform-ui-bool-matchwidth-bool-matchheight)
+- [SetFrameMatchParent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframematchparent-3)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -780,19 +804,19 @@ The left padding of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="10" paddingLeft="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="flex" padding="10" paddingLeft="20" frameImage="frame01">
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePaddingLeft()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepaddinglefttransform-ui-float-padding)
+- [SetFramePaddingLeft()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepaddingleft-2)
 
 #### Related UI XML Properties:
-- [padding](#padding)
+- [Padding](#padding)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -812,19 +836,19 @@ The right padding of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="10" paddingRight="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="flex" padding="10" paddingRight="20" frameImage="frame01">
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePaddingRight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepaddingrighttransform-ui-float-padding)
+- [SetFramePaddingRight()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepaddingright-2)
 
 #### Related UI XML Properties:
-- [padding](#padding)
+- [Padding](#padding)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -844,19 +868,19 @@ The top padding of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="10" paddingTop="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="flex" padding="10" paddingTop="20" frameImage="frame01">
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePaddingTop()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepaddingtoptransform-ui-float-padding)
+- [SetFramePaddingTop()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepaddingtop-2)
 
 #### Related UI XML Properties:
-- [padding](#padding)
+- [Padding](#padding)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -876,19 +900,19 @@ The bottom padding of the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="10" paddingBottom="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="flex" padding="10" paddingBottom="20" frameImage="frame01">
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePaddingBottom()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepaddingbottomtransform-ui-float-padding)
+- [SetFramePaddingBottom()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepaddingbottom-2)
 
 #### Related UI XML Properties:
-- [padding](#padding)
+- [Padding](#padding)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -902,22 +926,22 @@ The bottom padding of the UI frame.
 
 #### Description
 [](description-start)
-The spacing of the UI frame's child elements. This function affects frames that automatically position their children, such as stacks or scrolls. For scrolls, this function should be called on the content frame returned by [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-getscrollframecontenttransform-parent).
+The spacing of the UI frame's child elements. This function affects frames that automatically position their children, such as stacks or scrolls. For scrolls, this function should be called on the content frame returned by [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getscrollframecontent-1). Only works in legacy layouts.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack padding="20" spacing="20" backgroundImage="frame01">
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
-    <Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
+<VStack layout="legacy" padding="20" spacing="20" frameImage="frame01" >
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+    <Frame height="100" width="100" frameImageColor="r: 0.5, g: 0.5, b: 1, a: 1" />
 </VStack>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameSpacing()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframespacingtransform-ui-float-spacing)
+- [SetFrameSpacing()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframespacing-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -931,21 +955,21 @@ The spacing of the UI frame's child elements. This function affects frames that 
 
 #### Description
 [](description-start)
-The left alignment status for the UI frame's contents, where `true` is left-aligned and `false` is not.
+The left alignment status for the UI frame's contents, where `true` is left-aligned and `false` is not. This only works in legacy layouts. To achieve a similar effect in a flex layout, use [justifyContent](Ui-FlexLayouts#justifycontent).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="200" width="200" leftAlignment="true" backgroundImageColor="r: 1, g: 0, b: 1, a: 0.4">
-    <Frame backgroundImage="cart" height="100" width="100" />
+<Frame layout="legacy" height="200" width="200" leftAlignment="true" frameImageColor="r: 1, g: 0, b: 1, a: 0.4">
+    <Frame frameImage="cart" height="100" width="100" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameLeftAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeleftalignmenttransform-ui)
+- [SetFrameLeftAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeleftalignment-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -959,21 +983,21 @@ The left alignment status for the UI frame's contents, where `true` is left-alig
 
 #### Description
 [](description-start)
-The right alignment status for the UI frame's contents, where `true` is right-aligned and `false` is not.
+The right alignment status for the UI frame's contents, where `true` is right-aligned and `false` is not. This only works in legacy layouts. To achieve a similar effect in a flex layout, use [justifyContent](Ui-FlexLayouts#justifycontent).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="200" width="200" rightAlignment="true" backgroundImageColor="r: 1, g: 0, b: 1, a: 0.4">
-    <Frame backgroundImage="cart" height="100" width="100" />
+<Frame layout="legacy" height="200" width="200" rightAlignment="true" frameImageColor="r: 1, g: 0, b: 1, a: 0.4">
+    <Frame frameImage="cart" height="100" width="100" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameRightAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframerightalignmenttransform-ui)
+- [SetFrameRightAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframerightalignment-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -987,21 +1011,21 @@ The right alignment status for the UI frame's contents, where `true` is right-al
 
 #### Description
 [](description-start)
-The top alignment status for the UI frame's contents, where `true` is top-aligned and `false` is not.
+The top alignment status for the UI frame's contents, where `true` is top-aligned and `false` is not. This only works in legacy layouts. To achieve a similar effect in a flex layout, use [alignItems](Ui-FlexLayouts#alignItems).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="200" width="200" topAlignment="true" backgroundImageColor="r: 1, g: 0, b: 1, a: 0.4">
-    <Frame backgroundImage="cart" height="100" width="100" />
+<Frame layout="legacy" height="200" width="200" topAlignment="true" frameImageColor="r: 1, g: 0, b: 1, a: 0.4">
+    <Frame frameImage="cart" height="100" width="100" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameTopAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframetopalignmenttransform-ui)
+- [SetFrameTopAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframetopalignment-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1015,21 +1039,21 @@ The top alignment status for the UI frame's contents, where `true` is top-aligne
 
 #### Description
 [](description-start)
-The bottom alignment status for the UI frame's contents, where `true` is bottom-aligned and `false` is not.
+The bottom alignment status for the UI frame's contents, where `true` is bottom-aligned and `false` is not. This only works in legacy layouts. To achieve a similar effect in a flex layout, use [alignItems](Ui-FlexLayouts#alignItems).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="200" width="200" bottomAlignment="true" backgroundImageColor="r: 1, g: 0, b: 1, a: 0.4">
-    <Frame backgroundImage="cart" height="100" width="100" />
+<Frame layout="legacy" height="200" width="200" bottomAlignment="true" frameImageColor="r: 1, g: 0, b: 1, a: 0.4">
+    <Frame frameImage="cart" height="100" width="100" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameBottomAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframebottomalignmenttransform-ui)
+- [SetFrameBottomAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframebottomalignment-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1043,21 +1067,22 @@ The bottom alignment status for the UI frame's contents, where `true` is bottom-
 
 #### Description
 [](description-start)
-The center alignment status for the UI frame's contents, where `true` is center-aligned and `false` is not. This is the default alignment.
+The center alignment status for the UI frame's contents, where `true` is center-aligned and `false` is not. This is the default alignment. 
+This only works in legacy layouts. To achieve a similar effect in a flex layout, try adding [justifyContent](Ui-FlexLayouts#justifycontent) or [alignItems](Ui-FlexLayouts#alignItems) to the parent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="200" width="200" centerAlignment="true" backgroundImageColor="r: 1, g: 0, b: 1, a: 0.4">
-    <Frame backgroundImage="cart" height="100" width="100" />
+<Frame layout="legacy" height="200" width="200" centerAlignment="true" frameImageColor="r: 1, g: 0, b: 1, a: 0.4">
+    <Frame frameImage="cart" height="100" width="100" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameCenterAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframecenteralignmenttransform-ui)
+- [SetFrameCenterAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframecenteralignment-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1077,14 +1102,14 @@ The alpha value for the UI frame. This controls the transparency of the frame, a
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" alpha="0.5" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" alpha="0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameAlpha()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframealphatransform-ui-float-alpha)
-- [AnimateFrameAlpha()](Trigger-API-Reference-DCEI-Functions-Custom-UI#tweener-animateframealphatransform-ui-float-start-float-end-float-duration-string-ease)
+- [SetFrameAlpha()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframealpha-2)
+- [AnimateFrameAlpha()](Trigger-API-Reference-DCEI-Functions-Custom-UI#animateframealpha-5)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1104,13 +1129,13 @@ This ratio determines the size of the frame based on the size of its background 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameUseImageSizeRatio()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeuseimagesizeratiotransform-ui-float-ratio)
+- [SetFrameUseImageSizeRatio()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeuseimagesizeratio-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1138,7 +1163,7 @@ The image size ratio for the UI frame. Functionally identical to [useImageSizeRa
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameUseImageSizeRatio()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeuseimagesizeratiotransform-ui-float-ratio)
+- [SetFrameUseImageSizeRatio()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeuseimagesizeratio-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1495,15 +1520,15 @@ On the left, the cart image only displays the bottom right corner as that is all
 
 #### Description
 [](description-start)
-The background image expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImageExpression="data.image" useImageSizeRatio="1" />
+<Frame layout="flex" frameImageExpression="data.image" useImageSizeRatio="1" />
 ```
-Where "data.image" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.image" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {image = "cart"}
 DCEI.BindLuaTable("data", data)
@@ -1513,10 +1538,10 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimageexpression-2)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 
 #### Related UI XML Properties:
-- [backgroundImage](#backgroundimage)
+- [frameImage](#frameImage)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1530,20 +1555,21 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image fill amount for the UI frame, from 0-1.
+The frame image fill amount for the UI frame, from 0-1.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmount="0.5" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmount="0.5" useImageSizeRatio="1" />
 ```
+![image](https://user-images.githubusercontent.com/34138206/149423196-008f3116-1532-45d4-9af3-5592c4661ef7.png)
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillamounttransform-ui-float-fill)
-- [GetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#float-getframeimagefillamounttransform-ui)
+- [SetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamount-2)
+- [GetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframeimagefillamount-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1557,13 +1583,13 @@ The background image fill amount for the UI frame, from 0-1.
 
 #### Description
 [](description-start)
-The background image horizontal fill status of the UI frame in its parent, where `true` means the background image fill is horizontal and `false` means it is not. This is the default fill direction.
+The frame image horizontal fill status of the UI frame in its parent, where `true` means the frame image fill is horizontal and `false` means it is not. This is the default fill direction.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmount="0.5" backgroundImageFillHorizontal="true" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmount="0.5" frameImageFillHorizontal="true" useImageSizeRatio="1" />
 ```
 Horizontal fill origin left:
 ![image](https://user-images.githubusercontent.com/34138206/149423196-008f3116-1532-45d4-9af3-5592c4661ef7.png)
@@ -1575,7 +1601,8 @@ Horizontal fill origin right:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillhorizontaltransform-ui)
+- [frameImageFillOrigin](#frameImageFillOrigin)
+- [SetFrameImageFillHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillhorizontal-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1589,13 +1616,13 @@ Horizontal fill origin right:
 
 #### Description
 [](description-start)
-The background image vertical fill status of the UI frame in its parent, where `true` means the background image fill is vertical and `false` means it is not.
+The frame image vertical fill status of the UI frame in its parent, where `true` means the frame image fill is vertical and `false` means it is not.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmount="0.5" backgroundImageFillVertical="true" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmount="0.5" frameImageFillVertical="true" useImageSizeRatio="1" />
 ```
 Vertical fill origin bottom:
 ![image](https://user-images.githubusercontent.com/34138206/149423622-5f9d49c1-151e-4608-9f0c-b8d173616889.png)
@@ -1607,7 +1634,8 @@ Vertical fill origin top:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillverticaltransform-ui)
+- [frameImageFillOrigin](#frameImageFillOrigin)
+- [SetFrameImageFillVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillvertical-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1621,13 +1649,13 @@ Vertical fill origin top:
 
 #### Description
 [](description-start)
-The background image radial fill status of the UI frame in its parent, where `true` means the background image fill is radial and `false` means it is not.
+The frame image radial fill status of the UI frame in its parent, where `true` means the frame image fill is radial and `false` means it is not.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmount="0.75" backgroundImageFillRadial="true" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmount="0.5" frameImageFillRadial="true" useImageSizeRatio="1" />
 ```
 Radial fill origin bottom:
 ![image](https://user-images.githubusercontent.com/34138206/149423777-28779cff-ca44-4245-86cd-ac60a0d02cca.png)
@@ -1645,7 +1673,8 @@ Radial fill origin left:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillRadial()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillradialtransform-ui)
+- [frameImageFillOrigin](#frameImageFillOrigin)
+- [SetFrameImageFillRadial()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillradial-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1659,7 +1688,7 @@ Radial fill origin left:
 
 #### Description
 [](description-start)
-The background image fill origin side of the UI frame in its parent.
+The frame image fill origin side of the UI frame in its parent.
 ```
 [0, 1] for horizontal or vertical fills ([left, right] and [bottom, top])
 [0, 1, 2, 3] for radial fills ([bottom, right, top, left])
@@ -1693,13 +1722,13 @@ Radial fill origin left:
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmount="0.75" backgroundImageFillRadial="true" backgroundImageFillOrigin="3" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmount="0.75" frameImageFillRadial="true" frameImageFillOrigin="3" useImageSizeRatio="1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillOrigin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillorigintransform-ui-int-origin)
+- [SetFrameImageFillOrigin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillorigin-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1713,25 +1742,25 @@ Radial fill origin left:
 
 #### Description
 [](description-start)
-The background image fill amount expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image fill amount expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageFillAmountExpression="data.fill" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageFillAmountExpression="data.fill" useImageSizeRatio="1" />
 ```
-Where "data.fill" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.fill" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
-local data = {fill = 0.5}
+local data = { fill = 0.5 }
 DCEI.BindLuaTable("data", data)
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillamountexpressiontransform-ui-string-expression-bool-inverse)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1745,19 +1774,19 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image tiling status for the UI frame. By default this is true for [9 sliced](https://en.wikipedia.org/wiki/9-slice_scaling) images.
+The frame image tiling status for the UI frame. By default this is true for [9 sliced](https://en.wikipedia.org/wiki/9-slice_scaling) images.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="frame01" height="300" width="300" backgroundImageTiled="false" />
+<Frame layout="flex" frameImage="frame01" height="300" width="300" frameImageTiled="false" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageTiled()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagetiledtransform-ui-bool-settiled)
+- [SetFrameImageTiled()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagetiled-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1771,22 +1800,17 @@ The background image tiling status for the UI frame. By default this is true for
 
 #### Description
 [](description-start)
-The background image pixels per unit multiplier for the UI frame. For [9 sliced](https://en.wikipedia.org/wiki/9-slice_scaling) images, this will increase or decrease the amount of tile slices used in the background image.
+The frame image pixels per unit multiplier for the UI frame. For [9 sliced](https://en.wikipedia.org/wiki/9-slice_scaling) images, this will increase or decrease the amount of tile slices used in the frame image.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
 <!-- standard cart background image -->
-<Frame backgroundImage="cart" useImageSizeRatio="1" horizontalOffsetInParent="-300" backgroundImagePixelsPerUnitMultiplier="1" backgroundImageTiled="true" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" horizontalOffsetInParent="-300" frameImagePixelsPerUnitMultiplier="1" frameImageTiled="true" />
 
 <!-- 9-sliced frame background image -->
-<Frame backgroundImage="frame01_blue" height="250" width="250" horizontalOffsetInParent="300" backgroundImagePixelsPerUnitMultiplier="1" />
-```
-Lua code to render the frames:
-```lua
-    local xml = DCEI.CreateFrameFromXml(DCEI.GetUiRootFrame(), "frame")
-    local cart = DCEI.CreateFrameFromXml(DCEI.GetUiRootFrame(), "cart")
+<Frame layout="flex" frameImage="frame01_blue" height="250" width="250" horizontalOffsetInParent="300" frameImagePixelsPerUnitMultiplier="1" />
 ```
 The example usage above produces this output:
 ![image](https://user-images.githubusercontent.com/34138206/147608112-03a59615-838f-47bd-a0e6-8e6d9f69d2d1.png)
@@ -1806,7 +1830,7 @@ On the left, the cart image only displays the bottom right corner as that is all
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePixelsPerUnitMultiplier()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepixelsperunitmultipliertransform-ui-float-pixelsperunitmultiplier)
+- [SetFramePixelsPerUnitMultiplier()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepixelsperunitmultiplier-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1820,17 +1844,17 @@ On the left, the cart image only displays the bottom right corner as that is all
 
 #### Description
 [](description-start)
-The width expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The width expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" width="data.width" height="data.height" />
+<Frame layout="flex" frameImage="cart" width="data.width" height="data.height" />
 ```
-Where "data.width" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.width" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
-local data = {width = 100, height = 100}
+local data = { width = 100, height = 100 }
 DCEI.BindLuaTable("data", data)
 ```
 [](example-usage-end)
@@ -1838,7 +1862,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameWidthExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframewidthexpression-2)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1852,15 +1876,15 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The height expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The height expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" width="data.width" height="data.height" />
+<Frame layout="flex" frameImage="cart" width="data.width" height="data.height" />
 ```
-Where "data.height" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.height" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {width = 100, height = 100}
 DCEI.BindLuaTable("data", data)
@@ -1870,7 +1894,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameHeightExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeheightexpression-2)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2071,22 +2095,22 @@ The background image gray scale status for the UI frame, where `true` means the 
 
 #### Description
 [](description-start)
-The background image color or tint for the UI frame, using RGBA values (valid values are between 0 and 1). Note that frames without background images can be tinted a solid color. Alpha 1 is completely opaque, alpha 0 is completely transparent.
+The frame image color or tint for the UI frame, using RGBA values (valid values are between 0 and 1). Note that frames without images can be tinted a solid color. Alpha 1 is completely opaque, alpha 0 is completely transparent.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame height="100" width="100" backgroundImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
+<Frame layout="flex" height="100" width="100" frameImageColor="r: 0.5, g: 1, b: 0.5, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagecolortransform-ui-colorrgba-color)
+- [SetFrameImageColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolor-2)
 
 #### Related UI XML Properties:
-- [backgroundImage](#backgroundimage)
+- [frameImage](#frameImage)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2098,15 +2122,15 @@ The background image color or tint for the UI frame, using RGBA values (valid va
 
 #### Description
 [](description-start)
-The background image color's R value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image color's R value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageColorExpressionR="data.R" frameImageColorExpressionG="data.G" frameImageColorExpressionB="data.B" frameImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -2116,7 +2140,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2128,15 +2152,15 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's G value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image color's G value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageColorExpressionR="data.R" frameImageColorExpressionG="data.G" frameImageColorExpressionB="data.B" frameImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -2146,7 +2170,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2158,15 +2182,15 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's B value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image color's B value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageColorExpressionR="data.R" frameImageColorExpressionG="data.G" frameImageColorExpressionB="data.B" frameImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -2176,7 +2200,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2188,13 +2212,13 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's A value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The frame image color's A value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
+<Frame layout="flex" frameImage="cart" frameImageColorExpressionR="data.R" frameImageColorExpressionG="data.G" frameImageColorExpressionB="data.B" frameImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
 Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
 ```lua
@@ -2206,7 +2230,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2220,19 +2244,19 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image gray scale status for the UI frame, where `true` means the background image is in gray scale and `false` means it is not.
+The frame image gray scale status for the UI frame, where `true` means the frame image is in gray scale and `false` means it is not.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" backgroundImageGrayScale="true" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" frameImageGrayScale="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageGrayScale()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagegrayscaletransform-ui-bool-isgrayscale)
+- [SetFrameImageGrayScale()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagegrayscaleexpression-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2252,7 +2276,7 @@ The tooltip text for the UI frame. Child frame tooltips will show over parent fr
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="cart" useImageSizeRatio="1" tooltipText="Frame" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" tooltipText="Frame" />
 ```
 [](example-usage-end)
 
@@ -2272,23 +2296,23 @@ The tooltip text for the UI frame. Child frame tooltips will show over parent fr
 
 #### Description
 [](description-start)
-The input blocking status for the UI frame, where `true` means input is being blocked and `false` means it is not. Requires a [background image](#backgroundimage) (or color) to be set (but it can be made [invisible](#backgroundimagecolor)).
+The input blocking status for the UI frame, where `true` means input is being blocked and `false` means it is not. Requires a [frame image](#frameimage) (or color) to be set (but it can be made [invisible](#frameimagecolor)).
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
 <!-- Image blocking input -->
-<Frame backgroundImage="cart" useImageSizeRatio="1" blockInput="true" />
+<Frame layout="flex" frameImage="cart" useImageSizeRatio="1" blockInput="true" />
 
 <!-- Solid background color blocking input -->
-<Frame backgroundImageColor="r: 0, g: 1, b: 1, a: 0.25" matchParentHeight="true" matchParentWidth="true" blockInput="true" />
+<Frame layout="flex" frameImageColor="r: 0, g: 1, b: 1, a: 0.25" heightPercent="50" widthPercent="50" blockInput="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameBlockInput()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeblockinputtransform-ui-bool-value)
+- [SetFrameBlockInput()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeblockinput-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2306,10 +2330,10 @@ The [3D rotation](Trigger-API-Reference-DCEI-Types#float3) for the UI frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<HStack spacing="20" padding="20" backgroundImage="frame01_purple">
-    <Frame backgroundImage="cart" useImageSizeRatio="1" rotation3d="x: 45, y: 0, z: 0" />
-    <Frame backgroundImage="cart" useImageSizeRatio="1" rotation3d="x: 0, y: 45, z: 0" />
-    <Frame backgroundImage="cart" useImageSizeRatio="1" rotation3d="x: 0, y: 0, z: 45" />
+<HStack layout="flex" padding="20" frameImage="frame01_purple">
+    <Frame frameImage="cart" useImageSizeRatio="1" rotation3d="x: 45, y: 0, z: 0" />
+    <Frame frameImage="cart" useImageSizeRatio="1" rotation3d="x: 0, y: 45, z: 0" />
+    <Frame frameImage="cart" useImageSizeRatio="1" rotation3d="x: 0, y: 0, z: 45" />
 </HStack>
 ```
 To help visualize the rotation axis, the above example usage creates the following UI:
@@ -2319,7 +2343,7 @@ To help visualize the rotation axis, the above example usage creates the followi
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameRotation3D()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframerotation3dtransform-ui-float-x-float-y-float-z)
+- [SetFrameRotation3D()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframerotation3d-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2329,7 +2353,21 @@ To help visualize the rotation axis, the above example usage creates the followi
 
 [](manual-wiki-start)
 
-If set to `true` the frame will only be created in the UI Preview Window, not in-game. Useful for frames that will be created during runtime using Lua, but you still want to preview how the frame would look while designing the XML. 
+#### Description
+[](description-start)
+If set to `true` the frame will only be created in the UI Preview Window, not in-game. Useful for frames that will be created during runtime using Lua, but you still want to preview how the frame would look while designing the XML.
+[](description-end)
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" height="100" width="100" frameImage="cart" preview="true" />
+```
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2340,12 +2378,32 @@ If set to `true` the frame will only be created in the UI Preview Window, not in
 
 **Values:**  `flex`,  `legacy` (default) 
 
+#### Description
+[](description-start)
+
 Setting a layout to `flex` enables [Flex Layouts](Ui-FlexLayouts); an entirely different layout engine which has limited compatibility with `legacy` layout. It's more powerful and responsive, allowing for less static UI that can adjust based on screen sizes and aspect ratios. 
 
 For more info, see:
 * [Flex Layouts](Ui-FlexLayouts) main wiki documentation page
 * [yogalayout documentation](https://yogalayout.com/docs) and [playground](https://yogalayout.com/playground)
 * [Flexbox complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-grow)
+
+[](description-end)
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="column-reverse">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+</Frame>
+```
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2362,6 +2420,17 @@ For more info, see:
 Flex direction controls the direction in which children of a node are laid out.
 ![image](https://user-images.githubusercontent.com/56179268/201359497-60605ea0-a1df-4655-a16c-9e9b00fe3b26.png)
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="column-reverse">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+</Frame>
+```
+[](example-usage-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.flexGrow)flexGrow {flexGrow}
@@ -2375,6 +2444,30 @@ Flex direction controls the direction in which children of a node are laid out.
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). `flexGrow` describes how space within a container should be distributed among its children. If all items have `flexGrow` set to 1, the remaining space in the container will be distributed equally to all children. If one of the children has a value of 2, that child would take up twice as much of the space either one of the others.
 ![image](https://user-images.githubusercontent.com/56179268/201425671-6a3899fe-b984-43ef-9b82-39bb2320a495.png)
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" justifyContent="space-around" alignItems="stretch" alignContent="stretch">
+    <Frame layout="flex" flexDirection="row" marginBottom="25" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0"/>
+        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="0"/>
+        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0"/>
+    </Frame>
+    <Frame layout="flex" flexDirection="row" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0.5" />
+        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="2" />
+        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0.5" />
+    </Frame>
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201426265-cbe9bd00-0565-4506-9eae-5774546ff2ad.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.flexShrink)flexShrink {flexShrink}
@@ -2387,7 +2480,29 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). `flexGrow` describes ho
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). `flexShrink` is very similar to `flexGrow` and can be thought of in the same way if any overflowing size is considered to be negative remaining space. These two properties also work well together by allowing children to grow and shrink as needed.
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" justifyContent="space-around" alignItems="stretch" alignContent="stretch">
+    <Frame layout="flex" flexDirection="row" marginBottom="25" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="40" flexShrink="0" />
+        <include name="DemoAttributes/BasicBlockB" widthPercent="40" flexShrink="0" />
+        <include name="DemoAttributes/BasicBlockC" widthPercent="40" flexShrink="0" />
+    </Frame>
+    <Frame layout="flex" flexDirection="row" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="100" flexShrink="1" />
+        <include name="DemoAttributes/BasicBlockB" widthPercent="100" flexShrink="1" />
+        <include name="DemoAttributes/BasicBlockC" widthPercent="100" flexShrink="1" />
+    </Frame>
+</Frame>
+```
 <img src="https://user-images.githubusercontent.com/56179268/201428908-ac7f9688-3a4d-410e-8f3d-27ef3ecfb9fe.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2403,6 +2518,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). By default, flex items 
 
 <img src="https://user-images.githubusercontent.com/56179268/201434854-7e4e83af-354e-497e-92bf-e48982b5f092.png"/>
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="row" flexWrap="wrap"  heightPercent="100" widthPercent="100" alignContent="stretch">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201697701-176c267b-008d-43a1-a0b3-1bd4e20dcc24.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.justifyContent)justifyContent {justifyContent}
@@ -2415,7 +2548,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). By default, flex items 
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the alignment along the main axis. It helps distribute extra free space leftover when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line. For multi-line containers, see alignContent. 
 
-<img src="https://user-images.githubusercontent.com/56179268/201700478-de17fae1-2f1e-421f-adfb-025d26e1a963.png" width="300"/>
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" justifyContent="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <!-- justifyContent="flex-end" aligns items to the end of the frame -->
+    <!-- So extra space in the frame will be at the start -->
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/f5880222-223a-4a83-9f22-990838ce17b5" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2430,6 +2580,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the alignm
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the default behavior for how flex items are laid out along the cross axis on the current line. Think of it as the justify-content version for the cross-axis (perpendicular to the main-axis).
 
 <img src="https://user-images.githubusercontent.com/56179268/201709209-1fa8aadd-d52c-4722-ab9e-e4c6dca56692.png" width="300"/>
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+    <include name="DemoAttributes/BasicBlockD" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/a74a6e02-2387-4e6c-a2c0-07ad2e23aedd" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2447,6 +2615,29 @@ Note: This property only takes effect on multi-line flexible containers, where f
 
 <img src="https://user-images.githubusercontent.com/56179268/201718757-be14528b-3997-4342-b005-c3a5d9e34be5.png" width="300"/>
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignContent="flex-end" widthPercent="75" heightPercent="50" flexWrap="wrap" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
+    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
+    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
+    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
+    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
+    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
+    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
+    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
+    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/f4a746b9-01a6-430d-9e0d-ea4a39d66ec7" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.alignSelf)alignSelf {alignSelf}
@@ -2461,6 +2652,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This allows the default
 
 <img src="https://user-images.githubusercontent.com/56179268/201765048-101ae3d1-1ed9-45c5-8b8f-d53b404f8dbe.png" width="300"/>
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" heightPercent="25" />
+    <include name="DemoAttributes/BasicBlockB" heightPercent="45" />
+    <include name="DemoAttributes/BasicBlockC" heightPercent="80" alignSelf="flex-end" />
+    <include name="DemoAttributes/BasicBlockD" heightPercent="15" alignSelf="flex-end" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/24517e89-8052-413e-b8ab-2c485545ccc1" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.marginLeft)marginLeft {marginLeft}
@@ -2471,6 +2680,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This allows the default
 #### See <u>[FlexLayouts/Margins](Ui-FlexLayouts#margins)</u>
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spacing around the outside of a node.
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="row" flexWrap="no-wrap" heightPercent="100" widthPercent="100" alignContent="stretch" backgroundImageColor="r: 0, g: 0, b: 0, a: 1"> 
+    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" marginLeft="45" marginRight="45" marginBottom="45" marginTop="45" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201965366-03861ba7-e0b9-4724-b0a5-3c0d515aa64b.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2483,6 +2710,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spac
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spacing around the outside of a node.
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="row" flexWrap="no-wrap" heightPercent="100" widthPercent="100" alignContent="stretch" backgroundImageColor="r: 0, g: 0, b: 0, a: 1"> 
+    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" marginLeft="45" marginRight="45" marginBottom="45" marginTop="45" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201965366-03861ba7-e0b9-4724-b0a5-3c0d515aa64b.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.marginTop)marginTop {marginTop}
@@ -2494,6 +2739,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spac
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spacing around the outside of a node.
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="row" flexWrap="no-wrap" heightPercent="100" widthPercent="100" alignContent="stretch" backgroundImageColor="r: 0, g: 0, b: 0, a: 1"> 
+    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" marginLeft="45" marginRight="45" marginBottom="45" marginTop="45" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201965366-03861ba7-e0b9-4724-b0a5-3c0d515aa64b.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.marginBottom)marginBottom {marginBottom}
@@ -2503,7 +2766,23 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spac
 
 #### See <u>[FlexLayouts/Margins](Ui-FlexLayouts#margins)</u>
 
-A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spacing around the outside of a node.
+A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spacing around the outside of a node.#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" flexDirection="row" flexWrap="no-wrap" heightPercent="100" widthPercent="100" alignContent="stretch" backgroundImageColor="r: 0, g: 0, b: 0, a: 1"> 
+    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" marginLeft="45" marginRight="45" marginBottom="45" marginTop="45" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201965366-03861ba7-e0b9-4724-b0a5-3c0d515aa64b.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2517,6 +2796,18 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). Margin effects the spac
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines a frame's width as a percentage of it's parent's width. 
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" heightPercent="75" widthPercent="75" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" />
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.heightPercent)heightPercent {heightPercent}
@@ -2528,6 +2819,18 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines a frame's 
 #### See <u>[FlexLayouts/heightPercent](Ui-FlexLayouts#heightpercent)</u>
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines a frame's height as a percentage of it's parent's height. 
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" heightPercent="75" widthPercent="75" frameImageColor="r: 1, g: 1, b: 0.5, a: 1" />
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2545,6 +2848,24 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts).
 
 `absolute` When positioned absolutely an element doesn't take part in the normal layout flow. It is instead laid out independent of its siblings. The position is determined based on the top, right, bottom, and left values.
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="center" flexDirection="row" backgroundImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" position="relative" top="15" />
+    <include name="DemoAttributes/BasicBlockB" position="relative" />
+    <include name="DemoAttributes/BasicBlockC" position="relative" bottom="15" />
+    <include name="DemoAttributes/BasicBlockD" position="absolute" bottom="50" right="50" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201978680-868a36f4-b6f0-47f6-ad9c-23ab873b9934.png" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.left)left {left}
@@ -2555,6 +2876,23 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts).
 #### See <u>[FlexLayouts/Position](Ui-FlexLayouts#position)</u>
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a left-direction offset by pixels. The behavior of the offset depends if the frame position is relative or absolute. 
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="center" flexDirection="row" backgroundImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" position="relative" top="15" />
+    <include name="DemoAttributes/BasicBlockB" position="relative" />
+    <include name="DemoAttributes/BasicBlockC" position="relative" bottom="15" />
+    <include name="DemoAttributes/BasicBlockD" position="absolute" bottom="50" left="50" />
+</Frame>
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2578,6 +2916,23 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a right-directi
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a top-direction offset by pixels. The behavior of the offset depends if the frame position is relative or absolute. 
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="center" flexDirection="row" backgroundImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" position="relative" top="15" />
+    <include name="DemoAttributes/BasicBlockB" position="relative" />
+    <include name="DemoAttributes/BasicBlockC" position="relative" bottom="15" />
+    <include name="DemoAttributes/BasicBlockD" position="absolute" bottom="50" right="50" />
+</Frame>
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.bottom)bottom {bottom}
@@ -2589,6 +2944,23 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a top-direction
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a  bottom-direction offset by pixels. The behavior of the offset depends if the frame position is relative or absolute. 
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="center" flexDirection="row" backgroundImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" position="relative" top="15" />
+    <include name="DemoAttributes/BasicBlockB" position="relative" />
+    <include name="DemoAttributes/BasicBlockC" position="relative" bottom="15" />
+    <include name="DemoAttributes/BasicBlockD" position="absolute" bottom="50" right="50" />
+</Frame>
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.aspectRatio)aspectRatio {aspectRatio}
@@ -2596,7 +2968,32 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a  bottom-direc
 
 [](manual-wiki-start)
 
+**Values**: >= 0
+#### See <u>[FlexLayouts/AspectRatio](Ui-FlexLayouts#aspectratio)</u>
 
+A attribute only used by [Flex Layouts](Ui-FlexLayouts).
+
+`aspectRatio` describes the ratio of the width to the height. For instance, when the aspect ratio is set to 2, it means the width will be twice as large as the height.
+
+The `width` or `height` is adjusted depending on which one is not set. If both are set, `aspectRatio` will adjust the `height`.
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" aspectRatio="1" />
+    <include name="DemoAttributes/BasicBlockB" aspectRatio="2" />
+    <include name="DemoAttributes/BasicBlockC" aspectRatio="4" />
+    <include name="DemoAttributes/BasicBlockD" aspectRatio="0.5" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/7458d8f0-f131-431c-8d86-b23cf78d60aa" width="500"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+
+[](extra-section-end)
 
 [](manual-wiki-end)
 
@@ -2604,8 +3001,30 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a  bottom-direc
 **Value type: `string`**
 
 [](manual-wiki-start)
+**Values**: Script file associated with this frame.
 
-Script file associated with this frame. See [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28).
+#### Description
+[](description-start)
+
+The function links a script file to an XML file, enabling the execution of code, such as animations, during preview. This allows for faster development and testing.
+
+#####See the [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28) guide.
+[](description-end)
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" controller="controller" >
+    <Frame width="400" height="400" backgroundImage="golden_pass_overview" />
+</Frame>
+```
+
+[](example-usage-end)
+
+[](extra-section-start)
+#### Related Trigger Function(s):
+- [GetFrameController()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframecontroller-1)
+[](extra-section-end)
 
 [](manual-wiki-end)
 

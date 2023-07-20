@@ -22,14 +22,14 @@
 
 [](overview-start)
 
-Render world-space objects on a UI frame using a custom camera. Camera frames require either a [size](#size) or [autoSize](#autosize) to be set.
+Render world-space objects on a UI frame using a custom camera. Camera frames require either a [cameraSize](#cameraSize) or [cameraAutoSize](#cameraAutoSize) to be set.
 
 #### Example Usage
 [](example-usage-start)
 ```xml
 <!-- This camera frame's camera will be centered on the middle of the map, rotated to face down. 
 Placing a unit at x = 16, z = 16 will display it in the camera frame. -->
-<Camera width="200" height="200" autoSize="true" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" verticalOffsetInParent="200" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" verticalOffsetInParent="200" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149421895-8212bd32-6488-4d69-a1ba-a5465d9a83ac.png)
@@ -38,7 +38,7 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateCameraFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createcameraframetransform-parent)
+- [CreateCameraFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createcameraframe-1)
 [](extra-section-end)
 
 [](overview-end)
@@ -66,7 +66,7 @@ The size for the camera frame - this is the resolution of the camera frame. This
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -78,19 +78,19 @@ The size for the camera frame - this is the resolution of the camera frame. This
 
 #### Description
 [](description-start)
-The size for the camera frame - this is the resolution of the camera frame. This does not impact the width or height of the camera frame. The resolution values are not capped, but excessively high resolutions will consume large amounts of RAM. If [autoSize](#autosize) is set to `false` and no explicit size is set, the camera frame will have a resolution of 1x1.
+The size for the camera frame - this is the resolution of the camera frame. This does not impact the width or height of the camera frame. The resolution values are not capped, but excessively high resolutions will consume large amounts of RAM. If [cameraAutoSize](#autosize) is set to `false` and no explicit size is set, the camera frame will have a resolution of 1x1.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="200" height="200" size="x: 400, y: 400" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -116,7 +116,7 @@ The position for the camera frame's camera. The default position for a new camer
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportPosition()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportpositiontransform-ui-float-x-float-y-float-z)
+- [SetCameraFrameViewportPosition()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportworldposition-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -134,13 +134,13 @@ The position for the camera frame's camera. The default position for a new camer
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="200" height="200" size="x: 200, y: 200" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportPosition()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportpositiontransform-ui-float-x-float-y-float-z)
+- [SetCameraFrameViewportPosition()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportworldposition-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -166,7 +166,7 @@ The 3D rotation for the camera frame's camera. The default rotation for a new ca
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportRotation()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportrotationtransform-ui-float-x-float-y-float-z)
+- [SetCameraFrameViewportRotation()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportrotation-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -184,13 +184,13 @@ The 3D rotation for the camera frame's camera. The default rotation for a new ca
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="200" height="200" size="x: 200, y: 200" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportRotation()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportrotationtransform-ui-float-x-float-y-float-z)
+- [SetCameraFrameViewportRotation()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportrotation-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -218,7 +218,7 @@ The discard depth status for the camera frame, where `true` discards depth and `
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -238,13 +238,13 @@ The discard depth status for the camera frame, where `true` discards depth and `
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="200" height="200" size="x: 200, y: 200" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" discardDepth="true"/>
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" cameraDiscardDepth="true"/>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -272,7 +272,7 @@ The culling mask for the camera frame. Odd values will remove the terrain, even 
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameCullingMask()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframecullingmasktransform-ui-int-mask)
+- [SetCameraFrameCullingMask()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframecullingmask-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -292,13 +292,13 @@ The culling mask for the camera frame. Odd values will remove the terrain, even 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="100" height="100" autoSize="true" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0" cullingMask="1" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" cameraCullingMask="1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameCullingMask()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframecullingmasktransform-ui-int-mask)
+- [SetCameraFrameCullingMask()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframecullingmask-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -316,13 +316,13 @@ The background color for the camera frame. This background color will only color
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Camera width="100" height="100" autoSize="true" position="x: 16, y: 6, z: 15" rotation="x: 35, y: 0, z: 0" cameraBackgroundColor="r: 0, g: 1, b: 0.8, a: 1" />
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0" cameraCullingMask="1" cameraBackgroundColor="r: 0, g: 1, b: 0.8, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetUiCameraBackgroundColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframebackgroundcolortransform-ui-colorrgba-color)
+- [SetUiCameraBackgroundColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframebackgroundcolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -351,7 +351,7 @@ Example Usage:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -365,20 +365,20 @@ Example Usage:
 
 #### Description
 [](description-start)
-The autoSize status for the camera frame, where `true` means the camera frame will autosize and `false` means it does not. AutoSize will attempt to match the resolution with the height and width of the camera frame. If autoSize is set to `false` and no explicit [size](#size) is set, the camera frame will have a resolution of 1x1. This attribute cannot be set via an API call.
+The autoSize status for the camera frame, where `true` means the camera frame will autosize and `false` means it does not. CameraAutoSize will attempt to match the resolution with the height and width of the camera frame. If autoSize is set to `false` and no explicit [cameraSize](#cameraSize) is set, the camera frame will have a resolution of 1x1. This attribute cannot be set via an API call.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 Example Usage:
 ```xml
-<Camera width="400" height="400" autoSize="true" position="x: 16, y: 1, z: 15" rotation="x: 35, y: 0, z: 0"/>
+<Camera layout="legacy" width="200" height="200" cameraAutoSize="true" cameraPosition="x: 16, y: 1, z: 15" cameraRotation="x: 35, y: 0, z: 0"/>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setcameraframeviewportsizetransform-ui-int-x-int-y-bool-discarddepth)
+- [SetCameraFrameViewportSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setcameraframeviewportsize-4)
 [](extra-section-end)
 
 [](manual-wiki-end)

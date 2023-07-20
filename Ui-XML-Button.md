@@ -16,7 +16,7 @@ A button which can can be hooked up to run a lua function or change a XML state 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Button width="200" height="100">
+<Button layout="flex" width="200" height="100">
     <Text text="Button" />
 </Button>
 ```
@@ -27,12 +27,10 @@ This XML produces the following UI (shown in the UI Previewer):
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createbuttonframetransform-parent)
+- [CreateButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createbuttonframe-1)
 [](extra-section-end)
 
 [](overview-end)
-
-A button
 
 ## [](Button.enable)enable {enable}
 **Value type: `boolean`**
@@ -49,7 +47,7 @@ The enabled status for the button frame, where `true` is enabled and `false` is 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Button width="200" height="100" enable="false">
+<Button layout="flex" width="200" height="100" enable="false">
     <Text text="Button" />
 </Button>
 ```

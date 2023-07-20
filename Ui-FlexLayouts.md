@@ -9,15 +9,31 @@
     - [flexGrow](#flexgrow)
     - [flexShrink](#flexshrink)
     - [flexDirection](#flexdirection)
+      - [`column` (default)](#column-default)
+      - [`column-reverse`](#column-reverse)
+      - [`row`](#row)
+      - [`row-reverse`](#row-reverse)
     - [flexWrap](#flexwrap)
+      - [`no-wrap` (default)](#no-wrap-default)
+      - [`wrap` (default)](#wrap-default)
+      - [`wrap-reverse` (default)](#wrap-reverse-default)
     - [justifyContent](#justifycontent)
     - [alignItems](#alignitems)
     - [alignContent](#aligncontent)
     - [alignSelf](#alignself)
     - [Margins](#margins)
+      - [`marginLeft`](#marginleft)
+      - [`marginRight`](#marginright)
+      - [`marginTop`](#margintop)
+      - [`marginBottom`](#marginbottom)
     - [widthPercent](#widthpercent)
     - [heightPercent](#heightpercent)
     - [position](#position)
+      - [`left`](#left)
+      - [`right`](#right)
+      - [`top`](#top)
+      - [`bottom`](#bottom)
+    - [aspectRatio](#aspectratio)
   
 </div>
 
@@ -324,6 +340,28 @@ This defines the alignment along the main axis. It helps distribute extra free s
 * [justify-content (yogalayout)](https://yogalayout.com/docs/justify-content) 
 * [justify-content (Flexbox)](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-justify-content)
 
+<table><details>
+<summary>EXAMPLES (Click to expand)</summary>
+<div markdown="1">
+
+```xml
+<Frame layout="flex" justifyContent="space-around" alignItems="stretch" alignContent="stretch">
+    <Frame layout="flex" flexDirection="row" marginBottom="25" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0"/>
+        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="0"/>
+        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0"/>
+    </Frame>
+    <Frame layout="flex" flexDirection="row" heightPercent="50">
+        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0.5" />
+        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="2" />
+        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0.5" />
+    </Frame>
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201426265-cbe9bd00-0565-4506-9eae-5774546ff2ad.png" width="500"/>
+
+</div>
+</details></table>
 
 --- 
 
@@ -458,5 +496,37 @@ Offsets in each direction (different behavior depending if the position is absol
 </div>
 </details></table>
 
+
+---
+
+### aspectRatio
+**Value type: `number`**
+**Values**: >= 0
+
+`aspectRatio` describes the ratio of the width to the height. For instance, when the aspect ratio is set to 2, it means the width will be twice as large as the height.
+
+The `width` or `height` is adjusted depending on which one is not set. If both are set, `aspectRatio` will adjust the `height`.
+
+**For more info, see:**
+* [yogalayout](https://yogalayout.com/docs/aspect-ratio) 
+
+<table><details>
+<summary>EXAMPLE (Click to expand)</summary>
+
+<div markdown="1">
+
+```xml
+<Frame layout="flex" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" aspectRatio="1" />
+    <include name="DemoAttributes/BasicBlockB" aspectRatio="2" />
+    <include name="DemoAttributes/BasicBlockC" aspectRatio="4" />
+    <include name="DemoAttributes/BasicBlockD" aspectRatio="0.5" />
+</Frame>
+```
+
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/7458d8f0-f131-431c-8d86-b23cf78d60aa" width="500"/>
+
+</div>
+</details></table>
 
 ---
