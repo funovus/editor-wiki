@@ -926,7 +926,8 @@ The bottom padding of the UI frame.
 
 #### Description
 [](description-start)
-The spacing of the UI frame's child elements. This function affects frames that automatically position their children, such as stacks or scrolls. For scrolls, this function should be called on the content frame returned by [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getscrollframecontent-1). Only works in legacy layouts.
+The spacing of the UI frame's child elements. This function affects frames that automatically position their children, such as stacks or scrolls. For scrolls, this function should be called on the content frame returned by [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getscrollframecontent-1). 
+Only works in legacy layouts. If you wanted to achieve a similar effect in a flex layout, you would have to adjust the children. See [FlexLayouts/Margins](Ui-FlexLayouts#margins).
 [](description-end)
 
 #### Example Usage
@@ -2412,7 +2413,6 @@ For more info, see:
 
 [](manual-wiki-start)
 
-**Value type: `flexDirection`**
 **Values**: `column, column-reverse, row, row-reverse`
 
 #### See <u>[FlexLayouts/flexDirection](Ui-FlexLayouts#flexdirection)</u>
@@ -2905,6 +2905,17 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a left-directio
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This is a right-direction offset by pixels. The behavior of the offset depends if the frame position is relative or absolute. 
 
+#### Example Usage
+[](example-usage-start)
+```xml
+<Frame layout="flex" alignItems="center" flexDirection="row" backgroundImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" position="relative" top="15" />
+    <include name="DemoAttributes/BasicBlockB" position="relative" />
+    <include name="DemoAttributes/BasicBlockC" position="relative" bottom="15" />
+    <include name="DemoAttributes/BasicBlockD" position="absolute" bottom="50" right="50" />
+</Frame>
+```
+
 [](manual-wiki-end)
 
 ## [](CommonAttributes.top)top {top}
@@ -3001,12 +3012,13 @@ The `width` or `height` is adjusted depending on which one is not set. If both a
 **Value type: `string`**
 
 [](manual-wiki-start)
+
 **Values**: Script file associated with this frame.
 
 #### Description
 [](description-start)
 
-The function links a script file to an XML file, enabling the execution of code, such as animations, during preview. This allows for faster development and testing.
+This attribute links an XML file to a script file, enabling the execution of code, such as animations, during preview. This allows for faster development and testing.
 
 #####See the [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28) guide.
 [](description-end)
@@ -3033,7 +3045,55 @@ The function links a script file to an XML file, enabling the execution of code,
 
 [](manual-wiki-start)
 
+**Values**: The name of the class defined in the style.
 
+#### Description
+[](description-start)
+
+This attribute allows you to assign specific style rules to individual frames in your UI layout.
+
+#####See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
+[](description-end)
+
+#### Example Usage
+[](example-usage-start)
+```xml
+<!-- Style object that applies to all frames -->
+<Style>
+    <![CDATA[
+    /* Style for all text frames */
+    Text {
+        color: #ff0000;
+        font-size: 64px;
+        -dcei-text-shadow: false;
+        -dcei-text-outline: false;
+    }
+    .small {
+        color: #00ff00;
+        font-size: 32px;
+    }
+    .large {
+        color: #0000ff20;
+        font-size: 128px;
+    }
+    ]]>
+</Style>
+
+<!-- A different object utilizing the style -->
+<VStack layout="flex">
+    <Text text="test" />
+    <Text class="large" text="test" />
+    <Text class="small" text="test" />
+</VStack>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/f1b014d3-2729-45fc-8e60-ac78c1326e05"/>
+
+[](example-usage-end)
+
+[](extra-section-start)
+#### Related UI XML Properties:
+- [Style](Ui-XML-Style)
+[](extra-section-end)
 
 [](manual-wiki-end)
 

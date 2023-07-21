@@ -9,17 +9,30 @@
 
 [](overview-start)
 
-The scrollable content frame. Automatically created by creating a [CreateHScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createhscrollframetransform-parent), [CreateVScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createvscrollframetransform-parent), or [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createscrollframetransform-parent) in lua. When creating the scroll elements in xml, the explicit declaration of this frame is only necessary to set the [padding](Ui-XML-CommonAttributes#padding) and [spacing](Ui-XML-CommonAttributes#spacing) for the child frames.
+The scrollable content frame. Automatically created by creating a [CreateHScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createhscrollframe-1), [CreateVScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createvscrollframe-1), or [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createscrollframe-1) in lua. When creating the scroll elements in xml, the explicit declaration of this frame is only necessary to set the [padding](Ui-XML-CommonAttributes#padding) and [spacing](Ui-XML-CommonAttributes#spacing) for the child frames.
+
+Note that spacing only works in legacy layouts. If you wanted to achieve a similar effect in a flex layout, you would have to adjust the children. See [FlexLayouts/Margins](Ui-FlexLayouts#margins).
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VScroll height="200" width="120" backgroundImage="frame01_blue">
+<!-- Flex version -->
+<VScroll layout="flex" height="200" width="120" frameImage="frame01_blue">
+    <ScrollContent padding="10">
+        <Frame height="100" width="100" frameImage="cart" marginBottom="10" />
+        <Frame height="100" width="100" frameImage="cart" marginBottom="10" />
+        <Frame height="100" width="100" frameImage="cart" marginBottom="10" />
+        <Frame height="100" width="100" frameImage="cart" />
+    </ScrollContent>
+</VScroll>
+
+<!-- Legacy version -->
+<VScroll layout="legacy" height="200" width="120" frameImage="frame01_blue">
     <ScrollContent spacing="10" padding="10">
-        <Frame height="100" width="100" backgroundImage="cart" />
-        <Frame height="100" width="100" backgroundImage="cart" />
-        <Frame height="100" width="100" backgroundImage="cart" />
-        <Frame height="100" width="100" backgroundImage="cart" />
+        <Frame height="100" width="100" frameImage="cart" />
+        <Frame height="100" width="100" frameImage="cart" />
+        <Frame height="100" width="100" frameImage="cart" />
+        <Frame height="100" width="100" frameImage="cart" />
     </ScrollContent>
 </VScroll>
 ```
@@ -30,10 +43,10 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-getscrollframecontenttransform-parent)
-- [CreateHScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createhscrollframetransform-parent)
-- [CreateVScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createvscrollframetransform-parent)
-- [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createscrollframetransform-parent)
+- [GetScrollFrameContent()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getscrollframecontent-1)
+- [CreateHScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createhscrollframe-1)
+- [CreateVScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createvscrollframe-1)
+- [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createscrollframe-1)
 
 #### Related UI XML Properties:
 - [VScroll](Ui-XML-VScroll)

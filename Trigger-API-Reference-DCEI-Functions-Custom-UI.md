@@ -1595,7 +1595,7 @@ DCEI.SetFrameSize(input, 300, 50)
 [](extra-section-start)
 #### Related
 - [GetInputFrameText](#getinputframetext-1)
-- [SetInputFrameText()](rigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframetexttransform-text-string-content)
+- [SetInputFrameText()](rigger-API-Reference-DCEI-Functions-Custom-UI#setinputframetext-2)
 - [SetInputFrameFontSize](#setinputframefontsize-2)
 - [SetInputFrameColor](#setinputframecolor-2)
 - [SetInputFrameWrapping](#setinputframewrapping-2)
@@ -3064,7 +3064,7 @@ void SetScrollFrameSnapThreshold(InGameUILayoutComponent ui, float value)
 ```
 #### Description
 [](description-start)
-Sets the threshold for scroll frame snapping. The threshold his how close a user has to scroll to the next step before they will snap to that step instead of the previous one.
+Sets the threshold for scroll frame snapping. The threshold is how close a user has to scroll to the next step before they will snap to that step instead of the previous one.
 [](description-end)
 
 #### Parameters
@@ -4514,7 +4514,8 @@ InGameUILayoutComponent CreateListFrame(InGameUILayoutComponent parent)
 ```
 #### Description
 [](description-start)
-Create a virtualized list frame. Virtual lists greatly improve the performance of long lists by only creating UI elements when the user scrolls. Elements outside of the scroll view won't be created or updated, saving on performance. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
+Create a virtualized list frame. Virtual lists greatly improve the performance of long lists by only creating UI elements when the user scrolls. Elements outside of the scroll view won't be created or updated, saving on performance.
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4541,7 +4542,8 @@ void SetListFrameItemName(InGameUILayoutComponent ui, string itemName)
 ```
 #### Description
 [](description-start)
-Set the XML name for virtualized list's item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
+Set the XML name for virtualized list's item.
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4570,7 +4572,8 @@ void SetListFrameItemSize(InGameUILayoutComponent ui, float itemSize)
 ```
 #### Description
 [](description-start)
-Set the size for virtualized list's item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
+Set the size for virtualized list's item.
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4599,7 +4602,8 @@ void SetListFrameItemDataCallback(InGameUILayoutComponent ui, TypedCallback<InGa
 ```
 #### Description
 [](description-start)
-Tell the virtual list how to create new items as well as how to bind the data to each item. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
+Tell the virtual list how to create new items as well as how to bind the data to each item.
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4633,7 +4637,8 @@ void SetListFrameItemCount(InGameUILayoutComponent ui, int itemCount)
 ```
 #### Description
 [](description-start)
-Tell the virtual list we have more items and the list to manage item creation if needed. See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
+Tell the virtual list we have more items and the list to manage item creation if needed.
+See [Using Virtual Lists](https://funovus.notion.site/Using-Virtual-Lists-5e200de95f584e728b7019c1b271c8f2) for more information.
 [](description-end)
 
 #### Parameters
@@ -4707,7 +4712,17 @@ Creates a frame for Spine animations. See [Spine animations](https://funovus.not
 
 #### Example Usage
 [](example-usage-start)
-See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a90d9be4ea29a383e2f6d22577d)
+```lua
+local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(container, 250, 250)
+local spine = DCEI.CreateSpineFrame(container)
+DCEI.SetSpineFrameAsset(spine, "texiao3")
+local animations = DCEI.GetSpineFrameAnimations(spine)
+for _, animation in ipairs(animations) do
+    DCEI.LogMessage("Animation: " .. animation)
+end
+DCEI.PlaySpineFrameAnimation(spine, animations[1], true, 1)
+```
 [](example-usage-end)
 
 [](extra-section-start)

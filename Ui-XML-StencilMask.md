@@ -15,21 +15,21 @@ Shows through part of parent or self `Mask` area.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Mask>
+<Mask layout="flex" widthPercent="100" heightPercent="100" justifyContent="center" alignItems="center">
     <!-- Button has a child stencil mask that will 'cut through' the masking frame's effect -->
-    <Button height="200" width="200">
-        <Frame padding="-20">
-            <StencilMask id="mask_stencil" backgroundImage="shape_square_32x32" matchParentWidth="true" matchParentHeight="true" />
+    <Button height="200" width="200" position="absolute">
+        <Frame position="absolute" widthPercent="120" heightPercent="120">
+            <StencilMask frameImage="shape_square_32x32" widthPercent="100" heightPercent="100" />
         </Frame>
     </Button>
     <!-- Frame that actually creates the masking effect -->
-    <Frame id="mask" active="true" width="9000" height="9000" backgroundImageColor="r: 0, g: 0, b: 0, a: 0.45" />
+    <Frame widthPercent="100" heightPercent="100" frameImageColor="r: 0, g: 0, b: 0, a: 0.45" />
 </Mask>
 ```
 This xml script produces the following UI:
 ![Stencil Mask](https://user-images.githubusercontent.com/34138206/147840463-2b9ebb37-1f91-449d-858a-794621edd077.gif)
 
-The stencil mask, given a negative padding, is slightly larger than it's parent button. As the button changes size in response to being clicked on, the stencil mask matches its size and thus the stenciled portion adjusts smoothly.
+The stencil mask is slightly larger than it's parent button. As the button changes size in response to being clicked on, the stencil mask matches its size and thus the stenciled portion adjusts smoothly.
 [](example-usage-end)
 
 [](extra-section-start)
@@ -59,9 +59,9 @@ If `true` the stencil mask will only affect children frames. This will make the 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Mask>
-    <StencilMask id="mask_stencil" height="150" width="150" backgroundImage="shape_square_32x32" onlyAffectChildren="true">
-        <Button height="200" width="200" />
+<Mask layout="flex" heightPercent="100" widthPercent="100" justifyContent="center" alignItems="center">
+    <StencilMask height="100" width="100" frameImage="shape_inner_round_16_no_sliced" onlyAffectChildren="true" position="absolute" justifyContent="center" alignItems="center">
+        <Button height="200" width="200" position="absolute" />
     </StencilMask>
 </Mask>
 ```

@@ -17,13 +17,14 @@ A 2D scrollable frame. By default, this frame type attempts to fill its parent s
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Scroll height="500" width="500">
-    <Frame width="1000" height="1000" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.8" />
-    <Text text="Left" leftAlignmentInParent="true" />
-    <Text text="Right" rightAlignmentInParent="true" />
-    <Text text="Top" topAlignmentInParent="true" />
-    <Text text="Bottom" bottomAlignmentInParent="true" />
-    <Text text="Center" />
+<Scroll layout="flex" height="500" width="500">
+    <Frame width="1000" height="1000" frameImageColor="r: 1, g: 1, b: 1, a: 0.8">
+        <Text text="Left" position="absolute" left="0" />
+        <Text text="Right" position="absolute" right="0" />
+        <Text text="Top" position="absolute" top="0" />
+        <Text text="Bottom" position="absolute" bottom="0" />
+        <Text text="Center" position="absolute" />
+    </Frame>
 </Scroll>
 ```
 This xml script produces the following UI:
@@ -33,7 +34,7 @@ This xml script produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createscrollframetransform-parent)
+- [CreateScrollFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createscrollframe-1)
 
 #### Related UI XML Properties:
 - [ScrollContent](Ui-XML-ScrollContent)
@@ -58,20 +59,21 @@ The inertia status of the Scroll frame, where `true` is enabled and `false` is d
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Scroll height="500" width="500" inertia = "false">
-    <Frame width="1000" height="1000" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.8" />
-    <Text text="Left" leftAlignmentInParent="true" />
-    <Text text="Right" rightAlignmentInParent="true" />
-    <Text text="Top" topAlignmentInParent="true" />
-    <Text text="Bottom" bottomAlignmentInParent="true" />
-    <Text text="Center" />
+<Scroll layout="flex" height="500" width="500" inertia = "false">
+    <Frame width="1000" height="1000" frameImageColor="r: 1, g: 1, b: 1, a: 0.8">
+        <Text text="Left" position="absolute" left="0" />
+        <Text text="Right" position="absolute" right="0" />
+        <Text text="Top" position="absolute" top="0" />
+        <Text text="Bottom" position="absolute" bottom="0" />
+        <Text text="Center" position="absolute" />
+    </Frame>
 </Scroll>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetScrollFrameScrollInertia()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setscrollframescrollinertiatransform-ui-bool-value)
+- [SetScrollFrameScrollInertia()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setscrollframescrollinertia-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -83,19 +85,22 @@ The inertia status of the Scroll frame, where `true` is enabled and `false` is d
 
 [](manual-wiki-start)
 
+#### Description
+[](description-start)
 The deceleration rate for the inertia, if enabled. A value of 0 will cause instant deceleration (equivalent to setting the inertia to false). Values between 0 and 1 will cause deceleration. A value of 1 will cause no deceleration. A value greater than 1 will cause acceleration. A negative value will break the scroll element.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Scroll height="500" width="500" decelerationRate="0.5">
-    <Frame width="1000" height="1000" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.8" />
-    <Text text="Left" leftAlignmentInParent="true" />
-    <Text text="Right" rightAlignmentInParent="true" />
-    <Text text="Top" topAlignmentInParent="true" />
-    <Text text="Bottom" bottomAlignmentInParent="true" />
-    <Text text="Center" />
+<Scroll layout="flex" height="500" width="500" decelerationRate="0.5">
+    <Frame width="1000" height="1000" frameImageColor="r: 1, g: 1, b: 1, a: 0.8">
+        <Text text="Left" position="absolute" left="0" />
+        <Text text="Right" position="absolute" right="0" />
+        <Text text="Top" position="absolute" top="0" />
+        <Text text="Bottom" position="absolute" bottom="0" />
+        <Text text="Center" position="absolute" />
+    </Frame>
 </Scroll>
 ```
 [](example-usage-end)
@@ -103,7 +108,7 @@ The deceleration rate for the inertia, if enabled. A value of 0 will cause insta
 [](extra-section-start)
 #### Related Trigger Function(s):
 Related Trigger Function(s):
-- [SetScrollFrameScrollDecelerationRate()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setscrollframescrolldecelerationratetransform-ui-float-value)
+- [SetScrollFrameScrollDecelerationRate()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setscrollframescrolldecelerationrate-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -115,26 +120,29 @@ Related Trigger Function(s):
 
 [](manual-wiki-start)
 
+#### Description
+[](description-start)
 The content alignment of the Scroll frame.This value determines where the initial display location of the scroll content is. Options are `left`, `right`, `top`, `bottom`, and `(top|bottom)-(left|right)`. The default alignment is `top-left`
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Scroll height="500" width="500" contentAlignment="bottom-right">
-    <Frame width="1000" height="1000" backgroundImageColor="r: 1, g: 1, b: 1, a: 0.8" />
-    <Text text="Left" leftAlignmentInParent="true" />
-    <Text text="Right" rightAlignmentInParent="true" />
-    <Text text="Top" topAlignmentInParent="true" />
-    <Text text="Bottom" bottomAlignmentInParent="true" />
-    <Text text="Center" />
+<Scroll layout="flex" height="500" width="500" contentAlignment="bottom-right">
+    <Frame width="1000" height="1000" frameImageColor="r: 1, g: 1, b: 1, a: 0.8">
+        <Text text="Left" position="absolute" left="0" />
+        <Text text="Right" position="absolute" right="0" />
+        <Text text="Top" position="absolute" top="0" />
+        <Text text="Bottom" position="absolute" bottom="0" />
+        <Text text="Center" position="absolute" />
+    </Frame>
 </Scroll>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetScrollFrameScrollContentAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setscrollframescrollcontentalignmenttransform-ui-string-value)
+- [SetScrollFrameScrollContentAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setscrollframescrollcontentalignment-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
