@@ -87,7 +87,11 @@ Shows the position helper hand at the specified coordinates. This will replace p
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowPositionHelper(16, 16)
+DCEI.ShowWorldPositionHelper(16, 16)
+
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideWorldPositionHelper()
+end, 2)
 ```
 [](example-usage-end)
 
@@ -107,7 +111,11 @@ Hides the position helper.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideWorldPositionHelper()
+DCEI.ShowWorldPositionHelper(16, 16)
+
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideWorldPositionHelper()
+end, 2)
 ```
 [](example-usage-end)
 
@@ -127,7 +135,24 @@ Blocks the player from interacting with the game world. Removes any active white
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Creates a unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local unit = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+
+-- Blocks the game world, except the unit
 DCEI.BlockGameWorld()
+DCEI.WhitelistUnit(unit)
+
+-- When the function is triggered, unblocks the game world
+function OnSelect()
+    DCEI.UnblockGameWorld()
+end
+
+-- Sets the function to when the unit is selected
+DCEI.TriggerAddUnitSelectedEvent(unit, OnSelect)
 ```
 [](example-usage-end)
 
@@ -153,7 +178,24 @@ Whitelists a unit for player selection while normal input is blocked with `DCEI.
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Creates a unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local unit = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+
+-- Blocks the game world, except the unit
+DCEI.BlockGameWorld()
 DCEI.WhitelistUnit(unit)
+
+-- When the function is triggered, unblocks the game world
+function OnSelect()
+    DCEI.UnblockGameWorld()
+end
+
+-- Sets the function to when the unit is selected
+DCEI.TriggerAddUnitSelectedEvent(unit, OnSelect)
 ```
 [](example-usage-end)
 
@@ -181,6 +223,8 @@ Whitelists a map position for player interaction while normal input is blocked w
 #### Example Usage
 [](example-usage-start)
 ```lua
+DCEI.BlockGameWorld()
+DCEI.WhitelistUnit(unit)
 DCEI.WhitelistWorldPosition(20, 16, 2)
 ```
 [](example-usage-end)
@@ -207,7 +251,20 @@ Whitelists the given UI element while normal input is blocked with `DCEI.BlockGa
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.WhitelistUi(button)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Blocks the game world, except the button
+DCEI.BlockGameWorld()
+DCEI.WhitelistUi(button_layout.Button)
+
+-- Unblocks the game world when the button is pressed
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.UnblockGameWorld()
+end)
 ```
 [](example-usage-end)
 
@@ -227,7 +284,24 @@ Unblocks the game world, allowing user interaction again.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.UnblockGameWorld()
+-- Creates a unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local unit = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+
+-- Blocks the game world, except the unit
+DCEI.BlockGameWorld()
+DCEI.WhitelistUnit(unit)
+
+-- When the function is triggered, unblocks the game world
+function OnSelect()
+    DCEI.UnblockGameWorld()
+end
+
+-- Sets the function to when the unit is selected
+DCEI.TriggerAddUnitSelectedEvent(unit, OnSelect)
 ```
 [](example-usage-end)
 

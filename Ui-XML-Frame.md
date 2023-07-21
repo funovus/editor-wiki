@@ -14,7 +14,7 @@ An basic empty frame. Properties can be found in [CommonAttributes](https://wiki
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="frame01_blue" height="250" width="250" />
+<Frame layout="flex" frameImage="frame01_blue" height="250" width="250" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149568035-22056e14-9a3c-4dbe-a348-e03215caf9f3.png)

@@ -23,5 +23,5 @@ The following are some very useful UI features you should be aware of.
 * Add beautiful [Spine](http://esotericsoftware.com/spine-in-depth) animations to your game. 
 
 ## [Flex Layouts](Ui-FlexLayouts) {preview}
-* An alternate way of laying out UI
+* An alternate way of laying out UI.
   

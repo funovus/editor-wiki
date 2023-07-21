@@ -1095,13 +1095,26 @@ bool Settings.IsAppleConnected()
 ```
 #### Description
 [](description-start)
-Whether player has link the account to Apple.
+Whether player has linked the account to Apple.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
 local is_apple_connect = DCEI.Settings.IsAppleConnected()
+if not is_apple_connect then
+    DCEI.ConnectApple(
+        function(result)
+            if result == "success" then
+                -- Handle connect success case
+            elseif result == "failed" then
+                -- Handle connect failed case
+            elseif result == "used" then
+                -- Handle account used case
+            end
+        end
+    )
+end
 ```
 [](example-usage-end)
 

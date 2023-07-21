@@ -38,7 +38,7 @@ Game logic is handled by [Lua scripting](https://www.lua.org/pil/1.html). If thi
 ## UI
 UI can be created [with Lua scripting](Trigger-API-Reference#custom-ui) and directly with XML through the `UI Editor` window (Windows > UI Editor).
 
-The best practice for creating custom UI is to create the UI in xml and hook it up using the [gmui library](Mods-GMUI-Overview).
+The best practice for creating custom UI is to create the UI in xml and hook it up using the [GMUI library](Mods-GMUI-Overview).
 
 ### UI Resources
 * [Custom UI via XML Overview](Using-XML-For-UI)

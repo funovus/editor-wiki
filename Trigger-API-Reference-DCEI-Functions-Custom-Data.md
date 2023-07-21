@@ -21,13 +21,23 @@ object GetAllCustomData()
 ```
 #### Description
 [](description-start)
-Returns a table of all the custom data.
+Returns a table of all the custom data. To set the data, go to the Custom Data window.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
-local custom_data = DCEI.GetAllCustomData()
+function PrintTable(table)
+    for key, value in pairs(table) do
+        if type(value) == "table" then
+            PrintTable(value) -- Recursively print nested tables
+        else
+            DCEI.LogMessage("key: " .. tostring(key))
+            DCEI.LogMessage("value: " .. tostring(value))
+        end
+    end
+end
+PrintTable(DCEI.GetAllCustomData())
 ```
 [](example-usage-end)
 
@@ -53,7 +63,18 @@ Returns a table of all the custom data of the given type.
 #### Example Usage
 [](example-usage-start)
 ```lua
+function PrintTable(table)
+    for key, value in pairs(table) do
+        if type(value) == "table" then
+            PrintTable(value) -- Recursively print nested tables
+        else
+            DCEI.LogMessage("key: " .. tostring(key))
+            DCEI.LogMessage("value: " .. tostring(value))
+        end
+    end
+end
 local talents = DCEI.GetCustomDataByType("Talents")
+PrintTable(talents)
 ```
 [](example-usage-end)
 
@@ -79,7 +100,18 @@ Returns a table of all the default custom data of the given type.
 #### Example Usage
 [](example-usage-start)
 ```lua
+function PrintTable(table)
+    for key, value in pairs(table) do
+        if type(value) == "table" then
+            PrintTable(value) -- Recursively print nested tables
+        else
+            DCEI.LogMessage("key: " .. tostring(key))
+            DCEI.LogMessage("value: " .. tostring(value))
+        end
+    end
+end
 local talent_defaults = DCEI.GetDefaultCustomDataByType("Talents")
+PrintTable(talent_defaults)
 ```
 [](example-usage-end)
 
@@ -106,7 +138,18 @@ Returns a table of all the custom data of the given type of a specific instance.
 #### Example Usage
 [](example-usage-start)
 ```lua
+function PrintTable(table)
+    for key, value in pairs(table) do
+        if type(value) == "table" then
+            PrintTable(value) -- Recursively print nested tables
+        else
+            DCEI.LogMessage("key: " .. tostring(key))
+            DCEI.LogMessage("value: " .. tostring(value))
+        end
+    end
+end
 local talent_fireball = DCEI.GetCustomDataByInstance("Talents", "Fireball")
+PrintTable(talent_fireball)
 ```
 [](example-usage-end)
 

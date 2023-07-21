@@ -637,7 +637,7 @@ Layouts created from XML will have each child frame with id added to the layout 
 ##### Root Frame
 Regardless of how the layout was constructed, the root frame can be gotten with `layout.Frame` such as:
 ```lua
-local layout = GMUI.Layout:New()
+local layout = GMUI.Layout.New()
 DCEI.SetFrameSize(layout.Frame, 100, 100)
 DCEI.SetFrameImageColor(layout.Frame, {r = 1, g = 0, b = 0, a = 0.5})
 ```
@@ -660,31 +660,28 @@ Using an XML frame named "Standard/Button/Button" such as:
 The lua:
 ```lua
 local ui = {
-    Root = DCEI.GetUiRootFrame()
+    Root = DCEI.GetUiRootFrame(),
 }
 
 function CreateButtonFrame()
-    local layout = GMUI.Layout:New({
+    local layout = GMUI.Layout.New({
         parent = ui.Root,
-        name = "Standard/Button/Button"
+        name = "Standard/Button/Button",
     })
-
     -- layout
     DCEI.SetFrameImage(layout.Button, "btn_red")
     DCEI.SetTextFrameText(layout.Label, "Press Me!")
 
     -- initialize
-    layout:HideImmediate()
+    layout:Hide()
     return layout
 end
 
+-- creates a button that appears after 2 seconds
 ui.button = CreateButtonFrame()
-DCEI.TriggerAddTimerEventElapsed(
-    function()
-        ui.button:Show()
-    end,
-    2
-)
+DCEI.TriggerAddTimerEventElapsed(function()
+    ui.button:Show()
+end, 2)
 ```
 
 ## OnHide

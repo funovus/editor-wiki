@@ -31,7 +31,9 @@ Sets the level of an upgrade (for all players).
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetUpgradeLevelAsync("Upgrade", 1)
+local upgrade_name = "Upgrade Damage"
+local level = 5
+DCEI.SetUpgradeLevelAsync(upgrade_name, level)
 ```
 [](example-usage-end)
 

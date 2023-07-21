@@ -15,14 +15,14 @@ Embed another UI definition.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<HStack spacing="10" padding="10" backgroundImage="frame01_blue" reverse="true">
-    <include name="include" />
-    <include name="include" />
-    <include name="include" />
+<HStack layout="flex" padding="10" frameImage="frame01_blue">
+    <include name="IncludeTest" />
+    <include name="IncludeTest" />
+    <include name="IncludeTest" />
 </HStack>
 
-<!-- A separate UI element named 'include' -->
-<Frame height="100" width="100" backgroundImage="cart" />
+<!-- A separate UI element named 'IncludeTest' -->
+<Frame layout="flex" height="100" width="100" frameImage="cart" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149568768-b35ffadd-fd0c-4192-8010-ef2eedb3c1ef.png)
@@ -51,14 +51,14 @@ The name of the UI to embed.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<HStack spacing="10" padding="10" backgroundImage="frame01_blue" reverse="true">
-    <include name="include" />
-    <include name="include" />
-    <include name="include" />
+<HStack layout="flex" padding="10" frameImage="frame01_blue">
+    <include name="IncludeTest" />
+    <include name="IncludeTest" />
+    <include name="IncludeTest" />
 </HStack>
 
-<!-- A separate UI element named 'include' -->
-<Frame height="100" width="100" backgroundImage="cart" />
+<!-- A separate UI element named 'IncludeTest' -->
+<Frame layout="flex" height="100" width="100" frameImage="cart" />
 ```
 [](example-usage-end)
 

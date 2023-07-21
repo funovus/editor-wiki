@@ -150,7 +150,7 @@ Register a used actor.
 ```lua
 --this creates an vfx model actor on your unit
 on_hit = DCEI.Actor("COMBAT AreaAttack Impact FX")
-core.SendActorMessage(target_unit, "create", on_hit)
+Core.Unit.SendActorMessage(target_unit, "create", on_hit)
 ```
 [](example-usage-end)
 
@@ -196,6 +196,7 @@ See [Simple Units Guide.](https://funovus.notion.site/Simple-Units-Introduction-
 
 #### Parameters
 [](parameters-start)
+- *string* `unit` the unit name to register.
 
 [](parameters-end)
 
@@ -285,7 +286,8 @@ DCEI.ApplyBehaviorToSelf(target_unit, behavior, 1)
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[UnitBehaviorStatus](Trigger-API-Reference-DCEI-Types#unitbehaviorstatus)
 [](extra-section-end)
 
 ## string Sound(string sound) {sound-1}
@@ -458,17 +460,20 @@ string Particle(string particle)
 ```
 #### Description
 [](description-start)
-
+Register a used particle. Data used in Lua has to be registered in order for it to be loaded in-game.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `particle` the particle name to register.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local explosion_particle = DCEI.Particle("Explosion")
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1311,9 +1316,7 @@ Set effect field value for player with playerId. This is similar to effect hooks
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-  DCEI.SetEffectFieldValueForPlayer(1, DCEI.Effect("Standard Damage"), {"effects", "Standard Damage", "damage", "damageAmount"}, 15)
-
+DCEI.SetEffectFieldValueForPlayer(1, DCEI.Effect("Standard Damage"), {"effects", "Standard Damage", "damage", "damageAmount"}, 15)
 ```
 [](example-usage-end)
 
@@ -1340,7 +1343,17 @@ Applies a behavior modifier to a value, returning the scaled/modified value. Thi
 #### Example Usage
 [](example-usage-start)
 ```lua
-local example_value = DCEI.ApplyModifier({scaled = 5, unscaled = 0, additive_factor = 1, positive_unified_factor = 1, negative_unified_factor = 0, multiplier_factor = 1}, 5)
+local example_value = DCEI.ApplyModifier(
+    {
+        scaled = 5,
+        unscaled = 0,
+        additive_factor = 1,
+        positive_unified_factor = 1,
+        negative_unified_factor = 0,
+        multiplier_factor = 1,
+    },
+    5
+)
 DCEI.LogMessage(example_value)
 ```
 [](example-usage-end)

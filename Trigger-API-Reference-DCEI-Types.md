@@ -316,16 +316,37 @@ Windowed
 ```
 #### Description
 [](description-start)
+`ExclusiveFullScreen`
+An exclusive full-screen mode where the application takes complete control of the screen, hiding other windows and overlays. Stretches the screen if the resolution does not fit.
 
+`FullScreenWindow`
+A windowed version of the FullScreen mode. If the resolution is too small and the ratio doesn't match the screen, it creates black borders.
+
+`MaximizedWindow`
+Emulates the FullScreen mode by stretching the window borders to fit the entire screen. Functionally similar to FullScreenWindow.
+
+`Windowed`
+Starts the game in its own window.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+DCEI.SetResolution(1000, 500, "Windowed")
+-- Logs after a timer so the game has time to update.
+DCEI.TriggerAddTimerEventElapsed(function()
+    local resolution = DCEI.GetCurrentResolution()
+    DCEI.LogMessage("Width: " .. resolution.width)
+    DCEI.LogMessage("Height: " .. resolution.height)
+    DCEI.LogMessage("Mode: " .. resolution.mode)
+end, 0)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[SetResolution](Trigger-API-Reference-DCEI-Functions-Service#setresolution-3)
+[GetCurrentResolution](Trigger-API-Reference-DCEI-Functions-Service#getcurrentresolution-0)
 [](extra-section-end)
 
 ## UnitBehaviorStatus
@@ -347,7 +368,20 @@ Unit's behavior stats, including behavior name and stack count.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local test_subject = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local behavior_name = DCEI.Behavior("Damage Taken Half")
 
+DCEI.ApplyBehaviorToSelf(test_subject, behavior_name, 2)
+
+local stacks = DCEI.GetUnitBehaviorStackCount(test_subject, behavior_name)
+
+DCEI.LogMessage(unit_type .. " has " .. stacks .. " stacks of " .. behavior_name)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -373,7 +407,28 @@ Behavior Filters allow you to create a filter for trigger events such as `Trigge
 
 #### Example Usage
 [](example-usage-start)
+```lua
+-- Create unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local test_subject = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local behavior_name = DCEI.Behavior("Damage Taken Half")
 
+function OnUnitBehaviorAdd(effect_context)
+    local name = DCEI.TriggeringBehaviorName
+    local u = DCEI.TriggeringUnit
+    local unit_type = DCEI.GetUnitType(u)
+    local stacks = DCEI.GetUnitBehaviorStackCount(u, name)
+    DCEI.LogMessage(unit_type .. " had " .. name .. " added for a total of " .. stacks .. " stacks.")
+end
+
+local behavior_filter = { name = behavior_name }
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd, true, behavior_filter)
+
+DCEI.ApplyBehaviorToSelf(test_subject, behavior_name, 2)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -399,7 +454,20 @@ Ability Filters allow you to create a filter for trigger events such as `Trigger
 
 #### Example Usage
 [](example-usage-start)
+```lua
+function OnAbilityCast(target_unit, target_pos)
+    local unit = DCEI.TriggeringUnit
+    local unit_name = DCEI.GetUnitType(unit)
+    local ability_name = DCEI.TriggeringAbilityName
+    DCEI.LogMessage(unit_name .. " casts " .. ability_name)
 
+    local target_name = DCEI.GetUnitType(target_unit)
+    DCEI.LogMessage("Target: " .. target_name .. " at (" .. target_pos.x .. ", " .. target_pos.y .. ")")
+end
+
+local ability_filter = { name = "Ability Fireball" }
+DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnAbilityCast, true, ability_filter)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -425,7 +493,20 @@ Weapon Filters allow you to create a filter for trigger events such as `TriggerA
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local function OnUnitUseWeapon(target_unit, target_pos)
+    local unit = DCEI.TriggeringUnit
+    local unit_name = DCEI.GetUnitType(unit)
+    local weapon = DCEI.TriggeringWeaponName
+    DCEI.LogMessage(unit_name .. " has attacked with " .. weapon ..".")
+    
+    local target_name = DCEI.GetUnitType(target_unit)
+    DCEI.LogMessage("Target: " .. target_name .. " at (" .. target_pos.x .. ", " .. target_pos.y .. ")")
+end
 
+local weapon_filter = { name = "Weapon Bow" }
+DCEI.TriggerAddUseWeaponEvent(DCEI.UnitAny, OnUnitUseWeapon, true, weapon_filter)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -451,7 +532,13 @@ Used to make events like `TriggerAddUnitDamageEvent` trigger with only critical 
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local function OnUnitDamaged(damage, target_unit)
+    DCEI.ShowSimpleDamageNumber(target_unit, 1, damage)
+end
 
+DCEI.TriggerAddUnitDamageEvent(DCEI.UnitAny, OnUnitDamaged, {critical_only = true})
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -477,7 +564,23 @@ Tag status on unit, with name and stack count.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 16
+local unit = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local tag = DCEI.Tag("Banana")
 
+DCEI.ApplyTag(unit, tag, -1, 5)
+local tag_count = DCEI.GetUnitTagCount(unit, tag)
+DCEI.LogMessage(tag_count)
+
+
+DCEI.RemoveTag(unit, tag, 2)
+tag_count = DCEI.GetUnitTagCount(unit, tag)
+DCEI.LogMessage(tag_count)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -650,6 +753,7 @@ DCEI.TriggerAddUseAbilityEvent(DCEI.UnitAny, OnAbilityUse)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [GetAbilityCost](Trigger-API-Reference-DCEI-Functions-Ability#getabilitycost-1)
 [](extra-section-end)
 
@@ -676,9 +780,23 @@ Works in the same way as [BehaviorModifier](Data-Behavior#behaviormodifier) in b
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local example_value = DCEI.ApplyModifier(
+    {
+        scaled = 5,
+        unscaled = 0,
+        additive_factor = 1,
+        positive_unified_factor = 1,
+        negative_unified_factor = 0,
+        multiplier_factor = 1,
+    },
+    5
+)
+DCEI.LogMessage(example_value)
+```
 [](example-usage-end)
-
+#### Related
+[ApplyModifier](Trigger-API-Reference-DCEI-Functions-General#applymodifier-2)
 [](extra-section-start)
 
 [](extra-section-end)
@@ -739,7 +857,26 @@ Get effect's context.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, y = 16, 17
+local test_subject = DCEI.CreateUnit(team_id, player_id, unit_type, x, y)
+local behavior_name = DCEI.Behavior("Damage Taken Half")
 
+local function OnUnitBehaviorAdd(effect_context)
+    DCEI.LogMessage(
+        "target location x: "
+            .. effect_context.target_location.x
+            .. " target location y: "
+            .. effect_context.target_location.y
+    )
+end
+
+DCEI.TriggerAddBehaviorAddEvent(DCEI.UnitAny, OnUnitBehaviorAdd, true)
+DCEI.ApplyBehaviorToSelf(test_subject, behavior_name, 2)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -773,6 +910,7 @@ DCEI.ShowUnitLabel(unit, "Unit", label_options)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [ShowUnitLabel](Trigger-API-Reference-DCEI-Functions-UI#showunitlabel-3)
 [HideUnitLabel](Trigger-API-Reference-DCEI-Functions-UI#hideunitlabel-1)
 [](extra-section-end)
@@ -813,6 +951,7 @@ DCEI.AttachFrameToUnit(frame, unit, options)
 [](example-usage-end)
 
 [](extra-section-start)
+#### Related
 [AttachFrameToUnit](Trigger-API-Reference-DCEI-Functions-Custom-UI#attachframetounit-4)
 [](extra-section-end)
 
@@ -834,7 +973,11 @@ Text option.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local float_text_pos = { x = 20, y = 2, z = 20 }
+local text_options = { offset = { right = 1, up = 10, front = 10 } }
+DCEI.ShowFloatingText(float_text_pos, "Floating Text", 5, 1, 5, text_options)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -862,7 +1005,13 @@ Offset is based on forward/right/up directions.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local explicit_offset = {right = 1, up = 1, forward = 1}
+local parent_unit = DCEI.FindUnit("Ship")
+local child_unit = DCEI.FindUnit("Archer")
+DCEI.AttachUnit(
+    child_unit,
+    parent_unit,
+    { explicit_offset = { forward = 3 }, use_child_facing = true, orientation_type = "WorldOrientation" }
+)
 ```
 [](example-usage-end)
 
@@ -891,7 +1040,13 @@ Offset is based on angle and distance.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local polar_offset = {yaw = 90, distance = 2}
+local parent_unit = DCEI.FindUnit("Ship")
+local child_unit = DCEI.FindUnit("Archer")
+DCEI.AttachUnit(
+    child_unit,
+    parent_unit,
+    { polar_offset = { yaw = 3, distance = 2 }, use_child_facing = true, orientation_type = "WorldOrientation" }
+)
 ```
 [](example-usage-end)
 
@@ -920,7 +1075,6 @@ Settings used for APIs such as `DCEI.CreateSimpleUnit` and `DCEI.RegisterSimpleL
 #### Example Usage
 [](example-usage-start)
 ```lua
-
 local unit_data = {
     Collider = {
         belongs_to_layer_mask = 1,
@@ -947,7 +1101,6 @@ local unit = DCEI.CreateSimpleUnit(
     still_velocity.x,
     still_velocity.y
 )
-
 ```
 [](example-usage-end)
 
@@ -1041,12 +1194,15 @@ bool enabled
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_mover = { enabled = true }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1066,12 +1222,15 @@ bool enabled
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_local_avoidance = { enabled = true }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1093,12 +1252,16 @@ float remove_actor_after_killed_seconds
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
+Used by the `SimpleUnitTypeOptions` type which is used by the `DCEI.RegisterSimpleUnitType` API. Provides options to start timers for removing or killing a unit based on specified time intervals or after it has been killed.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_removal_timer = { remove_unit_after_seconds = nil, kill_unit_after_seconds = 1, remove_actor_after_killed_seconds = 3 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1343,16 +1506,20 @@ float frame_rate
 ```
 #### Description
 [](description-start)
-
+Used in `SimpleUnitAnimatorOptions`. Provides options to change the animation on a simple unit.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local simple_removal_timer = { enabled = true, frame_rate = 30 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [SimpleUnitAnimatorOptions](#simpleunitanimatoroptions)
 [](extra-section-end)
 
 ## SimpleUnitShadowOptions
@@ -1369,16 +1536,20 @@ float shadow_radius
 ```
 #### Description
 [](description-start)
-
+Used in `SimpleUnitAnimatorOptions`. Provides options to change the shadow on a simple unit.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local shadow_options = { enabled = true, shadow_radius = 0.5 }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [SimpleUnitAnimatorOptions](#simpleunitanimatoroptions)
 [](extra-section-end)
 
 ## SimpleUnitAnimatorOptions
@@ -1396,16 +1567,23 @@ SimpleUnitAnimationOptions animation_options
 ```
 #### Description
 [](description-start)
-
+*Experimental API: Not intended for wide use*
+Used by the `SimpleUnitTypeOptions` type which is used by the `DCEI.RegisterSimpleUnitType` API. Provides options for various visual effects for simple units.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+local shadow_data = { enabled = true, shadow_radius = 0.5 }
+local death_particle_data = { [1] = 5, [2] = 10 }
+local animation_data = { enabled = true, frame_rate = 30 }
+local animator_options = { shadow_options = shadow_data, death_particle_effects = shadow_data, animation_options = animation_data }
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+- [SimpleUnitTypeOptions](#simpleunittypeoptions)
 [](extra-section-end)
 
 ## SimpleParticleSpawnOptions
@@ -1423,12 +1601,15 @@ Dictionary<string, ParticleProperties> subsystem_properties
 ```
 #### Description
 [](description-start)
-
+Options for the *[DCEI.RegisterSimpleParticle](Trigger-API-Reference-DCEI-Functions-Unit#registersimpleparticle-1)* API.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.RegisterSimpleParticle(option)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1888,13 +2069,11 @@ Used for API `SetCollisionDamageData`
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-    DCEI.SetCollisionDamageData(self.unit, {
-        timing = 1,
-        cooldown = 5,
-        deal_damage_value = 1,
-    })
-
+DCEI.SetCollisionDamageData(self.unit, {
+    timing = 1,
+    cooldown = 5,
+    deal_damage_value = 1,
+})
 ```
 [](example-usage-end)
 
@@ -1928,13 +2107,11 @@ Used for api `SetCollisionForceData`
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-    DCEI.SetCollisionForceData(self.unit, {
-        force = 10, -- Push Force (+)
-        factor = -20, -- Change over Time
-        duration = 0.5, -- Seconds
-    })
-
+DCEI.SetCollisionForceData(self.unit, {
+    force = 10, -- Push Force (+)
+    factor = -20, -- Change over Time
+    duration = 0.5, -- Seconds
+})
 ```
 [](example-usage-end)
 
@@ -1963,9 +2140,7 @@ Used for api `SetCollisionStatsData`
 #### Example Usage
 [](example-usage-start)
 ```lua
-
 DCEI.SetCollisionStatsData(unit, {stats_id = 1, delta_value = 15})
-
 ```
 [](example-usage-end)
 
@@ -2021,7 +2196,6 @@ local new_simple_unit = DCEI.CreateSimpleUnit(
 )
 
 DCEI.SetSimpleHealthData(new_simple_unit, {max = 10, value = 10})
-
 ```
 [](example-usage-end)
 
@@ -2052,7 +2226,13 @@ Options to customize how units attch.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local attach_option = {explicit_offset = {forward = 3}, use_child_facing = true, orientation_type ="WorldOrientation"}
+local parent_unit = DCEI.FindUnit("Ship")
+local child_unit = DCEI.FindUnit("Archer")
+DCEI.AttachUnit(
+    child_unit,
+    parent_unit,
+    { explicit_offset = { forward = 3 }, use_child_facing = true, orientation_type = "WorldOrientation" }
+)
 ```
 [](example-usage-end)
 
@@ -2182,8 +2362,16 @@ Color and duration options for `DCEI.ShowScreenMask`
 #### Example Usage
 [](example-usage-start)
 ```lua
-local screen_options = {color = {r = 255, g = 0, b = 255, a = 255}, duration = 5}
-DCEI.ShowScreenMask(0.5, screen_options)
+-- Creates the screen mask
+local mask_alpha = 0.5
+local screen_options = { color = { r = 255, g = 0, b = 255, a = 255 }, duration = 1 }
+DCEI.ShowScreenMask(mask_alpha, screen_options)
+
+-- Hides the mask after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideScreenMask()
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -2363,7 +2551,21 @@ All the joystick button options for virtual joystick.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+function OnJoystickButton()
+    local button_id = DCEI.TriggeringJoystickButtonId
+    local button_event = DCEI.TriggeringJoystickButtonEventType
 
+    -- button event 0 is for ButtonDown, event 1 is for ButtonUp
+    if button_id == 0 and button_event == 0 then
+        -- currently does not support targeted abilities
+        -- movement commands will interrupt ability prep time / finish time, unless ability has "can cast while moving" flag checked
+        DCEI.CastAbility(HERO_SLASH, HERO, HERO)
+    end
+end
+
+DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, { icon = DCEI.Texture("icon_ingame_towerslot_barracks") })
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -2392,7 +2594,21 @@ Big head message options
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local title = "Title"
+local message = "Message"
+local image = "bighead_hero_smith"
+local big_head_options = {
+    pause = true,
+    on_dismiss = function()
+        DCEI.LogMessage("Dismissed")
+    end,
+    delay = 5,
+    message_box_color = { r = 255, g = 0, b = 255, a = 255 },
+    title_box_color = { r = 255, g = 0, b = 255, a = 255 },
+}
+DCEI.ShowBigHeadMessage(title, message, image, big_head_options)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -2622,12 +2838,31 @@ double elo
 ```
 #### Description
 [](description-start)
-
+Used for [DCEI.AsyncPvp.UseBotOpponent()](Trigger-API-Reference-DCEI-Functions-AsyncPvp#usebotopponent-3)
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+Demo map with source code: https://platform.wildsky.dev/arcade/game/775
+```lua
+DCEI.SetOnClickCallback(
+    use_bot_button,
+    function()
+        local bot = {uuid = "bot:1234", tag = "bx", name = "bx", elo = 0, board = "bb", board_win_count = 0, board_lose_count = 0, board_time = os.time()}
+        DCEI.AsyncPvp.UseBotOpponent(
+            session_info.id,
+            bot,
+            function(result)
+                if not result then
+                    return
+                end
+                session_info.current_opponent = bot
+                controller:SetSessionInfo(session_info)
+            end
+        )
+    end
+)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -2687,7 +2922,7 @@ See https://easings.net/en for visual examples.
 ```lua
 function AnimateSparkle(self, frame)
     local k1, k2 = 0, 1
-    local duration = core.Random(1, 2, 2)
+    local duration = Core.Random.GetNumber(1, 2)
     local ease = "OutQuart"
     local animation = DCEI.AnimateFrameAlpha(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Yoyo")
@@ -2702,7 +2937,7 @@ function AnimateSparkle(self, frame)
     local k1, k2 = { z = start_rotation }, { z = start_rotation - 90 }
     local ease = "Linear"
     local duration = 1
-    local duration = core.Random(1.5, 2.5, 2)
+    local duration = Core.Random.GetNumber(1.5, 2.5)
     local animation = DCEI.AnimateFrameRotation(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Incremental")
 end
@@ -2740,7 +2975,7 @@ When the animation finishes, it continues to play additively. An animation rotat
 ```lua
 function AnimateSparkle(self, frame)
     local k1, k2 = 0, 1
-    local duration = core.Random(1, 2, 2)
+    local duration = Core.Random.GetNumber(1, 2)
     local ease = "OutQuart"
     local animation = DCEI.AnimateFrameAlpha(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Yoyo")
@@ -2755,7 +2990,7 @@ function AnimateSparkle(self, frame)
     local k1, k2 = { z = start_rotation }, { z = start_rotation - 90 }
     local ease = "Linear"
     local duration = 1
-    local duration = core.Random(1.5, 2.5, 2)
+    local duration = Core.Random.GetNumber(1.5, 2.5)
     local animation = DCEI.AnimateFrameRotation(frame, k1, k2, duration, ease)
     DCEI.SetFrameAnimationLoops(animation, -1, "Incremental")
 end

@@ -323,15 +323,8 @@ Wild Sky only. Used for logging certain game-values for the meta-game to referen
 #### Example Usage
 [](example-usage-start)
 ```lua
-function OnUnitSpawn()
-    local u = DCEI.TriggeringUnit
-    local unit_name = DCEI.GetUnitType(u)
-
-    if unit_name == BOSS_NAME then
-        -- Log boss hp stats.
-        DCEI.LogEndGameUnitHpPercentage("Boss Hp", u)
-    end
-end
+-- e.g. Logging the combined health of all mine units
+DCEI.LogEndGameUnitHps("mine_health", {"Mine Big", "Mine Medium", "Mine Small"})
 ```
 [](example-usage-end)
 
@@ -345,17 +338,28 @@ void LogEndGameUnitHpPercentage(string name, unit u)
 ```
 #### Description
 [](description-start)
-
+Wild Sky only. Used for logging certain game-values for the meta-game to reference. 
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `name` The log name.
+- *unit* `u` The unit name.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+function OnUnitSpawn()
+    local u = DCEI.TriggeringUnit
+    local unit_name = DCEI.GetUnitType(u)
 
+    if unit_name == BOSS_NAME then
+        -- Log boss hp stats.
+        DCEI.LogEndGameUnitHpPercentage("Boss Hp", u)
+    end
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)

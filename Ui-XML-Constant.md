@@ -16,9 +16,9 @@ Defines a constant value that can be used in attributes. Constants do not requir
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="frame01_blue">
+<Frame layout="flex" frameImage="frame01_blue" >
     <Constant name="image" value="cart" />
-    <Frame backgroundImage="@image" height="200" width="200" />
+    <Frame frameImage="@image" height="200" width="200" />
 </Frame>
 ```
 This XML produces the following UI:
@@ -50,9 +50,9 @@ The name of the constant.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="frame01_blue">
+<Frame layout="flex" frameImage="frame01_blue" >
     <Constant name="image" value="cart" />
-    <Frame backgroundImage="@image" height="200" width="200" />
+    <Frame frameImage="@image" height="200" width="200" />
 </Frame>
 ```
 [](example-usage-end)
@@ -77,16 +77,15 @@ The value of the constant.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImage="frame01_blue">
+<Frame layout="flex" frameImage="frame01_blue" >
     <Constant name="image" value="cart" />
-    <Frame backgroundImage="@image" height="200" width="200" />
+    <Frame frameImage="@image" height="200" width="200" />
 </Frame>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
-Related Trigger Function(s):
-- None.
+
 [](extra-section-end)
 
 [](manual-wiki-end)

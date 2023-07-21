@@ -425,7 +425,8 @@ DCEI.SetUnitMass(new_simple_unit, 2)
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetSimpleHealthData(unit unit, SimpleHealthOptions options) {setsimplehealthdata-2}
@@ -480,7 +481,8 @@ DCEI.SetSimpleHealthData(new_simple_unit, {max = 10, value = 10})
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetSimpleUnitMoveTargetUnit(unit unit, unit targetUnit) {setsimpleunitmovetargetunit-2}
@@ -524,7 +526,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetSimpleUnitMoveTargetWorldPosition2D(unit unit, float x, float y) {setsimpleunitmovetargetworldposition2d-3}
@@ -569,7 +572,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetSimpleUnitMoveTargetDirection(unit unit, float dx, float dy) {setsimpleunitmovetargetdirection-3}
@@ -614,7 +618,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetSimpleUnitTeamId(unit unit, int teamId) {setsimpleunitteamid-2}
@@ -671,7 +676,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void ApplyTransformAnimationToSimpleUnit(unit unit, SimpleUnitTransformAnimationOptions options) {applytransformanimationtosimpleunit-2}
@@ -680,21 +686,63 @@ void ApplyTransformAnimationToSimpleUnit(unit unit, SimpleUnitTransformAnimation
 ```
 #### Description
 [](description-start)
-
+Applies a simple transformation animation to a simple unit.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `unit` the simple unit to apply the transform animation to.
+- *[SimpleUnitTransformAnimationOptions](Trigger-API-Reference-DCEI-Types#simpleunittransformanimationoptions)* `options` the settings for the transform animation.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local unit_data = {
+    Collider = {
+        belongs_to_layer_mask = 1,
+        collides_with_layer_mask = 3,
+        take_damage = false,
+        radius = 3,
+    },
+    Unit = {
+        type_name = DCEI.Unit("Archer"),
+    },
+}
 
+local position = { x = 18, y = 18 }
+local facing_down = { x = 0, y = -1 }
+local still_velocity = { x = 0, y = 0 }
+local new_simple_unit = DCEI.CreateSimpleUnit(
+    1,
+    unit_data.Unit,
+    unit_data.Collider,
+    position.x,
+    position.y,
+    facing_down.x,
+    facing_down.y,
+    still_velocity.x,
+    still_velocity.y
+)
+
+local simple_animation_transformation_option = {
+    start_scale = { x = 0, y = 0, z = 0 },
+    random_position_offset = { x = 0, y = 0, z = 0 },
+    end_scale = { x = 1, y = 1, z = 1 },
+    end_position = { x = 0, y = 0, z = 0 },
+    end_degree = 360,
+    pivot = { x = 0, y = 0 },
+    start_seconds = 0,
+    end_seconds = 1,
+}
+
+DCEI.ApplyTransformAnimationToSimpleUnit(new_simple_unit, simple_animation_transformation_option)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void ApplyTintColorAnimationToSimpleUnit(unit unit, SimpleUnitTintColorAnimationOptions options) {applytintcoloranimationtosimpleunit-2}
@@ -703,21 +751,62 @@ void ApplyTintColorAnimationToSimpleUnit(unit unit, SimpleUnitTintColorAnimation
 ```
 #### Description
 [](description-start)
-
+Applies a simple tint animation to a simple unit.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[unit](Trigger-API-Reference-DCEI-Types#unit)* `unit` the simple unit to apply the tint animation to.
+- *[SimpleUnitTintColorAnimationOptions](Trigger-API-Reference-DCEI-Types#simpleunittintcoloranimationoptions)* `options` the settings for the tint animation.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+function AnimateSimpleUnit()
+    local unit_data = {
+        Collider = {
+            belongs_to_layer_mask = 1,
+            collides_with_layer_mask = 3,
+            take_damage = false,
+            radius = 3,
+        },
+        Unit = {
+            type_name = DCEI.Unit("Collector"),
+            max_health = 1,
+        },
+    }
+    local position = {x = 15, y = 15}
+    local facing_down = {x = 0, y = -1}
+    local still_velocity = {x = 0, y = 0}
+    local unit = DCEI.CreateSimpleUnit(
+        1,
+        unit_data.Unit,
+        unit_data.Collider,
+        position.x,
+        position.y,
+        facing_down.x,
+        facing_down.y,
+        still_velocity.x,
+        still_velocity.y
+    )
+    DCEI.ApplyTintColorAnimationToSimpleUnit(unit, {            
+        start_tint_color = { x = 0, y = 0, z = 0},
+        end_tint_color = { x = 1, y = 1, z = 1},
+        start_alpha = 1,
+        end_alpha = 1,
+        start_seconds = 1,
+        end_seconds = 4
+    })
 
+    return unit
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void AddKillTimerToSimpleUnit(unit unit, float seconds) {addkilltimertosimpleunit-2}
@@ -774,7 +863,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void AddRemoveTimerToSimpleUnit(unit unit, float seconds) {addremovetimertosimpleunit-2}
@@ -831,7 +921,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void ApplySimpleMoverGuided(unit unit, unit target, float speed, float accelerationMagnitude, float startSeconds, float endSeconds) {applysimplemoverguided-6}
@@ -881,7 +972,8 @@ Applies a guided simple mover to a simple unit.
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void ApplySimpleMoverUniformAcceleration(unit unit, float velocityX, float velocityY, float accelerationX, float accelerationY, float startSeconds, float endSeconds) {applysimplemoveruniformacceleration-7}
@@ -933,7 +1025,8 @@ Applies a simple mover to a simple unit.
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void ApplySimpleMoverSineWave(unit unit, float amplitude, float periodSeconds, float startSeconds, float endSeconds) {applysimplemoversinewave-5}
@@ -981,7 +1074,8 @@ Applies a sine simple mover to a simple unit.
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void SetCollisionDamageData(unit unit, CollisionDamageApplierOptions options) {setcollisiondamagedata-2}
@@ -1307,17 +1401,27 @@ void SetDefaultSimpleDamageNumberStyle(SimpleDamageNumberStyleOptions options)
 ```
 #### Description
 [](description-start)
-
+Sets the default style for simple damage numbers.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[SimpleDamageNumberStyleOptions](Trigger-API-Reference-DCEI-Types#simpledamagenumberstyleoptions)* `options` the settings for this style.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+DCEI.SetDefaultSimpleDamageNumberStyle({
+    font_type = 1,
+    duration_seconds = 0.9,
+    distance_between_digits = {
+        x = 0.4,
+        y = 0,
+        z = 0,
+    },
+})
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1574,17 +1678,20 @@ void RegisterSimpleParticle(SimpleParticleSpawnOptions options)
 ```
 #### Description
 [](description-start)
-
+Register a simple particle.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[SimpleParticleSpawnOptions](Trigger-API-Reference-DCEI-Types#simpleparticlespawnoptions)* `options` the settings for this style.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.RegisterSimpleParticle(option)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1983,7 +2090,8 @@ DCEI.RemoveSimpleUnit(unit)
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## void KillSimpleUnit(unit unit) {killsimpleunit-1}
@@ -2192,7 +2300,11 @@ You can use AttachUnit to attach a ["Simple"](https://funovus.notion.site/Simpl
 ```lua
 local parent_unit = DCEI.FindUnit("Ship")
 local child_unit = DCEI.FindUnit("Archer")
-DCEI.AttachUnit(child_unit, parent_unit, {explicit_offset = {forward = 3}, use_child_facing = true, orientation_type ="WorldOrientation"})
+DCEI.AttachUnit(
+    child_unit,
+    parent_unit,
+    { explicit_offset = { forward = 3 }, use_child_facing = true, orientation_type = "WorldOrientation" }
+)
 ```
 [](example-usage-end)
 
@@ -3869,7 +3981,7 @@ bool UnitExists(unit unit)
 ```
 #### Description
 [](description-start)
-Returns true is a units exists.
+Returns true if a units exists.
 [](description-end)
 
 #### Parameters
@@ -3907,17 +4019,46 @@ bool SimpleUnitExists(unit unit)
 ```
 #### Description
 [](description-start)
-
+Returns true if a simple unit exists.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *[unit](Trigger-API-Reference-DCEI-Types#simpleunitoptions)* `unit` the simple unit to check.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local unit_data = {
+    Collider = {
+        belongs_to_layer_mask = 1,
+        collides_with_layer_mask = 3,
+        take_damage = false,
+        radius = 3,
+    },
+    Unit = {
+        type_name = DCEI.Unit("Collector"),
+        max_health = 1,
+    },
+}
+local position = {x = 15, y = 15}
+local facing_down = {x = 0, y = -1}
+local still_velocity = {x = 0, y = 0}
+local unit = DCEI.CreateSimpleUnit(
+    player_id,
+    unit_data.Unit,
+    unit_data.Collider,
+    position.x,
+    position.y,
+    facing_down.x,
+    facing_down.y,
+    still_velocity.x,
+    still_velocity.y
+)
+local exists = DCEI.SimpleUnitExists(unit)
+DCEI.LogMessage(tostring(exists))
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -5362,7 +5503,8 @@ end
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [Create Simple Unit](#createsimpleunit-9)
 [](extra-section-end)
 
 ## object FindSimpleUnitsByPlayerId(int playerId) {findsimpleunitsbyplayerid-1}

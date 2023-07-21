@@ -565,7 +565,7 @@ function OnJoystickButton()
     end
 end
 
-DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, {icon = DCEI.Texture("icon_ingame_towerslot_barracks")})
+DCEI.TriggerAddJoystickButtonEvent(0, OnJoystickButton, { icon = DCEI.Texture("icon_ingame_towerslot_barracks") })
 ```
 [](example-usage-end)
 
@@ -835,12 +835,19 @@ Register a callback to occur when the player's mouse hovers over a UI frame.
 #### Parameters
 [](parameters-start)
 - *InGameUILayoutComponent* `ui` the UI frame that will trigger the mouse enter callback.
+- *TypedCallback* `trigger` the callback function for when the mouse enters the ui frame.
 
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(button, 100, 100)
+DCEI.SetOnMouseEnterCallback(button, function()
+    DCEI.LogMessage("Mouse has entered button")
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -853,17 +860,25 @@ void SetOnMouseExitCallback(InGameUILayoutComponent ui, TypedCallback trigger)
 ```
 #### Description
 [](description-start)
-
+Register a callback to occur when the player's mouse leaves a UI frame.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
+- *InGameUILayoutComponent* `ui` the UI frame that will trigger the mouse exit callback.
+- *TypedCallback* `trigger` the callback function for when the mouse leaves the ui frame.
 
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+DCEI.SetFrameSize(button, 100, 100)
+DCEI.SetOnMouseExitCallback(button, function()
+    DCEI.LogMessage("Mouse has left button")
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -902,7 +917,7 @@ DCEI.SetOnDownCallback(
 
 [](extra-section-start)
 #### Related
-- [CreateButtonFrame](#createbuttonframe-1)
+- [CreateButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createbuttonframe-1)
 [](extra-section-end)
 
 ## void SetOnUpCallback(InGameUILayoutComponent ui, object callback) {setonupcallback-2}
@@ -939,7 +954,7 @@ DCEI.SetOnUpCallback(
 
 [](extra-section-start)
 #### Related
-- [CreateButtonFrame](#createbuttonframe-1)
+- [CreateButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createbuttonframe-1)
 [](extra-section-end)
 
 ## void SetOnClickCallback(InGameUILayoutComponent ui, object callback) {setonclickcallback-2}
@@ -974,22 +989,22 @@ DCEI.SetOnClickCallback(
 
 [](extra-section-start)
 #### Related
-- [CreateButtonFrame](#createbuttonframe-1)
+- [CreateButtonFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createbuttonframe-1)
 [](extra-section-end)
 
-## void SetOnClickOutsideCallback(InGameUILayoutComponent ui, object callback) {setonclickoutsidecallback-2}
+## void SetOnClickOutsideCallback(InGameUILayoutComponent ui, TypedCallback callback) {setonclickoutsidecallback-2}
 ```cs
-void SetOnClickOutsideCallback(InGameUILayoutComponent ui, object callback)
+void SetOnClickOutsideCallback(InGameUILayoutComponent ui, TypedCallback callback)
 ```
 #### Description
 [](description-start)
-Registers a callback to run when a click/touch happens outside of the specified UI frame while the frame is active. Unlike DCEI.[SetOnClickCallback](void-SetOnClickCallbackTransform-ui-object-callback)(), this API works on any frame type. You can enable "Custom UI Inspector" in the in-game dev panel to check what UI frames are under the current mouse position to better understand what's considered outside of a frame by the engine.
+Registers a callback to run when a click/touch happens outside of the specified UI frame while the frame is active. Unlike DCEI.[SetOnClickCallback](#setonclickcallback-2)(), this API works on any frame type. You can enable "Custom UI Inspector" in the in-game dev panel to check what UI frames are under the current mouse position to better understand what's considered outside of a frame by the engine.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
 - *InGameUILayoutComponent* `ui` the ui that triggers the event.
-- *object* `callback` the callback function that is called when the event is triggered.
+- *TypedCallback* `callback` the callback function that is called when the event is triggered.
 
 [](parameters-end)
 
@@ -1088,13 +1103,13 @@ DCEI.SetPauseMenuCallback(
 [](extra-section-start)
 #### Related
 - [SetPauseMenuFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframe-1)
-- [ShowPauseMenuFrame](#showpausemenuframe-0)
-- [HidePauseMenuFrame](#hidepausemenuframe-0)
+- [ShowPauseMenuFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#showpausemenuframe-0)
+- [HidePauseMenuFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#hidepausemenuframe-0)
 - [SetPauseMenuFrameResumeButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframeresumebutton-1)
 - [SetPauseMenuFrameQuitButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframequitbutton-1)
 - [SetPauseMenuFrameRestartButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframerestartbutton-1)
 - [SetPauseMenuFramePlayLevelButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframeplaylevelbutton-3)
 - [SetPauseMenuFrameSettingsButton()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setpausemenuframesettingsbutton-1)
-- [SuppressPauseMenuOnApplicationPause](#suppresspausemenuonapplicationpause-0)
+- [SuppressPauseMenuOnApplicationPause()](Trigger-API-Reference-DCEI-Functions-Custom-UI#suppresspausemenuonapplicationpause-0)
 [](extra-section-end)
 

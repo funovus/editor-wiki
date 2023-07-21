@@ -62,6 +62,7 @@ Returns the value associated with the given key.
 [](example-usage-start)
 ```lua
 DCEI.Save.Set("key", "value")
+DCEI.Save.Commit()
 local save_val = DCEI.Save.Get("key")
 DCEI.LogMessage(save_val)
 ```
@@ -83,7 +84,10 @@ Writes the current save data to the user's save data. You can view the editor's 
 #### Example Usage
 [](example-usage-start)
 ```lua
+DCEI.Save.Set("key", "value")
 DCEI.Save.Commit()
+local save_val = DCEI.Save.Get("key")
+DCEI.LogMessage(save_val)
 ```
 [](example-usage-end)
 
@@ -110,6 +114,7 @@ Sets the map entry in save data. Only works in mobile or web builds. Useful if y
 [](example-usage-start)
 ```lua
 DCEI.Save.SetMapEntry("Map Entry")
+DCEI.Save.Commit()
 ```
 [](example-usage-end)
 

@@ -46,6 +46,7 @@ Creates a dynamic region.
 [](example-usage-start)
 ```lua
 local region = DCEI.CreateRegion(16, 16, 4, 4)
+local random_point = DCEI.GetRandomPointInRegion(region)
 ```
 [](example-usage-end)
 
@@ -103,6 +104,7 @@ Returns a region by name. Currently only works for regions pre-placed in the Ter
 [](example-usage-start)
 ```lua
 local region = DCEI.FindRegion("region_a")
+local center_point = DCEI.GetCenterOfRegion(region)
 ```
 [](example-usage-end)
 

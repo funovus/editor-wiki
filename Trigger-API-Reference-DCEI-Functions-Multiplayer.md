@@ -30,7 +30,11 @@ Return the display name for certain player. It is mostly your Funovus alias.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local idx = DCEI.GetMultiplayerGamePlayerId(1)
+local name = DCEI.GetMultiplayerGamePlayerDisplayName(idx)
+DCEI.LogMessage(name)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -54,7 +58,11 @@ Get player id for a certain player.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local idx = DCEI.GetMultiplayerGamePlayerId(1)
+local name = DCEI.GetMultiplayerGamePlayerDisplayName(idx)
+DCEI.LogMessage(name)
+```
 [](example-usage-end)
 
 [](extra-section-start)

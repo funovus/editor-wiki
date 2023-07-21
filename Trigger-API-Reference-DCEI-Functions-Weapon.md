@@ -266,7 +266,9 @@ Adds the given weapon to the unit type.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddUnitWeapon(DCEI.Unit("Standard MeleeUnit"), DCEI.Weapon("Standard RangedUnit Weapon"))
+local weapon = DCEI.Weapon("Standard MeleeUnit Weapon")
+local unit_type = DCEI.Unit("Standard RangedUnit")
+DCEI.AddUnitWeapon(unit_type, weapon)
 ```
 [](example-usage-end)
 
@@ -293,7 +295,9 @@ Removes the given weapon from the unit type.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveUnitWeapon(unit_type, DCEI.Unit("Standard MeleeUnit"))
+local weapon = DCEI.Weapon("Standard MeleeUnit Weapon")
+local unit_type = DCEI.Unit("Standard RangedUnit")
+DCEI.RemoveUnitWeapon(unit_type, weapon)
 ```
 [](example-usage-end)
 

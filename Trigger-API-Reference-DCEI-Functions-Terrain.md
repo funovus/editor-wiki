@@ -59,14 +59,15 @@ Enable/disable a waypoints route according to route name.
 #### Parameters
 [](parameters-start)
 - *string* `routeName` the name of the route.
-- *bool* `enable` if true, enabel the route.
+- *bool* `enable` if true, enable the route.
 
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.EnableRoute("test_route", true)
+local routeName = "test_route"
+DCEI.EnableRoute(routeName, true)
 ```
 [](example-usage-end)
 
@@ -135,7 +136,9 @@ Returns the terrain type at the given point. Returns 0-4 depending on the textur
 #### Example Usage
 [](example-usage-start)
 ```lua
-local terrain_type = DCEI.GetTerrainTypeAtPoint(16, 16)
+local x, y = 16, 16
+local terrain_type = DCEI.GetTerrainTypeAtPoint(x, y)
+DCEI.LogMessage(terrain_type)
 ```
 [](example-usage-end)
 
@@ -162,7 +165,9 @@ Returns the terrain height at the given point. Values can range from 5 to -5. De
 #### Example Usage
 [](example-usage-start)
 ```lua
-local terrain_height = DCEI.GetTerrainHeightAtPoint(16, 16)
+local x, y = 16, 16
+local terrain_height = DCEI.GetTerrainHeightAtPoint(x, y)
+DCEI.LogMessage(terrain_type)
 ```
 [](example-usage-end)
 
@@ -189,7 +194,15 @@ Enables or disables the display of a prop player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ChangePropLayerDisplay("layer_1", false)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local layer_name = "layer_1"
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.ChangePropLayerDisplay(layer_name, false)
+end)
 ```
 [](example-usage-end)
 
@@ -346,7 +359,15 @@ Sets the [position](Trigger-API-Reference-DCEI-Types#float2) of a terrain chunk.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(tostring(DCEI.SetTerrainChunkPosition("terrain_chunk_0", {x = 16, y = -1, z = 16})))
+local new_pos = { x = 16, y = -3, z = 16 }
+local move_success = DCEI.SetTerrainChunkPosition("terrain_chunk_0", new_pos)
+
+if move_success then
+    local terrain_chunk_pos = DCEI.GetTerrainChunkPosition("terrain_chunk_0")
+    DCEI.LogMessage("X: " .. terrain_chunk_pos.x)
+    DCEI.LogMessage("Y: " .. terrain_chunk_pos.y)
+    DCEI.LogMessage("Z: " .. terrain_chunk_pos.z)
+end
 ```
 [](example-usage-end)
 
@@ -374,7 +395,16 @@ Sets the [3D position](Trigger-API-Reference-DCEI-Types#float3) of a terrain chu
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(tostring(DCEI.SetTerrainChunkPositionWithInterpolation("terrain_chunk_0", {x = 16, y = -1, z = 16}, 5)))
+local new_pos = { x = 16, y = -3, z = 16 }
+local duration = 5
+local move_success = DCEI.SetTerrainChunkPositionWithInterpolation("terrain_chunk_0", new_pos, duration)
+
+if move_success then
+    local terrain_chunk_pos = DCEI.GetTerrainChunkPosition("terrain_chunk_0")
+    DCEI.LogMessage("X: " .. terrain_chunk_pos.x)
+    DCEI.LogMessage("Y: " .. terrain_chunk_pos.y)
+    DCEI.LogMessage("Z: " .. terrain_chunk_pos.z)
+end
 ```
 [](example-usage-end)
 
@@ -401,8 +431,10 @@ Instantiates a terrain chunk at the given location and returns the instanceId of
 #### Example Usage
 [](example-usage-start)
 ```lua
-local terrain_chunk_instance = DCEI.InstantiateTerrainChunk("terrain_chunk_0", {x = 16.5, y = -1.1, z = 16.5})
-DCEI.LogMessage("Terrain Chunk instance ID: " .. terrain_chunk_instance)
+local chunk_name = "terrain_chunk_0"
+local pos = { x = 16, y = -3, z = 16 }
+local chunk_id = DCEI.InstantiateTerrainChunk(chunk_name, pos)
+DCEI.LogMessage("Terrain Chunk instance ID: " .. chunk_id)
 ```
 [](example-usage-end)
 
@@ -428,7 +460,15 @@ Destroys a terrain chunk instance.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.DestroyTerrainChunkInstance(1)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+local chunk_id = 2
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.DestroyTerrainChunkInstance(chunk_id)
+end)
 ```
 [](example-usage-end)
 
@@ -454,7 +494,14 @@ Returns the [3D position](Trigger-API-Reference-DCEI-Types#float3) of a terrain 
 #### Example Usage
 [](example-usage-start)
 ```lua
-local terrain_chunk_position = DCEI.GetTerrainChunkInstancePosition(1)
+local chunk_name = "terrain_chunk_0"
+local pos = { x = 16, y = -3, z = 16 }
+local chunk_id = DCEI.InstantiateTerrainChunk(chunk_name, pos)
+
+local terrain_chunk_pos = DCEI.GetTerrainChunkInstancePosition(chunk_id)
+DCEI.LogMessage("X: " .. terrain_chunk_pos.x)
+DCEI.LogMessage("Y: " .. terrain_chunk_pos.y)
+DCEI.LogMessage("Z: " .. terrain_chunk_pos.z)
 ```
 [](example-usage-end)
 
@@ -481,7 +528,16 @@ Sets the [3D position](Trigger-API-Reference-DCEI-Types#float3) of a terrain chu
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(tostring(DCEI.SetTerrainChunkInstancePosition(1, {x = 11.5, y = 0.4, z = 14.5})))
+local chunk_name = "terrain_chunk_0"
+local pos = { x = 16, y = -3, z = 16 }
+local chunk_id = DCEI.InstantiateTerrainChunk(chunk_name, pos)
+
+local new_pos = { x = 20, y = -3, z = 20 }
+local move_success = DCEI.SetTerrainChunkInstancePositionWithInterpolation(chunk_id, new_pos)
+
+if move_success then
+    DCEI.LogMessage("Success!")
+end
 ```
 [](example-usage-end)
 
@@ -509,7 +565,17 @@ Sets the [3D position](Trigger-API-Reference-DCEI-Types#float3) of a terrain chu
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.LogMessage(tostring(DCEI.SetTerrainChunkInstancePositionWithInterpolation(1, {x = 12.5, y = 3, z = 12.5}, 5)))
+local chunk_name = "terrain_chunk_0"
+local pos = { x = 16, y = -3, z = 16 }
+local chunk_id = DCEI.InstantiateTerrainChunk(chunk_name, pos)
+
+local new_pos = { x = 20, y = -3, z = 20 }
+local duration = 5
+local move_success = DCEI.SetTerrainChunkInstancePositionWithInterpolation(chunk_id, new_pos, duration)
+
+if move_success then
+    DCEI.LogMessage("Success!")
+end
 ```
 [](example-usage-end)
 
@@ -533,6 +599,7 @@ Returns an integer corresponding to the weather. Does not detect the heatwave op
 [](example-usage-start)
 ```lua
 local weather = DCEI.GetWeather()
+DCEI.LogMessage(weather)
 ```
 [](example-usage-end)
 
@@ -546,7 +613,7 @@ void SetWeather(int weatherStatus, float duration = 4)
 ```
 #### Description
 [](description-start)
-Sets a weather status over the given duration. Use 0 for an instant transition. Cannot set the heatwave option.
+Sets a weather status over the given duration. Use 0 for an instant transition. Cannot set the heatwave option. The weather can also be set under Project Settings > Map Settings > Weather.
 0 - None
 1 - Rain
 2 - Snow
@@ -562,7 +629,12 @@ Sets a weather status over the given duration. Use 0 for an instant transition. 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetWeather(1, 50)
+local new_weather = 2
+local duration = 50
+DCEI.SetWeather(new_weather, duration)
+
+local weather = DCEI.GetWeather()
+DCEI.LogMessage(weather)
 ```
 [](example-usage-end)
 
@@ -585,7 +657,12 @@ Returns an integer corresponding to the time of the day.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local time_lighting = DCEI.DCEI.GetTimeOfTheDay()
+local new_time = 1
+local duration = 5
+DCEI.SetTimeOfTheDay(new_time, duration)
+
+local time = DCEI.GetTimeOfTheDay()
+DCEI.LogMessage(time)
 ```
 [](example-usage-end)
 
@@ -615,7 +692,12 @@ Sets a time of the day over the given duration. Use 0 for an instant transition.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetTimeOfTheDay(2, 10)
+local new_time = 1
+local duration = 5
+DCEI.SetTimeOfTheDay(new_time, duration)
+
+local time = DCEI.GetTimeOfTheDay()
+DCEI.LogMessage(time)
 ```
 [](example-usage-end)
 
@@ -634,11 +716,17 @@ Get the current light's RGB value
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local light_color = DCEI.GetCurrentLightColor()
+DCEI.LogMessage("R: " .. light_color.r)
+DCEI.LogMessage("G: " .. light_color.g)
+DCEI.LogMessage("B: " .. light_color.b)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [ColorRGB](Trigger-API-Reference-DCEI-Types#colorrgb)
 [](extra-section-end)
 
 ## void SetOverrideLightColor(ColorRGB color, float duration) {setoverridelightcolor-2}
@@ -659,7 +747,11 @@ Set light color RGB value for a period of time
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local new_color = { r = 0.1, g = 0.1, b = 0.9 }
+local duration = 3
+DCEI.SetOverrideLightColor(new_color, duration)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -684,7 +776,18 @@ Set skybox RGB color value for a period of time.
 
 #### Example Usage
 [](example-usage-start)
+```lua
+-- Sets the skybox to a new color over 3 seconds
+local new_color = { r = 1, g = 0.1, b = 0.5 }
+local duration = 3
+DCEI.SetSkyboxColor(new_color, duration)
 
+-- Resets it after 5 seconds
+local reset_timer = 5
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.ResetSkyboxColor(0)
+end, reset_timer)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -709,7 +812,16 @@ Resets the skybox color to the default over the given duration. Use 0 for an ins
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ResetSkyboxColor(10)
+-- Sets the skybox to a new color over 3 seconds
+local new_color = { r = 1, g = 0.1, b = 0.5 }
+local duration = 3
+DCEI.SetSkyboxColor(new_color, duration)
+
+-- Resets it after 5 seconds
+local reset_timer = 5
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.ResetSkyboxColor(0)
+end, reset_timer)
 ```
 [](example-usage-end)
 
@@ -740,7 +852,20 @@ Draws a line on the terrain, with color! Returns the lineId of the created line 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddLine({x = 1, y = 1, z = 15}, {x = 30, y = 1, z = 15}, 1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, false)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
+
 ```
 [](example-usage-end)
 
@@ -763,7 +888,6 @@ Draws a line on the terrain using repeating sprites. Returns the lineId of the c
 - *[Float3](Trigger-API-Reference-DCEI-Types#float3)* `endPos` the ending coordinates for the line.
 - *float* `width` the width of the line, in terms of tiles.
 - *[ColorRGBA](Trigger-API-Reference-DCEI-Types#colorrgba)* `color` the RGBA values for the line.  Also accepts hex codes, such as `"#32a852"`
-
 - *string* `spriteName` the name of the sprite to draw.
 - *float* `tex_multiplier` the multiplier for sprite scaling.
 
@@ -772,7 +896,20 @@ Draws a line on the terrain using repeating sprites. Returns the lineId of the c
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddLineWithSprite({x = 15, y = 1, z = 1}, {x = 15, y = 1, z = 30}, 1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, DCEI.Texture("airship_onMap"), 1)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local line_sprite = DCEI.Texture("airship_onMap")
+local tex_multiplier = 1
+local line_id = DCEI.AddLineWithSprite(start_pos, end_pos, width, color, line_sprite, tex_multiplier)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -798,7 +935,19 @@ Removes a line.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveLine(1)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveLine(line_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -827,7 +976,19 @@ Moves a line's start and end points (and thus the line itself) to new locations 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.MoveLineWithInterpolation(2, {x = 1, y = 1, z = 15}, {x = 30, y = 1, z = 15}, 3)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Moves it
+local new_start_pos = { x = 15, y = 1, z = 15 }
+local new_end_pos = { x = 15, y = 1, z = 20 }
+local move_duration = 3
+DCEI.MoveLineWithInterpolation(line_id, new_start_pos, new_end_pos, move_duration)
 ```
 [](example-usage-end)
 
@@ -847,7 +1008,21 @@ Removes all lines.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveAllLines()
+-- Creates a group of lines
+for i = 1, 10, 1 do
+    local start_pos = { x = 10 + i, y = 1, z = 15 }
+    local end_pos = { x = 10 + i, y = 1, z = 20 }
+    local width = 0.5
+    local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+    local rect_cap = true
+    DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+end
+
+-- Removes them after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveAllLines()
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -874,7 +1049,20 @@ Changes a line's color.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ChangeLineColor(1, {r = 0.5, g = 0.5, b = 0, a = 0.5},)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Changes color after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    local new_color = { r = 0.1, g = 0.1, b = 0.75, a = 0.75 }
+    DCEI.ChangeLineColor(line_id, new_color)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -901,7 +1089,19 @@ Toggles the display of a line.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ChangeLineDisplay(1, false)
+-- Creates a line
+local start_pos = { x = 10, y = 1, z = 15 }
+local end_pos = { x = 20, y = 1, z = 15 }
+local width = 1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = true
+local line_id = DCEI.AddLine(start_pos, end_pos, width, color, rect_cap)
+
+-- Hides it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.ChangeLineDisplay(line_id, false)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -934,7 +1134,22 @@ Draws a grid with lines. Returns a gridId integer if successful.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddGrid({x = 16, y = 0.5, z = 16}, 15, 15, 5, 15, 0.1, {r = 0.5, g = 0.5, b = 0, a = 0.5}, false)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 5.5
+local height = 5.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = false
+local grid_id = DCEI.AddGrid(center, width, height, xCount, zCount, line_width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -969,7 +1184,23 @@ Draws a grid with lines made of repeating sprites. Returns a gridId integer if s
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.AddGridWithSprite({x = 16, y = 0.5, z = 16}, 15, 15, 5, 15, 0.5, {r = 0.5, g = 0.5, b = 0, a = 0.5}, DCEI.Texture("airship_onMap"), 1)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 10.5
+local height = 10.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.5
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local sprite = DCEI.Texture("airship_onMap")
+local tex_multiplier = 1
+local grid_id = DCEI.AddGridWithSprite(center, width, height, xCount, zCount, line_width, color, sprite, tex_multiplier)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -995,7 +1226,22 @@ Removes a grid.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RemoveGrid(1)
+-- Creates a grid
+local center = { x = 16, y = 1, z = 16 }
+local width = 5.5
+local height = 5.5
+local xCount = 5
+local zCount = 6
+local line_width = 0.1
+local color = { r = 1, g = 0.5, b = 0.5, a = 0.5 }
+local rect_cap = false
+local grid_id = DCEI.AddGrid(center, width, height, xCount, zCount, line_width, color, rect_cap)
+
+-- Removes it after 2 seconds
+local line_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.RemoveGrid(grid_id)
+end, line_duration)
 ```
 [](example-usage-end)
 
@@ -1015,14 +1261,29 @@ Toggles a blurred version of your terrain in the background. Note that this back
 #### Parameters
 [](parameters-start)
 - *bool* `set` if true, enables the blurred background.
-- *float* `duration` the transition duration.
+- *float* `duration` the transition duration of the blur.
 
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetBlurredScreenCaptureAsBackground(true, 5)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the current screen as the background over 1 second when the button is pressed
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.SetBlurredScreenCaptureAsBackground(true, 1)
+
+    -- Removes it after 2 seconds
+    local reset_duration = 2
+    DCEI.TriggerAddTimerEventElapsed(function()
+        DCEI.SetBlurredScreenCaptureAsBackground(false, 0)
+    end, reset_duration)
+end)
 ```
 [](example-usage-end)
 

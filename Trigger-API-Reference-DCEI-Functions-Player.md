@@ -54,7 +54,9 @@ Get the current player's id. Only useful in multiplayer.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local player_id = DCEI.GetCurrentPlayerId()
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -109,7 +111,8 @@ Returns a player's team id.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local player_team_id = DCEI.GetPlayerTeamId(1)
+local player_id = DCEI.GetCurrentPlayerId()
+local player_team_id = DCEI.GetPlayerTeamId(player_id)
 ```
 [](example-usage-end)
 
@@ -356,7 +359,10 @@ Wild Sky specific. Returns a lua table of the equipped cards from the meta.
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local deck = DCEI.GetPlayerDeckCards()
+Core.Util.LogDump(deck)
+```
 [](example-usage-end)
 
 [](extra-section-start)

@@ -5,6 +5,7 @@
 - [UserInputText](#userinputtext)
 - [Frame](#frame)
 - [Button](#button)
+- [Slider](#slider)
 - [Input](#input)
 - [VStack](#vstack)
 - [HStack](#hstack)
@@ -155,6 +156,13 @@
 ## [Button](Ui-XML-Button) {Button}
   + [enable](Ui-XML-Button#enable)
   + [onClick](Ui-XML-Button#onclick)
+## [Slider](Ui-XML-Slider) {Slider}
+  + [showSliderHandle](Ui-XML-Slider#showsliderhandle)
+  + [sliderHandleRadius](Ui-XML-Slider#sliderhandleradius)
+  + [sliderValue](Ui-XML-Slider#slidervalue)
+  + [sliderBackgroundImage](Ui-XML-Slider#sliderbackgroundimage)
+  + [sliderFillImage](Ui-XML-Slider#sliderfillimage)
+  + [sliderHandleImage](Ui-XML-Slider#sliderhandleimage)
 ## [Input](Ui-XML-Input) {Input}
   + [text](Ui-XML-Input#text)
   + [translationKey](Ui-XML-Input#translationkey)

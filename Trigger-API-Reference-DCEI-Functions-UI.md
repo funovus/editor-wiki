@@ -68,7 +68,16 @@ Shows a in-game feedback message in the center of the player's screen.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowFeedbackMessage("Message")
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to show the feedback message
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.ShowFeedbackMessage("Message")
+end)
 ```
 [](example-usage-end)
 
@@ -97,7 +106,21 @@ Shows a specific built-in UI frame. These UI frames are shown by default.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowSystemUi(0)
+-- Hides the wave and gold UI
+DCEI.HideSystemUi(0)
+DCEI.HideSystemUi(1)
+
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to show the wave and gold UI
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.ShowSystemUi(0)
+    DCEI.ShowSystemUi(1)
+end)
 ```
 [](example-usage-end)
 
@@ -126,7 +149,21 @@ Hides a specific built-in UI frame.
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Hides the wave and gold UI
+DCEI.HideSystemUi(0)
 DCEI.HideSystemUi(1)
+
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to show the wave and gold UI
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.ShowSystemUi(0)
+    DCEI.ShowSystemUi(1)
+end)
 ```
 [](example-usage-end)
 
@@ -153,7 +190,23 @@ Shows the UI for the specified ability on the given unit. A specific ability can
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowAbilitiesUi(1, unit)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to alternate between showing and hiding the ability UI
+local ability_id = 0
+local ability_ui_shown = false
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    if ability_ui_shown then
+        DCEI.HideAbilitiesUi(ability_id, unit)
+    else
+        DCEI.ShowAbilitiesUi(ability_id, unit)
+    end
+    ability_ui_shown = not ability_ui_shown
+end)
 ```
 [](example-usage-end)
 
@@ -181,7 +234,9 @@ Shows the built-in UI for the specified ability on the given unit in a specific 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowAbilitiesUiInSlot(1, unit, 3)
+local ability_id = 1
+local slot_key = 3
+DCEI.ShowAbilitiesUiInSlot(ability_id, unit, slot_key)
 ```
 [](example-usage-end)
 
@@ -208,7 +263,23 @@ Hides the built-in UI for the specified ability on the given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideAbilitiesUi(1, unit)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to alternate between showing and hiding the ability UI
+local ability_id = 0
+local ability_ui_shown = false
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    if ability_ui_shown then
+        DCEI.HideAbilitiesUi(ability_id, unit)
+    else
+        DCEI.ShowAbilitiesUi(ability_id, unit)
+    end
+    ability_ui_shown = not ability_ui_shown
+end)
 ```
 [](example-usage-end)
 
@@ -236,7 +307,24 @@ Shows the built-in UI for the specified ability on the given unit for the given 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowAbilitiesUiForPlayer(1, unit, 1)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to alternate between showing and hiding the ability UI
+local ability_id = 0
+local player = 1
+local ability_ui_shown = false
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    if ability_ui_shown then
+        DCEI.HideAbilitiesUiForPlayer(ability_id, g_hero, player)
+    else
+        DCEI.ShowAbilitiesUiForPlayer(ability_id, g_hero, player)
+    end
+    ability_ui_shown = not ability_ui_shown
+end)
 ```
 [](example-usage-end)
 
@@ -264,7 +352,24 @@ Hides the built-in UI for the specified ability on the given unit for the given 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideAbilitiesUiForPlayer(1, unit, 1)
+-- Creates a button
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+-- Sets the button to alternate between showing and hiding the ability UI
+local ability_id = 0
+local player = 1
+local ability_ui_shown = false
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    if ability_ui_shown then
+        DCEI.HideAbilitiesUiForPlayer(ability_id, g_hero, player)
+    else
+        DCEI.ShowAbilitiesUiForPlayer(ability_id, g_hero, player)
+    end
+    ability_ui_shown = not ability_ui_shown
+end)
 ```
 [](example-usage-end)
 
@@ -303,7 +408,22 @@ Shows the built-in status UI for the given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowUnitStatusUi(9, unit)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Shows the status UI
+local status_id = 9
+DCEI.ShowUnitStatusUi(status_id, unit_instance)
+
+-- Hides the status UI after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitStatusUi(status_id, unit_instance)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -341,7 +461,22 @@ Shows the built-in status UI for the given unit for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowUnitStatusUi(9, unit, 1)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Shows the status UI
+local status_id = 9
+DCEI.ShowUnitStatusUiForPlayer(status_id, unit_instance, player_id)
+
+-- Hides the status UI after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitStatusUiForPlayer(status_id, unit_instance, player_id)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -367,7 +502,8 @@ Sets the scale of the unit health bar UI.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetUnitHealthBarUiScale(0.5)
+local scale = 0.5
+DCEI.SetUnitHealthBarUiScale(scale)
 ```
 [](example-usage-end)
 
@@ -393,7 +529,8 @@ Sets the scale of the gold reward text, displayed when units with a [SetGoldBoun
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetGoldRewardTextScale(2)
+local scale = 2
+DCEI.SetGoldRewardTextScale(scale)
 ```
 [](example-usage-end)
 
@@ -422,7 +559,18 @@ Displays a speech bubble for the given unit. Speech bubble will disappear if the
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowSpeechBubble(unit, 100, "Content", "Title")
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the speech bubble
+local width = 100
+local content = "Content"
+local title = "Title"
+DCEI.ShowSpeechBubble(unit_instance, width, content, title)
 ```
 [](example-usage-end)
 
@@ -452,8 +600,19 @@ Displays a speech bubble for the given unit. Speech bubble will disappear if the
 #### Example Usage
 [](example-usage-start)
 ```lua
-local text_options = {offset = {right = 1, up = 10, front = 10}}
-DCEI.ShowSpeechBubble(unit, 100, "Content", "Title", text_options)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the speech bubble
+local width = 100
+local content = "Content"
+local title = "Title"
+local text_options = { offset = { right = 1, up = 1, front = 2 } }
+DCEI.ShowSpeechBubble(unit_instance, width, content, title, text_options)
 ```
 [](example-usage-end)
 
@@ -480,7 +639,16 @@ Shows a text tag attached to a unit. Will not overwrite existing labels.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowUnitLabel(unit, "Unit")
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the label
+local content = "Content"
+DCEI.ShowUnitLabel(unit_instance, content)
 ```
 [](example-usage-end)
 
@@ -508,8 +676,23 @@ Shows a text tag attached to a unit. Will not overwrite existing labels.
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the label
+local content = "Content"
 local label_options = {offset = {right = 1, up = 1, front = 1}, center_at_unit_origin = true, center_at_unit_top = true}
-DCEI.ShowUnitLabel(unit, "Unit", label_options)
+DCEI.ShowUnitLabel(unit_instance, content, label_options)
+
+-- Hides the label after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitLabel(unit_instance)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -535,7 +718,23 @@ Hides a text tag attached to a unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideUnitLabel(unit)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the label
+local content = "Content"
+local label_options = {offset = {right = 1, up = 1, front = 1}, center_at_unit_origin = true, center_at_unit_top = true}
+DCEI.ShowUnitLabel(unit_instance, content, label_options)
+
+-- Hides the label after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitLabel(unit_instance)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -564,7 +763,9 @@ Displays floating text at the specified location. Text will immediately start to
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowFloatingText(12, 4, 12, "Floating Text")
+local x, y, z = 12, 4, 12
+local text = "Floating Text"
+DCEI.ShowFloatingText(x, y, z, text)
 ```
 [](example-usage-end)
 
@@ -595,9 +796,13 @@ Displays floating text at the specified location.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local float_text_pos = {x = 20, y = 2, z = 20}
-local text_options = {offset = {right = 1, up = 10, front = 10}}
-DCEI.ShowFloatingText(float_text_pos, "Floating Text", 5, 1, 5, text_options)
+local float_text_pos = { x = 15, y = 2, z = 15 }
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local text_options = { offset = { right = 1, up = 2, front = 2 } }
+DCEI.ShowFloatingText(float_text_pos, text, duration, animation_type, animation_duration, text_options)
 ```
 [](example-usage-end)
 
@@ -628,9 +833,13 @@ Displays floating text at the specified location.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local float_text_pos = {x = 20, y = 2, z = 20}
-local text_options = {offset = {right = 1, up = 10, front = 10}}
-DCEI.ShowFloatingTextWithOptions(float_text_pos, "Floating Text", 5, 1, 5, text_options)
+local float_text_pos = { x = 15, y = 2, z = 15 }
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local text_options = { offset = { right = 1, up = 2, front = 2 } }
+DCEI.ShowFloatingTextWithOptions(float_text_pos, text, duration, animation_type, animation_duration, text_options)
 ```
 [](example-usage-end)
 
@@ -661,8 +870,13 @@ Displays floating text at the specified unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local label_options = {offset = {right = 1, up = 1, front = 1}, center_at_unit_origin = true, center_at_unit_top = true}
-DCEI.ShowFloatingTextAtUnit(unit, "Floating Text", 5, 0, 5, label_options)
+local text = "Floating Text"
+local duration = 5
+local animation_type = 1
+local animation_duration = 5
+local label_options =
+    { offset = { right = 1, up = 1, front = 1 }, center_at_unit_origin = true, center_at_unit_top = true }
+DCEI.ShowFloatingTextAtUnit(unit, text, duration, animation_type, animation_duration, label_options)
 ```
 [](example-usage-end)
 
@@ -688,7 +902,24 @@ Hides a speech bubble attached to the given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideSpeechBubble(unit)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Creates the speech bubble
+local width = 100
+local content = "Content"
+local title = "Title"
+DCEI.ShowSpeechBubble(unit_instance, width, content, title)
+
+-- Hides the speech bubble after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideSpeechBubble(unit_instance)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -727,7 +958,17 @@ Shows the built-in status UI for the given unit in the specified slot.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowUnitStatusUiInSlot(4, unit, 1)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Shows the status UI
+local status_id = 9
+local slot_key = 1
+DCEI.ShowUnitStatusUiInSlot(status_id, unit, slot_key)
 ```
 [](example-usage-end)
 
@@ -788,7 +1029,22 @@ Hides the given built-in status UI for a given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideUnitStatusUi(2, unit)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Shows the status UI
+local status_id = 9
+DCEI.ShowUnitStatusUi(status_id, unit_instance)
+
+-- Hides the status UI after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitStatusUi(status_id, unit_instance)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -826,7 +1082,22 @@ Hides the given built-in status UI for a given unit, for the given player.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideUnitStatusUiForPlayer(2, unit, 1)
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
+
+-- Shows the status UI
+local status_id = 9
+DCEI.ShowUnitStatusUiForPlayer(status_id, unit_instance, player_id)
+
+-- Hides the status UI after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitStatusUiForPlayer(status_id, unit_instance, player_id)
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -857,7 +1128,13 @@ Displays a pop-up message with a button. Displays up to 3 images.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowMessageWithButtonText("Title", "Content", "Button", "airship_onMap", "crown_gold", "icon_boss")
+local title = "Title"
+local content = "Content"
+local button_text = "Button Text"
+local image1 = "airship_onMap"
+local image2 = "crown_gold"
+local image3 = "icon_boss"
+DCEI.ShowMessageWithButtonText(title, content, button_text, image1, image2, image3)
 ```
 [](example-usage-end)
 
@@ -872,6 +1149,7 @@ void ShowBigHeadMessage(string title, string message, string image)
 #### Description
 [](description-start)
 Displays a "big head" message. You can view a list of accepted images [here](https://gist.github.com/coffee8479/063ddb5fbd710969f58499aabf295974).
+May require an older editor build.
 [](description-end)
 
 #### Parameters
@@ -885,7 +1163,10 @@ Displays a "big head" message. You can view a list of accepted images [here](htt
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowBigHeadMessage("Title", "Message", "bighead_hero_smith")
+local title = "Title"
+local message = "Message"
+local image = "bighead_hero_smith"
+DCEI.ShowBigHeadMessage(title, message, image)
 ```
 [](example-usage-end)
 
@@ -900,6 +1181,7 @@ void ShowBigHeadMessage(string title, string message, string image, BigHeadMessa
 #### Description
 [](description-start)
 Displays a "big head" message with additional options. Will not overwrite an existing big head message. You can view a list of accepted images [here](https://gist.github.com/coffee8479/063ddb5fbd710969f58499aabf295974).
+May require an older editor build.
 [](description-end)
 
 #### Parameters
@@ -914,8 +1196,19 @@ Displays a "big head" message with additional options. Will not overwrite an exi
 #### Example Usage
 [](example-usage-start)
 ```lua
-local big_head_options = {pause = true, on_dismiss = dismiss_func, delay = 5, message_box_color = {r = 255, g = 0, b = 255, a = 255}, title_box_color = {r = 255, g = 0, b = 255, a = 255}}
-DCEI.ShowBigHeadMessage("Title", "Message", "bighead_hero_smith", big_head_options)
+local title = "Title"
+local message = "Message"
+local image = "bighead_hero_smith"
+local big_head_options = {
+    pause = true,
+    on_dismiss = function()
+        DCEI.LogMessage("Dismissed")
+    end,
+    delay = 5,
+    message_box_color = { r = 255, g = 0, b = 255, a = 255 },
+    title_box_color = { r = 255, g = 0, b = 255, a = 255 },
+}
+DCEI.ShowBigHeadMessage(title, message, image, big_head_options)
 ```
 [](example-usage-end)
 
@@ -935,7 +1228,26 @@ Hides any big head messages.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideBigHeadMessage()
+-- Creates the big head message
+local title = "Title"
+local message = "Message"
+local image = "bighead_hero_smith"
+local big_head_options = {
+    pause = true,
+    on_dismiss = function()
+        DCEI.LogMessage("Dismissed")
+    end,
+    delay = 5,
+    message_box_color = { r = 255, g = 0, b = 255, a = 255 },
+    title_box_color = { r = 255, g = 0, b = 255, a = 255 },
+}
+DCEI.ShowBigHeadMessage(title, message, image, big_head_options)
+
+-- Hides the message after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideBigHeadMessage()
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -961,7 +1273,16 @@ Show objective text.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowObjectiveText("Objective")
+-- Creates the objective text
+local objective_text = "Objective Text"
+DCEI.ShowObjectiveText(objective_text)
+
+-- Hides the text after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideObjective()
+end, show_duration)
+
 ```
 [](example-usage-end)
 
@@ -981,7 +1302,16 @@ Hides any active objectives.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideObjective()
+-- Creates the objective text
+local objective_text = "Objective Text"
+DCEI.ShowObjectiveText(objective_text)
+
+-- Hides the text after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideObjective()
+end, show_duration)
+
 ```
 [](example-usage-end)
 
@@ -1008,8 +1338,16 @@ Shows a screen mask (overlay tint). This will block interaction with everything.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local screen_options = {color = {r = 255, g = 0, b = 255, a = 255}, duration = 5}
-DCEI.ShowScreenMask(0.5, screen_options)
+-- Creates the screen mask
+local mask_alpha = 0.5
+local screen_options = { color = { r = 255, g = 0, b = 255, a = 255 }, duration = 1 }
+DCEI.ShowScreenMask(mask_alpha, screen_options)
+
+-- Hides the mask after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideScreenMask()
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -1029,7 +1367,16 @@ Hides any active screen mask.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideScreenMask()
+-- Creates the screen mask
+local mask_alpha = 0.5
+local screen_options = { color = { r = 255, g = 0, b = 255, a = 255 }, duration = 1 }
+DCEI.ShowScreenMask(mask_alpha, screen_options)
+
+-- Hides the mask after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideScreenMask()
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -1057,10 +1404,8 @@ Takes a screenshot of the game. On Windows PCs, this file is saved in `C:\Users\
 #### Example Usage
 [](example-usage-start)
 ```lua
-
     DCEI.TakeScreenShot("A-ScreenshotNormal", 0, 1)
     DCEI.TakeScreenShot("A-ScreenshotHQ", 0.1, 6)
-
 ```
 [](example-usage-end)
 
@@ -1142,7 +1487,14 @@ Shows the slow motion effect on the screen.
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Starts the slow motion effect
 DCEI.ShowSlowMotionEffect()
+
+-- Hides the effect after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideSlowMotionEffect()
+end, show_duration)
 ```
 [](example-usage-end)
 
@@ -1162,7 +1514,14 @@ Hides the slow motion effect on the screen.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.HideSlowMotionEffect()
+-- Starts the slow motion effect
+DCEI.ShowSlowMotionEffect()
+
+-- Hides the effect after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideSlowMotionEffect()
+end, show_duration)
 ```
 [](example-usage-end)
 

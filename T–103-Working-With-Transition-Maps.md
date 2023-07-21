@@ -6,7 +6,7 @@ This guide assumes that you already know how to work with mods within your map. 
 # Caveats/Untested stuff
 There are some things that map transitioning cannot do
 - It does not save your "mod/game state" i.e variables current value, when transitioning. This can be mitigated by using the save/load functions [https://github.com/dctopspin/Wild-Modding/wiki/Trigger-API-Reference-DCEI-Functions-Save](https://github.com/dctopspin/Wild-Modding/wiki/Trigger-API-Reference-DCEI-Functions-Save)
-- I have not tested this, but i'm not sure how the map handles pre-placed units
+- I have not tested this, but I'm not sure how the map handles pre-placed units
 
 # Structure/Map Setup
 Your folder setup should look like this:

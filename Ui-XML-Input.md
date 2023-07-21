@@ -25,7 +25,7 @@ A text input frame. By default, this frame type attempts to fill its parent size
 #### Example Usage
 [](example-usage-start)
 ```xml
-    <Input height="30" width="200" />
+<Input layout="flex" height="30" width="200" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149568950-299acc22-7079-4c6d-92c6-7210df6b97d0.png)
@@ -34,7 +34,7 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateInputFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createinputframetransform-parent)
+- [CreateInputFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createinputframe-1)
 [](extra-section-end)
 
 [](overview-end)
@@ -56,14 +56,14 @@ The text in the input frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="30" width="200" text="Text Input" />
+<Input layout="flex" height="30" width="200" text="Text Input" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFrameText()](rigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframetexttransform-text-string-content)
-- [GetInputFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#string-getinputframetexttransform-text)
+- [SetInputFrameText()](rigger-API-Reference-DCEI-Functions-Custom-UI#setinputframetext-2)
+- [GetInputFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getinputframetext-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -83,7 +83,7 @@ The translation key for the input frame. This uses a translation key declared in
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="30" width="200" text="Text Input" translationKey="key" />
+<Input layout="flex" height="30" width="200" text="Text Input" translationKey="key" />
 ```
 [](example-usage-end)
 
@@ -109,13 +109,13 @@ The font size for the input frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="100" width="400" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" />
+<Input layout="flex" height="100" width="400" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframefontsizetransform-text-float-size)
+- [SetInputFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframefontsize-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -135,13 +135,13 @@ The font color for the input frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="30" width="200" text="Text Input" color="r: 0, g: 0, b: 1, a: 1" />
+<Input layout="flex" height="100" width="400" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframecolortransform-text-colorrgb-color)
+- [SetInputFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframecolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -161,7 +161,7 @@ The text outline status for the input frame, where `true` enables the text outli
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="100" width="400" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" outline="true" />
+<Input layout="flex" height="100" width="400" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" outline="true" />
 ```
 [](example-usage-end)
 
@@ -186,13 +186,13 @@ The font wrapping status for the input frame, where `true` enables font wrapping
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="300" width="200" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" wrapping="true" />
+<Input layout="flex" height="300" width="200" text="Text Input" fontSize="80" color="r: 1, g: 0, b: 0, a: 1" wrapping="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFrameWrapping()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframewrappingtransform-text-bool-enable)
+- [SetInputFrameWrapping()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframewrapping-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -206,19 +206,19 @@ The font wrapping status for the input frame, where `true` enables font wrapping
 
 #### Description
 [](description-start)
-The placeholder text for the input frame. This text is bolded and italicized by default.
+The placeholder text that appears whenever the input frame is empty. This text is bolded and italicized by default.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="40" width="200" placeholder="Text Input" />
+<Input layout="flex" height="40" width="200" placeholder="Text Input" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFramePlaceholder()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframeplaceholdertransform-text-string-content)
+- [SetInputFramePlaceholder()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframeplaceholder-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -238,7 +238,7 @@ The translation key for the placeholder text. This uses a translation key declar
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="30" width="200" text="Hello" placeholderTranslationKey="key" />
+<Input layout="flex" height="40" width="200" placeholder="Text Input" placeholderTranslationKey="key" />
 ```
 [](example-usage-end)
 
@@ -264,13 +264,13 @@ The placeholder text font size for the input frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="90" width="400" placeholder="Text Input" placeholderFontSize="60" />
+<Input layout="flex" height="90" width="400" placeholder="Text Input" placeholderFontSize="60"/>
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFramePlaceholderFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframeplaceholderfontsizetransform-text-float-size)
+- [SetInputFramePlaceholderFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframeplaceholderfontsize-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -290,13 +290,13 @@ The placeholder text color for the input frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="90" width="400" placeholder="Text Input" placeholderFontSize="60" placeholderColor="r: 0, g: 0, b: 1, a: 1" />
+<Input layout="flex" height="90" width="400" placeholder="Text Input" placeholderFontSize="60" placeholderColor="r: 0, g: 0, b: 1, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFramePlaceholderColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframeplaceholdercolortransform-text-colorrgb-color)
+- [SetInputFramePlaceholderColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframeplaceholdercolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -316,13 +316,13 @@ The placeholder text outline status for the input frame, where `true` enables th
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Input height="90" width="400" placeholder="Text Input" placeholderFontSize="60" placeholderColor="r: 1, g: 1, b: 0, a: 1" placeholderOutline="true" />
+<Input layout="flex" height="90" width="400" placeholder="Text Input" placeholderFontSize="60" placeholderColor="r: 1, g: 1, b: 0, a: 1" placeholderOutline="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetInputFramePlaceholderOutline()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setinputframeplaceholderoutlinetransform-text-bool-outline)
+- [SetInputFramePlaceholderOutline()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setinputframeplaceholderoutline-2)
 [](extra-section-end)
 
 [](manual-wiki-end)

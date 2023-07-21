@@ -13,7 +13,7 @@ Then include in your lua file with `local Meta = require("Meta")`
 
 # Example Usage
 
-Here is a Lua snippet from the most recent demo to give you a quick rundown of how to use gmui for UI in Lua. Be sure to downlod the project for a closer look, and reference the test of this document for more documentation on the gmui mod. 
+Here is a Lua snippet from the most recent demo to give you a quick rundown of how to use GMUI for UI in Lua. Be sure to downlod the project for a closer look, and reference the test of this document for more documentation on the GMUI mod. 
 
 ```lua
 -- LIBRARIES

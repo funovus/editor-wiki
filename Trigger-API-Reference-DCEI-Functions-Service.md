@@ -123,21 +123,29 @@ void SetTranslationText(string key, string text)
 ```
 #### Description
 [](description-start)
-
+Manually inputs translation text into the given key. You can put `{[]}` around variables in your text to allow you to easily replace them when using `GetTranslationText`.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `key` the localization key to use.
+- *string* `text` the text that is inserted into the key.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+DCEI.SetTranslationText("data/hero/ice_mage/skill01/description", "Slows nearby enemies by {[x]} for {[y]} seconds.")
+local text = DCEI.GetTranslationText("data/hero/ice_mage/skill01/description", { x = "50%", y = "3" })
 
+-- text: "Slows nearby enemies by 50% for 3 seconds."
+DCEI.LogMessage(text)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+- [GetTranslationText](gettranslationtext-2)
 [](extra-section-end)
 
 ## bool IsAdsReady() {isadsready-0}
@@ -263,7 +271,13 @@ Show the game settings menu. Only works on mobile.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowSettings()
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.ShowSettings()
+end)
 ```
 [](example-usage-end)
 
@@ -318,7 +332,7 @@ void ResetSavedMapDataByIndex(int index)
 ```
 #### Description
 [](description-start)
-Attempts to resets the saved map data at the given index.
+Attempts to reset the saved map data at the given index.
 [](description-end)
 
 #### Parameters
@@ -330,7 +344,36 @@ Attempts to resets the saved map data at the given index.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ResetSavedMapDataByIndex(1)
+function LoadBackupSaveDataPriority()
+    if not loading_backup_savedata then
+        loading_backup_savedata = true
+        local callback_func = function(result)
+            if result then
+                local index = 1
+                local max_wave = 0
+                if result.saves then
+                    for id, entry in ipairs(result.saves) do
+                        -- DCEI.LogMessage("Save data time:"..entry.time)
+                        if entry.save and entry.save.max_wave then
+                            -- DCEI.LogMessage("Max wave:"..entry.save.max_wave)
+                            if entry.save.max_wave > max_wave then
+                                index = id
+                                max_wave = entry.save.max_wave
+                            end
+                        end
+                    end
+                    if max_wave > 0 then
+                        -- DCEI.LogMessage("Restore wave:"..max_wave.."  id: "..index)
+                        DCEI.TriggerAddTimerEventElapsed(function()
+                            DCEI.ResetSavedMapDataByIndex(index)
+                        end, 0, true, true)
+                    end
+                end
+            end
+        end
+        DCEI.GetSaveDataHistory(10, callback_func)
+    end
+end
 ```
 [](example-usage-end)
 
@@ -393,7 +436,13 @@ Attempts to delete the mail with the given ID.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.DeleteMail(1)
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.DeleteMail(1)
+end)
 ```
 [](example-usage-end)
 
@@ -421,7 +470,12 @@ Schedules a notification and returns the ID of said notification. Only works on 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ScheduleNotification("Title", "Notification", 120)
+-- Schedule a notification after 2 minutes
+local title = "Title"
+local body = "Notification"
+local timeInSeconds = 120
+
+local id = DCEI.ScheduleNotification(title, body, timeInSeconds)
 ```
 [](example-usage-end)
 
@@ -447,7 +501,15 @@ Cancels a notification from the given id. Only works on mobile.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.CancelNotification(1)
+-- Schedule a notification after 2 minutes
+local title = "Title"
+local body = "Notification"
+local timeInSeconds = 120
+
+local id = DCEI.ScheduleNotification(title, body, timeInSeconds)
+
+---
+DCEI.CancelNotification(id)
 ```
 [](example-usage-end)
 
@@ -468,6 +530,7 @@ Returns the last notification ID. Only works on mobile.
 [](example-usage-start)
 ```lua
 local last_notif_id = DCEI.GetLastNotificationId()
+DCEI.LogMessage(last_notif_id)
 ```
 [](example-usage-end)
 
@@ -493,7 +556,13 @@ Shows the SMS invitation screen. Only works on mobile or web builds.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.ShowSendSMS(1)
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.ShowSendSMS(1)
+end)
 ```
 [](example-usage-end)
 
@@ -513,7 +582,13 @@ Restarts the application. Only works on mobile.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RestartApplication()
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.RestartApplication()
+end)
 ```
 [](example-usage-end)
 
@@ -527,12 +602,20 @@ void QuitApplication()
 ```
 #### Description
 [](description-start)
-
+Closes the application. Works in the editor, unlike `RestartApplication()`.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.QuitApplication()
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -550,16 +633,29 @@ void SetResolution(int width, int height, FullScreenMode mode)
 
 #### Parameters
 [](parameters-start)
-
+- *int* `width` the width of the desired screen resolution.
+- *int* `height` the height of the desired screen resolution.
+- *[FullScreenMode](Trigger-API-Reference-DCEI-Types#fullscreenmode)* `mode` the type of screen mode to set your game to. 
+Supports `ExclusiveFullScreen`, `FullScreenWindow`, `MaximizedWindow`, and `Windowed`.
 [](parameters-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+DCEI.SetResolution(1000, 500, "Windowed")
+-- Logs after a timer so the game has time to update.
+DCEI.TriggerAddTimerEventElapsed(function()
+    local resolution = DCEI.GetCurrentResolution()
+    DCEI.LogMessage("Width: " .. resolution.width)
+    DCEI.LogMessage("Height: " .. resolution.height)
+    DCEI.LogMessage("Mode: " .. resolution.mode)
+end, 0)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[FullScreenMode](Trigger-API-Reference-DCEI-Types#fullscreenmode)
 [](extra-section-end)
 
 ## object GetCurrentResolution() {getcurrentresolution-0}
@@ -568,16 +664,26 @@ object GetCurrentResolution()
 ```
 #### Description
 [](description-start)
-
+Gets the current screen resolution of the game. Returns a Lua table in the form of `{width = int, height = int, mode = string}`.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+DCEI.SetResolution(1000, 500, "Windowed")
+-- Logs after a timer so the game has time to update.
+DCEI.TriggerAddTimerEventElapsed(function()
+    local resolution = DCEI.GetCurrentResolution()
+    DCEI.LogMessage("Width: " .. resolution.width)
+    DCEI.LogMessage("Height: " .. resolution.height)
+    DCEI.LogMessage("Mode: " .. resolution.mode)
+end, 0)
+```
 [](example-usage-end)
 
 [](extra-section-start)
-
+#### Related
+[FullScreenMode](Trigger-API-Reference-DCEI-Types#fullscreenmode)
 [](extra-section-end)
 
 ## object GetSupportedResolutions() {getsupportedresolutions-0}
@@ -586,12 +692,20 @@ object GetSupportedResolutions()
 ```
 #### Description
 [](description-start)
-
+Returns a table of supported resolutions. The format of each resolution entry is `{{width = 640, height = 480}, {width = 720, height = 400}, etc.}`. If multiple monitors are detected, the function will include the same resolution entry for each supported screen. 
+For example, `{{width = 1760, height = 900}, {width = 1760, height = 900}, {width = 1920, height = 1080}}` indicates support for two monitors with resolutions 1760x900 and one monitor with resolution 1920x1080."
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
+```lua
+local resolutions = DCEI.GetSupportedResolutions()
 
+-- Print the supported resolutions
+for i, resolution in ipairs(resolutions) do
+    DCEI.LogMessage("Resolution " .. i .. ": " .. resolution.width .. "x" .. resolution.height)
+end
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -616,7 +730,13 @@ Opens a web url in the user's default browser.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#void-openurlstring-url")
+local layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+DCEI.SetOnClickCallback(layout.Button, function()
+    DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#void-openurlstring-url")
+end)
 ```
 [](example-usage-end)
 
@@ -670,7 +790,14 @@ Requests an app store review. Only works on iOS devices.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RequestAppStoreReview()
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.RequestAppStoreReview()
+end)
 ```
 [](example-usage-end)
 
@@ -697,7 +824,14 @@ Requests an in-app review. Only works on iOS devices.
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.RequestInAppReview(SuccessCallback, FailureCallback)
+local button_layout = GMUI.Layout.New({
+    parent = DCEI.GetUiRootFrame(),
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetOnClickCallback(button_layout.Button, function()
+    DCEI.RequestInAppReview(SuccessCallback, FailureCallback)
+end)
 ```
 [](example-usage-end)
 
@@ -911,7 +1045,7 @@ void GetReferralCode(TypedCallback<object> callback)
 ```
 #### Description
 [](description-start)
-Get the referral code of the current player. If successful, the callback will be called with a Lua table {code = string, count = number} where code is the referral code and count is the number of players who have used the referral code. The count value should be persisted in the save data. Rewards should be given the player when the server returned count value is larger than the one in save data.
+Get the referral code of the current player. If successful, the callback will be called with a Lua table `{code = string, count = number}` where code is the referral code and count is the number of players who have used the referral code. The count value should be persisted in the save data. Rewards should be given the player when the server returned count value is larger than the one in save data.
 [](description-end)
 
 #### Parameters
@@ -951,13 +1085,13 @@ void UseReferralCode(string code, TypedCallback<object> callback)
 ```
 #### Description
 [](description-start)
- Use a referral code from another player. If successful, the callback will be called with a Lua table {code = string, count = number}. The returned referral code should be persisted in save data along with the referral rewards.
+ Use a referral code from another player. If successful, the callback will be called with a Lua table `{code = string, count = number}`. The returned referral code should be persisted in save data along with the referral rewards.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
 - *string* `code` the referral code from another player to use.
-- *TypedCallback\<object>* `callback` the callback function for getting the referral code. If successful, the callback will be called with a Lua table {code = string, count = number} where code is the referral code and count is the number of players who have used the referral code.
+- *TypedCallback\<object>* `callback` the callback function for getting the referral code. If successful, the callback will be called with a Lua table `{code = string, count = number}` where code is the referral code and count is the number of players who have used the referral code.
 
 [](parameters-end)
 
@@ -997,12 +1131,13 @@ void GenerateDeepLink(string payload, TypedCallback<string> callback)
 ```
 #### Description
 [](description-start)
-
+Generates a deep link from the given payload data.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *string* `payload` the data being used to generate the deep link.
+- *TypedCallback\<string>* `callback` the callback that will be called with the created deep link url on success, or nil on failure.
 [](parameters-end)
 
 #### Callback Parameters
@@ -1014,7 +1149,12 @@ void GenerateDeepLink(string payload, TypedCallback<string> callback)
 
 #### Example Usage
 [](example-usage-start)
-
+```Lua
+-- Placeholder example
+DCEI.GenerateDeepLink("", function(url)
+    DCEI.LogMessage(url)
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1027,12 +1167,14 @@ void TriggerAddDeepLinkEvent(TypedCallback<string> callback)
 ```
 #### Description
 [](description-start)
-
+If the game is opened via a deep link, the callback will be called with the payload string that's originally used to create the deep link.
+Depending on if the game is installed, clicking on a deep link either opens the game or redirects the user to the store page. You can use it to generate invitation links and give rewards to invited players.
+Note that deep link APIs only work on mobile devices and require external service setup before use. Ask the engineers if you want to use them in your game.
 [](description-end)
 
 #### Parameters
 [](parameters-start)
-
+- *TypedCallback\<string>* `callback` the callback that will be called with the payload string that's originally used to create the deep link.
 [](parameters-end)
 
 #### Callback Parameters
@@ -1044,7 +1186,12 @@ void TriggerAddDeepLinkEvent(TypedCallback<string> callback)
 
 #### Example Usage
 [](example-usage-start)
-
+```lua
+-- Placeholder example
+DCEI.TriggerAddDeepLinkEvent(function(payload)
+    DCEI.LogMessage(payload)
+end)
+```
 [](example-usage-end)
 
 [](extra-section-start)
@@ -1149,7 +1296,7 @@ Pulls player current guild info. Callback parameter returns the [guild](Guild-Sy
 [](example-usage-start)
 ```lua
 DCEI.WildCastlePullGuild(function(guild) 
-    core.LogDump(guild)
+    Core.Util.LogDump(guild)
 end)
 ```
 [](example-usage-end)
@@ -1186,7 +1333,7 @@ Searches for a guild; return list of possible results. Callback parameter return
 ```lua
 DCEI.WildCastleSearchGuild("search term", function(results_table) 
     -- Table of "guild" tables
-    core.LogDump(results_table)
+    Core.Util.LogDump(results_table)
 end)
 ```
 [](example-usage-end)
@@ -1352,6 +1499,8 @@ Update your guild settings. Passes [guild](Guild-System#guild) result to callbac
 
 #### Parameters
 [](parameters-start)
+- *string* `announcement` the announcement text for the guild
+- *int* `guildJoinType` see [guildJoinType](Guild-System#guild_join_type) for more information
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1388,6 +1537,9 @@ Update ther player's guild badge. Passes [guild](Guild-System#guild) result to c
 
 #### Parameters
 [](parameters-start)
+- *int* `background` the identifier for the background of the guild badge
+- *int* `pattern` the identifier for the pattern of the guild badge.
+- *int* `icon` the identifier for the icon of the guild badge.
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1423,6 +1575,9 @@ Update player badge. Passes [guild](Guild-System#guild) result to callback funct
 
 #### Parameters
 [](parameters-start)
+- *int* `background` the identifier for the background of the player badge
+- *int* `pattern` the identifier for the pattern of the player badge.
+- *int* `icon` the identifier for the icon of the player badge.
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -1458,6 +1613,7 @@ Post player contribution to the guild board. Passes [guild](Guild-System#guild) 
 
 #### Parameters
 [](parameters-start)
+- *int* `contribution` the amount of contribution that the player has given
 - *TypedCallback\<object>* `callback` the callback function for when the API is successful
 
 [](parameters-end)
@@ -2361,7 +2517,7 @@ Initializes an in-app purchase. This will pass the product IDs to both callback 
 [](parameters-start)
 - *TypedCallback\<string>* `purchaseCallback` the callback function on a successful purchase.
 - *List\<string>* `productIds` a table containing the in-app product IDs.
-- *TypedCallback\<bool>* `initializationCallback` the callback function for
+- *TypedCallback\<bool>* `initializationCallback` the callback function for initialization.
 
 [](parameters-end)
 
@@ -2376,7 +2532,16 @@ Initializes an in-app purchase. This will pass the product IDs to both callback 
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.InitializeInAppPurchaseWithProductId(PurchaseCallback, {"prod_1", "prod_2"}, InitCallback)
+function PurchaseCallback(product_id)
+    -- Handle successful purchase
+end
+
+function InitCallback(success)
+    -- Handle initialization completion
+end
+
+local product_ids = {"prod_1", "prod_2"}
+DCEI.InitializeInAppPurchaseWithProductId(PurchaseCallback, product_ids, InitCallback)
 ```
 [](example-usage-end)
 
@@ -2412,6 +2577,14 @@ Initializes an in-app purchase. This will pass the product's ID to both callback
 #### Example Usage
 [](example-usage-start)
 ```lua
+function PurchaseCallback(product_id)
+    -- Handle successful purchase
+end
+
+function InitCallback(success)
+    -- Handle initialization completion
+end
+
 local product_list = DCEI.CreateCustomIapProductData()
 DCEI.InitializeInAppPurchaseWithProductData(PurchaseCallback, product_list, InitCallback)
 ```
@@ -2499,6 +2672,7 @@ Returns the in-app product's localized price, given its ID.
 [](example-usage-start)
 ```lua
 local localized_price = DCEI.GetIapProductLocalizedPrice(product_id)
+DCEI.LogMessage(localized_price)
 ```
 [](example-usage-end)
 
