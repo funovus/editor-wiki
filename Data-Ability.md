@@ -73,7 +73,7 @@ Abilities are spells or skills that are cast by units. Similar to weapons, abili
 ## [](dcei.engine.proto.Ability.ability_type)**Ability Type** {Ability-Type}
 
 [](manual-wiki-start)
-Determines how the ability's target location is chosen. Targeted abilities will cause the caster to enter [targeting mode](Trigger-API-Reference-DCEI-Functions-Ability#void-entertargetingmodeunit-unit-string-abilityname) while selecting a cast location. 
+Determines how the ability's target location is chosen. Targeted abilities will cause the caster to enter [targeting mode](Trigger-API-Reference-DCEI-Functions-Ability#entertargetingmode-2) while selecting a cast location. 
 [](manual-wiki-end)
 
 >* **NONE_ABILITY_TYPE**: 

@@ -69,15 +69,15 @@ The enabled status for the button frame, where `true` is enabled and `false` is 
 
 [](example-usage-start)
 ```xml
-<VStack>
+<Frame layout="flex" flexDirection="column">
     <!-- Declare initial state values. -->
     <State name="red" booleanValue="false" />
     <!-- Show different background images depending on the state value and flip state value when clicked. -->
-    <Button bind:backgroundImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
+    <Button bind:frameImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
         <Text text="switch color" />
     </Button>
     <Text bind:text="state.red and 'red' or 'blue'" />
-</VStack>
+</Frame>
 ```
 [](example-usage-end)
 [](extra-section-start)

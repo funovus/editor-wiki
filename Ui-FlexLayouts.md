@@ -9,17 +9,33 @@
     - [flexGrow](#flexgrow)
     - [flexShrink](#flexshrink)
     - [flexDirection](#flexdirection)
-      - [`column` (default)](#column-default)
-      - [`column-reverse`](#column-reverse)
-      - [`row`](#row)
+      - [`row` (default)](#row-default)
       - [`row-reverse`](#row-reverse)
+      - [`column`](#column)
+      - [`column-reverse`](#column-reverse)
     - [flexWrap](#flexwrap)
       - [`no-wrap` (default)](#no-wrap-default)
-      - [`wrap` (default)](#wrap-default)
-      - [`wrap-reverse` (default)](#wrap-reverse-default)
+      - [`wrap`](#wrap)
+      - [`wrap-reverse`](#wrap-reverse)
     - [justifyContent](#justifycontent)
+      - [`center` (default)](#center-default)
+      - [`flex-start`](#flex-start)
+      - [`flex-end`](#flex-end)
+      - [`space-around`](#space-around)
+      - [`space-between`](#space-between)
     - [alignItems](#alignitems)
+      - [`center` (default)](#center-default-1)
+      - [`flex-start`](#flex-start-1)
+      - [`flex-end`](#flex-end-1)
+      - [`baseline`](#baseline)
+      - [`stretch`](#stretch)
     - [alignContent](#aligncontent)
+      - [`flex-start`](#flex-start-2)
+      - [`flex-end`](#flex-end-2)
+      - [`center`](#center)
+      - [`stretch`](#stretch-1)
+      - [`space-between`](#space-between-1)
+      - [`space-around`](#space-around-1)
     - [alignSelf](#alignself)
     - [Margins](#margins)
       - [`marginLeft`](#marginleft)
@@ -179,9 +195,9 @@ If all items have `flexGrow` set to 1, the remaining space in the container will
 
 ### flexDirection
 **Value type: `flexDirection`**
-**Values**: `column, column-reverse, row, row-reverse`
+**Values**: `row, row-reverse, column, column-reverse`
 
-Flex direction controls the direction in which children of a node are laid out.
+Flex direction controls the direction in which children of a node are laid out. Row is the default.
 ![image](https://user-images.githubusercontent.com/56179268/201359497-60605ea0-a1df-4655-a16c-9e9b00fe3b26.png)
 
 
@@ -195,7 +211,38 @@ Flex direction controls the direction in which children of a node are laid out.
 
 <div markdown="1">
 
-#### `column` (default) 
+####  `row` (default)
+
+Align children from left to right. If wrapping is enabled then the next line will start under the first item on the left of the container.
+
+```xml
+<Frame layout="flex" flexDirection="row">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+</Frame>
+```
+
+<img src="https://user-images.githubusercontent.com/56179268/201363891-cc258ede-a1e4-433d-947b-f186e2ca39c8.png" width="300"/>
+
+---
+
+####  `row-reverse` 
+
+Align children from right to left. If wrapping is enabled then the next line will start under the first item on the right of the container.
+
+```xml
+<Frame layout="flex" flexDirection="row-reverse">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+</Frame>
+```
+<img src="https://user-images.githubusercontent.com/56179268/201371889-e6d4bd1c-27c8-4500-aa49-7fbe0aa4dde1.png"  width="300"/>
+
+---
+
+#### `column` 
 
 Align children from top to bottom. If wrapping is enabled then the next line will start to the left first item on the top of the container.
 
@@ -225,37 +272,6 @@ Align children from bottom to top. If wrapping is enabled then the next line wil
 
 <img src="https://user-images.githubusercontent.com/56179268/201373053-93761b32-f045-4589-9073-6af7f1c40f35.png" width="300"/>
 
----
-
-####  `row`  
-
-Align children from left to right. If wrapping is enabled then the next line will start under the first item on the left of the container.
-
-```xml
-<Frame layout="flex" flexDirection="row">
-    <include name="DemoAttributes/BasicBlockA" />
-    <include name="DemoAttributes/BasicBlockB" />
-    <include name="DemoAttributes/BasicBlockC" />
-</Frame>
-```
-
-<img src="https://user-images.githubusercontent.com/56179268/201363891-cc258ede-a1e4-433d-947b-f186e2ca39c8.png" width="300"/>
-
----
-
-####  `row-reverse` 
-
-Align children from right to left. If wrapping is enabled then the next line will start under the first item on the right of the container.
-
-```xml
-<Frame layout="flex" flexDirection="row-reverse">
-    <include name="DemoAttributes/BasicBlockA" />
-    <include name="DemoAttributes/BasicBlockB" />
-    <include name="DemoAttributes/BasicBlockC" />
-</Frame>
-```
-<img src="https://user-images.githubusercontent.com/56179268/201371889-e6d4bd1c-27c8-4500-aa49-7fbe0aa4dde1.png"  width="300"/>
-
 </div>
 </details></table>
 
@@ -263,7 +279,7 @@ Align children from right to left. If wrapping is enabled then the next line wil
 ---
 ### flexWrap
 **Value type: `flexWrap`**
-**Values**: `wrap`, `wrap-reverse`, `no-wrap`
+**Values**: `no-wrap`, `wrap`, `wrap-reverse`
 
 By default, flex items will all try to fit onto one line. You can change that and allow the items to wrap as needed with this property.
 <img src="https://user-images.githubusercontent.com/56179268/201434854-7e4e83af-354e-497e-92bf-e48982b5f092.png"/>
@@ -282,56 +298,56 @@ By default, flex items will all try to fit onto one line. You can change that an
 #### `no-wrap` (default) 
 
 ```xml
-<Frame layout="flex" flexDirection="row" flexWrap="no-wrap"  heightPercent="100" widthPercent="100" alignContent="stretch">
-    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="no-wrap" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
 </Frame>
-
 ```
 
-<img src="https://user-images.githubusercontent.com/56179268/201697066-f87e5768-ad46-4f1b-90ef-b30e43a9db04.png" width="300"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/7bdc8f91-23b8-4af1-9ec8-fee3dbcb1ed2" width="300"/>
 
-#### `wrap` (default) 
+---
+
+#### `wrap`
 
 ```xml
-<Frame layout="flex" flexDirection="row" flexWrap="wrap"  heightPercent="100" widthPercent="100" alignContent="stretch">
-    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
 </Frame>
-
 ```
 
-<img src="https://user-images.githubusercontent.com/56179268/201697701-176c267b-008d-43a1-a0b3-1bd4e20dcc24.png" width="300"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/b9edc682-9413-4fcb-8faf-e27113e6c934" width="300"/>
 
-#### `wrap-reverse` (default) 
+---
+
+#### `wrap-reverse` 
 
 ```xml
-<Frame layout="flex" flexDirection="row" flexWrap="wrap-reverse"  heightPercent="100" widthPercent="100" alignContent="stretch">
-    <include name="DemoAttributes/BasicBlockA" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockB" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockC" widthPercent="30" maxWidth="1100" flexShrink="1" />
-    <include name="DemoAttributes/BasicBlockD" widthPercent="30" maxWidth="1100" flexShrink="1" />
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="wrap-reverse" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
 </Frame>
-
 ```
 
-<img src="https://user-images.githubusercontent.com/56179268/201697784-9b3c46fa-d13b-4045-b45a-679c16575c9f.png" width="300"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/bd2bbfa8-2735-44e2-b7e0-c11db7744b5e" width="300"/>
 
 </div>
 </details></table>
 
 ---
 
-
 ### justifyContent
 **Value type: `flexJustify`**
-**Values**: `center`, `flex-end`, `flex-start`, `flex-start`, `space-around`, `space-between` 
+**Values**: `center`, `flex-start`, `flex-end`, `space-around`, `space-between` 
 
-This defines the alignment along the main axis. It helps distribute extra free space leftover when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line.
+This defines the alignment along the main axis. It helps distribute extra free space leftover when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line. Center is the default.
 
 <img src="https://user-images.githubusercontent.com/56179268/201700478-de17fae1-2f1e-421f-adfb-025d26e1a963.png" width="300"/>
 
@@ -344,21 +360,68 @@ This defines the alignment along the main axis. It helps distribute extra free s
 <summary>EXAMPLES (Click to expand)</summary>
 <div markdown="1">
 
+#### `center` (default) 
+
 ```xml
-<Frame layout="flex" justifyContent="space-around" alignItems="stretch" alignContent="stretch">
-    <Frame layout="flex" flexDirection="row" marginBottom="25" heightPercent="50">
-        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0"/>
-        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="0"/>
-        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0"/>
-    </Frame>
-    <Frame layout="flex" flexDirection="row" heightPercent="50">
-        <include name="DemoAttributes/BasicBlockA" widthPercent="25" flexGrow="0.5" />
-        <include name="DemoAttributes/BasicBlockB" widthPercent="25" flexGrow="2" />
-        <include name="DemoAttributes/BasicBlockC" widthPercent="25" flexGrow="0.5" />
-    </Frame>
+<Frame layout="flex" justifyContent="center" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
 </Frame>
 ```
-<img src="https://user-images.githubusercontent.com/56179268/201426265-cbe9bd00-0565-4506-9eae-5774546ff2ad.png" width="500"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/cf0294fa-cc2c-48d6-bd15-ea73c4339301" width="500"/>
+
+---
+
+#### `flex-start`
+
+```xml
+<Frame layout="flex" justifyContent="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/ba992969-f1e7-4bec-bd0c-6b5bba06ffb2" width="500"/>
+
+---
+
+#### `flex-end` 
+
+```xml
+<Frame layout="flex" justifyContent="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/f5880222-223a-4a83-9f22-990838ce17b5" width="500"/>
+
+---
+
+#### `space-around`
+
+```xml
+<Frame layout="flex" justifyContent="space-around" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/43dd5223-d23d-4f52-8552-a8f09f9eecfc" width="500"/>
+
+---
+
+#### `space-between`
+
+```xml
+<Frame layout="flex" justifyContent="space-between" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/110a9ec3-9efc-41e4-9a85-91affbb195f8" width="500"/>
 
 </div>
 </details></table>
@@ -367,8 +430,7 @@ This defines the alignment along the main axis. It helps distribute extra free s
 
 
 ### alignItems
-**Values**: `baseline`, `center`, `flex-end`, `flex-start`, `stretch`
-
+**Values**: `center`, `flex-start`, `flex-end`, `baseline`, `stretch`
 
  This defines the default behavior for how flex items are laid out along the cross axis on the current line. Think of it as the justify-content version for the cross-axis (perpendicular to the main-axis).
 
@@ -378,12 +440,87 @@ This defines the alignment along the main axis. It helps distribute extra free s
 **For more info, see:**
 * [yogalayout](https://yogalayout.com/docs/align-items) 
 * [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-align-items)
+
+<table><details>
+<summary>EXAMPLES (Click to expand)</summary>
+<div markdown="1">
+
+#### `center` (default)
+
+```xml
+<Frame layout="flex" alignItems="center" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+    <include name="DemoAttributes/BasicBlockD" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/bf7fd553-6375-4724-9607-adb2dfb4d359" width="500"/>
+
+---
+
+#### `flex-start`
+
+```xml
+<Frame layout="flex" alignItems="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+    <include name="DemoAttributes/BasicBlockD" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/a74a6e02-2387-4e6c-a2c0-07ad2e23aedd" width="500"/>
+
+---
+
+#### `flex-end`
+
+```xml
+<Frame layout="flex" alignItems="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+    <include name="DemoAttributes/BasicBlockD" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/e9967765-12f4-4381-aa71-34511d029de3" width="500"/>
+
+---
+
+#### `baseline`
+
+```xml
+<Frame layout="flex" alignItems="baseline" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" widthPercent="1" height="300" />
+    <include name="DemoAttributes/BasicBlockB" widthPercent="1" height="250" />
+    <include name="DemoAttributes/BasicBlockC" widthPercent="1" height="200" />
+    <include name="DemoAttributes/BasicBlockD" widthPercent="1" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/68990421-144e-4a3d-912a-90922e19076d" width="500"/>
+
+---
+
+#### `stretch`
+
+```xml
+<Frame layout="flex" alignItems="stretch" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100" heightPercent="50">
+    <include name="DemoAttributes/BasicBlockA" />
+    <include name="DemoAttributes/BasicBlockB" />
+    <include name="DemoAttributes/BasicBlockC" />
+    <include name="DemoAttributes/BasicBlockD" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/4ec8a204-0e35-45c3-bc76-83ca2a39c752" width="500"/>
+
+</div>
+</details></table>
   
 ---
 ### alignContent
 
 
-**Values**: `baseline`, `center`, `flex-end`, `flex-start`, `stretch`
+**Values**: `flex-start`, `flex-end`, `center`, `stretch`, `space-between`, `space-around`
 
 
 This aligns a flex container’s lines within when there is extra space in the cross-axis, similar to how justify-content aligns individual items within the main-axis.
@@ -396,6 +533,95 @@ Note: This property only takes effect on multi-line flexible containers, where f
 * [yogalayout](https://yogalayout.com/docs/align-content) 
 * [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-align-content)
 
+<table><details>
+<summary>EXAMPLES (Click to expand)</summary>
+<div markdown="1">
+
+#### `flex-start`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/608c4534-87ba-4c6a-aa9b-2264daa15468" width="500"/>
+
+---
+
+#### `flex-end`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/474c6897-82bf-4db4-9b04-9ee789d97f1a" width="500"/>
+
+---
+
+#### `center`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="center" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/a2d8f926-f462-439b-8db3-7d9b3e021ee4" width="500"/>
+
+---
+
+#### `stretch`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="stretch" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/49037407-c619-499d-9788-b1111da5677d" width="500"/>
+
+---
+
+#### `space-between`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="space-between" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/388ff7e6-4034-40c8-b3de-a9ebbe489821" width="500"/>
+
+---
+
+#### `space-around`
+
+```xml
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="space-around" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="BasicBlockA" width="400" />
+    <include name="BasicBlockB" width="400" />
+    <include name="BasicBlockC" width="400" />
+    <include name="BasicBlockD" width="400" />
+</Frame>
+```
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/f1ebf26f-fce8-47bd-acf2-f78c7d02c9b5" width="500"/>
+
+</div>
+</details></table>
+
 ---
 ### alignSelf
 **Values**: `baseline`, `center`, `flex-end`, `flex-start`, `stretch`
@@ -407,6 +633,25 @@ This allows the default alignment (or the one specified by align-items) to be ov
 **For more info, see:**
 * [yogalayout](https://yogalayout.com/docs/align-content) 
 * [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-align-self)
+
+<table><details>
+<summary>EXAMPLE (Click to expand)</summary>
+
+<div markdown="1">
+
+```xml
+<Frame layout="flex" alignItems="flex-start" heightPercent="60" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" heightPercent="45" />
+    <include name="DemoAttributes/BasicBlockB" heightPercent="45" />
+    <include name="DemoAttributes/BasicBlockC" heightPercent="45" alignSelf="flex-end" />
+    <include name="DemoAttributes/BasicBlockD" heightPercent="45" />
+</Frame>
+```
+
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/60531792/255295219-843f300e-d03b-48cb-acd5-f1d9d2067808.png" width="500"/>
+
+</div>
+</details></table>
 
 ---
 ### Margins

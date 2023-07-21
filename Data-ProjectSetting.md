@@ -101,7 +101,7 @@ If set, the application window can be resized.
 ### [](dcei.engine.proto.InputSettings.key_mappings)**Key Mappings** {Key-Mappings}
 
 [](manual-wiki-start)
-Defines key mappings that trigger **[DCEI.TriggerAddMappedKeyDownEvent()](Trigger-API-Reference-DCEI-Events-Input#void-triggeraddmappedkeydowneventstring-keyeventname-typedcallbackstring-trigger)** events for PC and web games.
+Defines key mappings that trigger **[DCEI.TriggerAddMappedKeyDownEvent()](Trigger-API-Reference-DCEI-Events-Input#triggeraddmappedkeydownevent-2)** events for PC and web games.
 [](manual-wiki-end)
 
 #### [](dcei.engine.proto.InputSettings.KeyMapping.name)**Name** {Name}

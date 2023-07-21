@@ -35,7 +35,7 @@ A text frame, displays simple text. This frame type has a default size of 0 and 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" />
+<Text layout="flex" text="Text Frame" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149570762-3aee569f-0d03-4cf1-9d76-d36188fffb35.png)
@@ -44,7 +44,7 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateTextFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createtextframetransform-parent)
+- [CreateTextFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createtextframe-1)
 [](extra-section-end)
 
 [](overview-end)
@@ -66,13 +66,13 @@ The text in the text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" />
+<Text layout="flex" text="Text Frame" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframetexttransform-text-string-content)
+- [SetTextFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetext-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -94,7 +94,7 @@ The expression for the text in the text frame. Data bound values can be formatte
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text textExpression="{data.text}" />
+<Text layout="flex" textExpression="{data.text}" />
 ```
 Where `{data.text}` is declared and bound in lua before the text frame is created:
 ```lua
@@ -106,9 +106,9 @@ local xml = DCEI.CreateFrameFromXml(DCEI.GetUiRootFrame(), "text")
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframetextexpressiontransform-text-string-content)
-- [BindUnitData()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindunitdatastring-name-unit-unit)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindunitdatastring-name-unit-unit)
+- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
+- [BindUnitData()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindunitdata-2)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -128,7 +128,7 @@ The translation key for the text frame. This uses a translation key declared in 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text translationKey="key" />
+<Text layout="flex" translationKey="key" />
 ```
 [](example-usage-end)
 
@@ -154,7 +154,7 @@ The font size for the text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" />
+<Text layout="flex" text="Text Frame" fontSize="40" />
 ```
 [](example-usage-end)
 
@@ -180,7 +180,7 @@ The minimum font size for the text frame. Does not work if there is a set font s
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSizeMin="40" />
+<Text layout="flex" text="Text Frame" fontSizeMin="40" />
 ```
 [](example-usage-end)
 
@@ -206,7 +206,7 @@ The maximum font size for the text frame. Does not work if there is a set font s
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSizeMax="60" />
+<Text layout="flex" text="Text Frame" fontSizeMax="60" />
 ```
 [](example-usage-end)
 
@@ -232,7 +232,7 @@ The font color for the text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" color="r: 1, g: 0, b: 0, a: 1" />
+<Text layout="flex" text="Text Frame" fontSize="40" color="r: 1, g: 0, b: 0, a: 1" />
 ```
 [](example-usage-end)
 
@@ -258,7 +258,7 @@ The status of the text outline for the text frame, where `true` means the outlin
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outline="false" />
+<Text layout="flex" text="Text Frame" fontSize="40" outline="false" />
 ```
 [](example-usage-end)
 
@@ -284,7 +284,7 @@ The status of the text shadow for the text frame, where `true` means the shadow 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" shadow="false" />
+<Text layout="flex" text="Text Frame" fontSize="40" shadow="false" />
 ```
 [](example-usage-end)
 
@@ -310,7 +310,7 @@ The status of the text wrapping for the text frame, where `true` means the wrapp
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImageColor="r: 0, g: 0, b: 0, a: 0.6">
+<Frame layout="flex" frameImageColor="r: 0, g: 0, b: 0, a: 0.6">
     <Text width="150" text="Text Frame" fontSize="40" wrapping="false" />
 </Frame>
 ```
@@ -338,7 +338,7 @@ The status of the text RTL support (right to left text) for the text frame, wher
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text rtlSupport="true" />
+<Text layout="flex" rtlSupport="true" />
 ```
 [](example-usage-end)
 
@@ -367,8 +367,8 @@ start, end, top, bottom, (top|bottom)-(start|end)
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImageColor="r: 0, g: 0, b: 0, a: 0.6">
-    <Text width="400" text="Text Frame" fontSize="40" alignment="end" />
+<Frame layout="flex" frameImageColor="r: 0, g: 0, b: 0, a: 0.6">
+    <Text height="200" width="400" text="Text Frame" fontSize="40" alignment="bottom-end" />
 </Frame>
 ```
 [](example-usage-end)
@@ -395,7 +395,7 @@ The status of the text overflow for the text frame, where `true` means the text 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame backgroundImageColor="r: 0, g: 0, b: 0, a: 0.6">
+<Frame layout="flex" frameImageColor="r: 0, g: 0, b: 0, a: 0.6">
     <Text height="40" width="150" text="Text Frame" fontSize="40" overflow="false" />
 </Frame>
 ```
@@ -417,19 +417,23 @@ The status of the text overflow for the text frame, where `true` means the text 
 
 #### Description
 [](description-start)
-The status of the frame outline for the text frame, where `true` means the outline will be shown. This is false by default.
+Adjusts the placement of the outline on the text frame, allowing you to choose between the outer edge and the inside. By default, the outline is positioned inside the text frame. Set to `true` to place the outline outside the text frame, and `false` to keep it inside.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outsideOutline="true" />
+<Text layout="flex" text="Text Frame" fontSize="40" outsideOutline="true" outlineWidth="0.5"/>
 ```
+Outside:
+![outside](https://github.com/funovus/editor-wiki/assets/60531792/5185ceed-90c7-4cbe-b6bc-0f2c075826ad)
+Inside:
+![inside](https://github.com/funovus/editor-wiki/assets/60531792/1bf29953-76d1-405d-b5de-457293c84816)
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameOutlineOutside()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeoutlineoutsidetransform-text-bool-outside)
+- [SetTextFrameOutlineOutside()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeoutlineoutside-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -443,19 +447,20 @@ The status of the frame outline for the text frame, where `true` means the outli
 
 #### Description
 [](description-start)
-The text outline color for the text frame.
+The text outline color for the text frame. Black by default.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" />
+<Text layout="flex" text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" />
+
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameOutlineColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeoutlinecolortransform-text-colorrgba-color)
+- [SetTextFrameOutlineColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeoutlinecolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -467,19 +472,19 @@ The text outline color for the text frame.
 
 #### Description
 [](description-start)
-The text outline width for the text frame, scaled from 0-1. A value of -1 will disable the outline.
+The text outline width for the text frame, scaled from 0-1. A value less than 0 will disable the outline.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" outlineWidth="0.5" />
+<Text layout="flex" text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" outlineWidth="0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameOutlineWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeoutlinewidthtransform-text-float-width)
+- [SetTextFrameOutlineWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeoutlinewidth-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -497,13 +502,13 @@ The text outline softness for the text frame, scaled from 0-1.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" outlineSoftness="0.3" />
+<Text layout="flex" text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" outlineSoftness="0.3" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameOutlineSoftness()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeoutlinesoftnesstransform-text-float-softness)
+- [SetTextFrameOutlineSoftness()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeoutlinesoftness-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -515,19 +520,19 @@ The text outline softness for the text frame, scaled from 0-1.
 
 #### Description
 [](description-start)
-The text shadow width for the text frame, scaled from 0-1. A value of -1 will remove the shadow without removing the outline.
+The text shadow width for the text frame, scaled from 0-1. A value less than 0 will remove the shadow without removing the outline.
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outlineColor="r: 1, g: 0, b: 0, a: 1" shadowWidth="-1" />
+<Text layout="flex" text="Text Frame" fontSize="40" shadowColor="r: 1, g: 0, b: 0, a: 1" shadowWidth="0.5" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameShadowWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeshadowwidthtransform-text-float-width)
+- [SetTextFrameShadowWidth()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeshadowwidth-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -545,13 +550,13 @@ The text shadow softness for the text frame, scaled from 0-1.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outline="false" shadowSoftness="0.3" />
+<Text layout="flex" text="Text Frame" fontSize="40" outline="false" shadowSoftness="0.3" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameShadowSoftness()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeshadowsoftnesstransform-text-float-softness)
+- [SetTextFrameShadowSoftness()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeshadowsoftness-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -571,13 +576,13 @@ The text shadow color for the text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" shadowColor="r: 1, g: 0, b: 0, a: 1" outline="false" />
+<Text layout="flex" text="Text Frame" fontSize="40" shadowColor="r: 1, g: 0, b: 0, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameShadowColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeshadowcolortransform-text-colorrgba-color)
+- [SetTextFrameShadowColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeshadowcolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -595,13 +600,13 @@ The text shadow direction for the text frame. The coordinate's direction is base
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Text text="Text Frame" fontSize="40" outline="false" shadowDirection="x: 1, y: 1" />
+<Text layout="flex" text="Text Frame" fontSize="40" outline="false" shadowDirection="x: 1, y: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameShadowDirection()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeshadowdirectiontransform-text-float-x-float-y)
+- [SetTextFrameShadowDirection()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeshadowdirection-3)
 [](extra-section-end)
 
 [](manual-wiki-end)

@@ -18,7 +18,7 @@ A text frame with user input text. The key difference between this frame and a n
 #### Example Usage
 [](example-usage-start)
 ```xml
-<UserInputText text="User Input Text" height="80" width="200" />
+<UserInputText layout="flex" text="User Input Text" height="80" width="200" />
 ```
 This XML produces the following UI:
 ![image](https://user-images.githubusercontent.com/34138206/149570848-4721af57-2ebe-46b5-906d-b0fe4f6f06d1.png)
@@ -27,7 +27,7 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [CreateUserInputTextFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#transform-createuserinputtextframetransform-parent)
+- [CreateUserInputTextFrame()](Trigger-API-Reference-DCEI-Functions-Custom-UI#createuserinputtextframe-1)
 [](extra-section-end)
 
 [](overview-end)
@@ -49,13 +49,13 @@ The text in the user input text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<UserInputText text="User Input Text" height="80" width="200" />
+<UserInputText layout="flex" text="User Input Text" height="80" width="200" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetUserInputTextFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setuserinputtextframetexttransform-text-string-content)
+- [SetUserInputTextFrameText()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setuserinputtextframetext-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -75,13 +75,13 @@ The font size in the user input text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<UserInputText text="User Input Text" height="120" width="500" fontSize="80" />
+<UserInputText layout="flex" text="User Input Text" height="120" width="500" fontSize="80" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetUserInputTextFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setuserinputtextframefontsizetransform-text-float-size)
+- [SetUserInputTextFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setuserinputtextframefontsize-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -101,13 +101,13 @@ The status of the text wrapping in the user input text frame, where `true` means
 #### Example Usage
 [](example-usage-start)
 ```xml
-<UserInputText text="User Input Text" height="120" width="200" fontSize="80" wrapping="true" />
+<UserInputText layout="flex" text="User Input Text" height="120" width="200" fontSize="80" wrapping="true" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetUserInputTextFrameWrapping()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setuserinputtextframewrappingtransform-text-bool-enable)
+- [SetUserInputTextFrameWrapping()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setuserinputtextframewrapping-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -127,13 +127,13 @@ The text color in the user input text frame.
 #### Example Usage
 [](example-usage-start)
 ```xml
-<UserInputText text="User Input Text" height="80" width="250" fontSize="40" color="r: 1, g: 1, b: 1, a: 1" />
+<UserInputText layout="flex" text="User Input Text" height="80" width="250" fontSize="40" color="r: 1, g: 1, b: 1, a: 1" />
 ```
 [](example-usage-end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetUserInputTextFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setuserinputtextframecolortransform-text-colorrgb-color)
+- [SetUserInputTextFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setuserinputtextframecolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)

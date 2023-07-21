@@ -26,7 +26,7 @@ Similar to [Validators](Data-Validator), expressions are evaluated and return a 
 In numeric cases, true is treated as `1` and false is treated as `0`. In boolean cases, non-zero numbers are treated as `true` and 0 is treated as `false`. Note that expressions can also be used as [validators](Data-Validator#expression).
 The most common use case for expressions are for creating custom damage formulas, such as `damage = ([caster]STRENGTH * 10) - [target]ARMOR)`, where `STRENGTH` and `ARMOR` are arbitrary attributes defined as [tags](Data-Behavior#behavior-tag-array).
 **Supported Fields**
-Expressions can be plugged into a number of existing data fields and can also be used with data binding in [custom UI](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframetextexpressiontransform-text-string-content). These are the currently supported data fields:
+Expressions can be plugged into a number of existing data fields and can also be used with data binding in [custom UI](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2). These are the currently supported data fields:
 - [Behavior/PeriodicInterval](Data-Behavior#periodic-interval-expressions)
 - [Effect/ApplyBehavior/Duration](Data-Effect-Apply-Behavior#expressions)
 - [Effect/Damage/DamageAmount](Data-Effect-Damage#expressions)

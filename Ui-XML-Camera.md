@@ -23,6 +23,7 @@
 [](overview-start)
 
 Render world-space objects on a UI frame using a custom camera. Camera frames require either a [cameraSize](#cameraSize) or [cameraAutoSize](#cameraAutoSize) to be set.
+Note that Camera doesn't support Flex layouts.
 
 #### Example Usage
 [](example-usage-start)

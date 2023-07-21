@@ -7,8 +7,8 @@ Data bound values can be formatted to specific decimal values by appending the e
 
 #### Related Trigger Function(s):
 
-- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframetextexpressiontransform-text-string-content)
-- [BindUnitData()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindunitdatastring-name-unit-unit)
+- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
+- [BindUnitData()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindunitdata-2)
 
 #### The following unit properties can be bound:
 

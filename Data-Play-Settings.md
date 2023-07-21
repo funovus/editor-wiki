@@ -68,13 +68,13 @@ Trigger context settings for Wild Sky.
 If the current opened project is a [mod](Data-Setting#dceiengineprotomapsettingstypetype), the level referenced here will be played using the mod as a dependency. This is useful for testing mods.
 
 ### Simulate Online
-When checked, [DCEI.IsOnline()](Trigger-API-Reference-DCEI-Functions-Service#bool-isonline) will return true in editor play mode.
+When checked, [DCEI.IsOnline()](Trigger-API-Reference-DCEI-Functions-Service#isonline-0) will return true in editor play mode.
 
 ### Simulate Ads
-When checked, the [DCEI.ShowAds()](Trigger-API-Reference-DCEI-Functions-Service#void-showadstypedcallbackbool-callback-bool-fallbacktounityads) callback will return successfully in editor play mode.
+When checked, the [DCEI.ShowAds()](Trigger-API-Reference-DCEI-Functions-Service#showads-2) callback will return successfully in editor play mode.
 
 ### Simulate User Id
-When set, [DCEI.GetUserId()](Trigger-API-Reference-DCEI-Functions-Service#string-getuserid) will return this value in editor play mode.
+When set, [DCEI.GetUserId()](Trigger-API-Reference-DCEI-Functions-Service#getuserid-0) will return this value in editor play mode.
 
 ### Simulate Leaderboard Top Score
 When set, sets the top leaderboard score to this value in editor play mode.

@@ -1595,7 +1595,7 @@ DCEI.SetFrameSize(input, 300, 50)
 [](extra-section-start)
 #### Related
 - [GetInputFrameText](#getinputframetext-1)
-- [SetInputFrameText()](rigger-API-Reference-DCEI-Functions-Custom-UI#setinputframetext-2)
+- [SetInputFrameText()](#setinputframetext-2)
 - [SetInputFrameFontSize](#setinputframefontsize-2)
 - [SetInputFrameColor](#setinputframecolor-2)
 - [SetInputFrameWrapping](#setinputframewrapping-2)
@@ -3615,7 +3615,7 @@ Sets the outline for a text frame's text.
 #### Parameters
 [](parameters-start)
 - *InGameUILayoutComponent* `text` the text frame.
-- *bool* `outside` if true, enables the text's outside outline. This is true by default for newly created text frames.
+- *bool* `outside` if true, enables the text's outside outline. This is false by default for newly created text frames.
 
 [](parameters-end)
 
@@ -3628,7 +3628,8 @@ DCEI.SetFrameImageColor(frame, {r = 1, g = 1, b = 0, a = 0.5})
 local text_frame = DCEI.CreateTextFrame(frame)
 DCEI.SetTextFrameText(text_frame, "Text")
 DCEI.SetFrameSize(text_frame, 200, 100)
-DCEI.SetTextFrameOutlineOutside(text_frame, false)
+DCEI.SetTextFrameOutlineOutside(text_frame, true)
+DCEI.SetTextFrameOutlineWidth(text_frame, 0.5)
 ```
 [](example-usage-end)
 
@@ -3683,7 +3684,7 @@ Sets the width for a text frame's text outline.
 #### Parameters
 [](parameters-start)
 - *InGameUILayoutComponent* `text` the text frame.
-- *float* `width` the width of the outline.
+- *float* `width` the width of the outline, scaled from 0-1. A value less than 0 will disable the outline.
 
 [](parameters-end)
 
@@ -3697,7 +3698,7 @@ local text_frame = DCEI.CreateTextFrame(frame)
 DCEI.SetTextFrameText(text_frame, "Text")
 DCEI.SetFrameSize(text_frame, 200, 100)
 DCEI.SetTextFrameFontSize(text_frame, 50)
-DCEI.SetTextFrameOutlineWidth(text_frame, 10)
+DCEI.SetTextFrameOutlineWidth(text_frame, 0.5)
 ```
 [](example-usage-end)
 
@@ -3753,7 +3754,7 @@ Sets the width for a text frame's text shadow.
 #### Parameters
 [](parameters-start)
 - *InGameUILayoutComponent* `text` the text frame.
-- *float* `width` the width of the shadow. A value of -1 will remove the shadow without removing the outline.
+- *float* `width` the width of the shadow, scaled from 0-1. A value less than 0 will remove the shadow without removing the outline.
 
 [](parameters-end)
 
@@ -3767,7 +3768,7 @@ local text_frame = DCEI.CreateTextFrame(frame)
 DCEI.SetTextFrameText(text_frame, "Text")
 DCEI.SetFrameSize(text_frame, 200, 100)
 DCEI.SetTextFrameFontSize(text_frame, 50)
-DCEI.SetTextFrameShadowWidth(text_frame, 10)
+DCEI.SetTextFrameShadowWidth(text_frame, 0.5)
 ```
 [](example-usage-end)
 
@@ -3832,7 +3833,7 @@ Set the softness for a text frame's text shadow.
 [](example-usage-start)
 ```lua
 local frame = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameImageColor(frame, {r = 1, g = 1, b = 0, a = 0.5})
+DCEI.SetFrameImageColor(frame, { r = 1, g = 1, b = 0, a = 0.5 })
 
 local text_frame = DCEI.CreateTextFrame(frame)
 DCEI.SetTextFrameText(text_frame, "Text")
@@ -3868,7 +3869,7 @@ Sets the direction for a text frame's text shadow. The coordinate's direction is
 [](example-usage-start)
 ```lua
 local frame = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameImageColor(frame, {r = 1, g = 1, b = 0, a = 0.5)
+DCEI.SetFrameImageColor(frame, { r = 1, g = 1, b = 0, a = 0.5 })
 
 local text_frame = DCEI.CreateTextFrame(frame)
 DCEI.SetTextFrameText(text_frame, "Text")
@@ -7986,11 +7987,11 @@ DCEI.TriggerAddTimerEventPeriodicIndefinite(
 
 [](extra-section-start)
 #### Related
-- [SetTextFrameTextExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
+- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
 - [SetFrameImageExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimageexpression-2)
 - [SetFrameImageGrayScaleExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagegrayscaleexpression-2)
-- [SetButtonFrameEnableExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#setbuttonframeenableexpression-2)
-- [SetFrameImageFillAmountExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
+- [SetButtonFrameEnableExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setbuttonframeenableexpression-2)
+- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
 - [SetFrameWidthExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframewidthexpression-2)
 - [SetFrameHeightExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeheightexpression-2)
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
@@ -8037,11 +8038,11 @@ DCEI.TriggerAddTimerEventPeriodicIndefinite(
 
 [](extra-section-start)
 #### Related
-- [SetTextFrameTextExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
+- [SetTextFrameTextExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2)
 - [SetFrameImageExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimageexpression-2)
 - [SetFrameImageGrayScaleExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagegrayscaleexpression-2)
-- [SetButtonFrameEnableExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#setbuttonframeenableexpression-2)
-- [SetFrameImageFillAmountExpression](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
+- [SetButtonFrameEnableExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setbuttonframeenableexpression-2)
+- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
 - [SetFrameWidthExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframewidthexpression-2)
 - [SetFrameHeightExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeheightexpression-2)
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)

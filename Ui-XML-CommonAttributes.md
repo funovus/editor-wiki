@@ -2543,7 +2543,7 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). By default, flex items 
 
 [](manual-wiki-start)
 
-**Values**: `center`, `flex-end`, `flex-start`, `space-around`, `space-between` 
+**Values**: `center`, `flex-start`, `flex-end`, `space-around`, `space-between`  
 #### See <u>[FlexLayouts/justifyContent](Ui-FlexLayouts#justifycontent)</u>
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the alignment along the main axis. It helps distribute extra free space leftover when either all the flex items on a line are inflexible, or are flexible but have reached their maximum size. It also exerts some control over the alignment of items when they overflow the line. For multi-line containers, see alignContent. 
@@ -2552,8 +2552,6 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the alignm
 [](example-usage-start)
 ```xml
 <Frame layout="flex" justifyContent="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1" widthPercent="100">
-    <!-- justifyContent="flex-end" aligns items to the end of the frame -->
-    <!-- So extra space in the frame will be at the start -->
     <include name="DemoAttributes/BasicBlockA" widthPercent="10" flexGrow="0" />
     <include name="DemoAttributes/BasicBlockB" widthPercent="30" flexGrow="0" />
     <include name="DemoAttributes/BasicBlockC" widthPercent="20" flexGrow="0" />
@@ -2574,7 +2572,7 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the alignm
 
 [](manual-wiki-start)
 
-**Values**: `baseline`, `center`, `flex-end`, `flex-start`, `stretch`
+**Values**: `center`, `flex-start`, `flex-end`, `baseline`, `stretch`
 #### See <u>[FlexLayouts/alignItems](Ui-FlexLayouts#alignitems)</u>
 
 A attribute only used by [Flex Layouts](Ui-FlexLayouts). This defines the default behavior for how flex items are laid out along the cross axis on the current line. Think of it as the justify-content version for the cross-axis (perpendicular to the main-axis).
@@ -2618,19 +2616,14 @@ Note: This property only takes effect on multi-line flexible containers, where f
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame layout="flex" alignContent="flex-end" widthPercent="75" heightPercent="50" flexWrap="wrap" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
-    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
-    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
-    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
-    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
-    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
-    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
-    <include name="DemoAttributes/BasicBlockA" width="200" height="50" />
-    <include name="DemoAttributes/BasicBlockB" width="250" height="50" />
-    <include name="DemoAttributes/BasicBlockC" width="300" height="50" />
+<Frame layout="flex" flexWrap="wrap" heightPercent="50" alignContent="flex-end" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" width="400" />
+    <include name="DemoAttributes/BasicBlockB" width="400" />
+    <include name="DemoAttributes/BasicBlockC" width="400" />
+    <include name="DemoAttributes/BasicBlockD" width="400" />
 </Frame>
 ```
-<img src="https://github.com/funovus/editor-wiki/assets/60531792/f4a746b9-01a6-430d-9e0d-ea4a39d66ec7" width="500"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/474c6897-82bf-4db4-9b04-9ee789d97f1a" width="500"/>
 
 [](example-usage-end)
 
@@ -2655,14 +2648,14 @@ A attribute only used by [Flex Layouts](Ui-FlexLayouts). This allows the default
 #### Example Usage
 [](example-usage-start)
 ```xml
-<Frame layout="flex" alignItems="flex-start" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
-    <include name="DemoAttributes/BasicBlockA" heightPercent="25" />
+<Frame layout="flex" alignItems="flex-start" heightPercent="60" frameImageColor="r: 0.3, g: 0.3, b: 0.3, a: 1">
+    <include name="DemoAttributes/BasicBlockA" heightPercent="45" />
     <include name="DemoAttributes/BasicBlockB" heightPercent="45" />
-    <include name="DemoAttributes/BasicBlockC" heightPercent="80" alignSelf="flex-end" />
-    <include name="DemoAttributes/BasicBlockD" heightPercent="15" alignSelf="flex-end" />
+    <include name="DemoAttributes/BasicBlockC" heightPercent="45" alignSelf="flex-end" />
+    <include name="DemoAttributes/BasicBlockD" heightPercent="45" />
 </Frame>
 ```
-<img src="https://github.com/funovus/editor-wiki/assets/60531792/24517e89-8052-413e-b8ab-2c485545ccc1" width="500"/>
+<img src="https://github.com/funovus/editor-wiki/assets/60531792/843f300e-d03b-48cb-acd5-f1d9d2067808" width="500"/>
 
 [](example-usage-end)
 
@@ -3080,11 +3073,11 @@ This attribute allows you to assign specific style rules to individual frames in
 </Style>
 
 <!-- A different object utilizing the style -->
-<VStack layout="flex">
+<Frame layout="flex" flexDirection="column">
     <Text text="test" />
     <Text class="large" text="test" />
     <Text class="small" text="test" />
-</VStack>
+</Frame>
 ```
 <img src="https://github.com/funovus/editor-wiki/assets/60531792/f1b014d3-2729-45fc-8e60-ac78c1326e05"/>
 

@@ -613,7 +613,9 @@ void SetWeather(int weatherStatus, float duration = 4)
 ```
 #### Description
 [](description-start)
-Sets a weather status over the given duration. Use 0 for an instant transition. Cannot set the heatwave option. The weather can also be set under Project Settings > Map Settings > Weather.
+Changes the weather over the given duration. Use 0 for an instant transition. Cannot set the heatwave option.
+In order to use a weather, you'll need to set `Has Weather Name` in the weather settings. To find it, go to Project Settings > Map Settings > Weather. Make sure you're in the settings for your map, not a mod that the map is using.
+
 0 - None
 1 - Rain
 2 - Snow

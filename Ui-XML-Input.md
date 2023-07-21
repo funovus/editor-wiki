@@ -156,6 +156,8 @@ The font color for the input frame.
 #### Description
 [](description-start)
 The text outline status for the input frame, where `true` enables the text outline.
+
+*Note that this doesn't actually work. Outline is only supported for Text frames.*
 [](description-end)
 
 #### Example Usage

@@ -18,15 +18,15 @@ Define a UI state. Often used with `bind` properties. The value can be changed b
 #### Example Usage
 [](example-usage-start)
 ```xml
-<VStack>
+<Frame layout="flex" flexDirection="column">
     <!-- Declare initial state values. -->
     <State name="red" booleanValue="false" />
     <!-- Show different background images depending on the state value and flip state value when clicked. -->
-    <Button bind:backgroundImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
+    <Button bind:frameImage="'btn_' .. (state.red and 'red' or 'blue')" bind:onClick="state.red = not state.red">
         <Text text="switch color" />
     </Button>
     <Text bind:text="state.red and 'red' or 'blue'" />
-</VStack>
+</Frame>
 ```
 Example lua script to modify a state's value:
 ```lua
@@ -42,7 +42,7 @@ This XML produces the following UI:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#object-getframestatetransform-ui)
+- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1)
 [](extra-section-end)
 
 [](overview-end)
@@ -77,7 +77,7 @@ state.enable = "true"
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- None.
+- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -106,7 +106,7 @@ state.size = "500"
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- None.
+- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -135,7 +135,7 @@ state.text = "Still Placeholder Text"
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- None.
+- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -164,7 +164,7 @@ state.enable = "true"
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- None.
+- [GetFrameState()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframestate-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
