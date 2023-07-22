@@ -859,7 +859,7 @@ Layouts created from XML will have each child frame with id added to the layout 
 ##### Root Frame
 Regardless of how the layout was constructed, the root frame can be gotten with `layout.Frame` such as:
 ```lua
-local layout = GMUI.LazyLayout:New()
+local layout = GMUI.LazyLayout.New()
 DCEI.SetFrameSize(layout.Frame, 100, 100)
 DCEI.SetFrameImageColor(layout.Frame, {r = 1, g = 0, b = 0, a = 0.5})
 ```
@@ -885,7 +885,7 @@ local ui = {
 }
 
 function CreateButtonFrame()
-    local layout = GMUI.LazyLayout:New({
+    local layout = GMUI.LazyLayout.New({
         parent = ui.Root,
         name = "Standard/Button/Button"
     })
