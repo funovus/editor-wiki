@@ -795,10 +795,10 @@ local example_value = DCEI.ApplyModifier(
 DCEI.LogMessage(example_value)
 ```
 [](example-usage-end)
+
+[](extra-section-start)
 #### Related
 [ApplyModifier](Trigger-API-Reference-DCEI-Functions-General#applymodifier-2)
-[](extra-section-start)
-
 [](extra-section-end)
 
 ## Float3
@@ -2134,12 +2134,13 @@ CollisionTiming timing
 ```
 #### Description
 [](description-start)
-Used for api `SetCollisionStatsData`
+Used for api `SetCollisionStatsData` and `RegisterSimpleLoot`
 [](description-end)
 
 #### Example Usage
 [](example-usage-start)
 ```lua
+-- Placeholder example
 DCEI.SetCollisionStatsData(unit, {stats_id = 1, delta_value = 15})
 ```
 [](example-usage-end)
@@ -2220,7 +2221,7 @@ OrientationType orientation_type
 ```
 #### Description
 [](description-start)
-Options to customize how units attch.
+Options to customize how units attach.
 [](description-end)
 
 #### Example Usage

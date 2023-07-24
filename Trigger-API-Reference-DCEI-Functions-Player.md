@@ -36,6 +36,7 @@ Returns the number of players in the game.
 [](example-usage-start)
 ```lua
 local player_count = DCEI.GetPlayerCount()
+DCEI.LogMessage(player_count)
 ```
 [](example-usage-end)
 
@@ -55,7 +56,10 @@ Get the current player's id. Only useful in multiplayer.
 #### Example Usage
 [](example-usage-start)
 ```lua
-local player_id = DCEI.GetCurrentPlayerId()
+local player_team_id = DCEI.GetPlayerTeamId(1)
+if player_team_id = 1 then
+    DCEI.SetPlayerTeamId(1, 2)
+end
 ```
 [](example-usage-end)
 

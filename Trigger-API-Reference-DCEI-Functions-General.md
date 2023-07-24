@@ -1316,7 +1316,11 @@ Set effect field value for player with playerId. This is similar to effect hooks
 #### Example Usage
 [](example-usage-start)
 ```lua
-DCEI.SetEffectFieldValueForPlayer(1, DCEI.Effect("Standard Damage"), {"effects", "Standard Damage", "damage", "damageAmount"}, 15)
+local player_id = 1
+local effect = DCEI.Effect("Standard Damage")
+local effect_path = {"effects", "Standard Damage", "damage", "damageAmount"}
+local value = 15
+DCEI.SetEffectFieldValueForPlayer(player_id, effect, effect_path, value)
 ```
 [](example-usage-end)
 

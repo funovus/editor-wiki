@@ -993,7 +993,24 @@ Set Hero Status UI visible or not
 
 #### Example Usage
 [](example-usage-start)
+```lua
+-- Creates the unit
+local team_id = 1
+local player_id = 1
+local unit_type = DCEI.Unit("Standard MeleeUnit")
+local x, z = 16, 16
+local unit_instance = DCEI.CreateUnit(team_id, player_id, unit_type, x, z)
 
+-- Shows the status UI
+local status_id = 9
+DCEI.ShowUnitStatusUi(status_id, unit_instance)
+
+-- Hides the status UI after 2 seconds
+local show_duration = 2
+DCEI.TriggerAddTimerEventElapsed(function()
+    DCEI.HideUnitStatusUi(status_id, unit_instance)
+end, show_duration)
+```
 [](example-usage-end)
 
 [](extra-section-start)

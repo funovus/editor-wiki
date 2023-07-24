@@ -1097,13 +1097,11 @@ Enable applying damage on collision for a given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-    DCEI.SetCollisionDamageData(self.unit, {
-        timing = 1,
-        cooldown = 5,
-        deal_damage_value = 1,
-    })
-
+DCEI.SetCollisionDamageData(self.unit, {
+    timing = 1,
+    cooldown = 5,
+    deal_damage_value = 1,
+})
 ```
 [](example-usage-end)
 
@@ -1130,13 +1128,11 @@ Enable applying force on collision for a given unit.
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-    DCEI.SetCollisionForceData(self.unit, {
-        force = 10, -- Push Force (+)
-        factor = -20, -- Change over Time
-        duration = 0.5, -- Seconds
-    })
-
+DCEI.SetCollisionForceData(self.unit, {
+    force = 10, -- Push Force (+)
+    factor = -20, -- Change over Time
+    duration = 0.5, -- Seconds
+})
 ```
 [](example-usage-end)
 
@@ -1150,7 +1146,9 @@ void SetCollisionStatsData(unit unit, CollisionStatsApplierOptions options)
 ```
 #### Description
 [](description-start)
-Enable applying stats on collision for unit
+Enable applying stats on collision for unit.
+
+*Experimental API: Not intended for wide use*
 [](description-end)
 
 #### Parameters
@@ -1163,9 +1161,8 @@ Enable applying stats on collision for unit
 #### Example Usage
 [](example-usage-start)
 ```lua
-
+-- Placeholder example
 DCEI.SetCollisionStatsData(unit, {stats_id = 1, delta_value = 15})
-
 ```
 [](example-usage-end)
 
@@ -1220,15 +1217,13 @@ Enable collision for unit, with options
 #### Example Usage
 [](example-usage-start)
 ```lua
-
-    -- Setup Collision Data
-    DCEI.SetCollisionComponentData(self.unit, {
-        belongs_to_layer_mask = 1,
-        collides_with_layer_mask = 3,
-        take_damage = false,
-        radius = 3,
-    })
-
+-- Setup Collision Data
+DCEI.SetCollisionComponentData(self.unit, {
+    belongs_to_layer_mask = 1,
+    collides_with_layer_mask = 3,
+    take_damage = false,
+    radius = 3,
+})
 ```
 [](example-usage-end)
 
@@ -1798,23 +1793,23 @@ Register loot with a name, owning player, simple unit options, and collision opt
 #### Example Usage
 [](example-usage-start)
 ```lua
-    local unit_options = {
-        type_name = DCEI.Unit("XP Item"),
-        max_health = 1,
-        drop_rate = 0,
-    }
-    local collision_options = {
-        belongs_to_layer_mask = 1,
-        collides_with_layer_mask = 2,
-        radius = 0.5,
-        take_damage = false,
-    }
-    local collision_stats = {
-        stats_id = 1,
-        delta_value = reward,
-    }
+local unit_options = {
+    type_name = DCEI.Unit("XP Item"),
+    max_health = 1,
+    drop_rate = 0,
+}
+local collision_options = {
+    belongs_to_layer_mask = 1,
+    collides_with_layer_mask = 2,
+    radius = 0.5,
+    take_damage = false,
+}
+local collision_stats = {
+    stats_id = 1,
+    delta_value = reward,
+}
 
-    DCEI.RegisterSimpleLoot("basic_loot", 1, unit_options, collision_options, collision_stats)
+DCEI.RegisterSimpleLoot("basic_loot", 1, unit_options, collision_options, collision_stats)
 ```
 [](example-usage-end)
 
@@ -1842,26 +1837,24 @@ Set simple unit to have a chance to drop loot that was previously registered wit
 #### Example Usage
 [](example-usage-start)
 ```lua
-    local unit_options = {
-        type_name = DCEI.Unit("XP Item"),
-        max_health = 1,
-        drop_rate = 0,
-    }
-    local collision_options = {
-        belongs_to_layer_mask = 1,
-        collides_with_layer_mask = 2,
-        radius = 0.5,
-        take_damage = false,
-    }
-    local collision_stats = {
-        stats_id = 1,
-        delta_value = reward,
-    }
+local unit_options = {
+    type_name = DCEI.Unit("XP Item"),
+    max_health = 1,
+    drop_rate = 0,
+}
+local collision_options = {
+    belongs_to_layer_mask = 1,
+    collides_with_layer_mask = 2,
+    radius = 0.5,
+    take_damage = false,
+}
+local collision_stats = {
+    stats_id = 1,
+    delta_value = reward,
+}
 
-    DCEI.RegisterSimpleLoot("basic_loot", unit_options, collision_options, collision_stats)
-    DCEI.SetSimpleUnitLootData(unit, "basic_loot", 1.00)
-
-
+DCEI.RegisterSimpleLoot("basic_loot", unit_options, collision_options, collision_stats)
+DCEI.SetSimpleUnitLootData(unit, "basic_loot", 1.00)
 ```
 [](example-usage-end)
 
