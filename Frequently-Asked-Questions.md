@@ -58,7 +58,7 @@ NOTE: `DCEI.Unit` is not a reference to the unit. It is only telling the engine 
 
 ![image](https://user-images.githubusercontent.com/65057459/188987238-abaa734e-067f-437d-867d-6e41728e1cd7.png)
 
-Custom key mappings can be defined the Project Settings Window. You can use the [DCEI.TriggerAddMappedKeyDownEvent()](https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Events-Input#void-triggeraddmappedkeydowneventstring-keyeventname-typedcallbackstring-trigger) trigger event to capture input events for such keys.
+Custom key mappings can be defined the Project Settings Window. You can use the [DCEI.TriggerAddMappedKeyDownEvent()](Trigger-API-Reference-DCEI-Events-Input#triggeraddmappedkeydownevent-2) trigger event to capture input events for such keys.
 
 ## How can I get units found by a search effect in Lua?
 

@@ -40,7 +40,7 @@ The most useful of these settings is the "Selected Unit Info" setting, which giv
 
 
 ### Text Commands
-Using the "Is Dev" setting also allows you to send text commands by pressing "Enter" in the Play Window. These commands can trigger events via [DCEI.TriggerAdddTextCommandEvent()](Trigger-API-Reference-DCEI-Events-Input#void-triggeraddtextcommandeventtypedcallbackstring-trigger).
+Using the "Is Dev" setting also allows you to send text commands by pressing "Enter" in the Play Window. These commands can trigger events via [DCEI.TriggerAdddTextCommandEvent()](Trigger-API-Reference-DCEI-Events-Input#triggeraddtextcommandevent-1).
 
 ## Trigger Debugging
 

@@ -665,13 +665,21 @@ function Color.HexToRGBA(hex: string)
 Returns a `table` array of RGBA values  (0 - 255) from a hexadecimal string. If no alpha value is supplied, the returned color will have full opacity.
 
 ##### Example usage:
-```
+```lua
 local hex_color = "#f17aed"
 
 local magenta = Core.Color.HexToRGBA(hex_color)
 -- magenta = {241, 122, 237, 255}
 
-DCEI.SetFrameImageColor(DCEI.GetUiRootFrame(), magenta[1]/255, magenta[2]/255, magenta[3]/255, magenta[4]/255)
+local layout = GMUI.Layout.New({
+    parent = GMUI.ui.Root,
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetFrameImageColor(
+    layout.Button,
+    { r = magenta[1] / 255, g = magenta[2] / 255, b = magenta[3] / 255, a = magenta[4] / 255 }
+)
 ```
 
 @*param* `hex` — A RGBA hex color value. e.g. green is "#00ff00ff", red is "#ff0000ff", blue is "#0000ffff"
@@ -693,8 +701,14 @@ Returns a `table` array of RGBA values (0 - 1) from a hexadecimal string. If no 
 local hex_color = "#f17aed"
 
 local magenta = Core.Color.HexToValues(hex_color)
+-- magenta = {0.95, 0.48, 0.93, 1}
 
-DCEI.SetFrameImageColor(DCEI.GetUiRootFrame(), magenta[1], magenta[2], magenta[3], magenta[4])
+local layout = GMUI.Layout.New({
+    parent = GMUI.ui.Root,
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetFrameImageColor(layout.Button, { r = magenta[1], g = magenta[2], b = magenta[3], a = magenta[4] })
 ```
 
 ## RGBAToHex
@@ -709,14 +723,14 @@ Returns a hexadecimal color value as a `string` from a `table` array of RGBA val
 
 ##### Example Usage
 ```lua
-local rgba = {241, 122, 237}
+local rgba = { 241, 122, 237 }
 
 local magenta = Core.Color.RGBAToHex(rgba)
 local tag = "<color=" .. magenta .. ">"
 -- magenta = "#f17aed"
 
 local text = tag .. "Magenta"
-local label = DCEI.CreateTextFrame(DCEI.GetUiRootFrame())
+local label = DCEI.CreateTextFrame(GMUI.ui.Root)
 DCEI.SetTextFrameText(label, text)
 ```
 
@@ -736,12 +750,20 @@ Returns a `table` array of RGBA percentage values (0 - 1) from a hexadecimal str
 
 ##### Example Usage
 ```lua
-local rgba = {0, 0, 0, 160}
+local rgba = { 0, 0, 0, 160 }
 
 local faded_black = Core.Color.RGBAToValues(rgba)
 -- faded_black = {0, 0, 0, 0.63}
 
-DCEI.SetFrameImageColor(DCEI.GetUiRootFrame(), {r = faded_black[1], g = faded_black[2], b = faded_black[3], a = faded_black[4]})
+local layout = GMUI.Layout.New({
+    parent = GMUI.ui.Root,
+    name = "Standard/Button/Button",
+})
+
+DCEI.SetFrameImageColor(
+    layout.Button,
+    { r = faded_black[1], g = faded_black[2], b = faded_black[3], a = faded_black[4] }
+)
 ```
 
 @*param* `rgba` — e.g. {0, 0, 0, 160} (0-255 values)
@@ -859,7 +881,7 @@ This function uses a combination of `DCEI.SetUpdateFrequency()` and `DCEI.SetSpe
 ```lua
 local game_speed = Core.GameSpeed.Get()
 
-local button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+local button = DCEI.CreateButtonFrame(GMUI.ui.Root)
 DCEI.SetFrameSize(button, 128, 128)
 
 local label = DCEI.CreateTextFrame(button)
@@ -977,7 +999,7 @@ Increments a value while keeping it in the given range. If the value would be gr
 ```lua
 local game_speed = Core.GameSpeed.Get()
 
-local button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+local button = DCEI.CreateButtonFrame(GMUI.ui.Root)
 DCEI.SetFrameSize(button, 128, 128)
 
 local label = DCEI.CreateTextFrame(button)
@@ -1608,7 +1630,7 @@ local amount = 1234567
 local display = Core.String.FormatNumberWithCommas(amount)
 -- display = "1,234,567"
 
-local label = DCEI.CreateTextFrame(DCEI.GetUiRootFrame())
+local label = DCEI.CreateTextFrame(GMUI.ui.Root)
 DCEI.SetTextFrameText(label, display)
 ```
 
@@ -1628,7 +1650,7 @@ local time_in_seconds = 7384.559
 local display = Core.String.FormatTimeHours(time_in_seconds, 2)
 -- display = "02:03:04.56"
 
-local label = DCEI.CreateTextFrame(DCEI.GetUiRootFrame())
+local label = DCEI.CreateTextFrame(GMUI.ui.Root)
 DCEI.SetTextFrameText(label, display)
 ```
 
@@ -1648,7 +1670,7 @@ local time_in_seconds = 7384
 local display = Core.String.FormatTimeMinutes(time_in_seconds, 2)
 -- display = "123:04.00"
 
-local label = DCEI.CreateTextFrame  (DCEI.GetUiRootFrame())
+local label = DCEI.CreateTextFrame(GMUI.ui.Root)
 DCEI.SetTextFrameText(label, display)
 ```
 
@@ -2414,7 +2436,7 @@ function Unit.GetId(unit: Unit)
   -> string
 ```
 
-Returns a unique unit id as a `string`, which is useful for [data binding](https://wiki.funovus.com/release/Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindunitdatastring-name-unit-unit). The returned id will never change and never be associated with another unit.
+Returns a unique unit id as a `string`, which is useful for [data binding](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindunitdata-2). The returned id will never change and never be associated with another unit.
 
 ##### Example Usage
 ```lua

@@ -735,7 +735,7 @@ local layout = GMUI.Layout.New({
     name = "Standard/Button/Button",
 })
 DCEI.SetOnClickCallback(layout.Button, function()
-    DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#void-openurlstring-url")
+    DCEI.OpenUrl("https://wiki.editor.funovus.com/master/Trigger-API-Reference-DCEI-Functions-Service#openurl-1")
 end)
 ```
 [](example-usage-end)

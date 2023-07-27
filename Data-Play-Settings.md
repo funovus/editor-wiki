@@ -86,7 +86,7 @@ Determines which leaderboard group is displayed in editor play mode. 0 is defaul
 When checked, trigger errors will be thrown as exceptions with a full stack trace. This is useful for gathering context while debugging (ie finding the error line number).
 
 ### Language
-Sets the localization langauge to use in editor play mode, affecting which text is returned by [DCEI.GetTranslationText()](Trigger-API-Reference-DCEI-Functions-Service#string-gettranslationtextstring-key-dictionarystring-object-parameters). The Play Window must be closed for a new language to be applied.
+Sets the localization langauge to use in editor play mode, affecting which text is returned by [DCEI.GetTranslationText()](Trigger-API-Reference-DCEI-Functions-Service#gettranslationtext-2). The Play Window must be closed for a new language to be applied.
 
 ### Show Iphone X Frame
 When checked, overlays the iPhone X frame on top of the game view in editor play mode. Useful for adjusting to UI to work with the pesky notch.

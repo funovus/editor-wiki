@@ -55,7 +55,7 @@ The enabled status for the button frame, where `true` is enabled and `false` is 
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetButtonFrameEnable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setbuttonframeenabletransform-ui-bool-enable)
+- [SetButtonFrameEnable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setbuttonframeenable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -82,7 +82,7 @@ The enabled status for the button frame, where `true` is enabled and `false` is 
 [](example-usage-end)
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetOnClickCallback()](Trigger-API-Reference-DCEI-Events-Input#void-setonclickcallbacktransform-ui-object-callback)
+- [SetOnClickCallback()](Trigger-API-Reference-DCEI-Events-Input#setonclickcallback-2)
 
 #### Related UI XML Properties:
 - [xmlns:bind](Ui-XML-CommonAttributes#xmlnsbind)

@@ -19,16 +19,16 @@
 The order of phases for abilities and their corresponding events are as follows:
 
 1. Ability Starts (via trigger or button)
-2. Enter Target Mode ([TriggerAddActivateAbilityEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeraddactivateabilityeventunit-unit-typedcallback-trigger-bool-simple-abilityfilter-filter))
-3. Exit Target Mode ([TriggerAddDeactivateAbilityEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeradddeactivateabilityeventunit-unit-typedcallback-trigger-bool-simple-abilityfilter-filter))
+2. Enter Target Mode ([TriggerAddActivateAbilityEvent()](#triggeraddactivateabilityevent-4))
+3. Exit Target Mode ([TriggerAddDeactivateAbilityEvent()](#triggeradddeactivateabilityevent-4))
 4. Queued
 5. Prep Time Start
 6. Prep Time End
-7. Cast ([TriggerAddCastAbilityEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeraddcastabilityeventunit-unit-typedcallbackunit-float2-trigger-bool-simple-abilityfilter-filter))
+7. Cast ([TriggerAddCastAbilityEvent()](#triggeraddcastabilityevent-4))
 8. Finish Time Start
-9. Finish Time End ([TriggerAddUseAbilityEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeradduseabilityeventunit-unit-typedcallbackunit-float2-trigger-bool-simple-abilityfilter-filter))
-10. Cooldown Start ([TriggerAddUnitAbilityOnOffEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeraddunitabilityonoffeventunit-unit-typedcallbackbool-trigger-bool-simple-abilityfilter-filter))
-11. Cooldown End ([TriggerAddUnitAbilityOnOffEvent()](Trigger-API-Reference-DCEI-Events-Ability#void-triggeraddunitabilityonoffeventunit-unit-typedcallbackbool-trigger-bool-simple-abilityfilter-filter))
+9. Finish Time End ([TriggerAddUseAbilityEvent()](#triggeradduseabilityevent-4))
+10. Cooldown Start ([TriggerAddUnitAbilityOnOffEvent()](#triggeraddunitabilityonoffevent-4))
+11. Cooldown End ([TriggerAddUnitAbilityOnOffEvent()](#triggeraddunitabilityoffevent-4))
 [](overview-end)
 
 ## void TriggerAddCastAbilityEvent(unit unit, TypedCallback\<unit, Float2> trigger, bool simple = False, AbilityFilter filter = default) {triggeraddcastabilityevent-4}

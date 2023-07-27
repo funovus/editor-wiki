@@ -680,7 +680,7 @@ Vertical flip/mirror for the big hand.
 "Restart"|"Yoyo"
 ```
 
-Choose the loop type. If no loop type is specified, `Restart` will be used. For loop types and how they function, see [SetFrameAnimationLoops()](https://wiki.funovus.com/release/Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeanimationloopstweener-tweener-int-loops-string-looptype).
+Choose the loop type. If no loop type is specified, `Restart` will be used. For loop types and how they function, see [SetFrameAnimationLoops()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeanimationloops-3).
 
 ## play_once
 

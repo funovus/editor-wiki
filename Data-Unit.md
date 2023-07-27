@@ -387,7 +387,7 @@ A unit level reference that can be referenced in validator expressions. Current 
 ## [](dcei.engine.proto.Unit.display_name)**Display Name** {Display-Name}
 
 [](manual-wiki-start)
-Sets the display name of the unit, which can be referenced in triggers with [DCEI.GetUnitDisplayName()](Trigger-API-Reference-DCEI-Functions-Unit#string-getunitdisplaynameunit-unit). Accepts string or localization key.
+Sets the display name of the unit, which can be referenced in triggers with [DCEI.GetUnitDisplayName()](Trigger-API-Reference-DCEI-Functions-Unit#getunitdisplayname-1). Accepts string or localization key.
 [](manual-wiki-end)
 
 ## [](dcei.engine.proto.Unit.hide_unit_status_bar)**Hide Unit Status Bar [Deprecated]** {Hide-Unit-Status-Bar-Deprecated}

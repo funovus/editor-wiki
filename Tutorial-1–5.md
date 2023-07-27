@@ -281,7 +281,7 @@ end
 
 ```
 
-If we look at the [Trigger Event API's](rigger-API-Reference-DCEI-Events-Timer#void-triggeraddtimereventelapsedtypedcallback-trigger-float-time-bool-userealtime-bool-simple) we'll see that `TriggerAddTimerEventElapsed()` takes a trigger (aka function) and float for the duration. As we learned earlier, `DCEI.TriggerAddTimerEventElapsed(SpawnEnemyUnitAtPoint(point), duration)` will not work.
+If we look at the [Trigger Event API's](Trigger-API-Reference-DCEI-Events-Timer#triggeraddtimereventelapsed-4) we'll see that `TriggerAddTimerEventElapsed()` takes a trigger (aka function) and float for the duration. As we learned earlier, `DCEI.TriggerAddTimerEventElapsed(SpawnEnemyUnitAtPoint(point), duration)` will not work.
 
 What we can do, is wrap `SpawnEnemyUnitAtPoint(point)` in its own function without parameters like so:
 

@@ -160,7 +160,7 @@ The font size for the text frame.
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframefontsizetransform-text-float-size)
+- [SetTextFrameFontSize()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframefontsize-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -186,7 +186,7 @@ The minimum font size for the text frame. Does not work if there is a set font s
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameFontSizeMin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframefontsizemintransform-text-float-size)
+- [SetTextFrameFontSizeMin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframefontsizemin-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -212,7 +212,7 @@ The maximum font size for the text frame. Does not work if there is a set font s
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameFontSizeMax()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframefontsizemaxtransform-text-float-size)
+- [SetTextFrameFontSizeMax()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframefontsizemax-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -238,7 +238,7 @@ The font color for the text frame.
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframecolortransform-text-colorrgb-color)
+- [SetTextFrameColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframecolor-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -264,7 +264,7 @@ The status of the text outline for the text frame, where `true` means the outlin
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameOutline()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeoutlinetransform-text-bool-outline)
+- [SetTextFrameOutline()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeoutline-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -290,7 +290,7 @@ The status of the text shadow for the text frame, where `true` means the shadow 
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameShadow()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframeshadowtransform-text-bool-enableshadow)
+- [SetTextFrameShadow()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframeshadow-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -344,7 +344,7 @@ The status of the text RTL support (right to left text) for the text frame, wher
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameRtlSupport()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframertlsupporttransform-text-bool-value)
+- [SetTextFrameRtlSupport()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframertlsupport-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -375,7 +375,7 @@ start, end, top, bottom, (top|bottom)-(start|end)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetTextFrameAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-settextframealignmenttransform-text-string-alignment)
+- [SetTextFrameAlignment()](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframealignment-2)
 [](extra-section-end)
 
 [](manual-wiki-end)

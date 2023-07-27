@@ -146,7 +146,7 @@ DCEI.TriggerAddEffectEvent(DCEI.Effect("DoNothing"), OnDoNothing, true)
 
 [](extra-section-start)
 #### Related
-- [TriggerAddEffectEvent](/Trigger-API-Reference-DCEI-Events-Effect#void-triggeraddeffecteventstring-effectname-typedcallbackeffectcontext-trigger-bool-simple)
+- [TriggerAddEffectEvent](/Trigger-API-Reference-DCEI-Events-Effect#triggeraddeffectevent-3)
 - [EffectContext](Trigger-API-Reference-DCEI-Types#effectcontext)
 - [TriggeringEffectId](Trigger-API-Reference-DCEI-Variables#triggeringeffectid)
 - [TriggeringEffectName](Trigger-API-Reference-DCEI-Variables#triggeringeffectname)

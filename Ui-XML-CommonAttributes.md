@@ -1180,7 +1180,7 @@ The image size ratio for the UI frame. Functionally identical to [useImageSizeRa
 
 #### Description
 [](description-start)
-The background image expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -1188,7 +1188,7 @@ The background image expression for the UI frame. Expressions use data bound by 
 ```xml
 <Frame backgroundImageExpression="data.image" useImageSizeRatio="1" />
 ```
-Where "data.image" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.image" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {image = "cart"}
 DCEI.BindLuaTable("data", data)
@@ -1198,7 +1198,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimageexpression-2)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 
 #### Related UI XML Properties:
 - [backgroundImage](#backgroundimage)
@@ -1229,8 +1229,8 @@ The background image fill amount for the UI frame, from 0-1.
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillamounttransform-ui-float-fill)
-- [GetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#float-getframeimagefillamounttransform-ui)
+- [SetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamount-2)
+- [GetFrameImageFillAmount()](Trigger-API-Reference-DCEI-Functions-Custom-UI#getframeimagefillamount-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1264,7 +1264,7 @@ Horizontal fill origin right:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillhorizontaltransform-ui)
+- [SetFrameImageFillHorizontal()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillhorizontal-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1298,7 +1298,7 @@ Vertical fill origin top:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillverticaltransform-ui)
+- [SetFrameImageFillVertical()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillvertical-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1338,7 +1338,7 @@ Radial fill origin left:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillRadial()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillradialtransform-ui)
+- [SetFrameImageFillRadial()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillradial-1)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1394,7 +1394,7 @@ Radial fill origin left:
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillOrigin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillorigintransform-ui-int-origin)
+- [SetFrameImageFillOrigin()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillorigin-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1410,7 +1410,7 @@ Radial fill origin left:
 
 #### Description
 [](description-start)
-The background image fill amount expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image fill amount expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -1418,7 +1418,7 @@ The background image fill amount expression for the UI frame. Expressions use da
 ```xml
 <Frame backgroundImage="cart" backgroundImageFillAmountExpression="data.fill" useImageSizeRatio="1" />
 ```
-Where "data.fill" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.fill" is [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {fill = 0.5}
 DCEI.BindLuaTable("data", data)
@@ -1427,8 +1427,8 @@ DCEI.BindLuaTable("data", data)
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagefillamountexpressiontransform-ui-string-expression-bool-inverse)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [SetFrameImageFillAmountExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagefillamountexpression-3)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1456,7 +1456,7 @@ The background image tiling status for the UI frame. By default this is true for
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageTiled()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagetiledtransform-ui-bool-settiled)
+- [SetFrameImageTiled()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagetiled)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1507,7 +1507,7 @@ On the left, the cart image only displays the bottom right corner as that is all
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFramePixelsPerUnitMultiplier()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframepixelsperunitmultipliertransform-ui-float-pixelsperunitmultiplier)
+- [SetFramePixelsPerUnitMultiplier()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframepixelsperunitmultiplier-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1923,7 +1923,7 @@ The background image color or tint for the UI frame, using RGBA values (valid va
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagecolortransform-ui-colorrgba-color)
+- [SetFrameImageColor()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolor-2)
 
 #### Related UI XML Properties:
 - [backgroundImage](#backgroundimage)
@@ -1940,7 +1940,7 @@ The background image color or tint for the UI frame, using RGBA values (valid va
 
 #### Description
 [](description-start)
-The background image color's R value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image color's R value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -1948,7 +1948,7 @@ The background image color's R value expression for the UI frame. Expressions us
 ```xml
 <Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -1958,7 +1958,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -1972,7 +1972,7 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's G value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image color's G value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -1980,7 +1980,7 @@ The background image color's G value expression for the UI frame. Expressions us
 ```xml
 <Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -1990,7 +1990,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2004,7 +2004,7 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's B value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image color's B value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -2012,7 +2012,7 @@ The background image color's B value expression for the UI frame. Expressions us
 ```xml
 <Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -2022,7 +2022,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2036,7 +2036,7 @@ DCEI.BindLuaTable("data", data)
 
 #### Description
 [](description-start)
-The background image color's A value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value).
+The background image color's A value expression for the UI frame. Expressions use data bound by [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2).
 [](description-end)
 
 #### Example Usage
@@ -2044,7 +2044,7 @@ The background image color's A value expression for the UI frame. Expressions us
 ```xml
 <Frame backgroundImage="cart" backgroundImageColorExpressionR="data.R" backgroundImageColorExpressionG="data.G" backgroundImageColorExpressionB="data.B" backgroundImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)
@@ -2054,7 +2054,7 @@ DCEI.BindLuaTable("data", data)
 [](extra-section-start)
 #### Related Trigger Function(s):
 - [SetFrameImageColorExpression()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagecolorexpression-5)
-- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value)
+- [BindLuaTable()](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2082,7 +2082,7 @@ The background image gray scale status for the UI frame, where `true` means the 
 
 [](extra-section-start)
 #### Related Trigger Function(s):
-- [SetFrameImageGrayScale()](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-setframeimagegrayscaletransform-ui-bool-isgrayscale)
+- [SetFrameImageGrayScale()](Trigger-API-Reference-DCEI-Functions-Custom-UI#setframeimagegrayscale-2)
 [](extra-section-end)
 
 [](manual-wiki-end)
@@ -2221,7 +2221,7 @@ The frame image color's A value expression for the UI frame. Expressions use dat
 ```xml
 <Frame layout="flex" frameImage="cart" frameImageColorExpressionR="data.R" frameImageColorExpressionG="data.G" frameImageColorExpressionB="data.B" frameImageColorExpressionA="data.A" useImageSizeRatio="1" />
 ```
-Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#void-bindluatablestring-name-object-value) in lua:
+Where "data.R", "data.G", "data.B", and "data.A" are [data bound](Trigger-API-Reference-DCEI-Functions-Custom-UI#bindluatable-2) in lua:
 ```lua
 local data = {R = 1, G = 1, B = 1, A = 1}
 DCEI.BindLuaTable("data", data)

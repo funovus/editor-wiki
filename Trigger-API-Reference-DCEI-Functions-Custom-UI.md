@@ -274,15 +274,13 @@ Runs the callback after engine finishes updating UI layout but before the update
 #### Example Usage
 [](example-usage-start)
 ```lua
-local button = DCEI.CreateButtonFrame(DCEI.GetUiRootFrame())
+local button = DCEI.CreateButtonFrame(GMUI.ui.Root)
 DCEI.SetFrameSize(button, 100, 100)
-DCEI.WaitForUiUpdateToComplete(
-    function()
-        DCEI.LogMessage("We can get (and set) button position after it initializes but before it renders on screen")
-        local pos = DCEI.GetFrameCanavasPosition3D(button)
-        DCEI.MoveFrameToCanvasPosition(button, pos, { right = 1 })
-    end
-)
+DCEI.WaitForUiUpdateToComplete(function()
+    DCEI.LogMessage("We can get (and set) button position after it initializes but before it renders on screen")
+    local pos = DCEI.GetFrameCanvasPosition3D(button)
+    DCEI.MoveFrameToCanvasPosition(button, pos, { right = 100 })
+end)
 ```
 [](example-usage-end)
 
