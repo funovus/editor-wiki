@@ -12,7 +12,7 @@
 
 This object allows you to define a css-like style sheet that can be used to automatically apply CSS attributes to your text. By using classes, you can also define specific rules for certain kinds of text.
 
-#####See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
+##### See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
 
 #### Example Usage
 [](example-usage-start)
@@ -91,7 +91,7 @@ Define a CSS-like style sheet.
 [](description-start)
 Allows you to assign a name to a style.
 
-#####See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
+##### See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
 [](description-end)
 
 #### Example Usage

@@ -1751,7 +1751,6 @@ return function(ui)
 
     -- Define the public interface of this controller. This one only has a single Animate function.
     function controller:Animate()
-    DCEI.LogMessage("Test")
     local s1, s2 = { x = 1, y = 1, z = 1 }, { x = 0.8, y = 0.8, z = 0.8 }
     local duration = 1
     local ease = "Linear"

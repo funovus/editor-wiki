@@ -644,7 +644,7 @@ DCEI.SetFrameImageColor(layout.Frame, {r = 1, g = 0, b = 0, a = 0.5})
 
 ##### Parameters
 * <i>table</i> `args` arguments for hooking up the layout.
-  * (optional) <i>InGameUILayoutComponent</i> `parent` the parent frame to use when creating this layout. If no parent is given then `DCEI.GetUiRootFrame()` will be used instead.
+  * (optional) <i>InGameUILayoutComponent</i> `parent` the parent frame to use when creating this layout. If no parent is given then the root frame will be used instead.
   * (optional) <i>xmlReference</i> `name` if used, the layout will be created from the given XML reference. If no `name` or `Frame` is given, a new blank frame will be created for the layout.
   * (optional) <i>InGameUILayoutComponent</i> `Frame` if used, a new layout will be created using the given frame.
 
@@ -659,9 +659,7 @@ Using an XML frame named "Standard/Button/Button" such as:
 ```
 The lua:
 ```lua
-local ui = {
-    Root = DCEI.GetUiRootFrame(),
-}
+local ui = GMUI.ui
 
 function CreateButtonFrame()
     local layout = GMUI.Layout.New({
@@ -866,7 +864,7 @@ DCEI.SetFrameImageColor(layout.Frame, {r = 1, g = 0, b = 0, a = 0.5})
 
 ##### Parameters
 * <i>table</i> `args` arguments for hooking up the layout.
-  * (optional) <i>InGameUILayoutComponent</i> `parent` the parent frame to use when creating this layout. If no parent is given then `DCEI.GetUiRootFrame()` will be used instead.
+  * (optional) <i>InGameUILayoutComponent</i> `parent` the parent frame to use when creating this layout. If no parent is given then the root frame will be used instead.
   * (optional) <i>xmlReference</i> `name` the layout will be created from the given XML reference. If no `name` is given, a new blank frame will be created for the layout.
 
 ##### Example Usage
@@ -880,9 +878,7 @@ Using an XML frame named "Standard/Button/Button" such as:
 ```
 The lua:
 ```lua
-local ui = {
-    Root = DCEI.GetUiRootFrame()
-}
+local ui = GMUI.ui
 
 function CreateButtonFrame()
     local layout = GMUI.LazyLayout.New({
@@ -1445,7 +1441,7 @@ If used, the layout will be created from the given XML reference. If no `name` o
 InGameUILayoutComponent
 ```
 
-The parent frame to use when creating this layout. If no parent is given then `DCEI.GetUiRootFrame()` will be used instead.
+The parent frame to use when creating this layout. If no parent is given then the root frame will be used instead.
 
 
 ---
@@ -1468,7 +1464,7 @@ If used, the layout will be created from the given XML reference. If no `name` i
 InGameUILayoutComponent
 ```
 
-The parent frame to use when creating this layout. If no parent is given then `DCEI.GetUiRootFrame()` will be used instead.
+The parent frame to use when creating this layout. If no parent is given then the root frame will be used instead.
 
 
 ---

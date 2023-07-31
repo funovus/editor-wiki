@@ -3013,7 +3013,7 @@ The `width` or `height` is adjusted depending on which one is not set. If both a
 
 This attribute links an XML file to a script file, enabling the execution of code, such as animations, during preview. This allows for faster development and testing.
 
-#####See the [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28) guide.
+##### See the [UI Controllers](https://funovus.notion.site/Animation-Previews-with-UI-Controllers-538d53a156174cfb949d05b561b78b28) guide.
 [](description-end)
 
 #### Example Usage
@@ -3045,7 +3045,7 @@ This attribute links an XML file to a script file, enabling the execution of cod
 
 This attribute allows you to assign specific style rules to individual frames in your UI layout.
 
-#####See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
+##### See the [Styles With Custom UI](https://funovus.notion.site/Using-Styles-With-Custom-UI-6d841ad81bd7444fac76d8b99bf7f36a) guide.
 [](description-end)
 
 #### Example Usage
