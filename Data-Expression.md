@@ -22,8 +22,10 @@
 
 [](manual-wiki-start)
 Expressions are a powerful feature of the DreamEditor that allows you to write formulas and plug them into various fields of game data. They're useful for creating things like damage formulas, where certain weapon types (fire, nature, armored) will deal more or less damage to different "armor" types (water, earth, light) as arbitrarily defined with tags. [See notion guide "Using Expressions."](https://www.notion.so/funovus/Using-Expressions-96418b963c274b5daa4e88ccab846d40)
+
 Similar to [Validators](Data-Validator), expressions are evaluated and return a result. Expressions are more flexible as they can be configured to write user defined formulas, and unlike validators they can return numeric or boolean values depending on context. 
 In numeric cases, true is treated as `1` and false is treated as `0`. In boolean cases, non-zero numbers are treated as `true` and 0 is treated as `false`. Note that expressions can also be used as [validators](Data-Validator#expression).
+
 The most common use case for expressions are for creating custom damage formulas, such as `damage = ([caster]STRENGTH * 10) - [target]ARMOR)`, where `STRENGTH` and `ARMOR` are arbitrary attributes defined as [tags](Data-Behavior#behavior-tag-array).
 **Supported Fields**
 Expressions can be plugged into a number of existing data fields and can also be used with data binding in [custom UI](Trigger-API-Reference-DCEI-Functions-Custom-UI#settextframetextexpression-2). These are the currently supported data fields:

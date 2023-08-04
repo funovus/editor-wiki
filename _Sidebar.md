@@ -15,12 +15,13 @@
 * [Data\ProjectSettings](Data-ProjectSetting)
 
 ### Guides
-* [See more helpful guides](https://www.notion.so/funovus/ada979ff3c6d48ee9482633fa776cdf5?v=1e8ba7c02f6049dea1339bab0f2ef702&pvs=4)
+* [Quick Start Guide](https://funovus.notion.site/Quick-Start-Guide-76266b23f38d4beba78929b0bf0b11d0)
+* [More Guides](https://www.notion.so/funovus/ada979ff3c6d48ee9482633fa776cdf5?v=1e8ba7c02f6049dea1339bab0f2ef702&pvs=4)
 
 ### Triggers
 * [Trigger API Reference](Trigger-API-Reference)
 * [Core Library Reference](Mods-Core-Overview)
-* [Lua Style Guide](https://funovus.notion.site/Lua-Scripting-8f54f72df8044482a37463180a15fc79)
+* [Lua Style Guide](https://funovus.notion.site/Lua-Style-Guide-b2338678703c4ea4a1aac27b8768bd40)
 
 ### UI
 * [XML UI Reference](Ui-XML)

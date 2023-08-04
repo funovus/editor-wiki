@@ -42,9 +42,9 @@ Used to determine the ability target type if this effect is the first effect of 
 Determines how to iterate through the unit list.
 
 [](manual-wiki-start)
-[Step Count](#step-count)
-[validator](#validator)
-[Impact Effect](#impact-effect)
+- [Step Count](#step-count)
+- [validator](#validator)
+- [Impact Effect](#impact-effect)
 [](manual-wiki-end)
 
 >* **REPEAT**: For each Step Count, check the validator and run the Impact Effect on the top unit of the list. If the validator fails, remove the top unit from the list and move on to the next unit in the list.
