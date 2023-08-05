@@ -1631,7 +1631,7 @@ Children frames can be referenced with DCEI.GetChildFrameById
 
 [](extra-section-start)
 #### Related
-- [Using XML For UI Guide](Using-XML-For-UI)
+- [Using XML For UI Guide](https://funovus.notion.site/Creating-Custom-UI-b4780e85ffb14ad98e0e34bb5a130e6d)
 - [UI XML Attributes](Ui-XML)
 [](extra-section-end)
 
@@ -4711,9 +4711,7 @@ Creates a frame for Spine animations. See [Spine animations](https://funovus.not
 #### Example Usage
 [](example-usage-start)
 ```lua
-local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameSize(container, 250, 250)
-local spine = DCEI.CreateSpineFrame(container)
+local spine = DCEI.CreateSpineFrame(GMUI.ui.Root)
 DCEI.SetSpineFrameAsset(spine, "texiao3")
 local animations = DCEI.GetSpineFrameAnimations(spine)
 for _, animation in ipairs(animations) do
@@ -4746,9 +4744,7 @@ Sets the Spine frame to the Spine asset. The asset must be in your map or mod’
 #### Example Usage
 [](example-usage-start)
 ```lua
-local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameSize(container, 250, 250)
-local spine = DCEI.CreateSpineFrame(container)
+local spine = DCEI.CreateSpineFrame(GMUI.ui.Root)
 DCEI.SetSpineFrameAsset(spine, "texiao3")
 local animations = DCEI.GetSpineFrameAnimations(spine)
 for _, animation in ipairs(animations) do
@@ -4780,9 +4776,7 @@ Gets a table of spine animations from the given spine frame. See [Spine animatio
 #### Example Usage
 [](example-usage-start)
 ```lua
-local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameSize(container, 250, 250)
-local spine = DCEI.CreateSpineFrame(container)
+local spine = DCEI.CreateSpineFrame(GMUI.ui.Root)
 DCEI.SetSpineFrameAsset(spine, "texiao3")
 local animations = DCEI.GetSpineFrameAnimations(spine)
 for _, animation in ipairs(animations) do
@@ -4817,9 +4811,7 @@ See [Spine animations](https://funovus.notion.site/Using-Spine-Animations-12292a
 #### Example Usage
 [](example-usage-start)
 ```lua
-local container = DCEI.CreateFrame(DCEI.GetUiRootFrame())
-DCEI.SetFrameSize(container, 250, 250)
-local spine = DCEI.CreateSpineFrame(container)
+local spine = DCEI.CreateSpineFrame(GMUI.ui.Root)
 DCEI.SetSpineFrameAsset(spine, "texiao3")
 local animations = DCEI.GetSpineFrameAnimations(spine)
 for _, animation in ipairs(animations) do

@@ -51,10 +51,10 @@ It's helpful to understand that these are lua libraries implemented by fellow de
 These are the latest iteration of first-party registry dependencies, utilizing [presentation scripting](https://funovus.notion.site/Presentation-vs-Simulation-Script-02155b2974e549c6afe3b3128ba841fb) and newer case formatting. (`GMUI` vs the legacy `gmui`)
 
 ### [Core](Mods-Core-Overview)
-`Core` is a general purpose layer just above `DCEI` API's, providing utility and shortcuts.
+`Core` is a general purpose layer just above `DCEI` API's, providing utility and shortcuts. Comes preinstalled on newer versions of the editor.
 
 ### [GMUI](Mods-GMUI-Overview)
-`GMUI` is essential for creating custom game UI.
+`GMUI` is essential for creating custom game UI. Comes preinstalled on newer versions of the editor.
 
 ### LegacyShop
 `LegacyShop` handles selling in-game IAP micro-transactions and utilizes lazy loading. It's marked Legacy because it has not yet been updated to fully utilize presentation scripting.

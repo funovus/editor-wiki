@@ -2,9 +2,7 @@
 This page will cover the basics of creating custom UI. This page assumes a basic understanding of lua and contemporary UI frameworks. This tutorial focuses on the basics of UI and uses Lua to create UI for simplicity. 
 
 ### Best practice
-[The best practice for creating custom UI is to use XML and the GMUI library.](Using-XML-For-UI)
-
-Using lua as below is generally only if you're struggling to quickly pick up xml/GMUI. For information on how to create custom UI with XML, refer to [this guide.](Using-XML-For-UI)
+Using lua as below is generally only if you're struggling to quickly pick up xml/GMUI. For information on how to create custom UI with XML, refer to [this guide.](https://funovus.notion.site/Creating-Custom-UI-b4780e85ffb14ad98e0e34bb5a130e6d)
 
 ### References
 * Download the example map [here](https://github.com/crunchystudio/editor-wiki/files/6601706/Example_CustomUI.zip).

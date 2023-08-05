@@ -1,5 +1,5 @@
 ## Overview
-This page covers the editor's currently available built-in UI functions. These are hardcoded functions you may find useful for quick prototyping. For more advanced UI, you'll want to [build your own](Using-XML-For-UI).
+This page covers the editor's currently available built-in UI functions. These are hardcoded functions you may find useful for quick prototyping. For more advanced UI, you'll want to [build your own](https://funovus.notion.site/Creating-Custom-UI-b4780e85ffb14ad98e0e34bb5a130e6d).
 
 - [Overview](#overview)
 - [Download the demo maps:](#download-the-demo-maps)
@@ -19,7 +19,7 @@ This page covers the editor's currently available built-in UI functions. These a
   - [Unit Label](#unit-label)
 
 ## Download the demo maps:
-- **(Most Recent!)** [GMUI Demo Project](https://platform.wildsky.dev/arcade/game/576) ([source](https://platform.wildsky.dev/api/store/project/576/source))
+- **(Most Recent!)** [GMUI Demo Project](https://platform.wildsky.dev/arcade/game/1018) ([source](https://platform.wildsky.dev/api/store/project/1018/source))
 - Older: [UI Demo](https://platform.wildsky.dev/arcade/game/125)
 - Older: [HERE](https://github.com/crunchystudio/editor-wiki/files/6601756/User.Interface.Demo.zip) 
 
